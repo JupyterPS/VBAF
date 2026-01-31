@@ -195,7 +195,7 @@ class MarketDashboard {
         $this.BtnPlay.BackColor = [System.Drawing.Color]::FromArgb(0, 180, 0)
         $this.BtnPlay.ForeColor = [System.Drawing.Color]::White
         $this.BtnPlay.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-        $this.BtnPlay.Font = New-Object System.Drawing.Font("Consolas", 8, [System.Drawing.FontStyle]::Bold)
+        $this.BtnPlay.Font = New-Object System.Drawing.Font("Consolas", 10, [System.Drawing.FontStyle]::Bold)
         $this.BtnPlay.Add_Click({ $dashboard.TogglePlay() })
         $this.ControlPanel.Controls.Add($this.BtnPlay)
         
@@ -229,7 +229,7 @@ class MarketDashboard {
         $this.SpeedLabel.Size = New-Object System.Drawing.Size(100, 20)
         $this.SpeedLabel.Text = "SPEED: 1x"
         $this.SpeedLabel.ForeColor = [System.Drawing.Color]::Cyan
-        $this.SpeedLabel.Font = New-Object System.Drawing.Font("Consolas", 10, [System.Drawing.FontStyle]::Bold)
+        $this.SpeedLabel.Font = New-Object System.Drawing.Font("Consolas", 8, [System.Drawing.FontStyle]::Bold)
         $this.ControlPanel.Controls.Add($this.SpeedLabel)
         
         # Speed Slider
@@ -258,7 +258,7 @@ class MarketDashboard {
         $btnExport.BackColor = [System.Drawing.Color]::FromArgb(100, 100, 120)
         $btnExport.ForeColor = [System.Drawing.Color]::White
         $btnExport.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-        $btnExport.Font = New-Object System.Drawing.Font("Consolas", 10, [System.Drawing.FontStyle]::Bold)
+        $btnExport.Font = New-Object System.Drawing.Font("Consolas", 8, [System.Drawing.FontStyle]::Bold)
         $btnExport.Add_Click({ $dashboard.ExportData() })
         $this.ControlPanel.Controls.Add($btnExport)
     }
@@ -836,18 +836,25 @@ class MarketDashboard {
                 [Math]::Round($company.Agent.Epsilon, 3)
             } else { 0 }
             
+            # Company name
             $brush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::White)
             $g.DrawString("$($company.Name):", $font, $brush, 10, $yPos)
             $brush.Dispose()
             
+            # Reward on first line (green)
             $rewardBrush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::LimeGreen)
-            $g.DrawString("R: $totalReward", $font, $rewardBrush, 150, $yPos)
+            $g.DrawString("R: $totalReward", $font, $rewardBrush, 100, $yPos)
             $rewardBrush.Dispose()
             
+            # Move to next line for epsilon
+            $yPos += 15
+            
+            # Epsilon on second line (yellow)
             $epsBrush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::Yellow)
-            $g.DrawString("ε: $epsilon", $font, $epsBrush, 250, $yPos)
+            $g.DrawString("ε: $epsilon", $font, $epsBrush, 100, $yPos)
             $epsBrush.Dispose()
             
+            # Space before next company
             $yPos += 20
         }
         

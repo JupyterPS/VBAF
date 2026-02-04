@@ -27,7 +27,19 @@ Reinforcement learning (RL) has transformative potential for business process au
 
 ## Quick Start
 
-### Installation
+### Installation (Recommended)
+
+Install directly from PowerShell Gallery:
+```powershell
+Install-Module VBAF -Scope CurrentUser
+Import-Module VBAF
+```
+
+That's it! All functions are now available.
+
+### Manual Installation (For Development)
+
+If you want to contribute or modify VBAF:
 ```powershell
 # Clone repository
 git clone https://github.com/JupyterPS/VBAF.git
@@ -35,6 +47,7 @@ cd VBAF
 
 # Load framework
 . .\VBAF.LoadAll.ps1
+```
 ```
 
 ### Your First Neural Network (2 minutes)

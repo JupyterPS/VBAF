@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 # VBAF.Business.Dashboard-Demo.ps1
 # Dashboard 2
 <#
@@ -27,7 +27,6 @@ Write-Host "Loading dependencies..." -ForegroundColor Yellow
 . "$basePath\VBAF.Business.CompanyAgent.ps1"
 . "$basePath\VBAF.Business.MarketEnvironment.ps1"
 . "$basePath\VBAF.Visualization.MarketDashboard.ps1"
-#. "$basePath\VBAF.TEST.ps1"
 
 Write-Host "All dependencies loaded successfully!" -ForegroundColor Green
 
@@ -43,16 +42,16 @@ $startingCapital = 100000000  # $100M
 
 Write-Host "Creating companies..." -ForegroundColor Yellow
 $novo = New-Object CompanyAgent -ArgumentList "Novo Nordisk", "Pharma", $startingCapital
-Write-Host "  ? Novo Nordisk created" -ForegroundColor Green
+Write-Host "  ✓ Novo Nordisk created" -ForegroundColor Green
 
 $wine = New-Object CompanyAgent -ArgumentList "Wine Co", "Wine", $startingCapital
-Write-Host "  ? Wine Co created" -ForegroundColor Green
+Write-Host "  ✓ Wine Co created" -ForegroundColor Green
 
 $bank = New-Object CompanyAgent -ArgumentList "Commerce Bank", "Banking", $startingCapital
-Write-Host "  ? Commerce Bank created" -ForegroundColor Green
+Write-Host "  ✓ Commerce Bank created" -ForegroundColor Green
 
 $ai = New-Object CompanyAgent -ArgumentList "AI Corp", "Technology", $startingCapital
-Write-Host "  ? AI Corp created" -ForegroundColor Green
+Write-Host "  ✓ AI Corp created" -ForegroundColor Green
 
 # Add companies to market
 Write-Host "`nAdding companies to market..." -ForegroundColor Yellow
@@ -65,11 +64,11 @@ Write-Host "`nMarket initialized with 4 companies" -ForegroundColor Green
 Write-Host "Starting capital: `$$($startingCapital / 1000000)M each" -ForegroundColor Cyan
 
 Write-Host "`n=== Dashboard Controls ===" -ForegroundColor Yellow
-Write-Host "  ?  Play    - Auto-run simulation" -ForegroundColor Gray
-Write-Host "  ? Step    - Advance one quarter manually" -ForegroundColor Gray
-Write-Host "  ?? Reset   - Start over from beginning" -ForegroundColor Gray
-Write-Host "  ?????????  Speed slider (1x-10x)" -ForegroundColor Gray
-Write-Host "  ?? Export  - Save data to CSV" -ForegroundColor Gray
+Write-Host "  ▶  Play    - Auto-run simulation" -ForegroundColor Gray
+Write-Host "  ⏭ Step    - Advance one quarter manually" -ForegroundColor Gray
+Write-Host "  🔄 Reset   - Start over from beginning" -ForegroundColor Gray
+Write-Host "  ━━━━━━━━━  Speed slider (1x-10x)" -ForegroundColor Gray
+Write-Host "  💾 Export  - Save data to CSV" -ForegroundColor Gray
 
 Write-Host "`nLaunching dashboard..." -ForegroundColor Cyan
 

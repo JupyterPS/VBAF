@@ -6,7 +6,7 @@
 .DESCRIPTION
     Loads all VBAF components in correct dependency order
 .EXAMPLE
-    . C:\Users\henni\OneDrive\WindowsPowerShell\VBAF.LoadAll.ps1
+    
 #>
 
 $basePath = $PSScriptRoot

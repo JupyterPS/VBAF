@@ -10,7 +10,7 @@
     Part of VBAF - Art/Generative Module
     Used by castle agents to learn aesthetic preferences
 .EXAMPLE
-    . C:\Users\henni\OneDrive\WindowsPowerShell\VBAF.Art.AestheticReward.ps1
+    
 #>
 
 class AestheticReward {

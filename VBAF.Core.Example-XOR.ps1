@@ -19,7 +19,7 @@
 $basePath = $PSScriptRoot
 
 # Load VBAF Core
-. "$basePath\VBAF.Core.AllClasses.ps1"
+. (Join-Path $basePath "VBAF.Core.AllClasses.ps1")
 
 Write-Host "`n+--------------------------------------+" -ForegroundColor Cyan
 Write-Host "¦     XOR PROBLEM - NEURAL NETWORK    ¦" -ForegroundColor Cyan

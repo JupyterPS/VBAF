@@ -14,7 +14,7 @@
 # Load dependencies
 $basePath = $PSScriptRoot
 
-. "$basePath\VBAF.Business.CompanyAgent.ps1"
+. (Join-Path $basePath "VBAF.Business.CompanyAgent.ps1")
 
 class MarketEnvironment {
     # Market participants

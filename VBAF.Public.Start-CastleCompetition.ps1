@@ -1,4 +1,4 @@
-﻿function Start-VBAFCastleCompetition {
+function Start-VBAFCastleCompetition {
     <#
     .SYNOPSIS
         Launches the multi-agent castle competition (Week 8 Grand Finale).
@@ -86,18 +86,18 @@
     
     begin {
         Write-Host "`n      - oo00oo - " -ForegroundColor Yellow
-        Write-Host "  🏰 CASTLE COMPETITION - WEEK 8 GRAND FINALE 🏰" -ForegroundColor Cyan
+        Write-Host "  ?? CASTLE COMPETITION - WEEK 8 GRAND FINALE ??" -ForegroundColor Cyan
         Write-Host "      - oo00oo - `n" -ForegroundColor Yellow
         
         Write-Host "  Three agents compete for aesthetic space:" -ForegroundColor Green
-        Write-Host "    • Classic Agent (Brown) - Gothic, Cathedral, Fortress" -ForegroundColor DarkYellow
-        Write-Host "    • Whimsical Agent (Pink) - FairyTale, Wizard, Palace" -ForegroundColor Magenta
-        Write-Host "    • Modern Agent (Cyan) - Oriental, Ruins, minimalist" -ForegroundColor Cyan
+        Write-Host "    � Classic Agent (Brown) - Gothic, Cathedral, Fortress" -ForegroundColor DarkYellow
+        Write-Host "    � Whimsical Agent (Pink) - FairyTale, Wizard, Palace" -ForegroundColor Magenta
+        Write-Host "    � Modern Agent (Cyan) - Oriental, Ruins, minimalist" -ForegroundColor Cyan
         Write-Host "`n  Configuration:" -ForegroundColor Green
         Write-Host "    Steps per episode: $StepsPerEpisode" -ForegroundColor White
         Write-Host "    Speed: $Speed ms ($([Math]::Round(1000/$Speed, 1)) steps/sec)" -ForegroundColor White
         Write-Host "    Auto-start: $AutoStart" -ForegroundColor White
-        Write-Host "`n  Watch them learn to coordinate! 🚀`n" -ForegroundColor Yellow
+        Write-Host "`n  Watch them learn to coordinate! ??`n" -ForegroundColor Yellow
     }
     
     process {
@@ -115,7 +115,7 @@
             # Source the competition script
             . $competitionPath
             
-            Write-Verbose "✓ Castle competition loaded"
+            Write-Verbose "? Castle competition loaded"
             Write-Host "  Dashboard opening..." -ForegroundColor Green
             
         } catch {

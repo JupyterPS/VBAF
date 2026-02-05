@@ -20,13 +20,14 @@ Write-Host "=== VBAF Market Dashboard ===" -ForegroundColor Cyan
 # Load dependencies in correct order
 Write-Host "Loading dependencies..." -ForegroundColor Yellow
 
-. (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
-. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
-. (Join-Path $basePath "VBAF.Business.CompanyState.ps1")
-. (Join-Path $basePath "VBAF.Business.BusinessAction.ps1")
-. (Join-Path $basePath "VBAF.Business.CompanyAgent.ps1")
-. (Join-Path $basePath "VBAF.Business.MarketEnvironment.ps1")
-. (Join-Path $basePath "VBAF.Visualization.MarketDashboard.ps1")
+. "$basePath\VBAF.RL.QLearningAgent.ps1"
+. "$basePath\VBAF.RL.ExperienceReplay.ps1"
+. "$basePath\VBAF.Business.CompanyState.ps1"
+. "$basePath\VBAF.Business.BusinessAction.ps1"
+. "$basePath\VBAF.Business.CompanyAgent.ps1"
+. "$basePath\VBAF.Business.MarketEnvironment.ps1"
+. "$basePath\VBAF.Visualization.MarketDashboard.ps1"
+#. "$basePath\VBAF.TEST.ps1"
 
 Write-Host "All dependencies loaded successfully!" -ForegroundColor Green
 

@@ -7,15 +7,15 @@
     Visual proof that neural networks, Q-learning, and experience replay work.
     Three panels: NN training XOR, Q-learning grid world, Experience replay stats
 .EXAMPLE
-    . C:\Users\henni\OneDrive\WindowsPowerShell\VBAF.Core.Test-ValidationDashboard.ps1
+    
 #>
 
 # Load dependencies
 $basePath = $PSScriptRoot
-. "$basePath\VBAF.Core.AllClasses.ps1"
-. "$basePath\VBAF.RL.QTable.ps1"
-. "$basePath\VBAF.RL.ExperienceReplay.ps1"
-. "$basePath\VBAF.RL.QLearningAgent.ps1"
+. (Join-Path $basePath "VBAF.Core.AllClasses.ps1")
+. (Join-Path $basePath "VBAF.RL.QTable.ps1")
+. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
+. (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
 
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing

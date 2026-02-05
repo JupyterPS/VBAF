@@ -1,4 +1,4 @@
-﻿function Get-VBAFExamples {
+function Get-VBAFExamples {
     <#
     .SYNOPSIS
         Lists available VBAF examples and how to run them.
@@ -139,7 +139,7 @@
         Write-Host "  " + ("=" * 70) -ForegroundColor DarkGray
         
         foreach ($example in $group.Group) {
-            Write-Host "  • " -NoNewline -ForegroundColor Cyan
+            Write-Host "  � " -NoNewline -ForegroundColor Cyan
             Write-Host $example.Name -ForegroundColor White
             Write-Host "    $($example.Description)" -ForegroundColor Gray
             

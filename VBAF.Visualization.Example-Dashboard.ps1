@@ -25,9 +25,9 @@ if ([System.Management.Automation.PSTypeName]'MetricsCollector'.Type) {
 $basePath = $PSScriptRoot
 
 # Load visualization components IN ORDER
-. "$basePath\VBAF.Visualization.MetricsCollector.ps1"
-. "$basePath\VBAF.Visualization.GraphRenderer.ps1"
-. "$basePath\VBAF.Visualization.LearningDashboard.ps1"
+. (Join-Path $basePath "VBAF.Visualization.MetricsCollector.ps1")
+. (Join-Path $basePath "VBAF.Visualization.GraphRenderer.ps1")
+. (Join-Path $basePath "VBAF.Visualization.LearningDashboard.ps1")
 
 Write-Host "`n+----------------------------------------------+" -ForegroundColor Cyan
 Write-Host "¦     LEARNING DASHBOARD - DEMO               ¦" -ForegroundColor Cyan

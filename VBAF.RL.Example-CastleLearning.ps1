@@ -11,9 +11,9 @@
 $basePath = $PSScriptRoot
 
 # Load dependencies
-. "$basePath\VBAF.RL.QTable.ps1"
-. "$basePath\VBAF.RL.ExperienceReplay.ps1"
-. "$basePath\VBAF.RL.QLearningAgent.ps1"
+. (Join-Path $basePath "VBAF.RL.QTable.ps1")
+. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
+. (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
 
 Write-Host "`n+----------------------------------------------+" -ForegroundColor Cyan
 Write-Host "¦   Q-LEARNING CASTLE AGENT - TRAINING DEMO   ¦" -ForegroundColor Cyan

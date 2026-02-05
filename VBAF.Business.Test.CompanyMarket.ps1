@@ -29,18 +29,18 @@ Write-Host ""
 Write-Host "Loading VBAF Market Framework..." -ForegroundColor Yellow
 
 Write-Host "  [1/5] Loading RL components..." -ForegroundColor Gray
-. "$basePath\VBAF.RL.QLearningAgent.ps1"
-. "$basePath\VBAF.RL.ExperienceReplay.ps1"
+. (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
+. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
 
 Write-Host "  [2/5] Loading Business components..." -ForegroundColor Gray
-. "$basePath\VBAF.Business.CompanyState.ps1"
-. "$basePath\VBAF.Business.BusinessAction.ps1"
+. (Join-Path $basePath "VBAF.Business.CompanyState.ps1")
+. (Join-Path $basePath "VBAF.Business.BusinessAction.ps1")
 
 Write-Host "  [3/5] Loading CompanyAgent..." -ForegroundColor Gray
-. "$basePath\VBAF.Business.CompanyAgent.ps1"
+. (Join-Path $basePath "VBAF.Business.CompanyAgent.ps1")
 
 Write-Host "  [4/5] Loading MarketEnvironment..." -ForegroundColor Gray
-. "$basePath\VBAF.Business.MarketEnvironment.ps1"
+. (Join-Path $basePath "VBAF.Business.MarketEnvironment.ps1")
 
 Write-Host "  [5/5] Framework loaded!" -ForegroundColor Green
 Write-Host ""

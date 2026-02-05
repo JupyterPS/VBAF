@@ -17,9 +17,9 @@ Add-Type -AssemblyName System.Drawing
 $basePath = $PSScriptRoot
 
 # Load RL dependencies
-. "$basePath\VBAF.RL.QTable.ps1"
-. "$basePath\VBAF.RL.ExperienceReplay.ps1"
-. "$basePath\VBAF.RL.QLearningAgent.ps1"
+. (Join-Path $basePath "VBAF.RL.QTable.ps1")
+. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
+. (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
 
 # -------------------------------
 # FORM

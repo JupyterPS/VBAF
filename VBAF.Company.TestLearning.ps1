@@ -25,19 +25,19 @@ Write-Host "Loading VBAF Business Framework..." -ForegroundColor Cyan
 
 # 1. Load RL framework first (CompanyAgent needs these)
 Write-Host "  [1/4] Loading RL components..." -ForegroundColor Gray
-. "$basePath\VBAF.RL.QLearningAgent.ps1"
-. "$basePath\VBAF.RL.ExperienceReplay.ps1"
+. (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
+. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
 
 # 2. Load Business state & actions (CompanyAgent needs these too)
 Write-Host "  [2/4] Loading Business state..." -ForegroundColor Gray
-. "$basePath\VBAF.Business.CompanyState.ps1"
+. (Join-Path $basePath "VBAF.Business.CompanyState.ps1")
 
 Write-Host "  [3/4] Loading Business actions..." -ForegroundColor Gray
-. "$basePath\VBAF.Business.BusinessAction.ps1"
+. (Join-Path $basePath "VBAF.Business.BusinessAction.ps1")
 
 # 3. Finally load CompanyAgent (depends on all above)
 Write-Host "  [4/4] Loading CompanyAgent..." -ForegroundColor Gray
-. "$basePath\VBAF.Business.CompanyAgent.ps1"
+. (Join-Path $basePath "VBAF.Business.CompanyAgent.ps1")
 
 Write-Host "? Framework loaded successfully" -ForegroundColor Green
 Write-Host ""

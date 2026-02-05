@@ -15,8 +15,8 @@
 $basePath = $PSScriptRoot
 
 # Load dependencies
-. "$basePath\VBAF.Visualization.MetricsCollector.ps1"
-. "$basePath\VBAF.Visualization.GraphRenderer.ps1"
+. (Join-Path $basePath "VBAF.Visualization.MetricsCollector.ps1")
+. (Join-Path $basePath "VBAF.Visualization.GraphRenderer.ps1")
 
 class LearningDashboard {
     # Properties

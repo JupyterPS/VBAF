@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 
 <#
 .SYNOPSIS
@@ -22,7 +22,7 @@
 #>
 
 # Load dependencies
-$basePath = "C:\Users\henni\OneDrive\WindowsPowerShell"
+$basePath = $PSScriptRoot
 . "$basePath\VBAF.RL.QTable.ps1"
 . "$basePath\VBAF.RL.ExperienceReplay.ps1"
 . "$basePath\VBAF.RL.QLearningAgent.ps1"
@@ -344,7 +344,7 @@ function Draw-CompetitionDashboard {
     # Title
     $titleFont = New-Object System.Drawing.Font("Segoe UI", 16, [System.Drawing.FontStyle]::Bold)
     $titleBrush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::Gold)
-    $g.DrawString("🏰 CASTLE COMPETITION - Three Agents Battle for Aesthetic Space 🏰", $titleFont, $titleBrush, 10, 10)
+    $g.DrawString("?? CASTLE COMPETITION - Three Agents Battle for Aesthetic Space ??", $titleFont, $titleBrush, 10, 10)
     $titleFont.Dispose()
     $titleBrush.Dispose()
     
@@ -357,19 +357,19 @@ function Draw-CompetitionDashboard {
     
     # Classic Agent
     $classicBrush = New-Object System.Drawing.SolidBrush($global:env.ClassicAgent.Color)
-    $text = "CLASSIC: Castles: $($stats.Classic.CastlesGenerated) | Avg: $([Math]::Round($stats.Classic.RecentAverage, 2)) | ε: $([Math]::Round($stats.Classic.Epsilon, 3))"
+    $text = "CLASSIC: Castles: $($stats.Classic.CastlesGenerated) | Avg: $([Math]::Round($stats.Classic.RecentAverage, 2)) | e: $([Math]::Round($stats.Classic.Epsilon, 3))"
     $g.DrawString($text, $font, $classicBrush, 10, $y)
     $classicBrush.Dispose()
     
     # Whimsical Agent
     $whimBrush = New-Object System.Drawing.SolidBrush($global:env.WhimsicalAgent.Color)
-    $text = "WHIMSICAL: Castles: $($stats.Whimsical.CastlesGenerated) | Avg: $([Math]::Round($stats.Whimsical.RecentAverage, 2)) | ε: $([Math]::Round($stats.Whimsical.Epsilon, 3))"
+    $text = "WHIMSICAL: Castles: $($stats.Whimsical.CastlesGenerated) | Avg: $([Math]::Round($stats.Whimsical.RecentAverage, 2)) | e: $([Math]::Round($stats.Whimsical.Epsilon, 3))"
     $g.DrawString($text, $font, $whimBrush, 10, $y + 20)
     $whimBrush.Dispose()
     
     # Modern Agent
     $modernBrush = New-Object System.Drawing.SolidBrush($global:env.ModernAgent.Color)
-    $text = "MODERN: Castles: $($stats.Modern.CastlesGenerated) | Avg: $([Math]::Round($stats.Modern.RecentAverage, 2)) | ε: $([Math]::Round($stats.Modern.Epsilon, 3))"
+    $text = "MODERN: Castles: $($stats.Modern.CastlesGenerated) | Avg: $([Math]::Round($stats.Modern.RecentAverage, 2)) | e: $([Math]::Round($stats.Modern.Epsilon, 3))"
     $g.DrawString($text, $font, $modernBrush, 10, $y + 40)
     $modernBrush.Dispose()
     
@@ -493,13 +493,13 @@ function Draw-CompetitionDashboard {
 # ==================== MAIN FORM ====================
 
 Write-Host "`n      - oo00oo - " -ForegroundColor Yellow
-Write-Host "🏰 CASTLE COMPETITION - WEEK 8 GRAND FINALE 🏰" -ForegroundColor Cyan
+Write-Host "?? CASTLE COMPETITION - WEEK 8 GRAND FINALE ??" -ForegroundColor Cyan
 Write-Host "      - oo00oo - `n" -ForegroundColor Yellow
 Write-Host "Three agents compete for aesthetic space:" -ForegroundColor Green
-Write-Host "  • Classic Agent (Brown) - Prefers Gothic, Cathedral, Fortress" -ForegroundColor DarkYellow
-Write-Host "  • Whimsical Agent (Pink) - Prefers FairyTale, Wizard, Palace" -ForegroundColor Magenta
-Write-Host "  • Modern Agent (Cyan) - Prefers Oriental, Ruins, Fortress" -ForegroundColor Cyan
-Write-Host "`nWatch them learn to coordinate! 🚀`n" -ForegroundColor Yellow
+Write-Host "  � Classic Agent (Brown) - Prefers Gothic, Cathedral, Fortress" -ForegroundColor DarkYellow
+Write-Host "  � Whimsical Agent (Pink) - Prefers FairyTale, Wizard, Palace" -ForegroundColor Magenta
+Write-Host "  � Modern Agent (Cyan) - Prefers Oriental, Ruins, Fortress" -ForegroundColor Cyan
+Write-Host "`nWatch them learn to coordinate! ??`n" -ForegroundColor Yellow
 
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "VBAF Castle Competition - Multi-Agent RL Arena"
@@ -531,7 +531,7 @@ $mainPanel.Add_Paint({
 
 # Start button
 $startButton = New-Object System.Windows.Forms.Button
-$startButton.Text = "▶ Start Competition"
+$startButton.Text = "? Start Competition"
 $startButton.Left = 10
 $startButton.Top = 10
 $startButton.Width = 160
@@ -539,15 +539,15 @@ $startButton.Height = 30
 $startButton.BackColor = [System.Drawing.Color]::FromArgb(0, 200, 80)
 $startButton.ForeColor = [System.Drawing.Color]::White
 $startButton.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-$startButton.Font = New-Object System.Drawing.Font("Segoe UI", 10, [System.Drawing.FontStyle]::Bold)
+$startButton.Font = New-Object System.Drawing.Font("Segoe UI", 8, [System.Drawing.FontStyle]::Bold)
 $startButton.Add_Click({
     if (-not $global:running) {
         $global:running = $true
-        $startButton.Text = "⏸ Pause"
+        $startButton.Text = "? Pause"
         $startButton.BackColor = [System.Drawing.Color]::FromArgb(255, 140, 0)
     } else {
         $global:running = $false
-        $startButton.Text = "▶ Resume"
+        $startButton.Text = "? Resume"
         $startButton.BackColor = [System.Drawing.Color]::FromArgb(0, 200, 80)
     }
 })
@@ -555,7 +555,7 @@ $form.Controls.Add($startButton)
 
 # Reset button
 $resetButton = New-Object System.Windows.Forms.Button
-$resetButton.Text = "🔄 Reset"
+$resetButton.Text = "?? Reset"
 $resetButton.Left = 180
 $resetButton.Top = 10
 $resetButton.Width = 100
@@ -563,11 +563,11 @@ $resetButton.Height = 30
 $resetButton.BackColor = [System.Drawing.Color]::FromArgb(220, 50, 50)
 $resetButton.ForeColor = [System.Drawing.Color]::White
 $resetButton.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-$resetButton.Font = New-Object System.Drawing.Font("Segoe UI", 10, [System.Drawing.FontStyle]::Bold)
+$resetButton.Font = New-Object System.Drawing.Font("Segoe UI", 8, [System.Drawing.FontStyle]::Bold)
 $resetButton.Add_Click({
     $global:running = $false
     $global:env = New-Object CompetitionEnvironment
-    $startButton.Text = "▶ Start Competition"
+    $startButton.Text = "? Start Competition"
     $startButton.BackColor = [System.Drawing.Color]::FromArgb(0, 200, 80)
     $mainPanel.Invalidate()
 })
@@ -580,7 +580,7 @@ $statusLabel.Left = 300
 $statusLabel.Top = 15
 $statusLabel.Width = 1000
 $statusLabel.ForeColor = [System.Drawing.Color]::Gold
-$statusLabel.Font = New-Object System.Drawing.Font("Consolas", 11, [System.Drawing.FontStyle]::Bold)
+$statusLabel.Font = New-Object System.Drawing.Font("Consolas", 9, [System.Drawing.FontStyle]::Bold)
 $form.Controls.Add($statusLabel)
 
 # Update timer
@@ -598,7 +598,7 @@ $timer.Add_Tick({
         
         # Update status
         $stats = $global:env.GetStats()
-        $statusLabel.Text = "Episode: $($stats.Episode) | Step: $($stats.Step) | Last: $($result.Agent) → $($result.Type) (Reward: $([Math]::Round($result.Reward, 2)))"
+        $statusLabel.Text = "Episode: $($stats.Episode) | Step: $($stats.Step) | Last: $($result.Agent) ? $($result.Type) (Reward: $([Math]::Round($result.Reward, 2)))"
     }
     
     # Redraw
@@ -606,7 +606,7 @@ $timer.Add_Tick({
 })
 $timer.Start()
 
-Write-Host "  ✓ Competition arena ready!" -ForegroundColor Green
+Write-Host "  ? Competition arena ready!" -ForegroundColor Green
 Write-Host "      - oo00oo - `n" -ForegroundColor Yellow
 
 $form.ShowDialog()

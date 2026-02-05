@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 # Dashboard 1
 <#
 .SYNOPSIS
@@ -12,7 +12,7 @@
 
 # CRITICAL: Check if classes are already loaded (cache issue)
 if ([System.Management.Automation.PSTypeName]'MetricsCollector'.Type) {
-    Write-Host "⚠ WARNING: Classes already loaded in this session!" -ForegroundColor Yellow
+    Write-Host "? WARNING: Classes already loaded in this session!" -ForegroundColor Yellow
     Write-Host "  For best results, close PowerShell and start fresh." -ForegroundColor Yellow
     Write-Host "  Or run: Launch-Dashboard-Clean.ps1" -ForegroundColor Cyan
     Write-Host ""
@@ -22,23 +22,23 @@ if ([System.Management.Automation.PSTypeName]'MetricsCollector'.Type) {
     }
 }
 
-$basePath = "C:\Users\henni\OneDrive\WindowsPowerShell"
+$basePath = $PSScriptRoot
 
 # Load visualization components IN ORDER
 . "$basePath\VBAF.Visualization.MetricsCollector.ps1"
 . "$basePath\VBAF.Visualization.GraphRenderer.ps1"
 . "$basePath\VBAF.Visualization.LearningDashboard.ps1"
 
-Write-Host "`n╔══════════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "║     LEARNING DASHBOARD - DEMO               ║" -ForegroundColor Cyan
-Write-Host "╚══════════════════════════════════════════════╝" -ForegroundColor Cyan
+Write-Host "`n+----------------------------------------------+" -ForegroundColor Cyan
+Write-Host "�     LEARNING DASHBOARD - DEMO               �" -ForegroundColor Cyan
+Write-Host "+----------------------------------------------+" -ForegroundColor Cyan
 
 Write-Host "`nStarting dashboard with simulated training..." -ForegroundColor Yellow
 Write-Host "This will show:"
-Write-Host "  • Neural network error decreasing"
-Write-Host "  • RL agent rewards increasing"
-Write-Host "  • Epsilon (exploration) decaying"
-Write-Host "  • Real-time statistics"
+Write-Host "  � Neural network error decreasing"
+Write-Host "  � RL agent rewards increasing"
+Write-Host "  � Epsilon (exploration) decaying"
+Write-Host "  � Real-time statistics"
 Write-Host ""
 Write-Host "Controls:" -ForegroundColor Cyan
 Write-Host "  [SPACE] - Pause/Resume updates"
@@ -84,7 +84,7 @@ $dataTimer.Add_Tick({
         }
     } else {
         # Training complete
-        Write-Host "`n✓ Training simulation complete (500 epochs)" -ForegroundColor Green
+        Write-Host "`n? Training simulation complete (500 epochs)" -ForegroundColor Green
         $dataTimer.Stop()
     }
 }.GetNewClosure())
@@ -101,5 +101,5 @@ try {
     $dataTimer.Dispose()
 }
 
-Write-Host "`n✓ Dashboard closed" -ForegroundColor Green
+Write-Host "`n? Dashboard closed" -ForegroundColor Green
 

@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 
 <#
 .SYNOPSIS
@@ -14,7 +14,7 @@ Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
 # Set base path
-$basePath = "C:\Users\henni\OneDrive\WindowsPowerShell"
+$basePath = $PSScriptRoot
 
 # Load RL dependencies
 . "$basePath\VBAF.RL.QTable.ps1"
@@ -327,11 +327,11 @@ $statsPanel.Add_Paint({
             $oldAvg /= 10
             
             if ($recentAvg -gt $oldAvg) {
-                $g.DrawString("↗ IMPROVING!", $font, $greenBrush, 600, $y)
+                $g.DrawString("? IMPROVING!", $font, $greenBrush, 600, $y)
             } elseif ($recentAvg -lt $oldAvg) {
-                $g.DrawString("↘ Declining", $font, [Drawing.Brushes]::Red, 600, $y)
+                $g.DrawString("? Declining", $font, [Drawing.Brushes]::Red, 600, $y)
             } else {
-                $g.DrawString("→ Stable", $font, $yellowBrush, 600, $y)
+                $g.DrawString("? Stable", $font, $yellowBrush, 600, $y)
             }
         }
     }

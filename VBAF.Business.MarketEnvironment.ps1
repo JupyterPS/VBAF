@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 
 <#
 .SYNOPSIS
@@ -12,7 +12,7 @@
 #>
 
 # Load dependencies
-$basePath = "C:\Users\henni\OneDrive\WindowsPowerShell"
+$basePath = $PSScriptRoot
 
 . "$basePath\VBAF.Business.CompanyAgent.ps1"
 
@@ -63,7 +63,7 @@ class MarketEnvironment {
         $company.State.MarketCondition = $this.MarketCondition
         $company.State.CompetitorCount = $this.Companies.Count - 1
         
-        Write-Host "✓ Added $($company.Name) to market" -ForegroundColor Green
+        Write-Host "? Added $($company.Name) to market" -ForegroundColor Green
     }
     
     # Simulate one quarter
@@ -168,36 +168,36 @@ class MarketEnvironment {
             switch ($eventType) {
                 0 {
                     # Recession
-                    Write-Host "  ⚠ EVENT: Economic Recession!" -ForegroundColor Red
+                    Write-Host "  ? EVENT: Economic Recession!" -ForegroundColor Red
                     $this.EconomyGrowth = -0.03
                     $this.MarketCondition = "Bearish"
                 }
                 1 {
                     # Boom
-                    Write-Host "  ✓ EVENT: Economic Boom!" -ForegroundColor Green
+                    Write-Host "  ? EVENT: Economic Boom!" -ForegroundColor Green
                     $this.EconomyGrowth = 0.08
                     $this.MarketCondition = "Bullish"
                 }
                 2 {
                     # Tech disruption
-                    Write-Host "  🚀 EVENT: Technological Breakthrough!" -ForegroundColor Yellow
+                    Write-Host "  ?? EVENT: Technological Breakthrough!" -ForegroundColor Yellow
                     # Random company gets innovation boost
                     if ($this.Companies.Count -gt 0) {
                         $luckyCompany = $this.Companies[(Get-Random -Minimum 0 -Maximum $this.Companies.Count)]
                         $luckyCompany.State.InnovationScore += 0.2
-                        Write-Host "     → $($luckyCompany.Name) gains innovation advantage!" -ForegroundColor Yellow
+                        Write-Host "     ? $($luckyCompany.Name) gains innovation advantage!" -ForegroundColor Yellow
                     }
                 }
                 3 {
                     # Regulatory change
-                    Write-Host "  📜 EVENT: New Regulation!" -ForegroundColor Magenta
+                    Write-Host "  ?? EVENT: New Regulation!" -ForegroundColor Magenta
                     foreach ($company in $this.Companies) {
                         $company.State.Costs *= 1.05  # 5% cost increase
                     }
                 }
                 4 {
                     # Consumer trend shift
-                    Write-Host "  👥 EVENT: Consumer Preferences Shift!" -ForegroundColor Cyan
+                    Write-Host "  ?? EVENT: Consumer Preferences Shift!" -ForegroundColor Cyan
                     # Rewards quality over price
                     foreach ($company in $this.Companies) {
                         if ($company.State.ProductQuality -gt 0.7) {
@@ -342,9 +342,9 @@ class MarketEnvironment {
     
     # Display market status
     [void] DisplayMarketStatus() {
-        Write-Host "`n╔══════════════════════════════════════════════════════╗" -ForegroundColor Cyan
-        Write-Host "║           MARKET STATUS                             ║" -ForegroundColor Cyan
-        Write-Host "╚══════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+        Write-Host "`n+------------------------------------------------------+" -ForegroundColor Cyan
+        Write-Host "�           MARKET STATUS                             �" -ForegroundColor Cyan
+        Write-Host "+------------------------------------------------------+" -ForegroundColor Cyan
         Write-Host ""
         Write-Host "Quarter: Q$($this.CurrentQuarter) Y$($this.CurrentYear)" -ForegroundColor White
         Write-Host "Economy: $($this.EconomyGrowth.ToString('P2')) growth - $($this.MarketCondition)" -ForegroundColor Yellow

@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Creates complete VBAF documentation structure
 .DESCRIPTION
@@ -7,7 +7,7 @@
 #>
 
 # Set base path (your current working directory)
-$basePath = "C:\Users\henni\OneDrive\WindowsPowerShell"
+$basePath = $PSScriptRoot
 cd $basePath
 
 Write-Host "`n========================================" -ForegroundColor Cyan
@@ -23,41 +23,41 @@ Write-Host "[1/6] Creating root-level files..." -ForegroundColor Yellow
 # README.md (main entry point)
 if (-not (Test-Path "README.md")) {
     New-Item -ItemType File -Path "README.md" -Force | Out-Null
-    Write-Host "  ✓ README.md created" -ForegroundColor Green
+    Write-Host "  ? README.md created" -ForegroundColor Green
 } else {
-    Write-Host "  ℹ README.md already exists (skipped)" -ForegroundColor Gray
+    Write-Host "  ? README.md already exists (skipped)" -ForegroundColor Gray
 }
 
 # PAPER.md (research paper)
 if (-not (Test-Path "PAPER.md")) {
     New-Item -ItemType File -Path "PAPER.md" -Force | Out-Null
-    Write-Host "  ✓ PAPER.md created" -ForegroundColor Green
+    Write-Host "  ? PAPER.md created" -ForegroundColor Green
 } else {
-    Write-Host "  ℹ PAPER.md already exists (skipped)" -ForegroundColor Gray
+    Write-Host "  ? PAPER.md already exists (skipped)" -ForegroundColor Gray
 }
 
 # LICENSE
 if (-not (Test-Path "LICENSE")) {
     New-Item -ItemType File -Path "LICENSE" -Force | Out-Null
-    Write-Host "  ✓ LICENSE created" -ForegroundColor Green
+    Write-Host "  ? LICENSE created" -ForegroundColor Green
 } else {
-    Write-Host "  ℹ LICENSE already exists (skipped)" -ForegroundColor Gray
+    Write-Host "  ? LICENSE already exists (skipped)" -ForegroundColor Gray
 }
 
 # CHANGELOG.md
 if (-not (Test-Path "CHANGELOG.md")) {
     New-Item -ItemType File -Path "CHANGELOG.md" -Force | Out-Null
-    Write-Host "  ✓ CHANGELOG.md created" -ForegroundColor Green
+    Write-Host "  ? CHANGELOG.md created" -ForegroundColor Green
 } else {
-    Write-Host "  ℹ CHANGELOG.md already exists (skipped)" -ForegroundColor Gray
+    Write-Host "  ? CHANGELOG.md already exists (skipped)" -ForegroundColor Gray
 }
 
 # .gitignore
 if (-not (Test-Path ".gitignore")) {
     New-Item -ItemType File -Path ".gitignore" -Force | Out-Null
-    Write-Host "  ✓ .gitignore created" -ForegroundColor Green
+    Write-Host "  ? .gitignore created" -ForegroundColor Green
 } else {
-    Write-Host "  ℹ .gitignore already exists (skipped)" -ForegroundColor Gray
+    Write-Host "  ? .gitignore already exists (skipped)" -ForegroundColor Gray
 }
 
 # ============================================================================
@@ -68,7 +68,7 @@ Write-Host "`n[2/6] Creating docs/ structure..." -ForegroundColor Yellow
 
 # Main docs folder
 New-Item -ItemType Directory -Path "docs" -Force | Out-Null
-Write-Host "  ✓ docs/" -ForegroundColor Green
+Write-Host "  ? docs/" -ForegroundColor Green
 
 # Core documentation files
 $docFiles = @(
@@ -83,15 +83,15 @@ $docFiles = @(
 foreach ($file in $docFiles) {
     if (-not (Test-Path $file)) {
         New-Item -ItemType File -Path $file -Force | Out-Null
-        Write-Host "  ✓ $file" -ForegroundColor Green
+        Write-Host "  ? $file" -ForegroundColor Green
     }
 }
 
 # docs/papers/ (Academic papers)
 New-Item -ItemType Directory -Path "docs\papers" -Force | Out-Null
 New-Item -ItemType Directory -Path "docs\papers\figures" -Force | Out-Null
-Write-Host "  ✓ docs/papers/" -ForegroundColor Green
-Write-Host "  ✓ docs/papers/figures/" -ForegroundColor Green
+Write-Host "  ? docs/papers/" -ForegroundColor Green
+Write-Host "  ? docs/papers/figures/" -ForegroundColor Green
 
 $paperFiles = @(
     "docs\papers\vbaf-main-paper.md",
@@ -103,13 +103,13 @@ $paperFiles = @(
 foreach ($file in $paperFiles) {
     if (-not (Test-Path $file)) {
         New-Item -ItemType File -Path $file -Force | Out-Null
-        Write-Host "  ✓ $file" -ForegroundColor Green
+        Write-Host "  ? $file" -ForegroundColor Green
     }
 }
 
 # docs/tutorials/ (Step-by-step guides)
 New-Item -ItemType Directory -Path "docs\tutorials" -Force | Out-Null
-Write-Host "  ✓ docs/tutorials/" -ForegroundColor Green
+Write-Host "  ? docs/tutorials/" -ForegroundColor Green
 
 $tutorialFiles = @(
     "docs\tutorials\README.md",
@@ -124,13 +124,13 @@ $tutorialFiles = @(
 foreach ($file in $tutorialFiles) {
     if (-not (Test-Path $file)) {
         New-Item -ItemType File -Path $file -Force | Out-Null
-        Write-Host "  ✓ $file" -ForegroundColor Green
+        Write-Host "  ? $file" -ForegroundColor Green
     }
 }
 
 # docs/case-studies/ (Real-world applications)
 New-Item -ItemType Directory -Path "docs\case-studies" -Force | Out-Null
-Write-Host "  ✓ docs/case-studies/" -ForegroundColor Green
+Write-Host "  ? docs/case-studies/" -ForegroundColor Green
 
 $caseStudyFiles = @(
     "docs\case-studies\README.md",
@@ -143,7 +143,7 @@ $caseStudyFiles = @(
 foreach ($file in $caseStudyFiles) {
     if (-not (Test-Path $file)) {
         New-Item -ItemType File -Path $file -Force | Out-Null
-        Write-Host "  ✓ $file" -ForegroundColor Green
+        Write-Host "  ? $file" -ForegroundColor Green
     }
 }
 
@@ -151,7 +151,7 @@ foreach ($file in $caseStudyFiles) {
 New-Item -ItemType Directory -Path "docs\teaching" -Force | Out-Null
 New-Item -ItemType Directory -Path "docs\teaching\lecture-slides" -Force | Out-Null
 New-Item -ItemType Directory -Path "docs\teaching\exercises" -Force | Out-Null
-Write-Host "  ✓ docs/teaching/" -ForegroundColor Green
+Write-Host "  ? docs/teaching/" -ForegroundColor Green
 
 $teachingFiles = @(
     "docs\teaching\README.md",
@@ -163,13 +163,13 @@ $teachingFiles = @(
 foreach ($file in $teachingFiles) {
     if (-not (Test-Path $file)) {
         New-Item -ItemType File -Path $file -Force | Out-Null
-        Write-Host "  ✓ $file" -ForegroundColor Green
+        Write-Host "  ? $file" -ForegroundColor Green
     }
 }
 
 # docs/dev/ (Developer documentation)
 New-Item -ItemType Directory -Path "docs\dev" -Force | Out-Null
-Write-Host "  ✓ docs/dev/" -ForegroundColor Green
+Write-Host "  ? docs/dev/" -ForegroundColor Green
 
 $devFiles = @(
     "docs\dev\README.md",
@@ -182,7 +182,7 @@ $devFiles = @(
 foreach ($file in $devFiles) {
     if (-not (Test-Path $file)) {
         New-Item -ItemType File -Path $file -Force | Out-Null
-        Write-Host "  ✓ $file" -ForegroundColor Green
+        Write-Host "  ? $file" -ForegroundColor Green
     }
 }
 
@@ -193,7 +193,7 @@ foreach ($file in $devFiles) {
 Write-Host "`n[3/6] Creating examples/ structure..." -ForegroundColor Yellow
 
 New-Item -ItemType Directory -Path "examples" -Force | Out-Null
-Write-Host "  ✓ examples/" -ForegroundColor Green
+Write-Host "  ? examples/" -ForegroundColor Green
 
 $exampleFolders = @(
     "examples\01-XOR-Network",
@@ -207,7 +207,7 @@ $exampleFolders = @(
 foreach ($folder in $exampleFolders) {
     New-Item -ItemType Directory -Path $folder -Force | Out-Null
     New-Item -ItemType File -Path "$folder\README.md" -Force | Out-Null
-    Write-Host "  ✓ $folder/" -ForegroundColor Green
+    Write-Host "  ? $folder/" -ForegroundColor Green
 }
 
 # ============================================================================
@@ -217,7 +217,7 @@ foreach ($folder in $exampleFolders) {
 Write-Host "`n[4/6] Creating tests/ structure..." -ForegroundColor Yellow
 
 New-Item -ItemType Directory -Path "tests" -Force | Out-Null
-Write-Host "  ✓ tests/" -ForegroundColor Green
+Write-Host "  ? tests/" -ForegroundColor Green
 
 $testFiles = @(
     "tests\README.md",
@@ -231,7 +231,7 @@ $testFiles = @(
 foreach ($file in $testFiles) {
     if (-not (Test-Path $file)) {
         New-Item -ItemType File -Path $file -Force | Out-Null
-        Write-Host "  ✓ $file" -ForegroundColor Green
+        Write-Host "  ? $file" -ForegroundColor Green
     }
 }
 
@@ -243,8 +243,8 @@ Write-Host "`n[5/6] Creating benchmarks/ structure..." -ForegroundColor Yellow
 
 New-Item -ItemType Directory -Path "benchmarks" -Force | Out-Null
 New-Item -ItemType Directory -Path "benchmarks\data" -Force | Out-Null
-Write-Host "  ✓ benchmarks/" -ForegroundColor Green
-Write-Host "  ✓ benchmarks/data/" -ForegroundColor Green
+Write-Host "  ? benchmarks/" -ForegroundColor Green
+Write-Host "  ? benchmarks/data/" -ForegroundColor Green
 
 $benchmarkFiles = @(
     "benchmarks\README.md",
@@ -256,7 +256,7 @@ $benchmarkFiles = @(
 foreach ($file in $benchmarkFiles) {
     if (-not (Test-Path $file)) {
         New-Item -ItemType File -Path $file -Force | Out-Null
-        Write-Host "  ✓ $file" -ForegroundColor Green
+        Write-Host "  ? $file" -ForegroundColor Green
     }
 }
 
@@ -270,10 +270,10 @@ New-Item -ItemType Directory -Path "assets" -Force | Out-Null
 New-Item -ItemType Directory -Path "assets\images" -Force | Out-Null
 New-Item -ItemType Directory -Path "assets\diagrams" -Force | Out-Null
 New-Item -ItemType Directory -Path "assets\screenshots" -Force | Out-Null
-Write-Host "  ✓ assets/" -ForegroundColor Green
-Write-Host "  ✓ assets/images/" -ForegroundColor Green
-Write-Host "  ✓ assets/diagrams/" -ForegroundColor Green
-Write-Host "  ✓ assets/screenshots/" -ForegroundColor Green
+Write-Host "  ? assets/" -ForegroundColor Green
+Write-Host "  ? assets/images/" -ForegroundColor Green
+Write-Host "  ? assets/diagrams/" -ForegroundColor Green
+Write-Host "  ? assets/screenshots/" -ForegroundColor Green
 
 # ============================================================================
 # VERIFICATION
@@ -287,7 +287,7 @@ Write-Host "========================================`n" -ForegroundColor Cyan
 $totalFolders = (Get-ChildItem -Path $basePath -Directory -Recurse | Where-Object { $_.FullName -like "*docs*" -or $_.FullName -like "*examples*" -or $_.FullName -like "*tests*" -or $_.FullName -like "*benchmarks*" -or $_.FullName -like "*assets*" }).Count
 $totalFiles = (Get-ChildItem -Path $basePath -File -Recurse | Where-Object { $_.FullName -like "*docs*" -or $_.FullName -like "*examples*" -or $_.FullName -like "*tests*" -or $_.FullName -like "*benchmarks*" -or $_.FullName -like "*.md" -or $_.FullName -like "*LICENSE*" -or $_.FullName -like "*.gitignore" }).Count
 
-Write-Host "✓ Structure created successfully!" -ForegroundColor Green
+Write-Host "? Structure created successfully!" -ForegroundColor Green
 Write-Host "  Folders created: $totalFolders" -ForegroundColor Cyan
 Write-Host "  Files created: $totalFiles" -ForegroundColor Cyan
 
@@ -296,9 +296,9 @@ Write-Host "`nKey folders:" -ForegroundColor Yellow
 $keyFolders = @("docs", "docs\papers", "docs\tutorials", "docs\case-studies", "docs\teaching", "examples", "tests", "benchmarks", "assets")
 foreach ($folder in $keyFolders) {
     if (Test-Path $folder) {
-        Write-Host "  ✓ $folder" -ForegroundColor Green
+        Write-Host "  ? $folder" -ForegroundColor Green
     } else {
-        Write-Host "  ✗ $folder (MISSING!)" -ForegroundColor Red
+        Write-Host "  ? $folder (MISSING!)" -ForegroundColor Red
     }
 }
 
@@ -307,9 +307,9 @@ Write-Host "`nVerifying existing code (should be unchanged):" -ForegroundColor Y
 $codeFiles = @("VBAF.LoadAll.ps1", "VBAF.psd1", "VBAF.Core.AllClasses.ps1", "VBAF.RL.QTable.ps1")
 foreach ($file in $codeFiles) {
     if (Test-Path $file) {
-        Write-Host "  ✓ $file (still in place)" -ForegroundColor Green
+        Write-Host "  ? $file (still in place)" -ForegroundColor Green
     } else {
-        Write-Host "  ✗ $file (MOVED OR MISSING!)" -ForegroundColor Red
+        Write-Host "  ? $file (MOVED OR MISSING!)" -ForegroundColor Red
     }
 }
 
@@ -322,44 +322,44 @@ Write-Host "  Final Directory Structure" -ForegroundColor Cyan
 Write-Host "========================================`n" -ForegroundColor Cyan
 
 Write-Host "VBAF/" -ForegroundColor White
-Write-Host "├── README.md                  (Main entry point)" -ForegroundColor Gray
-Write-Host "├── PAPER.md                   (Research paper)" -ForegroundColor Gray
-Write-Host "├── LICENSE" -ForegroundColor Gray
-Write-Host "├── CHANGELOG.md" -ForegroundColor Gray
-Write-Host "├── .gitignore" -ForegroundColor Gray
-Write-Host "│" -ForegroundColor Gray
-Write-Host "├── VBAF.LoadAll.ps1           (Your existing code - UNCHANGED)" -ForegroundColor Green
-Write-Host "├── VBAF.psd1                  (Module manifest - UNCHANGED)" -ForegroundColor Green
-Write-Host "├── VBAF.*.ps1                 (All your .ps1 files - UNCHANGED)" -ForegroundColor Green
-Write-Host "│" -ForegroundColor Gray
-Write-Host "├── docs/                      (Documentation)" -ForegroundColor Yellow
-Write-Host "│   ├── README.md" -ForegroundColor Gray
-Write-Host "│   ├── GettingStarted.md" -ForegroundColor Gray
-Write-Host "│   ├── Architecture.md" -ForegroundColor Gray
-Write-Host "│   ├── Theory.md" -ForegroundColor Gray
-Write-Host "│   ├── API-Reference.md" -ForegroundColor Gray
-Write-Host "│   ├── papers/                (Research papers)" -ForegroundColor Yellow
-Write-Host "│   ├── tutorials/             (Step-by-step guides)" -ForegroundColor Yellow
-Write-Host "│   ├── case-studies/          (Real-world examples)" -ForegroundColor Yellow
-Write-Host "│   ├── teaching/              (Educational materials)" -ForegroundColor Yellow
-Write-Host "│   └── dev/                   (Developer docs)" -ForegroundColor Yellow
-Write-Host "│" -ForegroundColor Gray
-Write-Host "├── examples/                  (Working code examples)" -ForegroundColor Yellow
-Write-Host "│   ├── 01-XOR-Network/" -ForegroundColor Gray
-Write-Host "│   ├── 02-Castle-Learning/" -ForegroundColor Gray
-Write-Host "│   └── ..." -ForegroundColor Gray
-Write-Host "│" -ForegroundColor Gray
-Write-Host "├── tests/                     (Test suite)" -ForegroundColor Yellow
-Write-Host "│   ├── Core.Tests.ps1" -ForegroundColor Gray
-Write-Host "│   └── ..." -ForegroundColor Gray
-Write-Host "│" -ForegroundColor Gray
-Write-Host "├── benchmarks/                (Performance data)" -ForegroundColor Yellow
-Write-Host "│   └── data/" -ForegroundColor Gray
-Write-Host "│" -ForegroundColor Gray
-Write-Host "└── assets/                    (Images, diagrams)" -ForegroundColor Yellow
-Write-Host "    ├── images/" -ForegroundColor Gray
-Write-Host "    ├── diagrams/" -ForegroundColor Gray
-Write-Host "    └── screenshots/" -ForegroundColor Gray
+Write-Host "+-- README.md                  (Main entry point)" -ForegroundColor Gray
+Write-Host "+-- PAPER.md                   (Research paper)" -ForegroundColor Gray
+Write-Host "+-- LICENSE" -ForegroundColor Gray
+Write-Host "+-- CHANGELOG.md" -ForegroundColor Gray
+Write-Host "+-- .gitignore" -ForegroundColor Gray
+Write-Host "�" -ForegroundColor Gray
+Write-Host "+-- VBAF.LoadAll.ps1           (Your existing code - UNCHANGED)" -ForegroundColor Green
+Write-Host "+-- VBAF.psd1                  (Module manifest - UNCHANGED)" -ForegroundColor Green
+Write-Host "+-- VBAF.*.ps1                 (All your .ps1 files - UNCHANGED)" -ForegroundColor Green
+Write-Host "�" -ForegroundColor Gray
+Write-Host "+-- docs/                      (Documentation)" -ForegroundColor Yellow
+Write-Host "�   +-- README.md" -ForegroundColor Gray
+Write-Host "�   +-- GettingStarted.md" -ForegroundColor Gray
+Write-Host "�   +-- Architecture.md" -ForegroundColor Gray
+Write-Host "�   +-- Theory.md" -ForegroundColor Gray
+Write-Host "�   +-- API-Reference.md" -ForegroundColor Gray
+Write-Host "�   +-- papers/                (Research papers)" -ForegroundColor Yellow
+Write-Host "�   +-- tutorials/             (Step-by-step guides)" -ForegroundColor Yellow
+Write-Host "�   +-- case-studies/          (Real-world examples)" -ForegroundColor Yellow
+Write-Host "�   +-- teaching/              (Educational materials)" -ForegroundColor Yellow
+Write-Host "�   +-- dev/                   (Developer docs)" -ForegroundColor Yellow
+Write-Host "�" -ForegroundColor Gray
+Write-Host "+-- examples/                  (Working code examples)" -ForegroundColor Yellow
+Write-Host "�   +-- 01-XOR-Network/" -ForegroundColor Gray
+Write-Host "�   +-- 02-Castle-Learning/" -ForegroundColor Gray
+Write-Host "�   +-- ..." -ForegroundColor Gray
+Write-Host "�" -ForegroundColor Gray
+Write-Host "+-- tests/                     (Test suite)" -ForegroundColor Yellow
+Write-Host "�   +-- Core.Tests.ps1" -ForegroundColor Gray
+Write-Host "�   +-- ..." -ForegroundColor Gray
+Write-Host "�" -ForegroundColor Gray
+Write-Host "+-- benchmarks/                (Performance data)" -ForegroundColor Yellow
+Write-Host "�   +-- data/" -ForegroundColor Gray
+Write-Host "�" -ForegroundColor Gray
+Write-Host "+-- assets/                    (Images, diagrams)" -ForegroundColor Yellow
+Write-Host "    +-- images/" -ForegroundColor Gray
+Write-Host "    +-- diagrams/" -ForegroundColor Gray
+Write-Host "    +-- screenshots/" -ForegroundColor Gray
 
 Write-Host "`n========================================" -ForegroundColor Cyan
 Write-Host "  Next Steps" -ForegroundColor Cyan
@@ -369,13 +369,13 @@ Write-Host "1. Test that your code still works:" -ForegroundColor Yellow
 Write-Host "   . .\VBAF.LoadAll.ps1" -ForegroundColor White
 Write-Host ""
 Write-Host "2. Fill in key documentation files:" -ForegroundColor Yellow
-Write-Host "   • README.md (main project description)" -ForegroundColor White
-Write-Host "   • docs/README.md (documentation hub)" -ForegroundColor White
-Write-Host "   • docs/papers/vbaf-main-paper.md (research paper)" -ForegroundColor White
+Write-Host "   � README.md (main project description)" -ForegroundColor White
+Write-Host "   � docs/README.md (documentation hub)" -ForegroundColor White
+Write-Host "   � docs/papers/vbaf-main-paper.md (research paper)" -ForegroundColor White
 Write-Host ""
 Write-Host "3. Add content to LICENSE:" -ForegroundColor Yellow
-Write-Host "   • MIT License recommended for academic projects" -ForegroundColor White
+Write-Host "   � MIT License recommended for academic projects" -ForegroundColor White
 Write-Host ""
 
-Write-Host "✨ VBAF documentation structure is ready!" -ForegroundColor Green
+Write-Host "? VBAF documentation structure is ready!" -ForegroundColor Green
 Write-Host ""

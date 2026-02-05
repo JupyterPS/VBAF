@@ -1,4 +1,4 @@
-﻿# VBAF.Reorganize-Module.ps1
+# VBAF.Reorganize-Module.ps1
 #Requires -Version 5.1
 
 <#
@@ -44,10 +44,10 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $false)]
-    [string]$SourcePath = "C:\Users\henni\OneDrive\WindowsPowerShell",
+    [string]$SourcePath = $PSScriptRoot,
     
     [Parameter(Mandatory = $false)]
-    [string]$TargetPath = "C:\Users\henni\OneDrive\WindowsPowerShell\VBAF",
+    [string]$TargetPath = (Join-Path $PSScriptRoot "VBAF"),
     
     [Parameter(Mandatory = $false)]
     [switch]$Copy,
@@ -92,8 +92,8 @@ if ($CreateBackup -and -not $Copy) {
             Copy-Item -Path $file.FullName -Destination $backupPath -Force
         }
         
-        Write-Host "    ✓ Backup created: $backupPath" -ForegroundColor Green
-        Write-Host "    ✓ Backed up $($vbafFiles.Count) files" -ForegroundColor Green
+        Write-Host "    ? Backup created: $backupPath" -ForegroundColor Green
+        Write-Host "    ? Backed up $($vbafFiles.Count) files" -ForegroundColor Green
     } catch {
         Write-Warning "Failed to create backup: $_"
         $continueAnyway = Read-Host "  Continue without backup? (Y/N)"
@@ -123,9 +123,9 @@ foreach ($folder in $folders) {
     try {
         if (-not (Test-Path $folder)) {
             New-Item -ItemType Directory -Path $folder -Force | Out-Null
-            Write-Host "    ✓ Created: $folder" -ForegroundColor Green
+            Write-Host "    ? Created: $folder" -ForegroundColor Green
         } else {
-            Write-Host "    • Exists: $folder" -ForegroundColor Gray
+            Write-Host "    � Exists: $folder" -ForegroundColor Gray
         }
     } catch {
         Write-Error "Failed to create folder $folder : $_"
@@ -203,18 +203,18 @@ foreach ($fileName in $fileMap.Keys) {
         try {
             if ($Copy) {
                 Copy-Item -Path $sourcePath -Destination $targetFilePath -Force
-                Write-Host "    ✓ Copied: $fileName → $targetFolder\" -ForegroundColor Green
+                Write-Host "    ? Copied: $fileName ? $targetFolder\" -ForegroundColor Green
                 $copiedCount++
             } else {
                 Move-Item -Path $sourcePath -Destination $targetFilePath -Force
-                Write-Host "    ✓ Moved: $fileName → $targetFolder\" -ForegroundColor Green
+                Write-Host "    ? Moved: $fileName ? $targetFolder\" -ForegroundColor Green
                 $movedCount++
             }
         } catch {
             Write-Warning "Failed to process $fileName : $_"
         }
     } else {
-        Write-Host "    ⊘ Not found: $fileName" -ForegroundColor DarkGray
+        Write-Host "    ? Not found: $fileName" -ForegroundColor DarkGray
         $notFoundCount++
     }
 }
@@ -225,11 +225,11 @@ Write-Host "`n  [SPECIAL] Processing AllClasses.ps1..." -ForegroundColor Cyan
 $allClassesPath = Join-Path "$TargetPath\Core" "VBAF.Core.AllClasses.ps1"
 
 if (Test-Path $allClassesPath) {
-    Write-Host "    • AllClasses.ps1 found in Core/" -ForegroundColor Yellow
-    Write-Host "    • This file may need to be split into individual class files" -ForegroundColor Yellow
-    Write-Host "    • Or update module loader to source this file" -ForegroundColor Yellow
+    Write-Host "    � AllClasses.ps1 found in Core/" -ForegroundColor Yellow
+    Write-Host "    � This file may need to be split into individual class files" -ForegroundColor Yellow
+    Write-Host "    � Or update module loader to source this file" -ForegroundColor Yellow
 } else {
-    Write-Host "    ⊘ AllClasses.ps1 not found - you may need to create individual class files" -ForegroundColor Gray
+    Write-Host "    ? AllClasses.ps1 not found - you may need to create individual class files" -ForegroundColor Gray
 }
 
 # ==================== CREATE PUBLIC FUNCTIONS NOTICE ====================
@@ -248,9 +248,9 @@ Write-Host "    The following public functions should be in Public/ folder:" -Fo
 foreach ($func in $publicFunctions) {
     $funcPath = Join-Path "$TargetPath\Public" $func
     if (Test-Path $funcPath) {
-        Write-Host "    ✓ Found: $func" -ForegroundColor Green
+        Write-Host "    ? Found: $func" -ForegroundColor Green
     } else {
-        Write-Host "    ⊘ Missing: $func (create this file)" -ForegroundColor Yellow
+        Write-Host "    ? Missing: $func (create this file)" -ForegroundColor Yellow
     }
 }
 
@@ -266,9 +266,9 @@ Write-Host "    The following files should be in VBAF\ root:" -ForegroundColor W
 foreach ($file in $moduleFiles) {
     $filePath = Join-Path $TargetPath $file
     if (Test-Path $filePath) {
-        Write-Host "    ✓ Found: $file" -ForegroundColor Green
+        Write-Host "    ? Found: $file" -ForegroundColor Green
     } else {
-        Write-Host "    ⊘ Missing: $file (create this file)" -ForegroundColor Yellow
+        Write-Host "    ? Missing: $file (create this file)" -ForegroundColor Yellow
     }
 }
 
@@ -286,15 +286,15 @@ Write-Host "    Files not found: $notFoundCount" -ForegroundColor Gray
 
 Write-Host "`n  Folder Structure Created:" -ForegroundColor Cyan
 Write-Host "    $TargetPath\" -ForegroundColor White
-Write-Host "      ├── Core/           ($((Get-ChildItem "$TargetPath\Core" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
-Write-Host "      ├── RL/             ($((Get-ChildItem "$TargetPath\RL" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
-Write-Host "      ├── Business/       ($((Get-ChildItem "$TargetPath\Business" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
-Write-Host "      ├── Art/            ($((Get-ChildItem "$TargetPath\Art" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
-Write-Host "      ├── Visualization/  ($((Get-ChildItem "$TargetPath\Visualization" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
-Write-Host "      ├── Public/         ($((Get-ChildItem "$TargetPath\Public" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
-Write-Host "      ├── Examples/       ($((Get-ChildItem "$TargetPath\Examples" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
-Write-Host "      ├── Tests/          ($((Get-ChildItem "$TargetPath\Tests" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
-Write-Host "      └── Docs/           ($((Get-ChildItem "$TargetPath\Docs" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
+Write-Host "      +-- Core/           ($((Get-ChildItem "$TargetPath\Core" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
+Write-Host "      +-- RL/             ($((Get-ChildItem "$TargetPath\RL" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
+Write-Host "      +-- Business/       ($((Get-ChildItem "$TargetPath\Business" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
+Write-Host "      +-- Art/            ($((Get-ChildItem "$TargetPath\Art" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
+Write-Host "      +-- Visualization/  ($((Get-ChildItem "$TargetPath\Visualization" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
+Write-Host "      +-- Public/         ($((Get-ChildItem "$TargetPath\Public" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
+Write-Host "      +-- Examples/       ($((Get-ChildItem "$TargetPath\Examples" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
+Write-Host "      +-- Tests/          ($((Get-ChildItem "$TargetPath\Tests" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
+Write-Host "      +-- Docs/           ($((Get-ChildItem "$TargetPath\Docs" -ErrorAction SilentlyContinue).Count) files)" -ForegroundColor Gray
 
 Write-Host "`n  NEXT STEPS:" -ForegroundColor Yellow
 Write-Host "    1. Save VBAF.psd1 to $TargetPath\" -ForegroundColor White
@@ -304,11 +304,11 @@ Write-Host "    4. Update file paths in scripts (remove hardcoded base paths)" -
 Write-Host "    5. Test the module: Import-Module $TargetPath\VBAF.psd1 -Verbose" -ForegroundColor White
 
 if ($CreateBackup -and -not $Copy) {
-    Write-Host "`n  ℹ️  Backup location: $backupPath" -ForegroundColor Cyan
+    Write-Host "`n  ??  Backup location: $backupPath" -ForegroundColor Cyan
 }
 
 Write-Host "`n      - oo00oo - " -ForegroundColor Yellow
-Write-Host "  ✓ Reorganization Complete!" -ForegroundColor Green
+Write-Host "  ? Reorganization Complete!" -ForegroundColor Green
 Write-Host "      - oo00oo - `n" -ForegroundColor Yellow
 
 # Return summary object

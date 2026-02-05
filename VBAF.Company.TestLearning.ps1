@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 
 <#
 .SYNOPSIS
@@ -12,12 +12,12 @@
 #>
 
 # Set base path
-$basePath = "C:\Users\henni\OneDrive\WindowsPowerShell"
+$basePath = $PSScriptRoot
 
 # Display header first
-Write-Host "`n╔══════════════════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "║   VBAF - Company Agent Learning Demo               ║" -ForegroundColor Cyan
-Write-Host "╚══════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+Write-Host "`n+------------------------------------------------------+" -ForegroundColor Cyan
+Write-Host "�   VBAF - Company Agent Learning Demo               �" -ForegroundColor Cyan
+Write-Host "+------------------------------------------------------+" -ForegroundColor Cyan
 Write-Host ""
 
 # CRITICAL: Load in correct order - dependencies first!
@@ -39,7 +39,7 @@ Write-Host "  [3/4] Loading Business actions..." -ForegroundColor Gray
 Write-Host "  [4/4] Loading CompanyAgent..." -ForegroundColor Gray
 . "$basePath\VBAF.Business.CompanyAgent.ps1"
 
-Write-Host "✓ Framework loaded successfully" -ForegroundColor Green
+Write-Host "? Framework loaded successfully" -ForegroundColor Green
 Write-Host ""
 
 Write-Host "This demo shows a company learning optimal business" -ForegroundColor Yellow
@@ -50,7 +50,7 @@ Write-Host ""
 Write-Host "Creating company agent..." -ForegroundColor Cyan
 $company = New-Object CompanyAgent -ArgumentList "TechCorp", "Technology", 1000000.0
 
-Write-Host "✓ Created: $($company.Name)" -ForegroundColor Green
+Write-Host "? Created: $($company.Name)" -ForegroundColor Green
 Write-Host "  Industry: $($company.Industry)" -ForegroundColor Gray
 Write-Host "  Starting Capital: `$$($company.State.Cash.ToString('N0'))" -ForegroundColor Gray
 Write-Host "  Available Actions: $($company.AvailableActions.Count)" -ForegroundColor Gray
@@ -94,7 +94,7 @@ for ($q = 1; $q -le $totalQuarters; $q++) {
         Write-Host ""
         Write-Host "Learning Progress:" -ForegroundColor Cyan
         Write-Host "  Total Reward: $($company.TotalReward.ToString('F2'))"
-        Write-Host "  Exploration (ε): $($company.Brain.Epsilon.ToString('F3'))"
+        Write-Host "  Exploration (e): $($company.Brain.Epsilon.ToString('F3'))"
     }
 }
 
@@ -102,9 +102,9 @@ $endTime = Get-Date
 $duration = ($endTime - $startTime).TotalSeconds
 
 # Training complete
-Write-Host "`n╔══════════════════════════════════════════════════════╗" -ForegroundColor Green
-Write-Host "║   TRAINING COMPLETE!                                ║" -ForegroundColor Green
-Write-Host "╚══════════════════════════════════════════════════════╝" -ForegroundColor Green
+Write-Host "`n+------------------------------------------------------+" -ForegroundColor Green
+Write-Host "�   TRAINING COMPLETE!                                �" -ForegroundColor Green
+Write-Host "+------------------------------------------------------+" -ForegroundColor Green
 Write-Host "Completed in $($duration.ToString('F1')) seconds" -ForegroundColor Gray
 Write-Host ""
 
@@ -189,28 +189,28 @@ Write-Host "=== WHAT THE AGENT LEARNED ===" -ForegroundColor Cyan
 Write-Host ""
 
 if ($summary.MarketShare -gt 0.2) {
-    Write-Host "✓ Successfully gained significant market share" -ForegroundColor Green
+    Write-Host "? Successfully gained significant market share" -ForegroundColor Green
 } else {
-    Write-Host "⚠ Struggled to gain market share" -ForegroundColor Yellow
+    Write-Host "? Struggled to gain market share" -ForegroundColor Yellow
 }
 
 if ($summary.CurrentProfit -gt 0) {
-    Write-Host "✓ Achieved profitability" -ForegroundColor Green
+    Write-Host "? Achieved profitability" -ForegroundColor Green
 } else {
-    Write-Host "⚠ Not yet profitable" -ForegroundColor Yellow
+    Write-Host "? Not yet profitable" -ForegroundColor Yellow
 }
 
 if ($summary.Cash -gt 1000000) {
-    Write-Host "✓ Grew cash reserves" -ForegroundColor Green
+    Write-Host "? Grew cash reserves" -ForegroundColor Green
 } else {
-    Write-Host "⚠ Cash reserves declined" -ForegroundColor Yellow
+    Write-Host "? Cash reserves declined" -ForegroundColor Yellow
 }
 
 $explorationRate = $summary.Epsilon
 if ($explorationRate -lt 0.2) {
-    Write-Host "✓ Agent converged to exploitation (confident in strategy)" -ForegroundColor Green
+    Write-Host "? Agent converged to exploitation (confident in strategy)" -ForegroundColor Green
 } else {
-    Write-Host "⚠ Agent still exploring (may need more training)" -ForegroundColor Yellow
+    Write-Host "? Agent still exploring (may need more training)" -ForegroundColor Yellow
 }
 
 Write-Host ""
@@ -233,5 +233,5 @@ Write-Host "   - Strategic interaction & game theory"
 Write-Host "   - Emergent behaviors"
 Write-Host ""
 
-Write-Host "✓ Demo complete!" -ForegroundColor Green
+Write-Host "? Demo complete!" -ForegroundColor Green
 Write-Host ""

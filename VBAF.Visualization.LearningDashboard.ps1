@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 # Dashboard 1
 <#
 .SYNOPSIS
@@ -12,7 +12,7 @@
 #>
 
 # Set base path
-$basePath = "C:\Users\henni\OneDrive\WindowsPowerShell"
+$basePath = $PSScriptRoot
 
 # Load dependencies
 . "$basePath\VBAF.Visualization.MetricsCollector.ps1"
@@ -206,7 +206,7 @@ class LearningDashboard {
         $statusBrush = New-Object System.Drawing.SolidBrush(
             $(if ($this.AutoUpdate) { [System.Drawing.Color]::LimeGreen } else { [System.Drawing.Color]::Red })
         )
-        $statusText = if ($this.AutoUpdate) { "● LIVE" } else { "● PAUSED" }
+        $statusText = if ($this.AutoUpdate) { "? LIVE" } else { "? PAUSED" }
         $g.DrawString($statusText, $statusFont, $statusBrush, $width - 100, 15)
         $statusFont.Dispose()
         $statusBrush.Dispose()
@@ -322,9 +322,9 @@ class LearningDashboard {
                     $trendBrush = New-Object System.Drawing.SolidBrush($trendColor)
                     
                     $trendText = if ($improvement -gt 0) {
-                        "↗ IMPROVING (+$($improvement.ToString('F1'))%)"
+                        "? IMPROVING (+$($improvement.ToString('F1'))%)"
                     } else {
-                        "↘ Declining ($($improvement.ToString('F1'))%)"
+                        "? Declining ($($improvement.ToString('F1'))%)"
                     }
                     
                     $g.DrawString($trendText, $font, $trendBrush, $bounds.X + 120, $y)

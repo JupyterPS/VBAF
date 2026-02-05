@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 
 <#
 .SYNOPSIS
@@ -12,7 +12,7 @@
 #>
 
 # Set base path
-$basePath = "C:\Users\henni\OneDrive\WindowsPowerShell"
+$basePath = $PSScriptRoot
 
 # Load dependencies
 . "$basePath\VBAF.RL.QTable.ps1"
@@ -22,8 +22,8 @@ class QLearningAgent {
     # Learning parameters
     [string[]]$Actions                  # Available actions
     [hashtable]$QTable                  # Stores learned Q-values (hashtable, not custom class!)
-    [double]$LearningRate               # Alpha (α)
-    [double]$DiscountFactor             # Gamma (γ)
+    [double]$LearningRate               # Alpha (a)
+    [double]$DiscountFactor             # Gamma (?)
     [double]$Epsilon                    # Exploration rate
     [double]$EpsilonDecay               # How fast epsilon decreases
     [double]$MinEpsilon                 # Minimum epsilon value
@@ -199,7 +199,7 @@ class QLearningAgent {
         $maxNextQ = $this.GetMaxQValue($nextState)
         
         # Q-Learning update rule:
-        # Q(s,a) ← Q(s,a) + α[r + γ·max(Q(s',a')) - Q(s,a)]
+        # Q(s,a) ? Q(s,a) + a[r + ?�max(Q(s',a')) - Q(s,a)]
         $tdTarget = $reward + ($this.DiscountFactor * $maxNextQ)
         $tdError = $tdTarget - $currentQ
         $newQ = $currentQ + ($this.LearningRate * $tdError)

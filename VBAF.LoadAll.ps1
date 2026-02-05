@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
  
 <#
 .SYNOPSIS
@@ -9,13 +9,13 @@
     . C:\Users\henni\OneDrive\WindowsPowerShell\VBAF.LoadAll.ps1
 #>
 
-$basePath = "C:\Users\henni\OneDrive\WindowsPowerShell"
+$basePath = $PSScriptRoot
 
 Write-Host "      - oo00oo - " -ForegroundColor Yellow 
 Write-Host "Loading VBAF Framework..." -ForegroundColor Cyan
 
 . "$basePath\VBAF.Core.AllClasses.ps1"
-Write-Host "  ✓ 33 Core modules loaded" -ForegroundColor Green
+Write-Host "  ? 33 Core modules loaded" -ForegroundColor Green
 
 # VBAF.Art.Show20-QLearning.ps1
 . "$basePath\VBAF.RL.QTable.ps1"
@@ -72,7 +72,7 @@ Write-Host "  ✓ 33 Core modules loaded" -ForegroundColor Green
 . "$basePath\VBAF.RL.QLearningAgent.ps1"
 . "$basePath\VBAF.Art.AestheticReward.ps1"
 
-# Write-Host "  ✓ Visualization modules loaded" -ForegroundColor Green
+# Write-Host "  ? Visualization modules loaded" -ForegroundColor Green
 Write-Host "VBAF Framework ready!" -ForegroundColor Green
 
 Write-Host "      - oo00oo - " -ForegroundColor Yellow 

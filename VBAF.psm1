@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 
 <#
 .SYNOPSIS
@@ -41,7 +41,7 @@ Add-Type -AssemblyName System.Drawing -ErrorAction SilentlyContinue
 Write-Verbose "  Loading all VBAF classes via VBAF.LoadAll.ps1..."
 
 # Use the existing, working VBAF.LoadAll.ps1
-$loadAllPath = "C:\Users\henni\OneDrive\WindowsPowerShell\VBAF.LoadAll.ps1"
+$loadAllPath = Join-Path $PSScriptRoot "VBAF.LoadAll.ps1"
 
 if (Test-Path $loadAllPath) {
     # Suppress the welcome messages from LoadAll
@@ -52,7 +52,7 @@ if (Test-Path $loadAllPath) {
     . $loadAllPath
     
     $VerbosePreference = $originalVerbose
-    Write-Verbose "  ✓ All classes loaded via VBAF.LoadAll.ps1"
+    Write-Verbose "  ? All classes loaded via VBAF.LoadAll.ps1"
 } else {
     Write-Warning "VBAF.LoadAll.ps1 not found at: $loadAllPath"
     Write-Warning "Classes may not be available. Expected location: $loadAllPath"
@@ -64,16 +64,16 @@ Write-Verbose "  Loading new Art classes..."
 # AestheticReward (created in this session)
 if (Test-Path "$script:ModuleRoot\Art\VBAF.Art.AestheticReward.ps1") {
     . "$script:ModuleRoot\Art\VBAF.Art.AestheticReward.ps1"
-    Write-Verbose "    ✓ Loaded: AestheticReward"
+    Write-Verbose "    ? Loaded: AestheticReward"
 }
 
 # CastleCompetition (created in this session)
 if (Test-Path "$script:ModuleRoot\Art\VBAF.Art.CastleCompetition.ps1") {
     . "$script:ModuleRoot\Art\VBAF.Art.CastleCompetition.ps1"
-    Write-Verbose "    ✓ Loaded: CastleCompetition"
+    Write-Verbose "    ? Loaded: CastleCompetition"
 }
 
-Write-Verbose "  ✓ Art classes loaded"
+Write-Verbose "  ? Art classes loaded"
 
 # ==================== LOAD PUBLIC FUNCTIONS ====================
 Write-Verbose "  Loading Public API functions..."
@@ -85,13 +85,13 @@ $PublicFunctions = @(Get-ChildItem -Path "$script:ModuleRoot\VBAF.Public.*.ps1" 
 foreach ($Function in $PublicFunctions) {
     try {
         . $Function.FullName
-        Write-Verbose "    ✓ Loaded: $($Function.BaseName)"
+        Write-Verbose "    ? Loaded: $($Function.BaseName)"
     } catch {
         Write-Error "Failed to import function $($Function.FullName): $_"
     }
 }
 
-Write-Verbose "  ✓ Public API functions loaded ($($PublicFunctions.Count) functions)"
+Write-Verbose "  ? Public API functions loaded ($($PublicFunctions.Count) functions)"
 
 # ==================== MODULE INITIALIZATION ====================
 

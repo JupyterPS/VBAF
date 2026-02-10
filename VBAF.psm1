@@ -62,14 +62,14 @@ if (Test-Path $loadAllPath) {
 Write-Verbose "  Loading new Art classes..."
 
 # AestheticReward (created in this session)
-if (Test-Path "$script:ModuleRoot\Art\VBAF.Art.AestheticReward.ps1") {
-    . "$script:ModuleRoot\Art\VBAF.Art.AestheticReward.ps1"
+if (Test-Path "$script:ModuleRoot\VBAF.Art.AestheticReward.ps1") {
+    . "$script:ModuleRoot\VBAF.Art.AestheticReward.ps1"
     Write-Verbose "    ? Loaded: AestheticReward"
 }
 
 # CastleCompetition (created in this session)
-if (Test-Path "$script:ModuleRoot\Art\VBAF.Art.CastleCompetition.ps1") {
-    . "$script:ModuleRoot\Art\VBAF.Art.CastleCompetition.ps1"
+if (Test-Path "$script:ModuleRoot\VBAF.Art.CastleCompetition.ps1") {
+    . "$script:ModuleRoot\VBAF.Art.CastleCompetition.ps1"
     Write-Verbose "    ? Loaded: CastleCompetition"
 }
 

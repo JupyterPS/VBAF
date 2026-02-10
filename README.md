@@ -1,6 +1,6 @@
-﻿ # VBAF: Visual Business Automation Framework
+ # VBAF: Visual Business Automation Framework
 
-**A PowerShell-Based Reinforcement Learning Framework for Education and Business Automation**
+**A Machine Learning Framework for PowerShell**`n*Focus: Neural Networks & Reinforcement Learning*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![PowerShell: 5.1+](https://img.shields.io/badge/PowerShell-5.1+-blue.svg)](https://docs.microsoft.com/powershell/)
@@ -60,7 +60,7 @@ $xorData = @(
     @{Input=@(1,1); Expected=0}
 )
 
-# Create network: 2 inputs → 3 hidden → 1 output
+# Create network: 2 inputs ? 3 hidden ? 1 output
 $nn = New-VBAFNeuralNetwork -Architecture @(2, 3, 1) -LearningRate 0.1
 
 # Train
@@ -69,7 +69,7 @@ $results = $nn.Train($xorData, 1000)
 # Test
 foreach ($sample in $xorData) {
     $prediction = $nn.Predict($sample.Input)
-    Write-Host "Input: $($sample.Input) → Output: $($prediction[0])"
+    Write-Host "Input: $($sample.Input) ? Output: $($prediction[0])"
 }
 ```
 
@@ -340,12 +340,12 @@ Academic and commercial use permitted with attribution.
 
 ## Roadmap
 
-### Phase 1: Foundation (Complete ✅)
-- ✅ Neural networks from scratch
-- ✅ Q-Learning implementation
-- ✅ Multi-agent market simulation
-- ✅ 3 real-time dashboards
-- ✅ Documentation structure
+### Phase 1: Foundation (Complete ?)
+- ? Neural networks from scratch
+- ? Q-Learning implementation
+- ? Multi-agent market simulation
+- ? 3 real-time dashboards
+- ? Documentation structure
 
 ### Phase 2: Expansion (Planned)
 - Advanced RL algorithms (PPO, A3C)

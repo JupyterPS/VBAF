@@ -95,35 +95,9 @@ RequiredAssemblies = @(
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
-    # Neural Network Functions
     'New-VBAFNeuralNetwork',
-    'Train-VBAFNeuralNetwork',
-    'Test-VBAFNeuralNetwork',
-    'Export-VBAFNeuralNetwork',
-    'Import-VBAFNeuralNetwork',
-    
-    # RL Agent Functions
     'New-VBAFAgent',
-    'Train-VBAFAgent',
-    'Get-VBAFAgentStats',
-    'Export-VBAFAgent',
-    'Import-VBAFAgent',
-    
-    # Market/Business Functions
-    'New-VBAFMarket',
-    'Start-VBAFMarketSimulation',
-    'Get-VBAFMarketStats',
-    
-    # Visualization Functions
-    'New-VBAFDashboard',
-    'Show-VBAFLearningCurve',
-    'Show-VBAFNetworkStructure',
-    
-    # Competition Functions
     'Start-VBAFCastleCompetition',
-    'New-VBAFAestheticReward',
-    
-    # Utility Functions
     'Get-VBAFVersion',
     'Get-VBAFExamples',
     'Test-VBAF'

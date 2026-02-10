@@ -110,17 +110,7 @@
     param(
         [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $false)]
         [ValidateNotNullOrEmpty()]
-        [ValidateScript({
-            if ($_.Count -lt 2) {
-                throw "Architecture must have at least 2 layers (input and output)"
-            }
-            foreach ($size in $_) {
-                if ($size -lt 1) {
-                    throw "Each layer must have at least 1 neuron"
-                }
-            }
-            $true
-        })]
+
         [int[]]$Architecture,
         
         [Parameter(Mandatory = $false)]
@@ -140,6 +130,13 @@
     )
     
     begin {
+        # Validate Architecture
+        if ($Architecture.Count -lt 2) {
+            throw "Architecture must have at least 2 layers (input and output)"
+        }
+        if ($Architecture | Where-Object { $_ -lt 1 }) {
+            throw "Each layer must have at least 1 neuron"
+        }
         Write-Verbose "Creating neural network with architecture: $($Architecture -join ' → ')"
         Write-Verbose "Learning rate: $LearningRate"
         Write-Verbose "Activation: $Activation"

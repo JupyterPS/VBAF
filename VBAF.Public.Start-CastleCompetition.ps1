@@ -103,12 +103,12 @@ function Start-VBAFCastleCompetition {
     process {
         try {
             # Check if competition script exists
-            $competitionPath = Join-Path $script:ModuleRoot "Art\CastleCompetition.ps1"
+            $competitionPath = Join-Path $script:ModuleRoot "VBAF.Art.CastleCompetition.ps1"
             
             if (-not (Test-Path $competitionPath)) {
                 Write-Warning "Castle competition script not found at: $competitionPath"
                 Write-Host "`nYou can run it directly from your original location:" -ForegroundColor Yellow
-                Write-Host '. $basePath\VBAF.Art.CastleCompetition.ps1' -ForegroundColor Cyan
+                Write-Host '. $script:ModuleRoot\VBAF.Art.CastleCompetition.ps1' -ForegroundColor Cyan
                 return
             }
             

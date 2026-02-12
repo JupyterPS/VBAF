@@ -35,7 +35,7 @@ Reinforcement learning (RL) has transformative potential for business process au
 
 ## ??? Roadmap
 
-VBAF follows an 8-phase development roadmap. [View the full roadmap ?](https://github.com/JupyterPS/VBAF/projects/1)
+VBAF follows an 8-phase development roadmap. [View the full roadmap ?](https://github.com/users/JupyterPS/projects/2)
 
 ### ? Phase 1: Foundation (Complete)
 - Neural networks with backpropagation
@@ -85,7 +85,7 @@ VBAF follows an 8-phase development roadmap. [View the full roadmap ?](https://g
 - PowerShell ecosystem integration
 - Conference presentations
 
-**Want to contribute?** Check our [Project Board](https://github.com/JupyterPS/VBAF/projects/1) to see what's being worked on!
+**Want to contribute?** Check our [Project Board](https://github.com/users/JupyterPS/projects/2) to see what's being worked on!
 ## Quick Start
 
 ### Installation (Recommended)

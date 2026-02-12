@@ -4,6 +4,11 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![PowerShell: 5.1+](https://img.shields.io/badge/PowerShell-5.1+-blue.svg)](https://docs.microsoft.com/powershell/)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/VBAF.svg)](https://www.powershellgallery.com/packages/VBAF)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/VBAF.svg)](https://www.powershellgallery.com/packages/VBAF)
+[![GitHub stars](https://img.shields.io/github/stars/JupyterPS/VBAF.svg)](https://github.com/JupyterPS/VBAF/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/JupyterPS/VBAF.svg)](https://github.com/JupyterPS/VBAF/issues)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 ---
 
@@ -25,6 +30,62 @@ Reinforcement learning (RL) has transformative potential for business process au
 
 ---
 
+
+---
+
+## ??? Roadmap
+
+VBAF follows an 8-phase development roadmap. [View the full roadmap ?](https://github.com/JupyterPS/VBAF/projects/1)
+
+### ? Phase 1: Foundation (Complete)
+- Neural networks with backpropagation
+- Q-Learning reinforcement learning
+- Interactive visualization dashboard
+
+### ?? Phase 2: Stability & Polish (v1.0.x) - *Current Focus*
+- Comprehensive testing suite
+- Performance optimization
+- Enhanced error handling
+- Expanded documentation
+
+### ?? Phase 3: RL Expansion (v1.1.0)
+- PPO (Proximal Policy Optimization)
+- A3C (Asynchronous Advantage Actor-Critic)
+- DQN (Deep Q-Network)
+- Standardized RL environments
+
+### ?? Phase 4: Supervised Learning (v1.2.0)
+- Linear & logistic regression
+- Decision trees & random forests
+- Clustering algorithms (K-Means, DBSCAN)
+- Naive Bayes classifier
+
+### ?? Phase 5: Data Pipeline (v1.3.0)
+- Data preprocessing utilities
+- Feature engineering tools
+- Multi-format import/export
+- Time series processing
+
+### ?? Phase 6: Deep Learning (v2.0.0)
+- Convolutional Neural Networks (CNN)
+- Recurrent architectures (RNN/LSTM/GRU)
+- Autoencoders & VAE
+- Transfer learning support
+
+### ?? Phase 7: Production Features (v2.1.0+)
+- Model serialization & versioning
+- REST API deployment
+- MLOps pipeline integration
+- Model interpretability tools
+- AutoML capabilities
+
+### ?? Phase 8: Community & Ecosystem (Ongoing)
+- Tutorial series & examples
+- Community templates
+- PowerShell ecosystem integration
+- Conference presentations
+
+**Want to contribute?** Check our [Project Board](https://github.com/JupyterPS/VBAF/projects/1) to see what's being worked on!
 ## Quick Start
 
 ### Installation (Recommended)

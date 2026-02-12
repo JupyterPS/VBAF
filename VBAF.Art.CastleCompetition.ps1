@@ -606,8 +606,4 @@ $timer.Add_Tick({
 })
 $timer.Start()
 
-Write-Host "  ? Competition arena ready!" -ForegroundColor Green
-Write-Host "      - oo00oo - `n" -ForegroundColor Yellow
-
-$form.ShowDialog()
-$timer.Stop()
+# Removed auto-execution - call Start-VBAFCastleCompetition instead

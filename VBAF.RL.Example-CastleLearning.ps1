@@ -96,7 +96,7 @@ for ($ep = 1; $ep -le $episodes; $ep++) {
     }
 }
 
-Write-Host "`n? Training complete!" -ForegroundColor Green
+Write-Host "`n Training complete!" -ForegroundColor Green
 
 Write-Host "`n" + ("-" * 60) -ForegroundColor Cyan
 Write-Host "FINAL RESULTS" -ForegroundColor Cyan
@@ -156,16 +156,16 @@ for ($stateNum = 0; $stateNum -le 5; $stateNum++) {
 }
 
 if ($statesFound.Count -eq 0) {
-    Write-Host "`n  ? No learning detected in any state!" -ForegroundColor Red
-    Write-Host "  This suggests the Q-Learning update isn't working." -ForegroundColor Red
+    Write-Host "`n No learning detected in any state!" -ForegroundColor Red
+    Write-Host " This suggests the Q-Learning update isn't working." -ForegroundColor Red
 } else {
-    Write-Host "`n? Learning detected in states: $($statesFound -join ', ')" -ForegroundColor Green
+    Write-Host "`n Learning detected in states: $($statesFound -join ', ')" -ForegroundColor Green
 }
 
 if ($finalStats.RecentAverageReward -gt $finalStats.AverageReward) {
-    Write-Host "`n?? Agent is IMPROVING! Recent rewards higher than average!" -ForegroundColor Green
+    Write-Host "`n Agent is IMPROVING! Recent rewards higher than average!" -ForegroundColor Green
 } else {
-    Write-Host "`n? Agent performance stable" -ForegroundColor Yellow
+    Write-Host "`n Agent performance stable" -ForegroundColor Yellow
 }
 
 Write-Host ""

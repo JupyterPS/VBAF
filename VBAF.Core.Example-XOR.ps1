@@ -40,7 +40,7 @@ Write-Host "  1 XOR 0 = 1"
 Write-Host "  1 XOR 1 = 0"
 
 # Create Neural Network
-# Architecture: 2 inputs ? 3 hidden ? 1 output
+# Architecture: 2 inputs 3 hidden 1 output
 $architecture = @(2, 3, 1)
 $learningRate = 0.5
 
@@ -89,14 +89,14 @@ Write-Host ("-" * 50)
 
 # Success check
 if ($evaluation.Accuracy -ge 95) {
-    Write-Host "`n?? SUCCESS! Network learned XOR!" -ForegroundColor Green
-    Write-Host "   Multi-layer backpropagation working correctly!" -ForegroundColor Green
+    Write-Host "`n SUCCESS! Network learned XOR!" -ForegroundColor Green
+    Write-Host " Multi-layer backpropagation working correctly!" -ForegroundColor Green
 } elseif ($evaluation.Accuracy -ge 75) {
-    Write-Host "`n? PARTIAL SUCCESS - Network learning but not converged" -ForegroundColor Yellow
-    Write-Host "   Try: More epochs, different learning rate, or re-run (random init)" -ForegroundColor Yellow
+    Write-Host "`n PARTIAL SUCCESS - Network learning but not converged" -ForegroundColor Yellow
+    Write-Host " Try: More epochs, different learning rate, or re-run (random init)" -ForegroundColor Yellow
 } else {
-    Write-Host "`n? FAILURE - Network did not learn XOR" -ForegroundColor Red
-    Write-Host "   Debug: Check backpropagation implementation" -ForegroundColor Red
+    Write-Host "`n FAILURE - Network did not learn XOR" -ForegroundColor Red
+    Write-Host " Debug: Check backpropagation implementation" -ForegroundColor Red
 }
 
 Write-Host ""

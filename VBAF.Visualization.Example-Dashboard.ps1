@@ -101,5 +101,5 @@ try {
     $dataTimer.Dispose()
 }
 
-Write-Host "`n? Dashboard closed" -ForegroundColor Green
+Write-Host "`n Dashboard closed" -ForegroundColor Green
 

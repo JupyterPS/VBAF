@@ -15,7 +15,7 @@ Write-Host "      - oo00oo - " -ForegroundColor Yellow
 Write-Host "Loading VBAF Framework..." -ForegroundColor Cyan
 
 . (Join-Path $basePath "VBAF.Core.AllClasses.ps1")
-Write-Host "  ? 33 Core modules loaded" -ForegroundColor Green
+Write-Host "33 Core modules loaded" -ForegroundColor Green
 
 # VBAF.Art.Show20-QLearning.ps1
 . (Join-Path $basePath "VBAF.RL.QTable.ps1")

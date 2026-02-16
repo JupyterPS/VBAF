@@ -69,6 +69,7 @@ function Start-VBAFCastleCompetition {
         New-VBAFAgent
         New-VBAFAestheticReward
     #>
+     
     
     [CmdletBinding()]
     param(

@@ -490,6 +490,10 @@ function Draw-CompetitionDashboard {
     $whiteBrush.Dispose()
 }
 
+# ==================== UI INITIALIZATION FUNCTION ====================
+
+function Start-CastleCompetitionUI {
+
 # ==================== MAIN FORM ====================
 
 Write-Host "`n      - oo00oo - " -ForegroundColor Yellow
@@ -611,3 +615,7 @@ Write-Host "      - oo00oo - `n" -ForegroundColor Yellow
 
 $form.ShowDialog()
 $timer.Stop()
+
+}
+
+# Function defined - call from Start-VBAFCastleCompetition to launch UI

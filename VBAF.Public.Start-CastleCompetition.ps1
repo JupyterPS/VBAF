@@ -117,11 +117,9 @@ function Start-VBAFCastleCompetition {
             
             Write-Verbose "? Castle competition loaded"
             Write-Host "  Dashboard opening..." -ForegroundColor Green
-            # Start the competition UI
-            Write-Host "  Competition arena ready!" -ForegroundColor Green
-            Write-Host "      - oo00oo - `n" -ForegroundColor Yellow
-            $form.ShowDialog()
-            $timer.Stop()
+
+            # Launch the UI
+            Start-CastleCompetitionUI
             
         } catch {
             Write-Error "Failed to start castle competition: $_"

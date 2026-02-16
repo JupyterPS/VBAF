@@ -80,9 +80,9 @@ function Initialize-NeuralNetwork {
     # Create network: 2 inputs, 4 hidden, 1 output
     try {
         $global:valState.NeuralNetwork = New-Object NeuralNetwork -ArgumentList @(2, 4, 1), 0.5
-        Write-Host "  ? Neural Network created (2-4-1 architecture)" -ForegroundColor Green
+        Write-Host "Neural Network created (2-4-1 architecture)" -ForegroundColor Green
     } catch {
-        Write-Host "  ? Failed to create Neural Network: $_" -ForegroundColor Red
+        Write-Host "Failed to create Neural Network: $_" -ForegroundColor Red
     }
 }
 
@@ -97,9 +97,9 @@ function Initialize-QLearning {
         # Use 3-parameter constructor: actions, learningRate, epsilon
         $global:valState.QLAgent = New-Object QLearningAgent -ArgumentList (,$actions), 0.1, 0.3
         $global:valState.ExperienceReplay = New-Object ExperienceReplay -ArgumentList 100
-        Write-Host "  ? Q-Learning agent created (10x10 grid)" -ForegroundColor Green
+        Write-Host "Q-Learning agent created (10x10 grid)" -ForegroundColor Green
     } catch {
-        Write-Host "  ? Failed to create Q-Learning agent: $_" -ForegroundColor Red
+        Write-Host "Failed to create Q-Learning agent: $_" -ForegroundColor Red
     }
 }
 
@@ -452,7 +452,7 @@ $erPanel.Add_Paint({
 
 # Control buttons
 $startButton = New-Object System.Windows.Forms.Button
-$startButton.Text = "? Start NN Training"
+$startButton.Text = "Start NN Training"
 $startButton.Left = 10
 $startButton.Top = 10
 #$startButton.Width = 150
@@ -468,21 +468,21 @@ $startButton.Add_Click({
         # Start/Resume
         $global:valState.NNTraining = $true
         $timer.Start()
-        $startButton.Text = "? Pause NN Training"
+        $startButton.Text = "Pause NN Training"
         $startButton.BackColor = [System.Drawing.Color]::FromArgb(255, 140, 0)  # Orange
         $stopButton.Enabled = $true
-        $stopButton.Text = "? Stop All"
+        $stopButton.Text = "Stop All"
     } else {
         # Pause
         $global:valState.NNTraining = $false
-        $startButton.Text = "? Resume NN"
+        $startButton.Text = "Resume NN"
         $startButton.BackColor = [System.Drawing.Color]::FromArgb(0, 200, 80)  # Green
     }
 })
 $form.Controls.Add($startButton)
 
 $stopButton = New-Object System.Windows.Forms.Button
-$stopButton.Text = "? Stop All"
+$stopButton.Text = "Stop All"
 $stopButton.Left = 170
 $stopButton.Top = 10
 #$stopButton.Width = 120
@@ -496,10 +496,10 @@ $stopButton.Font = New-Object System.Drawing.Font("Segoe UI", 9, [System.Drawing
 $stopButton.Add_Click({
     $global:valState.NNTraining = $false
     $timer.Stop()
-    $startButton.Text = "? Resume"
+    $startButton.Text = "Resume"
     $startButton.BackColor = [System.Drawing.Color]::FromArgb(0, 200, 80)  # Green
     $startButton.Enabled = $true
-    $stopButton.Text = "? Stopped"
+    $stopButton.Text = "Stopped"
     $stopButton.Enabled = $false
 })
 $form.Controls.Add($stopButton)
@@ -528,7 +528,7 @@ $timer.Add_Tick({
         $accuracy = (1.0 - $global:valState.NNCurrentError) * 100
         $statusLabel.Text = "Training... Epoch: $($global:valState.NNEpoch) | Accuracy: $([Math]::Round($accuracy, 1))% | QL Episodes: $($global:valState.QLEpisode)"
     } elseif ($global:valState.NNEpoch -ge 1000) {
-        $statusLabel.Text = "? Training Complete! NN converged. QL Episodes: $($global:valState.QLEpisode)"
+        $statusLabel.Text = "Training Complete! NN converged. QL Episodes: $($global:valState.QLEpisode)"
         $statusLabel.ForeColor = [System.Drawing.Color]::Lime
     }
     
@@ -539,8 +539,8 @@ $timer.Add_Tick({
 })
 $timer.Start()
 
-Write-Host "  ? Dashboard ready!" -ForegroundColor Green
-Write-Host "      - oo00oo - " -ForegroundColor Yellow
+Write-Host "Dashboard ready!" -ForegroundColor Green
+Write-Host "   - oo00oo - " -ForegroundColor Yellow
 
 $form.ShowDialog()
 $timer.Stop()

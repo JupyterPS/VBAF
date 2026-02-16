@@ -39,7 +39,7 @@ Write-Host "  [3/4] Loading Business actions..." -ForegroundColor Gray
 Write-Host "  [4/4] Loading CompanyAgent..." -ForegroundColor Gray
 . (Join-Path $basePath "VBAF.Business.CompanyAgent.ps1")
 
-Write-Host "? Framework loaded successfully" -ForegroundColor Green
+Write-Host "Framework loaded successfully" -ForegroundColor Green
 Write-Host ""
 
 Write-Host "This demo shows a company learning optimal business" -ForegroundColor Yellow
@@ -50,7 +50,7 @@ Write-Host ""
 Write-Host "Creating company agent..." -ForegroundColor Cyan
 $company = New-Object CompanyAgent -ArgumentList "TechCorp", "Technology", 1000000.0
 
-Write-Host "? Created: $($company.Name)" -ForegroundColor Green
+Write-Host "Created: $($company.Name)" -ForegroundColor Green
 Write-Host "  Industry: $($company.Industry)" -ForegroundColor Gray
 Write-Host "  Starting Capital: `$$($company.State.Cash.ToString('N0'))" -ForegroundColor Gray
 Write-Host "  Available Actions: $($company.AvailableActions.Count)" -ForegroundColor Gray
@@ -189,28 +189,28 @@ Write-Host "=== WHAT THE AGENT LEARNED ===" -ForegroundColor Cyan
 Write-Host ""
 
 if ($summary.MarketShare -gt 0.2) {
-    Write-Host "? Successfully gained significant market share" -ForegroundColor Green
+    Write-Host "Successfully gained significant market share" -ForegroundColor Green
 } else {
-    Write-Host "? Struggled to gain market share" -ForegroundColor Yellow
+    Write-Host "Struggled to gain market share" -ForegroundColor Yellow
 }
 
 if ($summary.CurrentProfit -gt 0) {
-    Write-Host "? Achieved profitability" -ForegroundColor Green
+    Write-Host "Achieved profitability" -ForegroundColor Green
 } else {
-    Write-Host "? Not yet profitable" -ForegroundColor Yellow
+    Write-Host "Not yet profitable" -ForegroundColor Yellow
 }
 
 if ($summary.Cash -gt 1000000) {
-    Write-Host "? Grew cash reserves" -ForegroundColor Green
+    Write-Host "Grew cash reserves" -ForegroundColor Green
 } else {
-    Write-Host "? Cash reserves declined" -ForegroundColor Yellow
+    Write-Host "Cash reserves declined" -ForegroundColor Yellow
 }
 
 $explorationRate = $summary.Epsilon
 if ($explorationRate -lt 0.2) {
-    Write-Host "? Agent converged to exploitation (confident in strategy)" -ForegroundColor Green
+    Write-Host "Agent converged to exploitation (confident in strategy)" -ForegroundColor Green
 } else {
-    Write-Host "? Agent still exploring (may need more training)" -ForegroundColor Yellow
+    Write-Host "Agent still exploring (may need more training)" -ForegroundColor Yellow
 }
 
 Write-Host ""
@@ -233,5 +233,5 @@ Write-Host "   - Strategic interaction & game theory"
 Write-Host "   - Emergent behaviors"
 Write-Host ""
 
-Write-Host "? Demo complete!" -ForegroundColor Green
+Write-Host "Demo complete!" -ForegroundColor Green
 Write-Host ""

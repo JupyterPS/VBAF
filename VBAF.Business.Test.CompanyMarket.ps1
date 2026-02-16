@@ -48,7 +48,7 @@ Write-Host ""
 # Create market
 Write-Host "Creating competitive market environment..." -ForegroundColor Cyan
 $market = New-Object MarketEnvironment
-Write-Host "? Market created" -ForegroundColor Green
+Write-Host "Market created" -ForegroundColor Green
 Write-Host ""
 
 # Create four competing companies
@@ -77,7 +77,7 @@ $startupX = New-Object CompanyAgent -ArgumentList "StartupX", "Technology", 8000
 $market.AddCompany($startupX)
 
 Write-Host ""
-Write-Host "? All competitors ready!" -ForegroundColor Green
+Write-Host "All competitors ready!" -ForegroundColor Green
 Write-Host ""
 
 # Training parameters
@@ -119,15 +119,15 @@ for ($q = 1; $q -le $totalQuarters; $q++) {
         
         # Find most profitable
         $mostProfitable = $market.Companies | Sort-Object { $_.State.Profit } -Descending | Select-Object -First 1
-        Write-Host "  ?? Most Profitable: $($mostProfitable.Name) (`$$($mostProfitable.State.Profit.ToString('N0')))" -ForegroundColor Green
+        Write-Host "Most Profitable: $($mostProfitable.Name) (`$$($mostProfitable.State.Profit.ToString('N0')))" -ForegroundColor Green
         
         # Find market leader
         $leader = $market.Companies | Sort-Object { $_.State.MarketShare } -Descending | Select-Object -First 1
-        Write-Host "  ?? Market Leader: $($leader.Name) ($($leader.State.MarketShare.ToString('P2')) share)" -ForegroundColor Cyan
+        Write-Host "Market Leader: $($leader.Name) ($($leader.State.MarketShare.ToString('P2')) share)" -ForegroundColor Cyan
         
         # Find best learner (highest total reward)
         $bestLearner = $market.Companies | Sort-Object { $_.TotalReward } -Descending | Select-Object -First 1
-        Write-Host "  ?? Best Learner: $($bestLearner.Name) (reward: $($bestLearner.TotalReward.ToString('F0')))" -ForegroundColor Magenta
+        Write-Host "Best Learner: $($bestLearner.Name) (reward: $($bestLearner.TotalReward.ToString('F0')))" -ForegroundColor Magenta
         
         Write-Host ""
     }
@@ -156,10 +156,10 @@ $ranked = $market.Companies | Sort-Object { $_.State.MarketShare } -Descending
 $rank = 1
 foreach ($company in $ranked) {
     $medal = switch ($rank) {
-        1 { "??" }
-        2 { "??" }
-        3 { "??" }
-        default { "  " }
+        1 { " " }
+        2 { " " }
+        3 { " " }
+        default { " " }
     }
     Write-Host "$medal #$rank $($company.Name): $($company.State.MarketShare.ToString('P2'))" -ForegroundColor White
     $rank++
@@ -173,10 +173,10 @@ $ranked = $market.Companies | Sort-Object { $_.State.Profit } -Descending
 $rank = 1
 foreach ($company in $ranked) {
     $medal = switch ($rank) {
-        1 { "??" }
-        2 { "??" }
-        3 { "??" }
-        default { "  " }
+        1 { " " }
+        2 { " " }
+        3 { " " }
+        default { " " }
     }
     $profitColor = if ($company.State.Profit -gt 0) { "Green" } else { "Red" }
     Write-Host "$medal #$rank $($company.Name): `$$($company.State.Profit.ToString('N0'))" -ForegroundColor $profitColor
@@ -191,10 +191,10 @@ $ranked = $market.Companies | Sort-Object { $_.State.Cash } -Descending
 $rank = 1
 foreach ($company in $ranked) {
     $medal = switch ($rank) {
-        1 { "??" }
-        2 { "??" }
-        3 { "??" }
-        default { "  " }
+        1 { " " }
+        2 { " " }
+        3 { " " }
+        default { " " }
     }
     $cashColor = if ($company.State.Cash -gt 0) { "Green" } else { "Red" }
     Write-Host "$medal #$rank $($company.Name): `$$($company.State.Cash.ToString('N0'))" -ForegroundColor $cashColor
@@ -214,10 +214,10 @@ $avgPrice = ($market.Companies | ForEach-Object { $_.State.AveragePrice } | Meas
 $priceVariation = ($market.Companies | ForEach-Object { [Math]::Abs($_.State.AveragePrice - $avgPrice) } | Measure-Object -Average).Average
 
 if ($priceVariation -gt 50) {
-    Write-Host "?? PRICE WAR DETECTED!" -ForegroundColor Red
+    Write-Host "PRICE WAR DETECTED!" -ForegroundColor Red
     Write-Host "   Companies competed aggressively on pricing" -ForegroundColor Gray
 } else {
-    Write-Host "?? TACIT COLLUSION DETECTED!" -ForegroundColor Green
+    Write-Host "TACIT COLLUSION DETECTED!" -ForegroundColor Green
     Write-Host "   Companies learned to avoid destructive price competition" -ForegroundColor Gray
 }
 
@@ -226,10 +226,10 @@ Write-Host ""
 # Innovation race
 $totalInnovation = ($market.Companies | ForEach-Object { $_.State.InnovationScore } | Measure-Object -Sum).Sum
 if ($totalInnovation -gt 0.5) {
-    Write-Host "?? INNOVATION RACE!" -ForegroundColor Cyan
+    Write-Host "INNOVATION RACE!" -ForegroundColor Cyan
     Write-Host "   Companies invested heavily in R&D" -ForegroundColor Gray
 } else {
-    Write-Host "?? LOW INNOVATION" -ForegroundColor Yellow
+    Write-Host "LOW INNOVATION" -ForegroundColor Yellow
     Write-Host "   Companies focused on operational efficiency over innovation" -ForegroundColor Gray
 }
 
@@ -238,10 +238,10 @@ Write-Host ""
 # Market concentration
 $herfindahl = ($market.Companies | ForEach-Object { [Math]::Pow($_.State.MarketShare, 2) } | Measure-Object -Sum).Sum
 if ($herfindahl -gt 0.25) {
-    Write-Host "?? MARKET CONSOLIDATION" -ForegroundColor Magenta
+    Write-Host "MARKET CONSOLIDATION" -ForegroundColor Magenta
     Write-Host "   One or two companies dominate the market" -ForegroundColor Gray
 } else {
-    Write-Host "?? BALANCED COMPETITION" -ForegroundColor Green
+    Write-Host "BALANCED COMPETITION" -ForegroundColor Green
     Write-Host "   Market share distributed relatively evenly" -ForegroundColor Gray
 }
 
@@ -250,10 +250,10 @@ Write-Host ""
 # Learning convergence
 $avgEpsilon = ($market.Companies | ForEach-Object { $_.Brain.Epsilon } | Measure-Object -Average).Average
 if ($avgEpsilon -lt 0.15) {
-    Write-Host "?? STRATEGIES CONVERGED" -ForegroundColor Green
+    Write-Host "STRATEGIES CONVERGED" -ForegroundColor Green
     Write-Host "   All agents found their optimal strategies (e < 0.15)" -ForegroundColor Gray
 } else {
-    Write-Host "?? STILL LEARNING" -ForegroundColor Yellow
+    Write-Host "STILL LEARNING" -ForegroundColor Yellow
     Write-Host "   Agents still exploring strategies (e = $($avgEpsilon.ToString('F3')))" -ForegroundColor Gray
     Write-Host "   Try running for 100+ quarters for full convergence" -ForegroundColor Gray
 }
@@ -266,10 +266,10 @@ Write-Host " KEY INSIGHTS" -ForegroundColor Cyan
 Write-Host "------------------------------------------------------------" -ForegroundColor Cyan
 Write-Host ""
 
-Write-Host "? Multi-agent reinforcement learning WORKS!" -ForegroundColor Green
-Write-Host "? Companies learned to compete and adapt" -ForegroundColor Green
-Write-Host "? Emergent behaviors appeared naturally" -ForegroundColor Green
-Write-Host "? No explicit programming of competition - it emerged!" -ForegroundColor Green
+Write-Host "Multi-agent reinforcement learning WORKS!" -ForegroundColor Green
+Write-Host "Companies learned to compete and adapt" -ForegroundColor Green
+Write-Host "Emergent behaviors appeared naturally" -ForegroundColor Green
+Write-Host "No explicit programming of competition - it emerged!" -ForegroundColor Green
 Write-Host ""
 
 Write-Host "Next Steps:" -ForegroundColor Yellow
@@ -279,5 +279,5 @@ Write-Host "  3. Add 5th or 6th competitor mid-simulation" -ForegroundColor Gray
 Write-Host "  4. Week 7: Market visualization dashboard!" -ForegroundColor Gray
 Write-Host ""
 
-Write-Host "? Phase 2, Week 6 COMPLETE!" -ForegroundColor Green
+Write-Host "Phase 2, Week 6 COMPLETE!" -ForegroundColor Green
 Write-Host ""

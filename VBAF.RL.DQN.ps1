@@ -414,11 +414,56 @@ function Invoke-DQNTraining {
     Write-Host ""
     Write-Host "✅ Training Complete!" -ForegroundColor Green
     $agent.PrintStats()
-    return $agent
+    ,$agent  # comma operator forces return as single object in PS 5.1
 }
+
+# ============================================================
+# TEST SUGGESTIONS
+# ============================================================
+# 1. BASIC LOAD TEST
+#    Run VBAF.LoadAll.ps1 - should see "📦 VBAF.RL.DQN.ps1 loaded"
+#
+# 2. FAST SMOKE TEST (seconds)
+#    $agent = Invoke-DQNTraining -Episodes 5 -PrintEvery 1 -FastMode
+#    Verify: DQNAgent created, episodes complete, stats print
+#
+# 3. STANDARD FAST TRAINING (2-3 minutes)
+#    $agent = Invoke-DQNTraining -Episodes 50 -PrintEvery 5 -FastMode
+#    Expect: Epsilon decays 1.0 -> ~0.24, Avg Reward > 15
+#
+# 4. BENCHMARK AGAINST RANDOM (requires VBAF.RL.Environment.ps1)
+#    $env = New-VBAFEnvironment -Name "CartPole" -MaxSteps 200
+#    Invoke-VBAFBenchmark -Agent $agent -Environment $env -Episodes 10 -Label "DQN vs CartPole"
+#    Invoke-VBAFBenchmark -Environment $env -Episodes 10 -Label "Random Baseline"
+#    Expect: DQN Agent type shows as DQNAgent
+#
+# 5. INSPECT AGENT STATE
+#    $agent.GetStats()
+#    $agent.PrintStats()
+#    $agent.Epsilon          # should be near EpsilonMin after full training
+#    $agent.Memory.Size()    # should be > BatchSize (32) before replay kicks in
+#
+# 6. GET Q-VALUES FOR A STATE
+#    $state = @(0.1, 0.0, 0.05, 0.0)   # sample CartPole state
+#    $agent.GetQValues($state)           # shows Q-value for each action
+#    $agent.Predict($state)              # greedy action (0 or 1)
+#
+# 7. COMPARE ALGORITHMS (after training PPO and A3C too)
+#    $dqn = Invoke-DQNTraining -Episodes 50 -PrintEvery 50 -FastMode -Quiet
+#    $env = New-VBAFEnvironment -Name "CartPole" -MaxSteps 200
+#    Invoke-VBAFBenchmark -Agent $dqn -Environment $env -Episodes 20 -Label "DQN"
+# ============================================================
+Write-Host "📦 VBAF.RL.DQN.ps1 loaded" -ForegroundColor Green
+Write-Host "   Classes : DQNConfig, DQNAgent, DQNEnvironment" -ForegroundColor Cyan
+Write-Host "   Function: Invoke-DQNTraining"                  -ForegroundColor Cyan
+Write-Host ""
+Write-Host "   Quick start:"                                                           -ForegroundColor Yellow
+Write-Host '   $agent = Invoke-DQNTraining -Episodes 100 -PrintEvery 10'              -ForegroundColor White
+Write-Host '   $agent = Invoke-DQNTraining -Episodes 50 -PrintEvery 5 -FastMode'      -ForegroundColor White
+Write-Host '   $agent.PrintStats()'                                                    -ForegroundColor White
+Write-Host ""
 
 #TEST:
 #1. Run VBAF.LoadAll.ps1
 #2. Run $agent = Invoke-DQNTraining -Episodes  20 -PrintEvery  2 -FastMode          OR
 #3. Run $agent = Invoke-DQNTraining -Episodes 100 -PrintEvery 10 -FastMode
-

@@ -543,13 +543,13 @@ function Invoke-A3CTraining {
     Write-Host ""
     Write-Host "✅ Training Complete!" -ForegroundColor Green
     $agent.PrintStats()
-    return $agent
+    ,$agent  # comma operator forces return as single object in PS 5.1
 }
 
 # ============================================================
 # TEST
 # 1. Run VBAF.LoadAll.ps1
-# 2. $agent = Invoke-A3CTraining -Episodes 20 -PrintEvery 2 -FastMode
+# 2. $agent = (Invoke-A3CTraining -Episodes 20 -PrintEvery 2 -FastMode)[-1]
 # 3. $agent = Invoke-A3CTraining -Episodes 50 -PrintEvery 5 -FastMode
 # 4. $agent.PrintStats()
 # ============================================================
@@ -558,6 +558,6 @@ Write-Host "   Classes : A3CConfig, A3CAgent, A3CWorker, A3CEnvironment" -Foregr
 Write-Host "   Function: Invoke-A3CTraining"                             -ForegroundColor Cyan
 Write-Host ""
 Write-Host "   Quick start:"                                                             -ForegroundColor Yellow
-Write-Host '   $agent = Invoke-A3CTraining -Episodes 20 -PrintEvery 2 -FastMode'        -ForegroundColor White
+Write-Host '   $agent = (Invoke-A3CTraining -Episodes 20 -PrintEvery 2 -FastMode)[-1]'        -ForegroundColor White
 Write-Host '   $agent.PrintStats()'                                                      -ForegroundColor White
 Write-Host ""

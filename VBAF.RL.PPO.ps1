@@ -547,19 +547,22 @@ function Invoke-PPOTraining {
     Write-Host ""
     Write-Host "✅ Training Complete!" -ForegroundColor Green
     $agent.PrintStats()
-    return $agent
+    ,$agent  # comma operator forces return as single object in PS 5.1
 }
 
+# ============================================================
+# ============================================================
+# TEST
+# 1. Run VBAF.LoadAll.ps1
+# 2. $agent = Invoke-PPOTraining -Episodes 20 -PrintEvery 2 -FastMode
+# 3. $agent = (Invoke-PPOTraining -Episodes 50 -PrintEvery 5 -FastMode)[-1]
+# 4. $agent.PrintStats()
 # ============================================================
 Write-Host "📦 VBAF.RL.PPO.ps1 loaded" -ForegroundColor Green
 Write-Host "   Classes : PPOConfig, PPOAgent, PPOEnvironment"              -ForegroundColor Cyan
 Write-Host "   Function: Invoke-PPOTraining"                               -ForegroundColor Cyan
 Write-Host ""
 Write-Host "   Quick start:"                                               -ForegroundColor Yellow
-Write-Host '   $agent = Invoke-PPOTraining -Episodes 50 -PrintEvery 5 -FastMode'  -ForegroundColor White
+Write-Host '   $agent = (Invoke-PPOTraining -Episodes 50 -PrintEvery 5 -FastMode)[-1]'  -ForegroundColor White
 Write-Host '   $agent.PrintStats()'                                        -ForegroundColor White
 Write-Host ""
-
-#TEST:
-#1. Run VBAF.LoadAll.ps1
-#2. $agent = Invoke-PPOTraining -Episodes 20 -PrintEvery 2 -FastMode

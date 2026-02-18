@@ -416,3 +416,9 @@ function Invoke-DQNTraining {
     $agent.PrintStats()
     return $agent
 }
+
+#TEST:
+#1. Run VBAF.LoadAll.ps1
+#2. Run $agent = Invoke-DQNTraining -Episodes  20 -PrintEvery  2 -FastMode          OR
+#3. Run $agent = Invoke-DQNTraining -Episodes 100 -PrintEvery 10 -FastMode
+

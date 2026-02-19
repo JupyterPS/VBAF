@@ -1,118 +1,262 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-    Standardized Environment Interface for VBAF RL Algorithms
+    Deep Q-Network (DQN) Agent for Reinforcement Learning
 .DESCRIPTION
-    Provides an OpenAI Gym-like environment interface for all VBAF RL algorithms.
-    Replaces the individual DQNEnvironment, PPOEnvironment, A3CEnvironment classes.
-    Features:
-      - Standardized Reset(), Step(), GetState() interface
-      - State/action space definitions
-      - Reward shaping utilities
-      - Pre-built environments: CartPole, GridWorld, RandomWalk
-      - Environment wrappers: RewardShaper, StateNormalizer
-    All algorithms (DQN, PPO, A3C) can use any environment interchangeably.
+    Implements the DQN algorithm combining:
+      - Neural Network for Q-value approximation
+      - Experience Replay for stable training
+      - Target Network for stable Bellman targets
+    Requires VBAF.Core.AllClasses.ps1 and VBAF.RL.ExperienceReplay.ps1
+    to be loaded first (via VBAF.LoadAll.ps1).
 .NOTES
     Part of VBAF - Phase 3 Reinforcement Learning Module
-    PS 5.1 compatible
+    PS 5.1 compatible - dependency injection pattern used
+    to avoid parse-time type resolution errors in classes.
 #>
 # Set base path
 $basePath = $PSScriptRoot
 
-# ============================================================
-# SPACE DEFINITIONS - describe state and action spaces
-# ============================================================
-class VBAFSpace {
-    [string] $Type    # "discrete" or "continuous"
-    [int]    $Size    # number of actions OR state dimensions
-    [double] $Low     # min value (continuous)
-    [double] $High    # max value (continuous)
+class DQNConfig {
+    [int]    $StateSize        = 4
+    [int]    $ActionSize       = 2
+    [int[]]  $HiddenLayers     = @(64, 64)
+    [double] $LearningRate     = 0.001
+    [double] $Gamma            = 0.95
+    [double] $Epsilon          = 1.0
+    [double] $EpsilonMin       = 0.01
+    [double] $EpsilonDecay     = 0.995
+    [int]    $BatchSize        = 32
+    [int]    $MemorySize       = 10000
+    [int]    $TargetUpdateFreq = 10
+    [string] $Activation       = "relu"
+}
 
-    VBAFSpace([string]$type, [int]$size) {
-        $this.Type = $type
-        $this.Size = $size
-        $this.Low  = -1.0
-        $this.High =  1.0
+# ============================================================
+class DQNAgent {
+    # [object] used for all cross-file types - PS 5.1 requirement
+    [object] $MainNetwork
+    [object] $TargetNetwork
+    [object] $Memory
+    [object] $Config
+
+    [int]    $ActionSize
+    [double] $Epsilon
+    [int]    $TotalSteps      = 0
+    [int]    $TotalEpisodes   = 0
+    [int]    $TrainingSteps   = 0
+    [double] $LastLoss        = 0.0
+
+    [System.Collections.Generic.List[double]] $EpisodeRewards
+    [System.Collections.Generic.List[double]] $LossHistory
+
+    hidden [System.Random] $Rng
+
+    # -------------------------------------------------------
+    # Constructor receives pre-built network objects (injected)
+    # so this class never needs to reference external types
+    # -------------------------------------------------------
+    DQNAgent([object]$config, [object]$mainNetwork, [object]$targetNetwork, [object]$memory) {
+        $this.Config        = $config
+        $this.MainNetwork   = $mainNetwork
+        $this.TargetNetwork = $targetNetwork
+        $this.Memory        = $memory
+        $this.ActionSize    = $config.ActionSize
+        $this.Epsilon       = $config.Epsilon
+        $this.Rng           = [System.Random]::new()
+
+        $this.EpisodeRewards = [System.Collections.Generic.List[double]]::new()
+        $this.LossHistory    = [System.Collections.Generic.List[double]]::new()
+
+        # Sync target = main weights at start
+        $this.SyncTargetNetwork()
+
+        Write-Host "✅ DQNAgent created" -ForegroundColor Green
+        Write-Host "   State size  : $($config.StateSize)"           -ForegroundColor Cyan
+        Write-Host "   Action size : $($config.ActionSize)"          -ForegroundColor Cyan
+        Write-Host "   Hidden      : $($config.HiddenLayers -join ' -> ')" -ForegroundColor Cyan
+        Write-Host "   Memory      : $($config.MemorySize)"          -ForegroundColor Cyan
+        Write-Host "   Batch size  : $($config.BatchSize)"           -ForegroundColor Cyan
     }
 
-    VBAFSpace([string]$type, [int]$size, [double]$low, [double]$high) {
-        $this.Type = $type
-        $this.Size = $size
-        $this.Low  = $low
-        $this.High = $high
+    # -------------------------------------------------------
+    [void] Remember([double[]]$state, [int]$action, [double]$reward,
+                    [double[]]$nextState, [bool]$done) {
+        $exp = @{
+            State     = $state
+            Action    = $action
+            Reward    = $reward
+            NextState = $nextState
+            Done      = $done
+        }
+        $this.Memory.Add($exp)
+        $this.TotalSteps++
     }
 
-    [string] ToString() {
-        return "$($this.Type)($($this.Size)) [$($this.Low), $($this.High)]"
+    # -------------------------------------------------------
+    # Epsilon-greedy action selection
+    # -------------------------------------------------------
+    [int] Act([double[]]$state) {
+        if ($this.Rng.NextDouble() -le $this.Epsilon) {
+            return $this.Rng.Next(0, $this.ActionSize)
+        }
+        $qValues = $this.MainNetwork.Predict($state)
+        return [DQNAgent]::ArgMax($qValues)
+    }
+
+    # -------------------------------------------------------
+    # Greedy action for evaluation (no exploration)
+    # -------------------------------------------------------
+    [int] Predict([double[]]$state) {
+        $qValues = $this.MainNetwork.Predict($state)
+        return [DQNAgent]::ArgMax($qValues)
+    }
+
+    # -------------------------------------------------------
+    [double[]] GetQValues([double[]]$state) {
+        return $this.MainNetwork.Predict($state)
+    }
+
+    # -------------------------------------------------------
+    # Sample batch from memory and train main network
+    # -------------------------------------------------------
+    [double] Replay() {
+        if ($this.Memory.Size() -lt $this.Config.BatchSize) {
+            return 0.0
+        }
+
+        $batch     = $this.Memory.Sample($this.Config.BatchSize)
+        $totalLoss = 0.0
+
+        foreach ($exp in $batch) {
+            $state     = $exp.State
+            $action    = $exp.Action
+            $reward    = $exp.Reward
+            $nextState = $exp.NextState
+            $done      = $exp.Done
+
+            $target = $this.MainNetwork.Predict($state)
+
+            if ($done) {
+                $target[$action] = $reward
+            } else {
+                $nextQ           = $this.TargetNetwork.Predict($nextState)
+                $maxNextQ        = ($nextQ | Measure-Object -Maximum).Maximum
+                $target[$action] = $reward + $this.Config.Gamma * $maxNextQ
+            }
+
+            $this.MainNetwork.TrainSample($state, $target)
+            $this.TrainingSteps++
+
+            $currentQ  = $this.MainNetwork.Predict($state)
+            $diff      = $currentQ[$action] - $target[$action]
+            $totalLoss += $diff * $diff
+        }
+
+        # Decay epsilon
+        if ($this.Epsilon -gt $this.Config.EpsilonMin) {
+            $this.Epsilon *= $this.Config.EpsilonDecay
+            if ($this.Epsilon -lt $this.Config.EpsilonMin) {
+                $this.Epsilon = $this.Config.EpsilonMin
+            }
+        }
+
+        $avgLoss       = $totalLoss / $this.Config.BatchSize
+        $this.LastLoss = $avgLoss
+        $this.LossHistory.Add($avgLoss)
+        return $avgLoss
+    }
+
+    # -------------------------------------------------------
+    # Copy MainNetwork weights to TargetNetwork
+    # -------------------------------------------------------
+    [void] SyncTargetNetwork() {
+        $state = $this.MainNetwork.ExportState()
+        $this.TargetNetwork.ImportState($state)
+    }
+
+    # -------------------------------------------------------
+    [void] EndEpisode([double]$totalReward) {
+        $this.TotalEpisodes++
+        $this.EpisodeRewards.Add($totalReward)
+
+        if ($this.TotalEpisodes % $this.Config.TargetUpdateFreq -eq 0) {
+            $this.SyncTargetNetwork()
+            Write-Host "   🔄 Target network synced (Episode $($this.TotalEpisodes))" -ForegroundColor DarkYellow
+        }
+    }
+
+    # -------------------------------------------------------
+    [hashtable] GetStats() {
+        $avgReward = 0.0
+        $avgLoss   = 0.0
+
+        if ($this.EpisodeRewards.Count -gt 0) {
+            $slice     = $this.EpisodeRewards | Select-Object -Last 100
+            $avgReward = ($slice | Measure-Object -Average).Average
+        }
+        if ($this.LossHistory.Count -gt 0) {
+            $slice   = $this.LossHistory | Select-Object -Last 100
+            $avgLoss = ($slice | Measure-Object -Average).Average
+        }
+
+        return @{
+            TotalEpisodes   = $this.TotalEpisodes
+            TotalSteps      = $this.TotalSteps
+            TrainingSteps   = $this.TrainingSteps
+            MemorySize      = $this.Memory.Size()
+            Epsilon         = [Math]::Round($this.Epsilon, 4)
+            LastLoss        = [Math]::Round($this.LastLoss, 6)
+            AvgReward100    = [Math]::Round($avgReward, 3)
+            AvgLoss100      = [Math]::Round($avgLoss, 6)
+            TargetSyncEvery = $this.Config.TargetUpdateFreq
+        }
+    }
+
+    # -------------------------------------------------------
+    [void] PrintStats() {
+        $s = $this.GetStats()
+        Write-Host ""
+        Write-Host "╔══════════════════════════════════════╗" -ForegroundColor Cyan
+        Write-Host "║         DQN Agent Statistics         ║" -ForegroundColor Cyan
+        Write-Host "╠══════════════════════════════════════╣" -ForegroundColor Cyan
+        Write-Host ("║  Episodes     : {0,-20}║" -f $s.TotalEpisodes)  -ForegroundColor White
+        Write-Host ("║  Total Steps  : {0,-20}║" -f $s.TotalSteps)     -ForegroundColor White
+        Write-Host ("║  Train Steps  : {0,-20}║" -f $s.TrainingSteps)  -ForegroundColor White
+        Write-Host ("║  Memory Used  : {0,-20}║" -f $s.MemorySize)     -ForegroundColor White
+        Write-Host ("║  Epsilon      : {0,-20}║" -f $s.Epsilon)        -ForegroundColor Yellow
+        Write-Host ("║  Last Loss    : {0,-20}║" -f $s.LastLoss)       -ForegroundColor Magenta
+        Write-Host ("║  Avg Reward   : {0,-20}║" -f $s.AvgReward100)  -ForegroundColor Green
+        Write-Host ("║  Avg Loss     : {0,-20}║" -f $s.AvgLoss100)    -ForegroundColor Magenta
+        Write-Host "╚══════════════════════════════════════╝" -ForegroundColor Cyan
+        Write-Host ""
+    }
+
+    # -------------------------------------------------------
+    static [int] ArgMax([double[]]$arr) {
+        $best = 0
+        for ($i = 1; $i -lt $arr.Length; $i++) {
+            if ($arr[$i] -gt $arr[$best]) { $best = $i }
+        }
+        return $best
     }
 }
 
 # ============================================================
-# BASE ENVIRONMENT - all environments inherit this interface
+# Simple CartPole-style test environment (no external deps)
 # ============================================================
-class VBAFEnvironment {
-    [string]     $Name
-    [VBAFSpace]  $ObservationSpace
-    [VBAFSpace]  $ActionSpace
-    [int]        $Steps
-    [int]        $MaxSteps
-    [double]     $TotalReward
-    [int]        $EpisodeCount
-
-    VBAFEnvironment([string]$name, [int]$maxSteps) {
-        $this.Name         = $name
-        $this.MaxSteps     = $maxSteps
-        $this.Steps        = 0
-        $this.TotalReward  = 0.0
-        $this.EpisodeCount = 0
-    }
-
-    # Override in subclass
-    [double[]] Reset() { return @(0.0) }
-    [double[]] GetState() { return @(0.0) }
-    [hashtable] Step([int]$action) {
-        return @{ NextState = @(0.0); Reward = 0.0; Done = $true }
-    }
-
-    [void] PrintInfo() {
-        Write-Host "Environment : $($this.Name)"          -ForegroundColor Cyan
-        Write-Host "Obs Space   : $($this.ObservationSpace.ToString())" -ForegroundColor Cyan
-        Write-Host "Act Space   : $($this.ActionSpace.ToString())"      -ForegroundColor Cyan
-        Write-Host "Max Steps   : $($this.MaxSteps)"      -ForegroundColor Cyan
-    }
-}
-
-# ============================================================
-# CARTPOLE ENVIRONMENT
-# Classic control problem - balance a pole on a cart
-# State : [position, velocity, angle, angularVelocity]
-# Actions: 0=left, 1=right
-# ============================================================
-class CartPoleEnvironment : VBAFEnvironment {
+class DQNEnvironment {
     [double] $Position
     [double] $Velocity
     [double] $Angle
     [double] $AngularVelocity
+    [int]    $Steps
+    [int]    $MaxSteps
     hidden [System.Random] $Rng
 
-    CartPoleEnvironment() : base("CartPole", 200) {
-        $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, -4.8, 4.8)
-        $this.ActionSpace      = [VBAFSpace]::new("discrete",   2,  0.0, 1.0)
-        $this.Rng              = [System.Random]::new()
-        $this.Reset()
-    }
-
-    CartPoleEnvironment([int]$maxSteps) : base("CartPole", $maxSteps) {
-        $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, -4.8, 4.8)
-        $this.ActionSpace      = [VBAFSpace]::new("discrete",   2,  0.0, 1.0)
-        $this.Rng              = [System.Random]::new()
-        $this.Reset()
-    }
-
-    CartPoleEnvironment([int]$maxSteps, [int]$seed) : base("CartPole", $maxSteps) {
-        $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, -4.8, 4.8)
-        $this.ActionSpace      = [VBAFSpace]::new("discrete",   2,  0.0, 1.0)
-        $this.Rng              = [System.Random]::new($seed)
+    DQNEnvironment() {
+        $this.MaxSteps = 200
+        $this.Rng      = [System.Random]::new()
         $this.Reset()
     }
 
@@ -122,8 +266,6 @@ class CartPoleEnvironment : VBAFEnvironment {
         $this.Angle           = ($this.Rng.NextDouble() - 0.5) * 0.1
         $this.AngularVelocity = ($this.Rng.NextDouble() - 0.5) * 0.1
         $this.Steps           = 0
-        $this.TotalReward     = 0.0
-        $this.EpisodeCount++
         return $this.GetState()
     }
 
@@ -133,19 +275,19 @@ class CartPoleEnvironment : VBAFEnvironment {
 
     [hashtable] Step([int]$action) {
         $this.Steps++
-        $force     = if ($action -eq 1) { 1.0 } else { -1.0 }
-        $gravity   = 9.8
-        $cartMass  = 1.0
-        $poleMass  = 0.1
-        $totalMass = $cartMass + $poleMass
-        $halfLen   = 0.25
-        $dt        = 0.02
+        $force       = if ($action -eq 1) { 1.0 } else { -1.0 }
+        $gravity     = 9.8
+        $cartMass    = 1.0
+        $poleMass    = 0.1
+        $totalMass   = $cartMass + $poleMass
+        $halfLen     = 0.25
+        $dt          = 0.02
 
-        $cosA = [Math]::Cos($this.Angle)
-        $sinA = [Math]::Sin($this.Angle)
-        $temp = ($force + $poleMass * $halfLen * $this.AngularVelocity * $this.AngularVelocity * $sinA) / $totalMass
-        $aAcc = ($gravity * $sinA - $cosA * $temp) / ($halfLen * (4.0/3.0 - $poleMass * $cosA * $cosA / $totalMass))
-        $acc  = $temp - $poleMass * $halfLen * $aAcc * $cosA / $totalMass
+        $cosA  = [Math]::Cos($this.Angle)
+        $sinA  = [Math]::Sin($this.Angle)
+        $temp  = ($force + $poleMass * $halfLen * $this.AngularVelocity * $this.AngularVelocity * $sinA) / $totalMass
+        $aAcc  = ($gravity * $sinA - $cosA * $temp) / ($halfLen * (4.0/3.0 - $poleMass * $cosA * $cosA / $totalMass))
+        $acc   = $temp - $poleMass * $halfLen * $aAcc * $cosA / $totalMass
 
         $this.Position        += $dt * $this.Velocity
         $this.Velocity        += $dt * $acc
@@ -157,298 +299,166 @@ class CartPoleEnvironment : VBAFEnvironment {
                   ([Math]::Abs($this.Angle)    -gt 0.21)
         $reward = if (-not $done) { 1.0 } else { 0.0 }
 
-        $this.TotalReward += $reward
         return @{ NextState = $this.GetState(); Reward = $reward; Done = $done }
     }
 }
 
 # ============================================================
-# GRIDWORLD ENVIRONMENT
-# Simple grid navigation - agent finds goal avoiding walls
-# State : [row, col, goalRow, goalCol] normalized 0-1
-# Actions: 0=up, 1=right, 2=down, 3=left
+# TRAINING RUNNER
+# Types are instantiated HERE (script level) where NeuralNetwork
+# and ExperienceReplay are already loaded by LoadAll.ps1
+# Then injected into DQNAgent constructor.
 # ============================================================
-class GridWorldEnvironment : VBAFEnvironment {
-    [int] $GridSize
-    [int] $AgentRow
-    [int] $AgentCol
-    [int] $GoalRow
-    [int] $GoalCol
-    hidden [System.Random] $Rng
-
-    GridWorldEnvironment() : base("GridWorld", 100) {
-        $this.GridSize         = 5
-        $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, 0.0, 1.0)
-        $this.ActionSpace      = [VBAFSpace]::new("discrete",   4, 0.0, 3.0)
-        $this.Rng              = [System.Random]::new()
-        $this.Reset()
-    }
-
-    GridWorldEnvironment([int]$gridSize, [int]$maxSteps) : base("GridWorld", $maxSteps) {
-        $this.GridSize         = $gridSize
-        $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, 0.0, 1.0)
-        $this.ActionSpace      = [VBAFSpace]::new("discrete",   4, 0.0, 3.0)
-        $this.Rng              = [System.Random]::new()
-        $this.Reset()
-    }
-
-    [double[]] Reset() {
-        $this.AgentRow    = $this.Rng.Next(0, $this.GridSize)
-        $this.AgentCol    = $this.Rng.Next(0, $this.GridSize)
-        $this.GoalRow     = $this.Rng.Next(0, $this.GridSize)
-        $this.GoalCol     = $this.Rng.Next(0, $this.GridSize)
-        # Make sure agent and goal are not same cell
-        while ($this.AgentRow -eq $this.GoalRow -and $this.AgentCol -eq $this.GoalCol) {
-            $this.GoalRow = $this.Rng.Next(0, $this.GridSize)
-            $this.GoalCol = $this.Rng.Next(0, $this.GridSize)
-        }
-        $this.Steps       = 0
-        $this.TotalReward = 0.0
-        $this.EpisodeCount++
-        return $this.GetState()
-    }
-
-    [double[]] GetState() {
-        $n  = [double]($this.GridSize - 1)
-        $s0 = $this.AgentRow / $n
-        $s1 = $this.AgentCol / $n
-        $s2 = $this.GoalRow  / $n
-        $s3 = $this.GoalCol  / $n
-        return @($s0, $s1, $s2, $s3)
-    }
-
-    [hashtable] Step([int]$action) {
-        $this.Steps++
-        $newRow = $this.AgentRow
-        $newCol = $this.AgentCol
-
-        switch ($action) {
-            0 { $newRow-- }  # up
-            1 { $newCol++ }  # right
-            2 { $newRow++ }  # down
-            3 { $newCol-- }  # left
-        }
-
-        # Clamp to grid
-        $newRow = [Math]::Max(0, [Math]::Min($this.GridSize - 1, $newRow))
-        $newCol = [Math]::Max(0, [Math]::Min($this.GridSize - 1, $newCol))
-
-        $this.AgentRow = $newRow
-        $this.AgentCol = $newCol
-
-        $atGoal = ($this.AgentRow -eq $this.GoalRow -and $this.AgentCol -eq $this.GoalCol)
-        $done   = $atGoal -or ($this.Steps -ge $this.MaxSteps)
-        $reward = if ($atGoal) { 10.0 } elseif ($done) { -1.0 } else { -0.1 }
-
-        $this.TotalReward += $reward
-        return @{ NextState = $this.GetState(); Reward = $reward; Done = $done }
-    }
-}
-
-# ============================================================
-# RANDOM WALK ENVIRONMENT
-# Simple 1D walk - agent tries to reach center (0)
-# State : [position] normalized
-# Actions: 0=left, 1=right
-# Good for quick algorithm sanity checks
-# ============================================================
-class RandomWalkEnvironment : VBAFEnvironment {
-    [int]    $Position
-    [int]    $Range
-    hidden [System.Random] $Rng
-
-    RandomWalkEnvironment() : base("RandomWalk", 50) {
-        $this.Range            = 10
-        $this.ObservationSpace = [VBAFSpace]::new("continuous", 1, -1.0, 1.0)
-        $this.ActionSpace      = [VBAFSpace]::new("discrete",   2,  0.0, 1.0)
-        $this.Rng              = [System.Random]::new()
-        $this.Reset()
-    }
-
-    [double[]] Reset() {
-        $this.Position    = $this.Rng.Next(-$this.Range, $this.Range)
-        $this.Steps       = 0
-        $this.TotalReward = 0.0
-        $this.EpisodeCount++
-        return $this.GetState()
-    }
-
-    [double[]] GetState() {
-        return @([double]$this.Position / $this.Range)
-    }
-
-    [hashtable] Step([int]$action) {
-        $this.Steps++
-        if ($action -eq 0) { $this.Position-- } else { $this.Position++ }
-        $this.Position = [Math]::Max(-$this.Range, [Math]::Min($this.Range, $this.Position))
-
-        $atCenter = ($this.Position -eq 0)
-        $done     = $atCenter -or ($this.Steps -ge $this.MaxSteps)
-        $reward   = if ($atCenter) { 10.0 } else { -[Math]::Abs($this.Position) * 0.1 }
-
-        $this.TotalReward += $reward
-        return @{ NextState = $this.GetState(); Reward = $reward; Done = $done }
-    }
-}
-
-# ============================================================
-# ENVIRONMENT FACTORY - create environments by name
-# ============================================================
-function New-VBAFEnvironment {
+function Invoke-DQNTraining {
     param(
-        [string] $Name     = "CartPole",
-        [int]    $MaxSteps = 200,
-        [int]    $GridSize = 5,
-        [int]    $Seed     = -1
+        [int]    $Episodes    = 100,
+        [int]    $PrintEvery  = 10,
+        [switch] $Quiet,
+        [switch] $FastMode
     )
 
-    switch ($Name) {
-        "CartPole" {
-            if ($Seed -ge 0) {
-                return [CartPoleEnvironment]::new($MaxSteps, $Seed)
-            }
-            return [CartPoleEnvironment]::new($MaxSteps)
-        }
-        "GridWorld" {
-            return [GridWorldEnvironment]::new($GridSize, $MaxSteps)
-        }
-        "RandomWalk" {
-            return [RandomWalkEnvironment]::new()
-        }
-        default {
-            Write-Host "❌ Unknown environment: $Name" -ForegroundColor Red
-            Write-Host "   Available: CartPole, GridWorld, RandomWalk" -ForegroundColor Yellow
-            return $null
-        }
+    # ---- Settings ----
+    $hiddenLayers  = @(64, 64)
+    $batchSize     = 32
+    $maxSteps      = 200
+    $replayEvery   = 4        # Only train every N steps (huge speed win)
+
+    if ($FastMode) {
+        $hiddenLayers = @(16, 16)
+        $batchSize    = 16
+        $maxSteps     = 30
+        $replayEvery  = 4
+        if ($Episodes -eq 100) { $Episodes  = 50 }
+        if ($PrintEvery -eq 10) { $PrintEvery = 5 }
+        Write-Host ""
+        Write-Host "⚡ FAST MODE ENABLED" -ForegroundColor Yellow
+        Write-Host "   Hidden   : 16 -> 16" -ForegroundColor Yellow
+        Write-Host "   Batch    : $batchSize" -ForegroundColor Yellow
+        Write-Host "   MaxSteps : $maxSteps"  -ForegroundColor Yellow
+        Write-Host "   Episodes : $Episodes"  -ForegroundColor Yellow
     }
-}
-
-# ============================================================
-# REWARD SHAPER WRAPPER
-# Wraps any VBAFEnvironment to modify rewards
-# ============================================================
-function New-RewardShaper {
-    param(
-        [object]    $Environment,
-        [double]    $Scale       = 1.0,
-        [double]    $Clip        = 0.0,   # 0 = no clipping
-        [double]    $StepPenalty = 0.0    # penalty per step
-    )
-
-    return @{
-        Env         = $Environment
-        Scale       = $Scale
-        Clip        = $Clip
-        StepPenalty = $StepPenalty
-
-        Reset       = { $Environment.Reset() }
-        GetState    = { $Environment.GetState() }
-        Step        = {
-            param([int]$action)
-            $result = $Environment.Step($action)
-            $r      = $result.Reward * $Scale - $StepPenalty
-            if ($Clip -gt 0) {
-                $r = [Math]::Max(-$Clip, [Math]::Min($Clip, $r))
-            }
-            return @{ NextState = $result.NextState; Reward = $r; Done = $result.Done }
-        }
-    }
-}
-
-# ============================================================
-# BENCHMARKING UTILITY
-# Run any algorithm on any environment and measure performance
-# ============================================================
-function Invoke-VBAFBenchmark {
-    param(
-        [object] $Agent,
-        [object] $Environment,
-        [int]    $Episodes = 10,
-        [string] $Label    = "Benchmark"
-    )
 
     Write-Host ""
-    Write-Host "⏱️  $Label" -ForegroundColor Yellow
-    Write-Host "   Episodes : $Episodes" -ForegroundColor Cyan
+    Write-Host "🚀 VBAF DQN Training Started" -ForegroundColor Green
+    Write-Host "   Episodes: $Episodes"        -ForegroundColor Cyan
+    Write-Host ""
 
-    $rewards  = [System.Collections.Generic.List[double]]::new()
-    $timer    = [System.Diagnostics.Stopwatch]::StartNew()
+    # ---- Config ----
+    $config                  = [DQNConfig]::new()
+    $config.StateSize        = 4
+    $config.ActionSize       = 2
+    $config.HiddenLayers     = $hiddenLayers
+    $config.LearningRate     = 0.001
+    $config.Gamma            = 0.95
+    $config.Epsilon          = 1.0
+    $config.EpsilonMin       = 0.01
+    $config.EpsilonDecay     = 0.995
+    $config.BatchSize        = $batchSize
+    $config.MemorySize       = 5000
+    $config.TargetUpdateFreq = 10
+    # ---- Build layer array ----
+    $layers = [System.Collections.Generic.List[int]]::new()
+    $layers.Add($config.StateSize)
+    foreach ($h in $config.HiddenLayers) { $layers.Add($h) }
+    $layers.Add($config.ActionSize)
+    $layerArray = $layers.ToArray()
 
-    $rng        = [System.Random]::new()
-    $actionSize = $Environment.ActionSpace.Size
+    # ---- Instantiate at script level (PS 5.1 safe) ----
+    $mainNetwork   = [NeuralNetwork]::new($layerArray, $config.LearningRate)
+    $targetNetwork = [NeuralNetwork]::new($layerArray, $config.LearningRate)
+    $memory        = [ExperienceReplay]::new($config.MemorySize)
 
-    $useRandom = ($null -eq $Agent)
+    $agent = [DQNAgent]::new($config, $mainNetwork, $targetNetwork, $memory)
 
-    if ($useRandom) {
-        Write-Host "   Agent    : Random (no agent provided)" -ForegroundColor DarkYellow
-    } else {
-        Write-Host "   Agent    : $($Agent.GetType().Name)" -ForegroundColor DarkYellow
-    }
+    $env          = [DQNEnvironment]::new()
+    $env.MaxSteps = $maxSteps
+
+    $bestReward = 0.0
+    $stepCount  = 0
 
     for ($ep = 1; $ep -le $Episodes; $ep++) {
-        $state       = $Environment.Reset()
+        $state       = $env.Reset()
         $totalReward = 0.0
         $done        = $false
 
         while (-not $done) {
-            if ($useRandom) {
-                $action = $rng.Next(0, $actionSize)
-            } else {
-                try   { $action = $Agent.Predict($state) }
-                catch { $action = $rng.Next(0, $actionSize) }
+            $action  = $agent.Act($state)
+            $result  = $env.Step($action)
+            $ns      = $result.NextState
+            $reward  = $result.Reward
+            $done    = $result.Done
+
+            $agent.Remember($state, $action, $reward, $ns, $done)
+            $stepCount++
+
+            # Only replay every N steps - massive speed improvement
+            if ($stepCount % $replayEvery -eq 0) {
+                $agent.Replay()
             }
-            $result       = $Environment.Step($action)
-            $state        = $result.NextState
-            $totalReward += $result.Reward
-            $done         = $result.Done
+
+            $state        = $ns
+            $totalReward += $reward
         }
-        $rewards.Add($totalReward)
+
+        $agent.EndEpisode($totalReward)
+        if ($totalReward -gt $bestReward) { $bestReward = $totalReward }
+
+        if (-not $Quiet -and ($ep % $PrintEvery -eq 0)) {
+            $stats = $agent.GetStats()
+            Write-Host ("  Ep {0,4}  Reward: {1,5:F0}  Best: {2,5:F0}  e: {3:F3}  Loss: {4:F5}  Mem: {5}" -f `
+                $ep, $totalReward, $bestReward,
+                $stats.Epsilon, $stats.LastLoss, $stats.MemorySize) -ForegroundColor White
+        }
     }
 
-    $timer.Stop()
-    $avg  = ($rewards | Measure-Object -Average).Average
-    $max  = ($rewards | Measure-Object -Maximum).Maximum
-    $min  = ($rewards | Measure-Object -Minimum).Minimum
-    $ms   = $timer.ElapsedMilliseconds
-
     Write-Host ""
-    Write-Host "╔══════════════════════════════════════╗" -ForegroundColor Yellow
-    Write-Host ("║  {0,-36}║" -f $Label)                  -ForegroundColor Yellow
-    Write-Host "╠══════════════════════════════════════╣" -ForegroundColor Yellow
-    Write-Host ("║  Avg Reward : {0,-23}║" -f [Math]::Round($avg, 2)) -ForegroundColor White
-    Write-Host ("║  Max Reward : {0,-23}║" -f [Math]::Round($max, 2)) -ForegroundColor Green
-    Write-Host ("║  Min Reward : {0,-23}║" -f [Math]::Round($min, 2)) -ForegroundColor White
-    Write-Host ("║  Time (ms)  : {0,-23}║" -f $ms)                    -ForegroundColor Cyan
-    Write-Host ("║  ms/episode : {0,-23}║" -f [Math]::Round($ms / $Episodes, 1)) -ForegroundColor Cyan
-    Write-Host "╚══════════════════════════════════════╝" -ForegroundColor Yellow
-    Write-Host ""
-
-    return @{ Avg = $avg; Max = $max; Min = $min; TimeMs = $ms }
+    Write-Host "✅ Training Complete!" -ForegroundColor Green
+    $agent.PrintStats()
+    ,$agent  # comma operator forces return as single object in PS 5.1
 }
 
 # ============================================================
-# TEST
-# 1. Run VBAF.LoadAll.ps1
-# 2. $env = New-VBAFEnvironment -Name "CartPole" -MaxSteps 200
-# 3. $env = New-VBAFEnvironment -Name "GridWorld" -GridSize 5 -MaxSteps 100
-# 4. $env = New-VBAFEnvironment -Name "RandomWalk"
-# 5. $env.PrintInfo()
-# 6. After training: Invoke-VBAFBenchmark -Agent $agent -Environment $env -Episodes 10
-# NOTE: Always capture agent with [-1]: $agent = (Invoke-DQNTraining ...)[-1]
+# TEST SUGGESTIONS
 # ============================================================
-Write-Host "📦 VBAF.RL.Environment.ps1 loaded" -ForegroundColor Green
-Write-Host "   Classes   : VBAFSpace, VBAFEnvironment"          -ForegroundColor Cyan
-Write-Host "   Environments: CartPole, GridWorld, RandomWalk"   -ForegroundColor Cyan
-Write-Host "   Functions : New-VBAFEnvironment"                 -ForegroundColor Cyan
-Write-Host "              New-RewardShaper"                     -ForegroundColor Cyan
-Write-Host "              Invoke-VBAFBenchmark"                 -ForegroundColor Cyan
+# 1. BASIC LOAD TEST
+#    Run VBAF.LoadAll.ps1 - should see "📦 VBAF.RL.DQN.ps1 loaded"
+#
+# 2. FAST SMOKE TEST (seconds)
+#    $agent = Invoke-DQNTraining -Episodes 5 -PrintEvery 1 -FastMode
+#    Verify: DQNAgent created, episodes complete, stats print
+#
+# 3. STANDARD FAST TRAINING (2-3 minutes)
+#    $agent = Invoke-DQNTraining -Episodes 50 -PrintEvery 5 -FastMode
+#    Expect: Epsilon decays 1.0 -> ~0.24, Avg Reward > 15
+#
+# 4. BENCHMARK AGAINST RANDOM (requires VBAF.RL.Environment.ps1)
+#    $env = New-VBAFEnvironment -Name "CartPole" -MaxSteps 200
+#    Invoke-VBAFBenchmark -Agent $agent -Environment $env -Episodes 10 -Label "DQN vs CartPole"
+#    Invoke-VBAFBenchmark -Environment $env -Episodes 10 -Label "Random Baseline"
+#    Expect: DQN Agent type shows as DQNAgent
+#
+# 5. INSPECT AGENT STATE
+#    $agent.GetStats()
+#    $agent.PrintStats()
+#    $agent.Epsilon          # should be near EpsilonMin after full training
+#    $agent.Memory.Size()    # should be > BatchSize (32) before replay kicks in
+#
+# 6. GET Q-VALUES FOR A STATE
+#    $state = @(0.1, 0.0, 0.05, 0.0)   # sample CartPole state
+#    $agent.GetQValues($state)           # shows Q-value for each action
+#    $agent.Predict($state)              # greedy action (0 or 1)
+#
+# 7. COMPARE ALGORITHMS (after training PPO and A3C too)
+#    $dqn = Invoke-DQNTraining -Episodes 50 -PrintEvery 50 -FastMode -Quiet
+#    $env = New-VBAFEnvironment -Name "CartPole" -MaxSteps 200
+#    Invoke-VBAFBenchmark -Agent $dqn -Environment $env -Episodes 20 -Label "DQN"
+# ============================================================
+Write-Host "📦 VBAF.RL.DQN.ps1 loaded" -ForegroundColor Green
+Write-Host "   Classes : DQNConfig, DQNAgent, DQNEnvironment" -ForegroundColor Cyan
+Write-Host "   Function: Invoke-DQNTraining"                  -ForegroundColor Cyan
 Write-Host ""
-Write-Host "   Quick start:" -ForegroundColor Yellow
-Write-Host '   $env = New-VBAFEnvironment -Name "CartPole" -MaxSteps 200' -ForegroundColor White
-Write-Host '   $env.PrintInfo()'                                           -ForegroundColor White
+Write-Host "   Quick start:"                                                           -ForegroundColor Yellow
+Write-Host '   $agent = (Invoke-DQNTraining -Episodes 100 -PrintEvery 10)[-1]'              -ForegroundColor White
+Write-Host '   $agent = (Invoke-DQNTraining -Episodes 50 -PrintEvery 5 -FastMode)[-1]'      -ForegroundColor White
+Write-Host '   $agent.PrintStats()'                                                    -ForegroundColor White
 Write-Host ""
-
-#TEST:
-#1. Run VBAF.LoadAll.ps1
-#2. Run $agent = Invoke-DQNTraining -Episodes  20 -PrintEvery  2 -FastMode          OR
-#3. Run $agent = Invoke-DQNTraining -Episodes 100 -PrintEvery 10 -FastMode

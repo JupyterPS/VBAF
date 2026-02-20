@@ -26,10 +26,10 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 . (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
 . (Join-Path $basePath "VBAF.Business.CompanyState.ps1")
 . (Join-Path $basePath "VBAF.Business.BusinessAction.ps1") 
-# VBAF.Business.Dashboard-Demo.ps1                                                      # Dashboard 2
+# VBAF.Business.Dashboard-Demo.ps1                                                         # Dashboard 2
 . (Join-Path $basePath "VBAF.Business.CompanyAgent.ps1")
 . (Join-Path $basePath "VBAF.Business.MarketEnvironment.ps1")
-. (Join-Path $basePath "VBAF.Visualization.MarketDashboard.ps1")                                    # Dashboard 2 
+. (Join-Path $basePath "VBAF.Visualization.MarketDashboard.ps1")                           # Dashboard 2 
 # VBAF.Business.MarketEnvironment.ps1
 . (Join-Path $basePath "VBAF.Business.CompanyAgent.ps1") 
 # VBAF.Business.Test.CompanyMarket.ps1
@@ -57,7 +57,7 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 # VBAF.Visualization.Example-Dashboard.ps1                                                 # Dashboard 1
 . (Join-Path $basePath "VBAF.Visualization.MetricsCollector.ps1")
 . (Join-Path $basePath "VBAF.Visualization.GraphRenderer.ps1")
-. (Join-Path $basePath "VBAF.Visualization.LearningDashboard.ps1")                                     # Dashboard 1 
+. (Join-Path $basePath "VBAF.Visualization.LearningDashboard.ps1")                         # Dashboard 1 
 # VBAF.Visualization.LearningDashboard.ps1
 . (Join-Path $basePath "VBAF.Visualization.MetricsCollector.ps1")
 . (Join-Path $basePath "VBAF.Visualization.GraphRenderer.ps1") 
@@ -71,6 +71,25 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 . (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
 . (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
 . (Join-Path $basePath "VBAF.Art.AestheticReward.ps1")
+# Phase 3 - RL Algorithms
+. (Join-Path $basePath "VBAF.RL.Environment.ps1")
+. (Join-Path $basePath "VBAF.RL.DQN.ps1")    
+. (Join-Path $basePath "VBAF.RL.PPO.ps1")  
+. (Join-Path $basePath "VBAF.RL.A3C.ps1")  
+# Phase 4 - ML Supervised Learning
+. (Join-Path $basePath "VBAF.ML.Regression.ps1")
+. (Join-Path $basePath "VBAF.ML.Trees.ps1")
+. (Join-Path $basePath "VBAF.ML.Clustering.ps1") 
+. (Join-Path $basePath "VBAF.ML.NaiveBayes.ps1")
+# Phase 5 - ML Data Pipeline
+. (Join-Path $basePath "VBAF.ML.DataPipeline.ps1")
+. (Join-Path $basePath "VBAF.ML.FeatureEngineering.ps1")
+. (Join-Path $basePath "VBAF.ML.DataIO.ps1")
+. (Join-Path $basePath "VBAF.ML.TimeSeries.ps1")
+# Phase 6 - ML Deep Learning
+. (Join-Path $basePath "VBAF.ML.CNN.ps1")
+. (Join-Path $basePath "VBAF.ML.RNN.ps1")
+
 
 # Write-Host "  ? Visualization modules loaded" -ForegroundColor Green
 Write-Host "VBAF Framework ready!" -ForegroundColor Green

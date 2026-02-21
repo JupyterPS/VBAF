@@ -89,8 +89,8 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 # Phase 6 - ML Deep Learning
 . (Join-Path $basePath "VBAF.ML.CNN.ps1")
 . (Join-Path $basePath "VBAF.ML.RNN.ps1")
-#. (Join-Path $basePath "VBAF.ML.Autoencoder.ps1")                                           # Awaiting                    
-#. (Join-Path $basePath "VBAF.ML.TransferLearning.ps1")                                      # Awaiting
+. (Join-Path $basePath "VBAF.ML.Autoencoder.ps1")                                                            
+. (Join-Path $basePath "VBAF.ML.TransferLearning.ps1")                                       
 
 # Phase 7 - ML Production Features
 . (Join-Path $basePath "VBAF.ML.ModelRegistry.ps1")

@@ -89,9 +89,8 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 # Phase 6 - ML Deep Learning
 . (Join-Path $basePath "VBAF.ML.CNN.ps1")
 . (Join-Path $basePath "VBAF.ML.RNN.ps1")
-. (Join-Path $basePath "VBAF.ML.Autoencoder.ps1")                                                            
-. (Join-Path $basePath "VBAF.ML.TransferLearning.ps1")                                       
-
+. (Join-Path $basePath "VBAF.ML.Autoencoder.ps1") 
+. (Join-Path $basePath "VBAF.ML.TransferLearning.ps1")
 # Phase 7 - ML Production Features
 . (Join-Path $basePath "VBAF.ML.ModelRegistry.ps1")
 . (Join-Path $basePath "VBAF.ML.ModelServer.ps1")
@@ -99,11 +98,11 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 . (Join-Path $basePath "VBAF.ML.AutoML.ps1")
 . (Join-Path $basePath "VBAF.ML.Explainability.ps1")
 
-# Write-Host "  ? Visualization modules loaded" -ForegroundColor Green
+# Write-Host "Visualization modules loaded" -ForegroundColor Green
 Write-Host "VBAF Framework ready!" -ForegroundColor Green
 
 Write-Host "      - oo00oo - " -ForegroundColor Yellow 
-Write-Host "LOADABLES FOR TESTING" -ForegroundColor Green
+Write-Host "VISIBLE LOADABLES FOR TESTING" -ForegroundColor Green
 
 Write-Host "VBAF.Art.Show20-QLearning.ps1" -ForegroundColor Cyan
 Write-Host "VBAF.RL.Example-CastleLearning.ps1" -ForegroundColor Cyan

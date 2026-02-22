@@ -2,7 +2,8 @@
 
 > 🚧 **Placeholder**
 
-Multiple VBAF.Business.CompanyAgent instances compete for shared market resources
-in VBAF.Business.MarketEnvironment. Demonstrates emergent cooperative/competitive behaviour.
+Multiple `VBAF.Business.CompanyAgent` instances compete for shared market
+resources in `VBAF.Business.MarketEnvironment`.
+Demonstrates emergent cooperative/competitive behaviour.
 
 *Full write-up coming soon.*

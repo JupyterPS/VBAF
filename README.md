@@ -383,7 +383,6 @@ Topics covered:
 Contributions are welcome! See [Contributing Guide](docs/dev/contributing.md) for details.
 
 **Areas for contribution:**
-- Additional RL algorithms (PPO, A3C, SAC)
 - New case studies and examples
 - Documentation improvements
 - Tutorial content

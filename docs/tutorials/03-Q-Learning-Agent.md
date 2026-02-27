@@ -1,4 +1,6 @@
-﻿# Tutorial 03: Your First Q-Learning Agent
+﻿[← Back to Tutorials](README.md) | [🏠 Home](../../README.md)
+
+# Tutorial 03: Your First Q-Learning Agent
 
 **Teach an agent to navigate through trial and error** 🤖
 
@@ -207,3 +209,7 @@ A Q-value represents how good an action is from a given state:
 ---
 
 *VBAF Version: 1.0.0 | PowerShell 5.1+ | Windows 10/11*
+
+
+---
+[← Back to Tutorials](README.md) | [Next: Tutorial 04 →](04-Multi-Agent-Market.md)

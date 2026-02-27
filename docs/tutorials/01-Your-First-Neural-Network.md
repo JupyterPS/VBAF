@@ -1,4 +1,6 @@
-﻿# Tutorial 01: Your First Neural Network
+﻿[← Back to Tutorials](README.md) | [🏠 Home](../../README.md)
+
+# Tutorial 01: Your First Neural Network
 
 **From zero to neural network in 15 minutes** ⚡
 
@@ -183,3 +185,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ---
 
 *VBAF Version: 1.0.0 | PowerShell 5.1+ | Windows 10/11*
+
+
+---
+[← Back to Tutorials](README.md) | [Next: Tutorial 02 →](02-Building-XOR-Net.md)

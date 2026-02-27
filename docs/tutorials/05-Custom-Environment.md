@@ -1,4 +1,6 @@
-﻿# Tutorial 05: Building a Custom RL Environment
+﻿[← Back to Tutorials](README.md) | [🏠 Home](../../README.md)
+
+# Tutorial 05: Building a Custom RL Environment
 
 **Design your own world for an agent to learn in** 🌍
 
@@ -275,3 +277,7 @@ it will struggle to learn. Add intermediate rewards for progress.
 ---
 
 *VBAF Version: 1.0.0 | PowerShell 5.1+ | Windows 10/11*
+
+
+---
+[← Back to Tutorials](README.md) | [Next: Tutorial 06 →](06-Using-Dashboards.md)

@@ -1,4 +1,6 @@
-﻿# Tutorial 04: Multi-Agent Market Simulation
+﻿[← Back to Tutorials](README.md) | [🏠 Home](../../README.md)
+
+# Tutorial 04: Multi-Agent Market Simulation
 
 **Watch 4 companies compete, learn, and develop strategies** 🏢
 
@@ -214,3 +216,7 @@ together, but individually each is tempted to raise prices for short-term gain.
 ---
 
 *VBAF Version: 1.0.0 | PowerShell 5.1+ | Windows 10/11*
+
+
+---
+[← Back to Tutorials](README.md) | [Next: Tutorial 05 →](05-Custom-Environment.md)

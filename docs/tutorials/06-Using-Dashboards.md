@@ -1,4 +1,6 @@
-﻿# Tutorial 06: Using the VBAF Dashboards
+﻿[← Back to Tutorials](README.md) | [🏠 Home](../../README.md)
+
+# Tutorial 06: Using the VBAF Dashboards
 
 **Visualize your AI learning in real-time** 📊
 
@@ -159,3 +161,7 @@ Write-Host "Training complete! Close dashboard window when done."
 ---
 
 *VBAF Version: 1.0.0 | PowerShell 5.1+ | Windows 10/11*
+
+
+---
+[← Back to Tutorials](README.md) | [← Back to Tutorial 05](05-Custom-Environment.md)

@@ -1,4 +1,6 @@
-﻿# Tutorial 02: Building the XOR Network in Depth
+﻿[← Back to Tutorials](README.md) | [🏠 Home](../../README.md)
+
+# Tutorial 02: Building the XOR Network in Depth
 
 **Understand exactly how a neural network learns** 🧠
 
@@ -219,3 +221,7 @@ Too small = very slow. 0.1 is a reliable starting point.
 ---
 
 *VBAF Version: 1.0.0 | PowerShell 5.1+ | Windows 10/11*
+
+
+---
+[← Back to Tutorials](README.md) | [Next: Tutorial 03 →](03-Q-Learning-Agent.md)

@@ -20,3 +20,4 @@ Layers are stored as **hashtables in ArrayLists** — not typed class properties
 This guarantees reference semantics so weight mutations persist during backprop.
 See [Theory.md](Theory.md) for details.
 
+

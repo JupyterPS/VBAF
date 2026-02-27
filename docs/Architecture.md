@@ -1,4 +1,4 @@
-﻿# VBAF Architecture
+﻿C:\Users\henni# VBAF Architecture
 
 > 🚧 **Placeholder** — full architecture document coming soon.
 
@@ -19,3 +19,4 @@
 Layers are stored as **hashtables in ArrayLists** — not typed class properties.
 This guarantees reference semantics so weight mutations persist during backprop.
 See [Theory.md](Theory.md) for details.
+

@@ -1,4 +1,4 @@
-﻿# Getting Started with VBAF
+﻿C:\Users\henni# Getting Started with VBAF
 
 > 🚧 **Placeholder** — full guide coming soon.
 
@@ -26,3 +26,4 @@ Test-VBAFAutoencoder -Epochs 300 -LR 0.15
 \\\
 
 See the [tutorials/](tutorials/README.md) folder for step-by-step guides.
+

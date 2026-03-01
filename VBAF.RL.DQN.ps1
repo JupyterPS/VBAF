@@ -424,11 +424,11 @@ function Invoke-DQNTraining {
 #    Run VBAF.LoadAll.ps1 - should see "📦 VBAF.RL.DQN.ps1 loaded"
 #
 # 2. FAST SMOKE TEST (seconds)
-#    $agent = Invoke-DQNTraining -Episodes 5 -PrintEvery 1 -FastMode
+#    $agent = (Invoke-DQNTraining -Episodes 5 -PrintEvery 1 -FastMode)[-1]
 #    Verify: DQNAgent created, episodes complete, stats print
 #
 # 3. STANDARD FAST TRAINING (2-3 minutes)
-#    $agent = Invoke-DQNTraining -Episodes 50 -PrintEvery 5 -FastMode
+#    $agent = (Invoke-DQNTraining -Episodes 50 -PrintEvery 5 -FastMode)[-1]
 #    Expect: Epsilon decays 1.0 -> ~0.24, Avg Reward > 15
 #
 # 4. BENCHMARK AGAINST RANDOM (requires VBAF.RL.Environment.ps1)
@@ -449,7 +449,7 @@ function Invoke-DQNTraining {
 #    $agent.Predict($state)              # greedy action (0 or 1)
 #
 # 7. COMPARE ALGORITHMS (after training PPO and A3C too)
-#    $dqn = Invoke-DQNTraining -Episodes 50 -PrintEvery 50 -FastMode -Quiet
+#    $dqn = (Invoke-DQNTraining -Episodes 50 -PrintEvery 50 -FastMode -Quiet)[-1]
 #    $env = New-VBAFEnvironment -Name "CartPole" -MaxSteps 200
 #    Invoke-VBAFBenchmark -Agent $dqn -Environment $env -Episodes 20 -Label "DQN"
 # ============================================================

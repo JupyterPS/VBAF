@@ -1016,8 +1016,8 @@ function Show-TensorAscii {
 #    Show-TensorAscii $aug "Augmented Horizontal"
 #
 # --- Save and load weights ---
-# 6. Save-CNNWeights -model $model -path "C:\Users\henni\OneDrive\cnn_weights.json"
-#    Load-CNNWeights -model $model -path "C:\Users\henni\OneDrive\cnn_weights.json"
+# 6. Save-CNNWeights -model $model -Path "C:\Temp\cnn_weights.json"
+#    Load-CNNWeights -model $model -Path "C:\Temp\cnn_weights.json"
 # ============================================================
 Write-Host "📦 VBAF.ML.CNN.ps1 loaded  [v2.0.0 🚀]" -ForegroundColor Green
 Write-Host "   Classes   : Conv2D, MaxPooling2D, AveragePooling2D" -ForegroundColor Cyan

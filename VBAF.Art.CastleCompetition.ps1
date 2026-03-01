@@ -619,4 +619,4 @@ $timer.Stop()
 }
 
 
-# Function defined - call from Start-VBAFCastleCompetition to launch UI
+Start-CastleCompetitionUI

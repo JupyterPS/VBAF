@@ -209,13 +209,17 @@ class GridWorldEnvironment : VBAFEnvironment {
     }
 
     [double[]] GetState() {
-        $n = $this.GridSize - 1
-        return @(
-            $this.AgentRow / $n,
-            $this.AgentCol / $n,
-            $this.GoalRow  / $n,
-            $this.GoalCol  / $n
-        )
+        [int] $g = $this.GridSize - 1
+        [double[]] $arr = @(0.0, 0.0, 0.0, 0.0)
+        $arr[0] = $this.AgentRow
+        $arr[1] = $this.AgentCol
+        $arr[2] = $this.GoalRow
+        $arr[3] = $this.GoalCol
+        $arr[0] /= $g
+        $arr[1] /= $g
+        $arr[2] /= $g
+        $arr[3] /= $g
+        return $arr
     }
 
     [hashtable] Step([int]$action) {
@@ -448,3 +452,6 @@ Write-Host "   Quick start:" -ForegroundColor Yellow
 Write-Host '   $env = New-VBAFEnvironment -Name "CartPole" -MaxSteps 200' -ForegroundColor White
 Write-Host '   $env.PrintInfo()'                                           -ForegroundColor White
 Write-Host ""
+
+
+

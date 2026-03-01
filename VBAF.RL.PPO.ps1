@@ -554,7 +554,7 @@ function Invoke-PPOTraining {
 # ============================================================
 # TEST
 # 1. Run VBAF.LoadAll.ps1
-# 2. $agent = Invoke-PPOTraining -Episodes 20 -PrintEvery 2 -FastMode
+# 2. $agent = (Invoke-PPOTraining -Episodes 20 -PrintEvery 2 -FastMode)[-1]
 # 3. $agent = (Invoke-PPOTraining -Episodes 50 -PrintEvery 5 -FastMode)[-1]
 # 4. $agent.PrintStats()
 # ============================================================

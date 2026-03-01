@@ -631,12 +631,6 @@ function Get-VBAFServerMetrics {
 # 6. Get-VBAFMonitoringStats
 #    Export-VBAFMonitoringLog -Path "C:\Temp\vbaf_log.csv"
 #
-# --- HTTP Server (open new PS window to test) ---
-# 7. Start-VBAFModelServer -Model $model -ModelName "HousePricePredictor" `
-#        -ModelVersion "1.0.0" -ModelType "LinearRegression" -Scaler $scaler -Port 8080
-#    # In another PS window:
-#    # Invoke-VBAFServerPredict -Features @(120.0, 3.0, 5.0)
-#    # Get-VBAFServerHealth
 # ============================================================
 Write-Host "📦 VBAF.ML.ModelServer.ps1 loaded  [v2.1.0 🏭]" -ForegroundColor Green
 Write-Host "   Functions : Invoke-VBAFPrediction"            -ForegroundColor Cyan

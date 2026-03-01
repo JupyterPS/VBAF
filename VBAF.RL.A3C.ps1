@@ -550,7 +550,7 @@ function Invoke-A3CTraining {
 # TEST
 # 1. Run VBAF.LoadAll.ps1
 # 2. $agent = (Invoke-A3CTraining -Episodes 20 -PrintEvery 2 -FastMode)[-1]
-# 3. $agent = Invoke-A3CTraining -Episodes 50 -PrintEvery 5 -FastMode
+# 3. $agent = (Invoke-A3CTraining -Episodes 50 -PrintEvery 5 -FastMode)[-1]
 # 4. $agent.PrintStats()
 # ============================================================
 Write-Host "📦 VBAF.RL.A3C.ps1 loaded" -ForegroundColor Green

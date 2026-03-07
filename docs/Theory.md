@@ -1,4 +1,5 @@
-﻿C:\Users\henni# VBAF — Theory & Mathematical Background
+﻿[🏠 Back to Docs](../README.md#documentation)
+# VBAF — Theory & Mathematical Background
 
 > 🚧 **Placeholder** — mathematical derivations coming soon.
 
@@ -10,5 +11,6 @@
 - MSE vs cross-entropy loss functions
 - Autoencoder latent space geometry
 - Transfer learning: feature reuse theory
+
 
 

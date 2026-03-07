@@ -1,4 +1,5 @@
-﻿C:\Users\henni# VBAF API Reference
+﻿[🏠 Back to Docs](../README.md#documentation)
+# VBAF API Reference
 
 > 🚧 **Placeholder** — full reference will be auto-generated from module headers.
 
@@ -14,5 +15,6 @@
 
 Full per-function documentation is embedded as comment-based help in each .ps1 file.
 Run \Get-Help FunctionName -Full\ in PS 5.1 to read it.
+
 
 

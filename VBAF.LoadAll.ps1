@@ -104,6 +104,7 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 # Phase 9 - Enterprise Automation Engine
 . (Join-Path $basePath "VBAF.Enterprise.Environment.ps1")
 . (Join-Path $basePath "VBAF.Enterprise.JobScheduler.ps1")
+. (Join-Path $basePath "VBAF.Enterprise.ResourceOptimizer.ps1")
 
 # Write-Host "Visualization modules loaded" -ForegroundColor Green
 Write-Host "VBAF Framework ready!" -ForegroundColor Green

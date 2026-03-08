@@ -249,6 +249,93 @@ class AlertRouterEnvironment : VBAFEnvironment {
 }
 
 # ============================================================
+# ============================================================
+# SUPPLY CHAIN ENVIRONMENT - Pillar 7: Multi-Agent Strategy
+# Agent learns optimal inventory ordering strategy
+# State  : [inventory, demand, price, backlog] normalized 0-1
+# Actions: 0=OrderSmall, 1=OrderMedium, 2=OrderLarge, 3=Hold
+# ============================================================
+class SupplyChainEnvironment : VBAFEnvironment {
+    [double] $Inventory
+    [double] $Demand
+    [double] $Price
+    [double] $Backlog
+    [double] $TotalProfit
+    [int]    $StockOuts
+    hidden [System.Random] $Rng
+
+    SupplyChainEnvironment() : base("SupplyChain", 50) {
+        $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, 0.0, 1.0)
+        $this.ActionSpace      = [VBAFSpace]::new("discrete",   4, 0.0, 3.0)
+        $this.Rng              = [System.Random]::new()
+        $this.Reset()
+    }
+
+    [double[]] Reset() {
+        $this.Inventory    = 0.5
+        $this.Demand       = [double]$this.Rng.Next(10, 50) / 100.0
+        $this.Price        = [double]$this.Rng.Next(20, 80) / 100.0
+        $this.Backlog      = 0.0
+        $this.TotalProfit  = 0.0
+        $this.StockOuts    = 0
+        $this.Steps        = 0
+        $this.TotalReward  = 0.0
+        $this.EpisodeCount++
+        return $this.GetState()
+    }
+
+    [double[]] GetState() {
+        [double[]] $arr = @(0.0, 0.0, 0.0, 0.0)
+        $arr[0] = [Math]::Max(0.0, [Math]::Min(1.0, $this.Inventory))
+        $arr[1] = $this.Demand
+        $arr[2] = $this.Price
+        $arr[3] = [Math]::Min(1.0, $this.Backlog)
+        return $arr
+    }
+
+    [hashtable] Step([int]$action) {
+        $this.Steps++
+        [double] $orderQty = 0.0
+        [double] $orderCost = 0.0
+        switch ($action) {
+            0 { $orderQty = 0.1; $orderCost = 0.05 }  # OrderSmall
+            1 { $orderQty = 0.3; $orderCost = 0.12 }  # OrderMedium
+            2 { $orderQty = 0.5; $orderCost = 0.18 }  # OrderLarge
+            3 { $orderQty = 0.0; $orderCost = 0.0  }  # Hold
+        }
+
+        # Add ordered stock
+        $this.Inventory += $orderQty
+
+        # Fulfill demand
+        [double] $reward = 0.0
+        if ($this.Inventory -ge $this.Demand) {
+            $reward           = $this.Demand * $this.Price * 2.0  # Sales revenue
+            $this.Inventory  -= $this.Demand
+            $this.Backlog     = [Math]::Max(0.0, $this.Backlog - 0.1)
+        } else {
+            $reward           = $this.Inventory * $this.Price     # Partial sales
+            $this.Backlog    += ($this.Demand - $this.Inventory)  # Unfulfilled
+            $this.Inventory   = 0.0
+            $this.StockOuts++
+        }
+
+        # Subtract order cost and holding cost
+        $reward          -= $orderCost
+        $reward          -= $this.Inventory * 0.02  # Holding cost
+        $reward          -= $this.Backlog   * 0.05  # Backlog penalty
+
+        # Simulate market changes
+        $this.Demand  = [Math]::Max(0.05, [Math]::Min(0.9, $this.Demand + ($this.Rng.NextDouble() - 0.5) * 0.1))
+        $this.Price   = [Math]::Max(0.1,  [Math]::Min(0.9, $this.Price  + ($this.Rng.NextDouble() - 0.5) * 0.05))
+
+        $this.TotalProfit += $reward
+        [bool] $done = ($this.Steps -ge $this.MaxSteps)
+        $this.TotalReward += $reward
+        return @{ NextState = $this.GetState(); Reward = $reward; Done = $done }
+    }
+}
+
 # ENTERPRISE ENVIRONMENT FACTORY
 # ============================================================
 function New-EnterpriseEnvironment {
@@ -260,6 +347,7 @@ function New-EnterpriseEnvironment {
         "JobScheduler"       { return [JobSchedulerEnvironment]::new($MaxSteps) }
         "ResourceOptimizer"  { return [ResourceOptimizerEnvironment]::new() }
         "AlertRouter"        { return [AlertRouterEnvironment]::new() }
+        "SupplyChain"        { return [SupplyChainEnvironment]::new() }
         default {
             Write-Host "❌ Unknown: $Name" -ForegroundColor Red
             Write-Host "   Available: JobScheduler, ResourceOptimizer, AlertRouter" -ForegroundColor Yellow
@@ -290,7 +378,7 @@ function New-EnterpriseEnvironment {
 #    Invoke-VBAFBenchmark -Agent $agent -Environment $env -Episodes 10 -Label "DQN ResourceOptimizer"
 # ============================================================
 Write-Host "📦 VBAF.Enterprise.Environment.ps1 loaded  [v3.0.0 🏢]" -ForegroundColor Green
-Write-Host "   Environments: JobScheduler, ResourceOptimizer, AlertRouter" -ForegroundColor Cyan
+Write-Host "   Environments: JobScheduler, ResourceOptimizer, AlertRouter, SupplyChain" -ForegroundColor Cyan
 Write-Host "   Function    : New-EnterpriseEnvironment"                    -ForegroundColor Cyan
 Write-Host ""
 Write-Host "   Quick start:" -ForegroundColor Yellow
@@ -298,4 +386,5 @@ Write-Host '   $env = New-EnterpriseEnvironment -Name "JobScheduler"'     -Foreg
 Write-Host '   $env.PrintInfo()'                                           -ForegroundColor White
 Write-Host '   Invoke-VBAFBenchmark -Environment $env -Episodes 5'        -ForegroundColor White
 Write-Host ""
+
 

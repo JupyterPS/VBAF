@@ -2,6 +2,22 @@
 
 All notable changes to VBAF are documented here.
 
+## [3.0.0] - March 2026 - Enterprise Automation Engine
+
+### Phase 9 - Enterprise Automation Engine
+- VBAF.Enterprise.Environment.ps1 - foundation, 4 environments
+- Pillar 4: JobScheduler DQN agent - +292% improvement over random
+- Pillar 5: ResourceOptimizer - real Windows CPU/memory data connected
+- Pillar 6: AlertRouter DQN agent - +230% improvement over random
+- Pillar 7: SupplyChain optimizer - learning curve confirmed
+- VBAF.LoadCore.ps1 - pure core loader without Enterprise pillars
+
+### Phase 10 - Planned (Pillars 8-10)
+- Pillar 8: Security & Compliance Intelligence
+- Pillar 9: Network & Infrastructure Intelligence
+- Pillar 10: Database & Data Flow Optimization
+
+---
 ---
 
 ## [1.0.0] - 2025
@@ -42,12 +58,45 @@ All notable changes to VBAF are documented here.
 - Windows 10/11
 - No additional dependencies
 
+## [3.0.0] - March 2026 - Enterprise Automation Engine
+
+### Phase 9 - Enterprise Automation Engine
+- VBAF.Enterprise.Environment.ps1 - foundation, 4 environments
+- Pillar 4: JobScheduler DQN agent - +292% improvement over random
+- Pillar 5: ResourceOptimizer - real Windows CPU/memory data connected
+- Pillar 6: AlertRouter DQN agent - +230% improvement over random
+- Pillar 7: SupplyChain optimizer - learning curve confirmed
+- VBAF.LoadCore.ps1 - pure core loader without Enterprise pillars
+
+### Phase 10 - Planned (Pillars 8-10)
+- Pillar 8: Security & Compliance Intelligence
+- Pillar 9: Network & Infrastructure Intelligence
+- Pillar 10: Database & Data Flow Optimization
+
+---
 ---
 
 ## Future Releases
 
 See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for planned features.
 
+## [3.0.0] - March 2026 - Enterprise Automation Engine
+
+### Phase 9 - Enterprise Automation Engine
+- VBAF.Enterprise.Environment.ps1 - foundation, 4 environments
+- Pillar 4: JobScheduler DQN agent - +292% improvement over random
+- Pillar 5: ResourceOptimizer - real Windows CPU/memory data connected
+- Pillar 6: AlertRouter DQN agent - +230% improvement over random
+- Pillar 7: SupplyChain optimizer - learning curve confirmed
+- VBAF.LoadCore.ps1 - pure core loader without Enterprise pillars
+
+### Phase 10 - Planned (Pillars 8-10)
+- Pillar 8: Security & Compliance Intelligence
+- Pillar 9: Network & Infrastructure Intelligence
+- Pillar 10: Database & Data Flow Optimization
+
+---
 ---
 
 *Format based on [Keep a Changelog](https://keepachangelog.com)*
+

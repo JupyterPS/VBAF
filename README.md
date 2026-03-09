@@ -1,4 +1,4 @@
- # VBAF: Visual Business Automation Framework
+﻿ # VBAF: Visual Business Automation Framework
 
 **A Machine Learning Framework for PowerShell**`n*Focus: Neural Networks & Reinforcement Learning*
 
@@ -88,14 +88,25 @@ VBAF follows an 8-phase development roadmap. [View the full roadmap ?](https://g
 **Want to contribute?** Check our [Project Board](https://github.com/users/JupyterPS/projects/2) to see what's being worked on!
 ## Quick Start
 
-### Installation (Recommended)
+## Installation
 
+### Option 1: PowerShell Gallery
 Install directly from PowerShell Gallery:
 ```powershell
 Install-Module VBAF -Scope CurrentUser
 Import-Module VBAF
 ```
+That's it! All functions are now available.
 
+### Option 2: Clone Repository
+Then choose your loader:
+```powershell
+# Enterprise Automation Engine (full - all pillars)
+. .\VBAF.LoadAll.ps1
+
+# Core Framework only (algorithms, ML, RL - no Enterprise pillars)
+. .\VBAF.LoadCore.ps1
+```
 That's it! All functions are now available.
 
 ### Manual Installation (For Development)
@@ -321,13 +332,26 @@ Classic neural network validation:
 
 ## Installation
 
+### Option 1: PowerShell Gallery
+Install directly from PowerShell Gallery:
+
 ### Option 1: Clone Repository
 ```powershell
 git clone https://github.com/JupyterPS/VBAF.git
 cd VBAF
 . .\VBAF.LoadAll.ps1
 ```
+That's it! All functions are now available.
 
+### Option 2: Clone Repository
+Then choose your loader:
+```powershell
+# Enterprise Automation Engine (full - all pillars)
+. .\VBAF.LoadAll.ps1
+
+# Core Framework only (algorithms, ML, RL - no Enterprise pillars)
+. .\VBAF.LoadCore.ps1
+```
 ### Option 2: Download ZIP
 
 1. Download ZIP from GitHub
@@ -423,3 +447,5 @@ PowerShell automation specialist exploring AI/ML applications in business contex
 ---
 
 **"Making reinforcement learning accessible to those who automate businesses, not just those who optimize neural networks."**
+
+

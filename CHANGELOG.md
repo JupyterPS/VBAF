@@ -130,3 +130,12 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Actions: Handle / Consult / Escalate / Override
   - Real data: Start-Job parallel agent execution confirmed
   - Result: +31.3% vs random baseline, 100% recall
+
+## [3.3.0] - 2026-03-11 — Phase 12: Predictive Maintenance
+
+### Added
+- VBAF.Enterprise.PredictiveMaintenance.ps1
+  - DQN agent predicts hardware failures before they occur
+  - Actions: Monitor / Schedule / Warn / Act
+  - Real data: WMI disk, CPU load, battery health
+  - Result: +35.6% vs random baseline, 100% recall

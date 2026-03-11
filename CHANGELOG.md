@@ -139,3 +139,12 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Actions: Monitor / Schedule / Warn / Act
   - Real data: WMI disk, CPU load, battery health
   - Result: +35.6% vs random baseline, 100% recall
+
+## [3.4.0] - 2026-03-11 — Phase 13: Natural Language Interface
+
+### Added
+- VBAF.Enterprise.NLInterface.ps1
+  - DQN agent routes NL commands to correct enterprise subsystem
+  - Actions: Respond / Execute / Orchestrate / Escalate
+  - Real data: PS ISE host, sample command routing demo
+  - Result: +40.4% vs random baseline, 100% recall

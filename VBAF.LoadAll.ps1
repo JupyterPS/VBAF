@@ -1,4 +1,6 @@
-﻿<#
+﻿#Requires -Version 5.1
+ 
+<#
 .SYNOPSIS
     Master loader for VBAF framework
 .DESCRIPTION
@@ -108,6 +110,7 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 # Phase 10 - Enterprise Intelligence (Pillars 8-10)
 . (Join-Path $basePath "VBAF.Enterprise.SecurityMonitor.ps1")
 . (Join-Path $basePath "VBAF.Enterprise.NetworkWatcher.ps1")
+. (Join-Path $basePath "VBAF.Enterprise.DataFlowOptimizer.ps1")
 
 # Write-Host "Visualization modules loaded" -ForegroundColor Green
 Write-Host "VBAF Framework ready!" -ForegroundColor Green

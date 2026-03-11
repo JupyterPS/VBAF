@@ -121,3 +121,12 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Actions: Throttle / Prioritize / Cache / Reroute
   - Real data: WMI disk I/O, CSV streams, SQL probe
   - Result: +59.8% vs random baseline
+
+## [3.2.0] - 2026-03-11 — Phase 11: Multi-Agent Collaboration
+
+### Added
+- VBAF.Enterprise.MultiAgentCoordinator.ps1
+  - DQN coordinator orchestrates decisions across multiple agents
+  - Actions: Handle / Consult / Escalate / Override
+  - Real data: Start-Job parallel agent execution confirmed
+  - Result: +31.3% vs random baseline, 100% recall

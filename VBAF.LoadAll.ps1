@@ -113,6 +113,7 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 . (Join-Path $basePath "VBAF.Enterprise.DataFlowOptimizer.ps1")
 # Phase 11 - Multi-Agent Enterprise Collaboration
 . (Join-Path $basePath "VBAF.Enterprise.MultiAgentCoordinator.ps1")
+. (Join-Path $basePath "VBAF.Enterprise.PredictiveMaintenance.ps1")
 
 # Write-Host "Visualization modules loaded" -ForegroundColor Green
 Write-Host "VBAF Framework ready!" -ForegroundColor Green

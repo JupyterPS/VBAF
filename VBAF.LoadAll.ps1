@@ -111,9 +111,12 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 . (Join-Path $basePath "VBAF.Enterprise.SecurityMonitor.ps1")
 . (Join-Path $basePath "VBAF.Enterprise.NetworkWatcher.ps1")
 . (Join-Path $basePath "VBAF.Enterprise.DataFlowOptimizer.ps1")
-# Phase 11 - Multi-Agent Enterprise Collaboration
+# Phase 11 - Multi-Agent Collaboration
 . (Join-Path $basePath "VBAF.Enterprise.MultiAgentCoordinator.ps1")
+# Phase 12 - Predictive Maintenance
 . (Join-Path $basePath "VBAF.Enterprise.PredictiveMaintenance.ps1")
+# Phase 13 - Natural Language Interface
+. (Join-Path $basePath "VBAF.Enterprise.NLInterface.ps1")
 
 # Write-Host "Visualization modules loaded" -ForegroundColor Green
 Write-Host "VBAF Framework ready!" -ForegroundColor Green
@@ -132,4 +135,4 @@ Write-Host "      - oo00oo - " -ForegroundColor Yellow
 Write-Host "The 3 Dashboards" -ForegroundColor Green
 Write-Host "VBAF.Visualization.Example-Dashboard.ps1" -ForegroundColor Cyan                # Dashboard 1
 Write-Host "VBAF.Business.Dashboard-Demo.ps1" -ForegroundColor Cyan                        # Dashboard 2
-Write-Host "VBAF.Core.Test-ValidationDashboard.ps1" -ForegroundColor Cyan                  # Dashboard 3
+Write-Host "VBAF.Core.Test-ValidationDashboard.ps1" -ForegroundColor Cyan                  # Dashboard 3n                  # Dashboard 3

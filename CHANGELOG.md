@@ -100,3 +100,24 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
 
 *Format based on [Keep a Changelog](https://keepachangelog.com)*
 
+
+## [3.1.0] - 2026-03-11 — Phase 10: Enterprise Intelligence
+
+### Added
+- Pillar 8: VBAF.Enterprise.SecurityMonitor.ps1
+  - DQN agent classifies Windows Security Events
+  - Actions: Ignore / Log / Alert / Lock
+  - Real data: Get-WinEvent -LogName Security
+  - Result: +39.7% vs random baseline
+
+- Pillar 9: VBAF.Enterprise.NetworkWatcher.ps1
+  - DQN agent monitors network infrastructure health
+  - Actions: Ignore / Monitor / Alert / Escalate
+  - Real data: Test-NetConnection, Get-NetAdapter, WMI
+  - Result: +35.4% vs random baseline
+
+- Pillar 10: VBAF.Enterprise.DataFlowOptimizer.ps1
+  - DQN agent optimizes data pipeline conditions
+  - Actions: Throttle / Prioritize / Cache / Reroute
+  - Real data: WMI disk I/O, CSV streams, SQL probe
+  - Result: +59.8% vs random baseline

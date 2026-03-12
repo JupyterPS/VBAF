@@ -167,3 +167,13 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Real data: WMI memory, active sessions, event log
   - Fix: UrgencyScore replaces OffHours (dead daytime dimension)
   - Result: +59.1% vs random baseline
+
+## [3.7.0] - 2026-03-12 — Phase 16: Federated Learning
+
+### Added
+- VBAF.Enterprise.FederatedLearning.ps1
+  - DQN agent coordinates distributed model updates across nodes
+  - Actions: Collect / Aggregate / Validate / Rollback
+  - Real data: Get-Job, network latency, WMI CPU
+  - Fix: UpdateQuality inverted to break monotonic collapse
+  - Result: +62.1% vs random baseline

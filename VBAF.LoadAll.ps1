@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
  
 <#
 .SYNOPSIS
@@ -117,6 +117,8 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 . (Join-Path $basePath "VBAF.Enterprise.PredictiveMaintenance.ps1")
 # Phase 13 - Natural Language Interface
 . (Join-Path $basePath "VBAF.Enterprise.NLInterface.ps1")
+# Phase 14 - Self-Healing Infrastructure
+. (Join-Path $basePath "VBAF.Enterprise.SelfHealing.ps1")
 
 # Write-Host "Visualization modules loaded" -ForegroundColor Green
 Write-Host "VBAF Framework ready!" -ForegroundColor Green

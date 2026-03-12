@@ -157,3 +157,13 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Actions: Observe / Adjust / Restart / Rebuild
   - Real data: WMI OS, Get-Service, Get-Process CPU
   - Result: +63% vs random baseline — best result to date
+
+## [3.6.0] - 2026-03-12 — Phase 15: Enterprise Dashboard
+
+### Added
+- VBAF.Enterprise.Dashboard.ps1
+  - DQN agent manages dashboard resource allocation
+  - Actions: Cache / Refresh / Prioritise / Rebuild
+  - Real data: WMI memory, active sessions, event log
+  - Fix: UrgencyScore replaces OffHours (dead daytime dimension)
+  - Result: +59.1% vs random baseline

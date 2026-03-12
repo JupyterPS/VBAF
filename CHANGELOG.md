@@ -148,3 +148,12 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Actions: Respond / Execute / Orchestrate / Escalate
   - Real data: PS ISE host, sample command routing demo
   - Result: +40.4% vs random baseline, 100% recall
+
+## [3.5.0] - 2026-03-12 — Phase 14: Self-Healing Infrastructure
+
+### Added
+- VBAF.Enterprise.SelfHealing.ps1
+  - DQN agent autonomously remediates system failures
+  - Actions: Observe / Adjust / Restart / Rebuild
+  - Real data: WMI OS, Get-Service, Get-Process CPU
+  - Result: +63% vs random baseline — best result to date

@@ -177,3 +177,13 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Real data: Get-Job, network latency, WMI CPU
   - Fix: UpdateQuality inverted to break monotonic collapse
   - Result: +62.1% vs random baseline
+
+## [3.8.0] - 2026-03-12 — Phase 17: Cloud Bridge
+
+### Added
+- VBAF.Enterprise.CloudBridge.ps1
+  - DQN agent manages hybrid cloud/on-premise workload routing
+  - Actions: Local / Offload / Sync / Failover
+  - Real data: Test-NetConnection latency, WMI memory, CPU
+  - Fix: CloudBandwidth inverted to break monotonic collapse
+  - Result: +24.5% vs random baseline

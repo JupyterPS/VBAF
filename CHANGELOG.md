@@ -197,3 +197,13 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Real data: Get-WinEvent, WMI memory, active processes
   - Fix: DeviationTrend inverted to break monotonic collapse
   - Result: +30.6% vs random baseline
+
+## [3.10.0] - 2026-03-12 — Phase 19: Capacity Planning Intelligence
+
+### Added
+- VBAF.Enterprise.CapacityPlanner.ps1
+  - DQN agent predicts and manages resource exhaustion
+  - Actions: Monitor / Warn / Reserve / Escalate
+  - Real data: Get-PSDrive disk usage, WMI free memory
+  - Fix: AvailableHeadroom + TimeRemaining both inverted — dual inversion
+  - Result: +32.6% vs random baseline

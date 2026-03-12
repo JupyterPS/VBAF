@@ -119,8 +119,9 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 . (Join-Path $basePath "VBAF.Enterprise.NLInterface.ps1")
 # Phase 14 - Self-Healing Infrastructure
 . (Join-Path $basePath "VBAF.Enterprise.SelfHealing.ps1")
+# Phase 15 - Enterprise Dashboard
+. (Join-Path $basePath "VBAF.Enterprise.Dashboard.ps1")
 
-# Write-Host "Visualization modules loaded" -ForegroundColor Green
 Write-Host "VBAF Framework ready!" -ForegroundColor Green
 
 Write-Host "      - oo00oo - " -ForegroundColor Yellow 
@@ -138,3 +139,6 @@ Write-Host "The 3 Dashboards" -ForegroundColor Green
 Write-Host "VBAF.Visualization.Example-Dashboard.ps1" -ForegroundColor Cyan                # Dashboard 1
 Write-Host "VBAF.Business.Dashboard-Demo.ps1" -ForegroundColor Cyan                        # Dashboard 2
 Write-Host "VBAF.Core.Test-ValidationDashboard.ps1" -ForegroundColor Cyan                  # Dashboard 3n                  # Dashboard 3
+
+
+

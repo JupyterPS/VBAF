@@ -187,3 +187,13 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Real data: Test-NetConnection latency, WMI memory, CPU
   - Fix: CloudBandwidth inverted to break monotonic collapse
   - Result: +24.5% vs random baseline
+
+## [3.9.0] - 2026-03-12 — Phase 18: Anomaly Detection Engine
+
+### Added
+- VBAF.Enterprise.AnomalyDetector.ps1
+  - DQN agent detects and responds to cross-pillar anomalies
+  - Actions: Ignore / Flag / Alert / Escalate
+  - Real data: Get-WinEvent, WMI memory, active processes
+  - Fix: DeviationTrend inverted to break monotonic collapse
+  - Result: +30.6% vs random baseline

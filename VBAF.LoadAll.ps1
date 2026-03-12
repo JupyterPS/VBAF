@@ -22,58 +22,25 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 . (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
 . (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1") 
 # VBAF.Business.CompanyAgent.ps1
-. (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
-. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
 . (Join-Path $basePath "VBAF.Business.CompanyState.ps1")
 . (Join-Path $basePath "VBAF.Business.BusinessAction.ps1") 
 # VBAF.Business.Dashboard-Demo.ps1                                                         # Dashboard 2
 . (Join-Path $basePath "VBAF.Business.CompanyAgent.ps1")
 . (Join-Path $basePath "VBAF.Business.MarketEnvironment.ps1")
 . (Join-Path $basePath "VBAF.Visualization.MarketDashboard.ps1") 
-. (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
-. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
-. (Join-Path $basePath "VBAF.Business.CompanyState.ps1")
-. (Join-Path $basePath "VBAF.Business.BusinessAction.ps1")                         
 # VBAF.Business.MarketEnvironment.ps1
-. (Join-Path $basePath "VBAF.Business.CompanyAgent.ps1") 
 # VBAF.Business.Test.CompanyMarket.ps1
-. (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
-. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
-. (Join-Path $basePath "VBAF.Business.CompanyState.ps1")
-. (Join-Path $basePath "VBAF.Business.BusinessAction.ps1")
-. (Join-Path $basePath "VBAF.Business.CompanyAgent.ps1")
-. (Join-Path $basePath "VBAF.Business.MarketEnvironment.ps1") 
 # VBAF.Company.TestLearning.ps1 
-. (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
-. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
-. (Join-Path $basePath "VBAF.Business.CompanyState.ps1")
-. (Join-Path $basePath "VBAF.Business.BusinessAction.ps1")
-. (Join-Path $basePath "VBAF.Business.CompanyAgent.ps1") 
 # VBAF.Core.Example-XOR.ps1
-. (Join-Path $basePath "VBAF.Core.AllClasses.ps1") 
 # VBAF.RL.Example-CastleLearning.ps1
-. (Join-Path $basePath "VBAF.RL.QTable.ps1")
-. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
-. (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1") 
 # VBAF.RL.QLearningAgent.ps1
-. (Join-Path $basePath "VBAF.RL.QTable.ps1")
-. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1") 
 # VBAF.Visualization.Example-Dashboard.ps1                                                 # Dashboard 1
 . (Join-Path $basePath "VBAF.Visualization.MetricsCollector.ps1")
 . (Join-Path $basePath "VBAF.Visualization.GraphRenderer.ps1")
 . (Join-Path $basePath "VBAF.Visualization.LearningDashboard.ps1")                          
 # VBAF.Visualization.LearningDashboard.ps1
-. (Join-Path $basePath "VBAF.Visualization.MetricsCollector.ps1")
-. (Join-Path $basePath "VBAF.Visualization.GraphRenderer.ps1") 
 # VBAF.Core.Test-ValidationDashboard.ps1                                                   # Dashboard 3
-. (Join-Path $basePath "VBAF.Core.AllClasses.ps1")
-. (Join-Path $basePath "VBAF.RL.QTable.ps1")
-. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
-. (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
 # VBAF.Art.CastleCompetition.ps1
-. (Join-Path $basePath "VBAF.RL.QTable.ps1")
-. (Join-Path $basePath "VBAF.RL.ExperienceReplay.ps1")
-. (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
 . (Join-Path $basePath "VBAF.Art.AestheticReward.ps1")
 # Phase 3 - RL Algorithms
 . (Join-Path $basePath "VBAF.RL.Environment.ps1")
@@ -123,10 +90,11 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 . (Join-Path $basePath "VBAF.Enterprise.Dashboard.ps1")
 # Phase 16 - Federated Learning
 . (Join-Path $basePath "VBAF.Enterprise.FederatedLearning.ps1")
+# Phase 17 - Cloud Bridge
+. (Join-Path $basePath "VBAF.Enterprise.CloudBridge.ps1")
 
 Write-Host "VBAF Framework ready!" -ForegroundColor Green
 
-Write-Host "      - oo00oo - " -ForegroundColor Yellow 
 Write-Host "VISIBLE LOADABLES FOR TESTING" -ForegroundColor Green
 
 Write-Host "VBAF.LoadAll.ps1" -ForegroundColor Cyan
@@ -136,11 +104,13 @@ Write-Host "VBAF.Company.TestLearning.ps1" -ForegroundColor Cyan
 Write-Host "VBAF.Core.Example-XOR.ps1" -ForegroundColor Cyan
 Write-Host "VBAF.Business.Test.CompanyMarket.ps1" -ForegroundColor Cyan
 
-Write-Host "      - oo00oo - " -ForegroundColor Yellow 
 Write-Host "The 3 Dashboards" -ForegroundColor Green
 Write-Host "VBAF.Visualization.Example-Dashboard.ps1" -ForegroundColor Cyan                # Dashboard 1
 Write-Host "VBAF.Business.Dashboard-Demo.ps1" -ForegroundColor Cyan                        # Dashboard 2
 Write-Host "VBAF.Core.Test-ValidationDashboard.ps1" -ForegroundColor Cyan                  # Dashboard 3n                  # Dashboard 3
+
+
+
 
 
 

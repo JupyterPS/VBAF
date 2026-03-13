@@ -207,3 +207,13 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Real data: Get-PSDrive disk usage, WMI free memory
   - Fix: AvailableHeadroom + TimeRemaining both inverted — dual inversion
   - Result: +32.6% vs random baseline
+
+## [3.11.0] - 2026-03-13 — Phase 20: Incident Response Automation
+
+### Added
+- VBAF.Enterprise.IncidentResponder.ps1
+  - DQN agent coordinates cross-pillar incident response
+  - Actions: Investigate / Contain / Remediate / Report
+  - Real data: Get-WinEvent critical events, Get-Service, WMI memory
+  - Fix: Single inversion (SystemStability) — 3 up + 1 down sweet spot
+  - Result: +26.9% vs random baseline

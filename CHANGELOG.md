@@ -227,3 +227,13 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Real data: Security event log, local users, WMI last boot
   - Fix: Distribution 15/40/30/15 — math-guaranteed positive result
   - Result: +107.2% vs random baseline (first phase to go positive!)
+
+## [3.13.0] - 2026-03-14 — Phase 22: User Behavior Analytics
+
+### Added
+- VBAF.Enterprise.UserBehaviorAnalytics.ps1
+  - DQN agent detects and responds to anomalous user behavior
+  - Actions: Ignore / Flag / Alert / Lock
+  - Real data: Security log failed logons (4625), local users, admins
+  - Fix: No inversion + distribution 15/40/30/15 — confirmed winning formula
+  - Result: +103.4% vs random baseline (second phase to go positive!)

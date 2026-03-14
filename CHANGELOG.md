@@ -247,3 +247,13 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Real data: Get-HotFix, WMI OS build, System event errors
   - Formula: No inversion + distribution 15/40/30/15
   - Result: +65.5% vs random baseline
+
+## [3.15.0] - 2026-03-14 — Phase 24: Backup Optimizer
+
+### Added
+- VBAF.Enterprise.BackupOptimizer.ps1
+  - DQN agent manages enterprise backup strategy decisions
+  - Actions: Skip / Incremental / Full / Replicate
+  - Real data: Get-PSDrive, WMI memory, App event warnings
+  - Formula: No inversion + distribution 15/40/30/15
+  - Result: +116.3% vs random baseline (best result to date!)

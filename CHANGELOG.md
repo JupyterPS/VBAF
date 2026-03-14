@@ -237,3 +237,13 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Real data: Security log failed logons (4625), local users, admins
   - Fix: No inversion + distribution 15/40/30/15 — confirmed winning formula
   - Result: +103.4% vs random baseline (second phase to go positive!)
+
+## [3.14.0] - 2026-03-14 — Phase 23: Patch Intelligence
+
+### Added
+- VBAF.Enterprise.PatchIntelligence.ps1
+  - DQN agent manages enterprise patch deployment decisions
+  - Actions: Defer / Schedule / Apply / Rollback
+  - Real data: Get-HotFix, WMI OS build, System event errors
+  - Formula: No inversion + distribution 15/40/30/15
+  - Result: +65.5% vs random baseline

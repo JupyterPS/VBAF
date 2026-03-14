@@ -257,3 +257,13 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Real data: Get-PSDrive, WMI memory, App event warnings
   - Formula: No inversion + distribution 15/40/30/15
   - Result: +116.3% vs random baseline (best result to date!)
+
+## [3.16.0] - 2026-03-14 — Phase 25: Energy Optimizer
+
+### Added
+- VBAF.Enterprise.EnergyOptimizer.ps1
+  - DQN agent manages enterprise energy consumption
+  - Actions: Throttle / Sleep / Consolidate / Scale
+  - Real data: WMI CPU load, memory free, process count
+  - Formula: No inversion + distribution 15/40/30/15
+  - Result: +117.5% vs random baseline (new best result!)

@@ -139,6 +139,8 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 . (Join-Path $basePath "VBAF.Enterprise.PatchIntelligence.ps1")
 # Phase 24 - Backup Optimizer
 . (Join-Path $basePath "VBAF.Enterprise.BackupOptimizer.ps1")
+# Phase 25 - Energy Optimizer
+. (Join-Path $basePath "VBAF.Enterprise.EnergyOptimizer.ps1")
 
 # Write-Host "Visualization modules loaded" -ForegroundColor Green
 Write-Host "VBAF Framework ready!" -ForegroundColor Green

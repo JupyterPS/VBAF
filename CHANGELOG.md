@@ -217,3 +217,13 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Real data: Get-WinEvent critical events, Get-Service, WMI memory
   - Fix: Single inversion (SystemStability) — 3 up + 1 down sweet spot
   - Result: +26.9% vs random baseline
+
+## [3.12.0] - 2026-03-14 — Phase 21: Compliance Reporting Engine
+
+### Added
+- VBAF.Enterprise.ComplianceReporter.ps1
+  - DQN agent manages GDPR/ISO27001/NIS2 compliance evidence
+  - Actions: Collect / Classify / Report / Archive
+  - Real data: Security event log, local users, WMI last boot
+  - Fix: Distribution 15/40/30/15 — math-guaranteed positive result
+  - Result: +107.2% vs random baseline (first phase to go positive!)

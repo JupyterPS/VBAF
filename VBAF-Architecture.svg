@@ -1,73 +1,77 @@
 ﻿<svg width="680" height="520" viewBox="0 0 680 520" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
 
-  <!-- Background -->
   <rect width="680" height="520" fill="#0d1117" rx="12"/>
 
-  <!-- Title -->
   <text x="340" y="32" text-anchor="middle" font-size="16" font-weight="600" fill="#e6edf3">VBAF Enterprise Architecture</text>
   <text x="340" y="50" text-anchor="middle" font-size="12" fill="#7d8590">27 phases · pure PowerShell 5.1 · any Windows environment</text>
 
-  <!-- Arrow marker -->
   <defs>
     <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M2 1L8 5L2 9" fill="none" stroke="#444c56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </marker>
   </defs>
 
-  <!-- Phase 27 - AutoPilot (Crown Jewel - Amber) -->
-  <rect x="240" y="62" width="200" height="52" rx="8" fill="#2d1f00" stroke="#d29922" stroke-width="1"/>
-  <text x="340" y="83" text-anchor="middle" font-size="13" font-weight="600" fill="#d29922">Phase 27 — AutoPilot</text>
-  <text x="340" y="101" text-anchor="middle" font-size="11" fill="#9e6a03">One agent. Full autonomy.</text>
+  <!-- Phase 27 - AutoPilot -->
+  <a href="https://github.com/users/JupyterPS/projects" target="_blank">
+    <rect x="240" y="62" width="200" height="52" rx="8" fill="#2d1f00" stroke="#d29922" stroke-width="1"/>
+    <text x="340" y="83" text-anchor="middle" font-size="13" font-weight="600" fill="#d29922">Phase 27 — AutoPilot</text>
+    <text x="340" y="101" text-anchor="middle" font-size="11" fill="#9e6a03">One agent. Full autonomy.</text>
+  </a>
 
-  <!-- Connector -->
   <line x1="340" y1="130" x2="340" y2="116" stroke="#444c56" stroke-width="1" marker-end="url(#arr)"/>
 
   <!-- Phase 26 -->
-  <rect x="200" y="130" width="280" height="44" rx="8" fill="#0d2140" stroke="#388bfd" stroke-width="0.8"/>
-  <text x="340" y="147" text-anchor="middle" font-size="12" font-weight="600" fill="#79c0ff">Phase 26</text>
-  <text x="340" y="163" text-anchor="middle" font-size="11" fill="#388bfd">Multi-site coordination</text>
+  <a href="https://github.com/users/JupyterPS/projects" target="_blank">
+    <rect x="200" y="130" width="280" height="44" rx="8" fill="#0d2140" stroke="#388bfd" stroke-width="0.8"/>
+    <text x="340" y="147" text-anchor="middle" font-size="12" font-weight="600" fill="#79c0ff">Phase 26</text>
+    <text x="340" y="163" text-anchor="middle" font-size="11" fill="#388bfd">Multi-site coordination</text>
+  </a>
 
-  <!-- Connector -->
   <line x1="340" y1="190" x2="340" y2="176" stroke="#444c56" stroke-width="1" marker-end="url(#arr)"/>
 
   <!-- Phases 22-25 -->
-  <rect x="140" y="190" width="400" height="44" rx="8" fill="#0d2140" stroke="#388bfd" stroke-width="0.8"/>
-  <text x="340" y="207" text-anchor="middle" font-size="12" font-weight="600" fill="#79c0ff">Phases 22–25</text>
-  <text x="340" y="223" text-anchor="middle" font-size="11" fill="#388bfd">UBA · Patch · Backup · Energy optimization</text>
+  <a href="https://github.com/users/JupyterPS/projects" target="_blank">
+    <rect x="140" y="190" width="400" height="44" rx="8" fill="#0d2140" stroke="#388bfd" stroke-width="0.8"/>
+    <text x="340" y="207" text-anchor="middle" font-size="12" font-weight="600" fill="#79c0ff">Phases 22–25</text>
+    <text x="340" y="223" text-anchor="middle" font-size="11" fill="#388bfd">UBA · Patch · Backup · Energy optimization</text>
+  </a>
 
-  <!-- Connector -->
   <line x1="340" y1="250" x2="340" y2="236" stroke="#444c56" stroke-width="1" marker-end="url(#arr)"/>
 
   <!-- Phases 18-21 -->
-  <rect x="100" y="250" width="480" height="44" rx="8" fill="#0d2140" stroke="#388bfd" stroke-width="0.8"/>
-  <text x="340" y="267" text-anchor="middle" font-size="12" font-weight="600" fill="#79c0ff">Phases 18–21</text>
-  <text x="340" y="283" text-anchor="middle" font-size="11" fill="#388bfd">Anomaly · Capacity · Incident response · Compliance</text>
+  <a href="https://github.com/users/JupyterPS/projects" target="_blank">
+    <rect x="100" y="250" width="480" height="44" rx="8" fill="#0d2140" stroke="#388bfd" stroke-width="0.8"/>
+    <text x="340" y="267" text-anchor="middle" font-size="12" font-weight="600" fill="#79c0ff">Phases 18–21</text>
+    <text x="340" y="283" text-anchor="middle" font-size="11" fill="#388bfd">Anomaly · Capacity · Incident response · Compliance</text>
+  </a>
 
-  <!-- Connector -->
   <line x1="340" y1="310" x2="340" y2="296" stroke="#444c56" stroke-width="1" marker-end="url(#arr)"/>
 
   <!-- Phases 14-17 -->
-  <rect x="68" y="310" width="544" height="44" rx="8" fill="#0d2140" stroke="#388bfd" stroke-width="0.8"/>
-  <text x="340" y="327" text-anchor="middle" font-size="12" font-weight="600" fill="#79c0ff">Phases 14–17</text>
-  <text x="340" y="343" text-anchor="middle" font-size="11" fill="#388bfd">Self-Heal · Dashboard · Federated learning · Cloud Bridge</text>
+  <a href="https://github.com/users/JupyterPS/projects" target="_blank">
+    <rect x="68" y="310" width="544" height="44" rx="8" fill="#0d2140" stroke="#388bfd" stroke-width="0.8"/>
+    <text x="340" y="327" text-anchor="middle" font-size="12" font-weight="600" fill="#79c0ff">Phases 14–17</text>
+    <text x="340" y="343" text-anchor="middle" font-size="11" fill="#388bfd">Self-Heal · Dashboard · Federated learning · Cloud Bridge</text>
+  </a>
 
-  <!-- Connector -->
   <line x1="340" y1="370" x2="340" y2="356" stroke="#444c56" stroke-width="1" marker-end="url(#arr)"/>
 
   <!-- Phases 10-13 -->
-  <rect x="44" y="370" width="592" height="44" rx="8" fill="#0d2140" stroke="#388bfd" stroke-width="0.8"/>
-  <text x="340" y="387" text-anchor="middle" font-size="12" font-weight="600" fill="#79c0ff">Phases 10–13</text>
-  <text x="340" y="403" text-anchor="middle" font-size="11" fill="#388bfd">Security · Network · DataFlow · Multi-Agent · Predictive · NL Interface</text>
+  <a href="https://github.com/users/JupyterPS/projects" target="_blank">
+    <rect x="44" y="370" width="592" height="44" rx="8" fill="#0d2140" stroke="#388bfd" stroke-width="0.8"/>
+    <text x="340" y="387" text-anchor="middle" font-size="12" font-weight="600" fill="#79c0ff">Phases 10–13</text>
+    <text x="340" y="403" text-anchor="middle" font-size="11" fill="#388bfd">Security · Network · DataFlow · Multi-Agent · Predictive · NL Interface</text>
+  </a>
 
-  <!-- Connector -->
   <line x1="340" y1="430" x2="340" y2="416" stroke="#444c56" stroke-width="1" marker-end="url(#arr)"/>
 
-  <!-- Phase 9 Foundation (Teal) -->
-  <rect x="28" y="430" width="624" height="52" rx="8" fill="#001a14" stroke="#3fb950" stroke-width="1"/>
-  <text x="340" y="451" text-anchor="middle" font-size="13" font-weight="600" fill="#3fb950">Phase 9 — Foundation</text>
-  <text x="340" y="469" text-anchor="middle" font-size="11" fill="#238636">JobScheduler · ResourceOptimizer · AlertRouter · SupplyChain · Environment</text>
+  <!-- Phase 9 Foundation -->
+  <a href="https://github.com/users/JupyterPS/projects" target="_blank">
+    <rect x="28" y="430" width="624" height="52" rx="8" fill="#001a14" stroke="#3fb950" stroke-width="1"/>
+    <text x="340" y="451" text-anchor="middle" font-size="13" font-weight="600" fill="#3fb950">Phase 9 — Foundation</text>
+    <text x="340" y="469" text-anchor="middle" font-size="11" fill="#238636">JobScheduler · ResourceOptimizer · AlertRouter · SupplyChain · Environment</text>
+  </a>
 
-  <!-- Footer -->
-  <text x="340" y="503" text-anchor="middle" font-size="11" fill="#484f58">github.com/JupyterPS/VBAF · Install-Module VBAF · Built in Denmark 🇩🇰</text>
+  <text x="340" y="503" text-anchor="middle" font-size="11" fill="#484f58">github.com/JupyterPS/VBAF · Install-Module VBAF · Built in Denmark</text>
 
 </svg>

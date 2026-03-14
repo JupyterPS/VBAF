@@ -5,7 +5,7 @@
 
 ## Architecture
 
-![VBAF Enterprise Architecture](VBAF-Architecture.svg)
+[![VBAF Enterprise Architecture](VBAF-Architecture.svg)](https://github.com/users/JupyterPS/projects)
 
 ## What is VBAF?
 
@@ -114,3 +114,4 @@ platform that should have existed years ago.
 ---
 
 *"Intelligent automation for the Windows environments that power the world - built in Denmark, running everywhere."*
+

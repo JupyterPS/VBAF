@@ -1,18 +1,26 @@
-﻿# VBAF: Visual Business Automation Framework
+﻿# VBAF — Visual Business Automation Framework
 
-**An Enterprise AI Automation Engine for Windows**
-*Built in pure PowerShell 5.1 — no Python, no cloud, no dependencies*
+> **v4.0.0** · PowerShell 5.1 · DQN Reinforcement Learning · Enterprise Automation Engine
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![PowerShell: 5.1+](https://img.shields.io/badge/PowerShell-5.1+-blue.svg)](https://docs.microsoft.com/powershell/)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/VBAF.svg)](https://www.powershellgallery.com/packages/VBAF)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/VBAF.svg)](https://www.powershellgallery.com/packages/VBAF)
+[![GitHub stars](https://img.shields.io/github/stars/JupyterPS/VBAF.svg)](https://github.com/JupyterPS/VBAF/stargazers)
+
+---
 
 ## Architecture
 
 [![VBAF Enterprise Architecture](VBAF-Architecture.svg)](https://github.com/users/JupyterPS/projects)
 
+---
+
 ## What is VBAF?
 
-VBAF is a **27-phase Enterprise Automation Engine** that deploys intelligent DQN agents directly on Windows infrastructure — learning from real Windows data and making autonomous decisions across security, networking, scheduling, resource management and more.
+VBAF is a PowerShell 5.1 framework that trains Deep Q-Network (DQN) agents to make autonomous enterprise IT decisions. Each agent observes real Windows system signals and learns the optimal action through reinforcement learning — no hardcoded rules, no thresholds, no if/else chains.
 
-**No Python. No cloud. No GPU. No dependencies.**
-Runs on any Windows box with PowerShell 5.1.
+**27 phases. 14 enterprise pillars. 1 AutoPilot to rule them all.**
 
 ---
 
@@ -21,64 +29,54 @@ Runs on any Windows box with PowerShell 5.1.
 Install-Module VBAF -Scope CurrentUser
 Import-Module VBAF
 
-# Or clone and load
-git clone https://github.com/JupyterPS/VBAF.git
-cd VBAF
-
-# Full Enterprise Engine
 . .\VBAF.LoadAll.ps1
 
-# Core only
-. .\VBAF.LoadCore.ps1
+$r = Invoke-VBAFAutoPilotTraining -Episodes 100 -PrintEvery 10 -SimMode
 ```
 
-## Enterprise Pillars
+---
 
-| Pillar | File | Actions |
-|--------|------|---------|
-| Foundation | Enterprise.Environment | 4 environments |
-| 4 Job Scheduler | Enterprise.JobScheduler | Schedule / Defer / Prioritise / Skip |
-| 5 Resource Optimizer | Enterprise.ResourceOptimizer | Throttle / Balance / Scale / Idle |
-| 6 Alert Router | Enterprise.AlertRouter | Ignore / Log / Alert / Escalate |
-| 7 Supply Chain | Enterprise.SupplyChain | Hold / Order / Expedite / Cancel |
-| 8 Security Monitor | Enterprise.SecurityMonitor | Ignore / Log / Alert / Lock |
-| 9 Network Watcher | Enterprise.NetworkWatcher | Monitor / Alert / Reroute / Escalate |
-| 10 Data Flow | Enterprise.DataFlowOptimizer | Throttle / Prioritise / Cache / Reroute |
+## Enterprise Automation Engine (Phases 14-27)
 
-## Proven Results
+| Phase | File | Actions | Improvement | Version |
+|-------|------|---------|-------------|---------|
+| 14 | VBAF.Enterprise.SelfHealing.ps1 | Observe / Adjust / Restart / Rebuild | +63.0% | v3.5.0 |
+| 15 | VBAF.Enterprise.Dashboard.ps1 | Cache / Refresh / Prioritise / Rebuild | +59.1% | v3.6.0 |
+| 16 | VBAF.Enterprise.FederatedLearning.ps1 | Collect / Aggregate / Validate / Rollback | +62.1% | v3.7.0 |
+| 17 | VBAF.Enterprise.CloudBridge.ps1 | Local / Offload / Sync / Failover | +24.5% | v3.8.0 |
+| 18 | VBAF.Enterprise.AnomalyDetector.ps1 | Ignore / Flag / Alert / Escalate | +30.6% | v3.9.0 |
+| 19 | VBAF.Enterprise.CapacityPlanner.ps1 | Monitor / Warn / Reserve / Escalate | +32.6% | v3.10.0 |
+| 20 | VBAF.Enterprise.IncidentResponder.ps1 | Investigate / Contain / Remediate / Report | +26.9% | v3.11.0 |
+| 21 | VBAF.Enterprise.ComplianceReporter.ps1 | Collect / Classify / Report / Archive | +107.2% | v3.12.0 |
+| 22 | VBAF.Enterprise.UserBehaviorAnalytics.ps1 | Ignore / Flag / Alert / Lock | +103.4% | v3.13.0 |
+| 23 | VBAF.Enterprise.PatchIntelligence.ps1 | Defer / Schedule / Apply / Rollback | +65.5% | v3.14.0 |
+| 24 | VBAF.Enterprise.BackupOptimizer.ps1 | Skip / Incremental / Full / Replicate | +116.3% | v3.15.0 |
+| 25 | VBAF.Enterprise.EnergyOptimizer.ps1 | Throttle / Sleep / Consolidate / Scale | +117.5% | v3.16.0 |
+| 26 | VBAF.Enterprise.MultiSiteCoordinator.ps1 | Local / Sync / Failover / Rebalance | +47.4% | v3.17.0 |
+| 27 | VBAF.Enterprise.AutoPilot.ps1 | Delegate / Override / Escalate / Autopilot | +63.3% | v4.0.0 |
 
-| Pillar | Improvement | Recall |
-|--------|-------------|--------|
-| Job Scheduler | +292% | — |
-| Alert Router | +230% | — |
-| Security Monitor | +39.7% | 100% |
-| Predictive Maintenance | +35.6% | 100% |
-| Natural Language Interface | +40.4% | 100% |
-| Enterprise Dashboard | +59.1% | 100% |
+---
 
-## Full Roadmap
+## Version History
 
-| Phase | Theme | Status |
-|-------|-------|--------|
-| 9 | Foundation - 5 Enterprise pillars | Complete |
-| 10 | Security, Network, DataFlow | Complete |
-| 11 | Multi-Agent Collaboration | Complete |
-| 12 | Predictive Maintenance | Complete |
-| 13 | Natural Language Interface | Complete |
-| 14 | Self-Healing Infrastructure | Complete |
-| 15 | Enterprise Dashboard | Complete |
-| 16 | Federated Learning | In Progress |
-| 17 | Cloud Bridge | Planned |
-| 18 | Anomaly Detection Engine | Planned |
-| 19 | Capacity Planning Intelligence | Planned |
-| 20 | Incident Response Automation | Planned |
-| 21 | Compliance Reporting Engine | Planned |
-| 22 | User Behavior Analytics | Planned |
-| 23 | Patch and Update Intelligence | Planned |
-| 24 | Backup and Recovery Optimization | Planned |
-| 25 | Energy and Cost Optimization | Planned |
-| 26 | Multi-Site Coordination | Planned |
-| 27 | AutoPilot - one agent to rule them all | Planned |
+| Version | Phase | Highlight |
+|---------|-------|-----------|
+| v4.0.0 | Phase 27 | AutoPilot — crown jewel, all 13 pillars |
+| v3.17.0 | Phase 26 | Multi-Site Coordinator +47.4% |
+| v3.16.0 | Phase 25 | Energy Optimizer +117.5% |
+| v3.15.0 | Phase 24 | Backup Optimizer +116.3% |
+| v3.14.0 | Phase 23 | Patch Intelligence +65.5% |
+| v3.13.0 | Phase 22 | User Behavior Analytics +103.4% |
+| v3.12.0 | Phase 21 | Compliance Reporter +107.2% |
+| v3.11.0 | Phase 20 | Incident Responder +26.9% |
+| v3.10.0 | Phase 19 | Capacity Planner +32.6% |
+| v3.9.0 | Phase 18 | Anomaly Detector +30.6% |
+| v3.8.0 | Phase 17 | Cloud Bridge +24.5% |
+| v3.7.0 | Phase 16 | Federated Learning +62.1% |
+| v3.6.0 | Phase 15 | Dashboard +59.1% |
+| v3.5.0 | Phase 14 | Self-Healing +63.0% |
+
+---
 
 ## Requirements
 
@@ -86,32 +84,17 @@ cd VBAF
 - PowerShell 5.1 (included with Windows)
 - No additional dependencies
 
-## Why VBAF?
-
-| | VBAF | TensorFlow / PyTorch |
-|--|------|---------------------|
-| Language | PowerShell 5.1 | Python |
-| Installation | None - included with Windows | pip, conda, drivers, packages |
-| Target | Enterprise IT professionals | ML engineers, researchers |
-| Data sources | Real Windows: WMI, Event Log, counters | Datasets and APIs |
-| Deployment | Any Windows box | Python environment required |
-| Transparency | Full algorithm visibility | Optimized black boxes |
-| Cloud required | No | Optional but common |
+---
 
 ## License
 
 MIT License - see LICENSE for details.
-Academic and commercial use permitted with attribution.
-
-## Author
-
-**Henning**
-Roskilde, Denmark
-
-Enterprise IT automation specialist - building the intelligent Windows operations
-platform that should have existed years ago.
 
 ---
 
-*"Intelligent automation for the Windows environments that power the world - built in Denmark, running everywhere."*
+## Author
 
+**Henning** · Roskilde, Denmark 🇩🇰
+Built with Claude (Anthropic) · PowerShell ISE · PS 5.1
+
+*"Intelligent automation for the Windows environments that power the world."*

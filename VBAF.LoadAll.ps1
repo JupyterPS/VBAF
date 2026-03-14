@@ -135,6 +135,8 @@ Write-Host "33 Core modules loaded" -ForegroundColor Green
 . (Join-Path $basePath "VBAF.Enterprise.ComplianceReporter.ps1")
 # Phase 22 - User Behavior Analytics
 . (Join-Path $basePath "VBAF.Enterprise.UserBehaviorAnalytics.ps1")
+# Phase 23 - Patch Intelligence
+. (Join-Path $basePath "VBAF.Enterprise.PatchIntelligence.ps1")
 
 # Write-Host "Visualization modules loaded" -ForegroundColor Green
 Write-Host "VBAF Framework ready!" -ForegroundColor Green

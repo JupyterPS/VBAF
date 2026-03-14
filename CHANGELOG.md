@@ -267,3 +267,13 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Real data: WMI CPU load, memory free, process count
   - Formula: No inversion + distribution 15/40/30/15
   - Result: +117.5% vs random baseline (new best result!)
+
+## [3.17.0] - 2026-03-14 — Phase 26: Multi-Site Coordinator
+
+### Added
+- VBAF.Enterprise.MultiSiteCoordinator.ps1
+  - DQN agent coordinates cross-site workload distribution
+  - Actions: Local / Sync / Failover / Rebalance
+  - Real data: Test-NetConnection, WMI memory, CPU load
+  - Formula: No inversion + distribution 15/40/30/15
+  - Result: +47.4% vs random baseline (3rd run — initialization sensitive)

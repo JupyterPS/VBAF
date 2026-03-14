@@ -277,3 +277,14 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Real data: Test-NetConnection, WMI memory, CPU load
   - Formula: No inversion + distribution 15/40/30/15
   - Result: +47.4% vs random baseline (3rd run — initialization sensitive)
+
+## [4.0.0] - 2026-03-14 — Phase 27: AutoPilot — Crown Jewel 👑
+
+### Added
+- VBAF.Enterprise.AutoPilot.ps1
+  - Master DQN agent orchestrating ALL 13 enterprise pillars (Ph. 14-26)
+  - Actions: Delegate / Override / Escalate / Autopilot
+  - Real data: WinEvent, Get-Service, WMI memory+CPU
+  - Formula: No inversion + distribution 15/40/30/15
+  - Result: +63.3% vs random baseline — first try success
+  - 13/13 pillars online at test time

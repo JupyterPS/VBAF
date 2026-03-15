@@ -36,6 +36,17 @@ $r = Invoke-VBAFAutoPilotTraining -Episodes 100 -PrintEvery 10 -SimMode
 
 ---
 
+## Two Entry Points
+
+| Loader | Purpose |
+|--------|---------|
+| VBAF.LoadAll.ps1 | Full Enterprise Engine - all 27 phases |
+| VBAF.LoadCore.ps1 | Core algorithms only - DQN, Neural Networks, RL |
+
+Core for builders. All for operators.
+
+---
+
 ## Enterprise Automation Engine (Phases 14-27)
 
 | Phase | File | Actions | Improvement | Version |
@@ -98,4 +109,5 @@ MIT License - see LICENSE for details.
 Built with Claude (Anthropic) · PowerShell ISE · PS 5.1
 
 *"Intelligent automation for the Windows environments that power the world."*
+
 

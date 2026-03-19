@@ -46,6 +46,8 @@ Get-FeatureCorrelations -X $data.X -y $data.y -FeatureNames $data.Features
 # STEP 2: Set up experiment tracking
 # ============================================================
 Write-Host "--- Step 2: Experiment Tracking ---" -ForegroundColor Yellow
+$script:ExperimentStorePath = Join-Path $env:USERPROFILE "VBAFRegistry\experiments"
+Initialize-VBAFRegistry -Path "C:\Users\henni\VBAFRegistry" | Out-Null
 
 New-VBAFExperiment -Name "HousePriceMLOps" `
     -Description "Predict house prices - production model" | Out-Null
@@ -63,9 +65,9 @@ Start-VBAFRun -RunName "baseline_linear" -ModelType "LinearRegression" `
     -Params @{ scaler="Standard"; testSize=0.2 } | Out-Null
 
 $baseline = [LinearRegression]::new()
-$baseline.Fit($split.TrainX, $split.TrainY)
-$basePreds   = $baseline.Predict($split.TestX)
-$baseMetrics = Get-RegressionMetrics $split.TestY $basePreds
+$baseline.Fit($split.XTrain, $split.yTrain)
+$basePreds   = $baseline.Predict($split.XTest)
+$baseMetrics = Get-RegressionMetrics $split.yTest $basePreds
 
 Set-VBAFRunMetric -Key "R2"   -Value $baseMetrics.R2
 Set-VBAFRunMetric -Key "RMSE" -Value $baseMetrics.RMSE
@@ -80,13 +82,13 @@ Start-VBAFRun -RunName "ridge_poly2" -ModelType "RidgeRegression" `
     -Params @{ scaler="Standard"; poly=2; lambda=0.01 } | Out-Null
 
 $poly    = [PolynomialFeatures]::new(2)
-$trainXp = $poly.FitTransform($split.TrainX, $data.Features)
-$testXp  = $poly.FitTransform($split.TestX,  $data.Features)
+$trainXp = $poly.FitTransform($split.XTrain, $data.Features)
+$testXp  = $poly.FitTransform($split.XTest,  $data.Features)
 
 $improved = [RidgeRegression]::new(0.01)
-$improved.Fit($trainXp, $split.TrainY)
+$improved.Fit($trainXp, $split.yTrain)
 $impPreds   = $improved.Predict($testXp)
-$impMetrics = Get-RegressionMetrics $split.TestY $impPreds
+$impMetrics = Get-RegressionMetrics $split.yTest $impPreds
 
 Set-VBAFRunMetric -Key "R2"   -Value $impMetrics.R2
 Set-VBAFRunMetric -Key "RMSE" -Value $impMetrics.RMSE
@@ -104,7 +106,7 @@ Compare-VBAFRuns -ExperimentName "HousePriceMLOps"
 # ============================================================
 Write-Host "--- Step 6: Save to Registry ---" -ForegroundColor Yellow
 
-Initialize-VBAFRegistry | Out-Null
+Initialize-VBAFRegistry -Path "C:\Users\henni\VBAFRegistry" | Out-Null
 Save-VBAFModel `
     -ModelName   "HousePriceProduction" `
     -Model       $improved `
@@ -158,3 +160,6 @@ Write-Host ("¦  Monitoring     : Active ?                     ¦") -ForegroundCol
 Write-Host "+--------------------------------------------------+" -ForegroundColor Green
 Write-Host ""
 Write-Host "Try Tutorial 05 next: Anomaly Detection project!" -ForegroundColor Cyan
+
+
+

@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 <#
 .SYNOPSIS
     VBAF Tutorial 02 - Your First Classification Model
@@ -44,8 +44,8 @@ Write-Host ""
 
 $split  = Split-TrainTest -X $data.X -y $data.y -TestSize 0.2 -Seed 42
 
-Write-Host "Train samples: $($split.TrainX.Length)" -ForegroundColor White
-Write-Host "Test  samples: $($split.TestX.Length)"  -ForegroundColor White
+Write-Host "Train samples: $($split.XTrain.Length)" -ForegroundColor White
+Write-Host "Test  samples: $($split.XTest.Length)"  -ForegroundColor White
 Write-Host ""
 
 # ============================================================
@@ -58,15 +58,15 @@ Write-Host ""
 
 Write-Host "Training Gaussian Naive Bayes..." -ForegroundColor Yellow
 $gnb = [GaussianNaiveBayes]::new()
-$gnb.Fit($split.TrainX, $split.TrainY)
+$gnb.Fit($split.XTrain, $split.yTrain)
 $gnb.PrintSummary()
 
 # ============================================================
 # SECTION 5: Evaluate on test set
 # ============================================================
 
-$predictions = $gnb.Predict($split.TestX)
-$metrics     = Get-ClassificationMetrics $split.TestY $predictions
+$predictions = $gnb.Predict($split.XTest)
+$metrics     = Get-ClassificationMetrics $split.yTest $predictions
 
 Write-Host "Test Results:" -ForegroundColor Green
 Write-Host "  Accuracy : $([Math]::Round($metrics.Accuracy * 100, 1))%" -ForegroundColor White
@@ -82,8 +82,8 @@ Write-Host "=== Classifier Comparison ===" -ForegroundColor Cyan
 Write-Host ""
 
 $scaler = [StandardScaler]::new()
-$trainXs = $scaler.FitTransform($split.TrainX)
-$testXs  = $scaler.Transform($split.TestX)
+$trainXs = $scaler.FitTransform($split.XTrain)
+$testXs  = $scaler.Transform($split.XTest)
 
 $classifiers = @(
     @{ Name="GaussianNaiveBayes";  Model=$gnb },
@@ -93,13 +93,13 @@ $classifiers = @(
 
 foreach ($clf in $classifiers) {
     if ($clf.Name -ne "GaussianNaiveBayes") {
-        $clf.Model.Fit($trainXs, $split.TrainY)
+        $clf.Model.Fit($trainXs, $split.yTrain)
         $preds = $clf.Model.Predict($testXs)
     } else {
-        $preds = $clf.Model.Predict($split.TestX)
+        $preds = $clf.Model.Predict($split.XTest)
     }
-    $acc = Get-ClassificationMetrics $split.TestY $preds
-    $bar = "█" * [int]($acc.Accuracy * 20)
+    $acc = Get-ClassificationMetrics $split.yTest $preds
+    $bar = "�" * [int]($acc.Accuracy * 20)
     Write-Host ("  {0,-25} Acc={1:P1}  {2}" -f $clf.Name, $acc.Accuracy, $bar) -ForegroundColor White
 }
 

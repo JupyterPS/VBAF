@@ -1,5 +1,5 @@
-﻿#Requires -Version 5.1
 <#
+#Requires -Version 5.1
 .SYNOPSIS
     VBAF Tutorial 04 - Real-World Project: House Price MLOps
     Real-World Projects | Estimated time: 45 minutes
@@ -16,10 +16,10 @@
 #>
 
 Write-Host ""
-Write-Host "╔══════════════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "║  VBAF Tutorial 04 - House Price MLOps Project    ║" -ForegroundColor Cyan
-Write-Host "║  From raw data to monitored production model     ║" -ForegroundColor Cyan
-Write-Host "╚══════════════════════════════════════════════════╝" -ForegroundColor Cyan
+Write-Host "+--------------------------------------------------+" -ForegroundColor Cyan
+Write-Host "�  VBAF Tutorial 04 - House Price MLOps Project    �" -ForegroundColor Cyan
+Write-Host "�  From raw data to monitored production model     �" -ForegroundColor Cyan
+Write-Host "+--------------------------------------------------+" -ForegroundColor Cyan
 Write-Host ""
 
 # ============================================================
@@ -148,13 +148,13 @@ Test-VBAFRetrainingNeeded `
 # SUMMARY
 # ============================================================
 Write-Host ""
-Write-Host "╔══════════════════════════════════════════════════╗" -ForegroundColor Green
-Write-Host "║            Project Summary                       ║" -ForegroundColor Green
-Write-Host ("║  Baseline R2    : {0,-31}║" -f [Math]::Round($baseMetrics.R2, 4)) -ForegroundColor White
-Write-Host ("║  Improved R2    : {0,-31}║" -f [Math]::Round($impMetrics.R2, 4))  -ForegroundColor White
-Write-Host ("║  Improvement    : +{0,-30}║" -f [Math]::Round($impMetrics.R2 - $baseMetrics.R2, 4)) -ForegroundColor White
-Write-Host ("║  Model saved    : HousePriceProduction v1.0.0   ║") -ForegroundColor White
-Write-Host ("║  Monitoring     : Active ✅                     ║") -ForegroundColor White
-Write-Host "╚══════════════════════════════════════════════════╝" -ForegroundColor Green
+Write-Host "+--------------------------------------------------+" -ForegroundColor Green
+Write-Host "�            Project Summary                       �" -ForegroundColor Green
+Write-Host ("�  Baseline R2    : {0,-31}�" -f [Math]::Round($baseMetrics.R2, 4)) -ForegroundColor White
+Write-Host ("�  Improved R2    : {0,-31}�" -f [Math]::Round($impMetrics.R2, 4))  -ForegroundColor White
+Write-Host ("�  Improvement    : +{0,-30}�" -f [Math]::Round($impMetrics.R2 - $baseMetrics.R2, 4)) -ForegroundColor White
+Write-Host ("�  Model saved    : HousePriceProduction v1.0.0   �") -ForegroundColor White
+Write-Host ("�  Monitoring     : Active ?                     �") -ForegroundColor White
+Write-Host "+--------------------------------------------------+" -ForegroundColor Green
 Write-Host ""
 Write-Host "Try Tutorial 05 next: Anomaly Detection project!" -ForegroundColor Cyan

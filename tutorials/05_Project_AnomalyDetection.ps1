@@ -1,5 +1,5 @@
-﻿#Requires -Version 5.1
 <#
+#Requires -Version 5.1
 .SYNOPSIS
     VBAF Tutorial 05 - Real-World Project: Anomaly Detection
     Real-World Projects | Estimated time: 30 minutes
@@ -14,10 +14,10 @@
 #>
 
 Write-Host ""
-Write-Host "╔══════════════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "║  VBAF Tutorial 05 - Anomaly Detection Project    ║" -ForegroundColor Cyan
-Write-Host "║  Detect unusual patterns in production data      ║" -ForegroundColor Cyan
-Write-Host "╚══════════════════════════════════════════════════╝" -ForegroundColor Cyan
+Write-Host "+--------------------------------------------------+" -ForegroundColor Cyan
+Write-Host "�  VBAF Tutorial 05 - Anomaly Detection Project    �" -ForegroundColor Cyan
+Write-Host "�  Detect unusual patterns in production data      �" -ForegroundColor Cyan
+Write-Host "+--------------------------------------------------+" -ForegroundColor Cyan
 Write-Host ""
 
 # ============================================================
@@ -86,7 +86,7 @@ $std       = [Math]::Sqrt((($trainScores | ForEach-Object { ($_ - $mean)*($_ - $
 $threshold = $mean + 3.0 * $std   # 3-sigma rule
 
 Write-Host ("  Training score: mean={0:F3}  std={1:F3}" -f $mean, $std) -ForegroundColor White
-Write-Host ("  Threshold (3σ): {0:F3}" -f $threshold) -ForegroundColor Yellow
+Write-Host ("  Threshold (3s): {0:F3}" -f $threshold) -ForegroundColor Yellow
 Write-Host ""
 
 # ============================================================
@@ -119,13 +119,13 @@ for ($i = 0; $i -lt $productionData.Length; $i++) {
     $score = Get-AnomalyScore -x ([double[]]$xs[0]) -KMeansModel $km
     $isAnomaly = $score -gt $threshold
     if ($isAnomaly) { $anomalyCount++ }
-    $status = if ($isAnomaly) { "⚠️  ANOMALY" } else { "✅ Normal" }
+    $status = if ($isAnomaly) { "??  ANOMALY" } else { "? Normal" }
     $color  = if ($isAnomaly) { "Red" } else { "White" }
     Write-Host ("  {0,-12} {1,8:F3} {2,10:F3}  {3}" -f $prodLabels[$i], $score, $threshold, $status) -ForegroundColor $color
 }
 
 Write-Host ""
-Write-Host ("  Detected {0}/{1} anomalies ✅" -f $anomalyCount, $productionData.Length) -ForegroundColor Green
+Write-Host ("  Detected {0}/{1} anomalies ?" -f $anomalyCount, $productionData.Length) -ForegroundColor Green
 
 # ============================================================
 # STEP 5: Monitor anomaly rate over time
@@ -144,19 +144,19 @@ Write-Host ("  {0}" -f ("-" * 35)) -ForegroundColor DarkGray
 for ($d = 0; $d -lt $dailyRates.Length; $d++) {
     $rate    = $dailyRates[$d]
     $isAlert = $rate -gt $alertThreshold
-    $bar     = "█" * [int]($rate * 100)
-    $status  = if ($isAlert) { "🚨 ALERT" } else { "OK" }
+    $bar     = "�" * [int]($rate * 100)
+    $status  = if ($isAlert) { "?? ALERT" } else { "OK" }
     $color   = if ($isAlert) { "Red" } else { "White" }
     Write-Host ("  {0,-8} {1,7:P1}  {2} {3}" -f $days[$d], $rate, $bar, $status) -ForegroundColor $color
 }
 
 Write-Host ""
-Write-Host "╔══════════════════════════════════════════════════╗" -ForegroundColor Green
-Write-Host "║            Project Summary                       ║" -ForegroundColor Green
-Write-Host ("║  Normal samples  : 80 (3 clusters)              ║") -ForegroundColor White
-Write-Host ("║  Threshold (3σ)  : {0,-31}║" -f ("{0:F3}" -f $threshold)) -ForegroundColor White
-Write-Host ("║  Anomalies found : {0}/10 (3 injected)           ║" -f $anomalyCount) -ForegroundColor White
-Write-Host ("║  Rate spike      : Detected day 7-9 ✅          ║") -ForegroundColor White
-Write-Host "╚══════════════════════════════════════════════════╝" -ForegroundColor Green
+Write-Host "+--------------------------------------------------+" -ForegroundColor Green
+Write-Host "�            Project Summary                       �" -ForegroundColor Green
+Write-Host ("�  Normal samples  : 80 (3 clusters)              �") -ForegroundColor White
+Write-Host ("�  Threshold (3s)  : {0,-31}�" -f ("{0:F3}" -f $threshold)) -ForegroundColor White
+Write-Host ("�  Anomalies found : {0}/10 (3 injected)           �" -f $anomalyCount) -ForegroundColor White
+Write-Host ("�  Rate spike      : Detected day 7-9 ?          �") -ForegroundColor White
+Write-Host "+--------------------------------------------------+" -ForegroundColor Green
 Write-Host ""
 Write-Host "Tutorials complete! Check the VBAF GitHub for more examples." -ForegroundColor Cyan

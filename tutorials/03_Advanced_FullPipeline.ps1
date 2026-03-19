@@ -1,5 +1,5 @@
-﻿#Requires -Version 5.1
 <#
+#Requires -Version 5.1
 .SYNOPSIS
     VBAF Tutorial 03 - Advanced: Full ML Pipeline
     Advanced Series | Estimated time: 30 minutes
@@ -16,9 +16,9 @@
 #>
 
 Write-Host ""
-Write-Host "╔══════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "║  VBAF Tutorial 03 - Full ML Pipeline     ║" -ForegroundColor Cyan
-Write-Host "╚══════════════════════════════════════════╝" -ForegroundColor Cyan
+Write-Host "+------------------------------------------+" -ForegroundColor Cyan
+Write-Host "�  VBAF Tutorial 03 - Full ML Pipeline     �" -ForegroundColor Cyan
+Write-Host "+------------------------------------------+" -ForegroundColor Cyan
 Write-Host ""
 
 # ============================================================
@@ -40,13 +40,14 @@ $Ximp    = $imputer.FitTransform($data.X)
 Write-Host "  Missing values imputed (median)" -ForegroundColor White
 
 # Detect and clip outliers
-$outlier = [OutlierDetector]::new("iqr", 1.5)
-$Xclip   = $outlier.FitTransform($Ximp)
+$outlier = [OutlierDetector]::new("iqr", "clip", 1.5)
+$outlier.Fit($Ximp)
+$Xclip   = $outlier.Transform($Ximp)
 Write-Host "  Outliers clipped (IQR method)" -ForegroundColor White
 
 # Scale features
 $scaler  = [RobustScaler]::new()
-$Xs      = $scaler.FitTransform($Xclip)
+$Xs      = $scaler.FitTransform($Xclip.Data)
 Write-Host "  Features scaled (RobustScaler)" -ForegroundColor White
 
 # ============================================================
@@ -83,9 +84,9 @@ $bestModel.Fit($Xp, $data.y)
 # ============================================================
 # STAGE 6: Save to registry
 # ============================================================
-Write-Host "[Stage 6/6] Saving to Registry" -ForegroundColor Yellow
+Write-Host "[Stage 6/6] Saving to Registry"
+Initialize-VBAFRegistry -Path "C:\Users\henni\VBAFRegistry" | Out-Null
 
-Initialize-VBAFRegistry | Out-Null
 Save-VBAFModel `
     -ModelName   "Tutorial_HousePrice" `
     -Model       $bestModel `
@@ -96,11 +97,17 @@ Save-VBAFModel `
     -Description "Tutorial 03 - full pipeline" | Out-Null
 
 Write-Host ""
-Write-Host "╔══════════════════════════════════════════╗" -ForegroundColor Green
-Write-Host "║         Pipeline Complete! ✅            ║" -ForegroundColor Green
-Write-Host ("║  Best R2     : {0,-27}║" -f [Math]::Round($hpoResult.BestScore, 4)) -ForegroundColor White
-Write-Host ("║  Best Lambda : {0,-27}║" -f $hpoResult.BestParams.Lambda)            -ForegroundColor White
-Write-Host ("║  Features    : {0,-27}║" -f $Xp[0].Length)                          -ForegroundColor White
-Write-Host "╚══════════════════════════════════════════╝" -ForegroundColor Green
+Write-Host "+------------------------------------------+" -ForegroundColor Green
+Write-Host "�         Pipeline Complete! ?            �" -ForegroundColor Green
+Write-Host ("�  Best R2     : {0,-27}�" -f [Math]::Round($hpoResult.BestScore, 4)) -ForegroundColor White
+Write-Host ("�  Best Lambda : {0,-27}�" -f $hpoResult.BestParams.Lambda)            -ForegroundColor White
+Write-Host ("�  Features    : {0,-27}�" -f $Xp[0].Length)                          -ForegroundColor White
+Write-Host "+------------------------------------------+" -ForegroundColor Green
 Write-Host ""
 Write-Host "Try Tutorial 04 next: Real-world House Price MLOps project!" -ForegroundColor Cyan
+
+
+
+
+
+

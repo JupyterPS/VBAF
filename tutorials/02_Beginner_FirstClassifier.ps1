@@ -1,5 +1,5 @@
-#Requires -Version 5.1
 <#
+#Requires -Version 5.1
 .SYNOPSIS
     VBAF Tutorial 02 - Your First Classification Model
     Beginner Series | Estimated time: 20 minutes
@@ -105,3 +105,4 @@ foreach ($clf in $classifiers) {
 
 Write-Host ""
 Write-Host "Tutorial 02 complete! Try Tutorial 03 next." -ForegroundColor Green
+

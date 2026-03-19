@@ -32,10 +32,18 @@ $rng = [System.Random]::new(42)
 $normalData = @()
 for ($i = 0; $i -lt 80; $i++) {
     $cluster = $i % 3
-    $sample  = switch ($cluster) {
-        0 { @(70.0 + $rng.NextDouble()*5,  1.0 + $rng.NextDouble()*0.1,  50.0 + $rng.NextDouble()*5) }  # idle
-        1 { @(85.0 + $rng.NextDouble()*5,  1.5 + $rng.NextDouble()*0.1,  80.0 + $rng.NextDouble()*5) }  # normal load
-        2 { @(95.0 + $rng.NextDouble()*5,  2.0 + $rng.NextDouble()*0.1, 120.0 + $rng.NextDouble()*5) }  # high load
+    [double] $r1 = $rng.NextDouble()
+    [double] $r2 = $rng.NextDouble()
+    [double] $r3 = $rng.NextDouble()
+    if ($cluster -eq 0) {
+        [double]$v1=70.0+$r1*5.0; [double]$v2=1.0+$r2*0.1; [double]$v3=50.0+$r3*5.0
+        $sample = [double[]]@($v1,$v2,$v3)
+    } elseif ($cluster -eq 1) {
+        [double]$v1=85.0+$r1*5.0; [double]$v2=1.5+$r2*0.1; [double]$v3=80.0+$r3*5.0
+        $sample = [double[]]@($v1,$v2,$v3)
+    } else {
+        [double]$v1=95.0+$r1*5.0; [double]$v2=2.0+$r2*0.1; [double]$v3=120.0+$r3*5.0
+        $sample = [double[]]@($v1,$v2,$v3)
     }
     $normalData += ,$sample
 }
@@ -160,3 +168,6 @@ Write-Host ("¦  Rate spike      : Detected day 7-9 ?          ¦") -ForegroundCol
 Write-Host "+--------------------------------------------------+" -ForegroundColor Green
 Write-Host ""
 Write-Host "Tutorials complete! Check the VBAF GitHub for more examples." -ForegroundColor Cyan
+
+
+

@@ -9,7 +9,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/JupyterPS/VBAF)](https://github.com/JupyterPS/VBAF/stargazers)
 
 ## Architecture
-![VBAF Enterprise Architecture](VBAF.jpg)
+<img src="VBAF.jpg" alt="VBAF Enterprise Architecture" width="100%">
 
 ## What is VBAF?
 
@@ -91,3 +91,4 @@ MIT License — see [LICENSE](LICENSE) for details.
 Built with Claude (Anthropic) · PowerShell ISE · PS 5.1
 
 *"Intelligent automation for the Windows environments that power the world."*
+

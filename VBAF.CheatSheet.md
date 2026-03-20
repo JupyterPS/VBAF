@@ -5,7 +5,7 @@
 
 ## 1. Load Everything First
 ```powershell
-. "C:\Users\henni\OneDrive\WindowsPowerShell\VBAF.LoadAll.ps1"
+. .\VBAF.LoadAll.ps1
 ```
 
 ---
@@ -316,7 +316,7 @@ $r.Trained     # @{ Avg = trained_reward }
 
 ```powershell
 # Load
-. "C:\Users\henni\OneDrive\WindowsPowerShell\VBAF.LoadAll.ps1"
+. .\VBAF.LoadAll.ps1
 
 # Data
 $data   = Get-VBAFDataset -Name "HousePrice"

@@ -1,6 +1,6 @@
-# VBAF — Visual Business Automation Framework
+ï»¿# VBAF â€” Visual Business Automation Framework
 
-> **v4.0.0** · PowerShell 5.1 · DQN Reinforcement Learning · Enterprise Automation Engine
+> **v4.0.0** Â· PowerShell 5.1 Â· DQN Reinforcement Learning Â· Enterprise Automation Engine
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue.svg)](https://github.com/PowerShell/PowerShell)
@@ -13,7 +13,7 @@
 
 ## What is VBAF?
 
-VBAF is a PowerShell 5.1 framework that trains Deep Q-Network (DQN) agents to make autonomous enterprise IT decisions. Each agent observes real Windows system signals and learns the optimal action through reinforcement learning — no hardcoded rules, no thresholds, no if/else chains.
+VBAF is a PowerShell 5.1 framework that trains Deep Q-Network (DQN) agents to make autonomous enterprise IT decisions. Each agent observes real Windows system signals and learns the optimal action through reinforcement learning â€” no hardcoded rules, no thresholds, no if/else chains.
 
 **27 phases. 14 enterprise pillars. 1 AutoPilot to rule them all.**
 
@@ -29,7 +29,7 @@ $r = Invoke-VBAFAutoPilotTraining -Episodes 100 -PrintEvery 10 -SimMode
 
 | Document | Description |
 |----------|-------------|
-| [VBAF.CheatSheet.md](VBAF.CheatSheet.md) | **Start here** — all functions, parameters, valid values and common gotchas in one page |
+| [VBAF.CheatSheet.md](VBAF.CheatSheet.md) | **Start here** â€” all functions, parameters, valid values and common gotchas in one page |
 | [tutorials/01_Beginner_GettingStarted.md](tutorials/01_Beginner_GettingStarted.md) | Getting started guide |
 | [tutorials/02_Beginner_FirstClassifier.ps1](tutorials/02_Beginner_FirstClassifier.ps1) | Your first classification model |
 | [tutorials/03_Advanced_FullPipeline.ps1](tutorials/03_Advanced_FullPipeline.ps1) | Full ML pipeline end to end |
@@ -60,7 +60,7 @@ $r = Invoke-VBAFAutoPilotTraining -Episodes 100 -PrintEvery 10 -SimMode
 
 | Version | Phase | Highlight |
 |---------|-------|-----------|
-| v4.0.0 | Phase 27 | AutoPilot — crown jewel, all 13 pillars |
+| v4.0.0 | Phase 27 | AutoPilot â€” crown jewel, all 13 pillars |
 | v3.17.0 | Phase 26 | Multi-Site Coordinator +47.4% |
 | v3.16.0 | Phase 25 | Energy Optimizer +117.5% |
 | v3.15.0 | Phase 24 | Backup Optimizer +116.3% |
@@ -83,13 +83,14 @@ $r = Invoke-VBAFAutoPilotTraining -Episodes 100 -PrintEvery 10 -SimMode
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License â€” see [LICENSE](LICENSE) for details.
 
 ## Author
 
-**Henning** · Roskilde, Denmark ????
-Built with Claude (Anthropic) · PowerShell ISE · PS 5.1
+**Henning** Â· Roskilde, Denmark ðŸ‡©ðŸ‡°
+Built with Claude (Anthropic) Â· PowerShell ISE Â· PS 5.1
 
 *"Intelligent automation for the Windows environments that power the world."*
+
 
 

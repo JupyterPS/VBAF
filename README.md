@@ -35,6 +35,14 @@ $r = Invoke-VBAFAutoPilotTraining -Episodes 100 -PrintEvery 10 -SimMode
 | [tutorials/03_Advanced_FullPipeline.ps1](tutorials/03_Advanced_FullPipeline.ps1) | Full ML pipeline end to end |
 | [tutorials/04_Project_HousePriceMLOps.ps1](tutorials/04_Project_HousePriceMLOps.ps1) | Real-world MLOps project |
 | [tutorials/05_Project_AnomalyDetection.ps1](tutorials/05_Project_AnomalyDetection.ps1) | Anomaly detection project |
+| [tutorials/06_Beginner_Regression.ps1](tutorials/06_Beginner_Regression.ps1) | Your first regression model |
+| [tutorials/07_Beginner_Clustering.ps1](tutorials/07_Beginner_Clustering.ps1) | KMeans clustering and anomaly detection |
+| [tutorials/08_Beginner_YourOwnData.ps1](tutorials/08_Beginner_YourOwnData.ps1) | Load any CSV into VBAF |
+| [tutorials/09_Intermediate_FeatureEngineering.ps1](tutorials/09_Intermediate_FeatureEngineering.ps1) | Scaling, polynomial features, impact measurement |
+| [tutorials/10_Intermediate_ModelComparison.ps1](tutorials/10_Intermediate_ModelComparison.ps1) | Cross-validation, HPO, algorithm selection |
+| [tutorials/11_Intermediate_Pipelines.ps1](tutorials/11_Intermediate_Pipelines.ps1) | Data leakage, correct pipeline pattern |
+| [tutorials/12_Enterprise_YourFirstDQN.ps1](tutorials/12_Enterprise_YourFirstDQN.ps1) | Build your first DQN agent |
+| [tutorials/13_Enterprise_CustomPillar.ps1](tutorials/13_Enterprise_CustomPillar.ps1) | Build your own enterprise pillar (Phase 28+) |
 | [tutorials/VBAF.Templates.ps1](tutorials/VBAF.Templates.ps1) | Reusable workflow recipes |
 
 ## Enterprise Automation Engine (Phases 14-27)
@@ -91,6 +99,7 @@ MIT License — see [LICENSE](LICENSE) for details.
 Built with Claude (Anthropic) · PowerShell ISE · PS 5.1
 
 *"Intelligent automation for the Windows environments that power the world."*
+
 
 
 

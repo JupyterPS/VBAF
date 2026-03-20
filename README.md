@@ -29,7 +29,7 @@ $r = Invoke-VBAFAutoPilotTraining -Episodes 100 -PrintEvery 10 -SimMode
 
 | Document | Description |
 |----------|-------------|
-| [VBAF.CheatSheet.md](VBAF.CheatSheet.md) | **Start here** — all functions, parameters, valid values and common gotchas in one page |
+| [VBAF CheatSheet](VBAF.CheatSheet.md) | **Start here** — all functions, parameters, valid values and common gotchas in one page |
 | [tutorials/01_Beginner_GettingStarted.md](tutorials/01_Beginner_GettingStarted.md) | Getting started guide |
 | [tutorials/02_Beginner_FirstClassifier.ps1](tutorials/02_Beginner_FirstClassifier.ps1) | Your first classification model |
 | [tutorials/03_Advanced_FullPipeline.ps1](tutorials/03_Advanced_FullPipeline.ps1) | Full ML pipeline end to end |
@@ -91,6 +91,7 @@ MIT License — see [LICENSE](LICENSE) for details.
 Built with Claude (Anthropic) · PowerShell ISE · PS 5.1
 
 *"Intelligent automation for the Windows environments that power the world."*
+
 
 
 

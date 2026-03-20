@@ -37,6 +37,44 @@ $r = Invoke-VBAFAutoPilotTraining -Episodes 100 -PrintEvery 10 -SimMode
 | [tutorials/05_Project_AnomalyDetection.ps1](tutorials/05_Project_AnomalyDetection.ps1) | Anomaly detection project |
 | [tutorials/VBAF.Templates.ps1](tutorials/VBAF.Templates.ps1) | Reusable workflow recipes |
 
+## Enterprise Automation Engine (Phases 14-27)
+
+| Phase | File | Actions | Improvement | Version |
+|-------|------|---------|-------------|---------|
+| 14 | `VBAF.Enterprise.SelfHealing.ps1` | Observe / Adjust / Restart / Rebuild | **+63.0%** | v3.5.0 |
+| 15 | `VBAF.Enterprise.Dashboard.ps1` | Cache / Refresh / Prioritise / Rebuild | **+59.1%** | v3.6.0 |
+| 16 | `VBAF.Enterprise.FederatedLearning.ps1` | Collect / Aggregate / Validate / Rollback | **+62.1%** | v3.7.0 |
+| 17 | `VBAF.Enterprise.CloudBridge.ps1` | Local / Offload / Sync / Failover | **+24.5%** | v3.8.0 |
+| 18 | `VBAF.Enterprise.AnomalyDetector.ps1` | Ignore / Flag / Alert / Escalate | **+30.6%** | v3.9.0 |
+| 19 | `VBAF.Enterprise.CapacityPlanner.ps1` | Monitor / Warn / Reserve / Escalate | **+32.6%** | v3.10.0 |
+| 20 | `VBAF.Enterprise.IncidentResponder.ps1` | Investigate / Contain / Remediate / Report | **+26.9%** | v3.11.0 |
+| 21 | `VBAF.Enterprise.ComplianceReporter.ps1` | Collect / Classify / Report / Archive | **+107.2%** | v3.12.0 |
+| 22 | `VBAF.Enterprise.UserBehaviorAnalytics.ps1` | Ignore / Flag / Alert / Lock | **+103.4%** | v3.13.0 |
+| 23 | `VBAF.Enterprise.PatchIntelligence.ps1` | Defer / Schedule / Apply / Rollback | **+65.5%** | v3.14.0 |
+| 24 | `VBAF.Enterprise.BackupOptimizer.ps1` | Skip / Incremental / Full / Replicate | **+116.3%** | v3.15.0 |
+| 25 | `VBAF.Enterprise.EnergyOptimizer.ps1` | Throttle / Sleep / Consolidate / Scale | **+117.5%** | v3.16.0 |
+| 26 | `VBAF.Enterprise.MultiSiteCoordinator.ps1` | Local / Sync / Failover / Rebalance | **+47.4%** | v3.17.0 |
+| 27 | `VBAF.Enterprise.AutoPilot.ps1` | Delegate / Override / Escalate / Autopilot | **+63.3%** | v4.0.0 |
+
+## Version History
+
+| Version | Phase | Highlight |
+|---------|-------|-----------|
+| v4.0.0 | Phase 27 | AutoPilot — crown jewel, all 13 pillars |
+| v3.17.0 | Phase 26 | Multi-Site Coordinator +47.4% |
+| v3.16.0 | Phase 25 | Energy Optimizer +117.5% |
+| v3.15.0 | Phase 24 | Backup Optimizer +116.3% |
+| v3.14.0 | Phase 23 | Patch Intelligence +65.5% |
+| v3.13.0 | Phase 22 | User Behavior Analytics +103.4% |
+| v3.12.0 | Phase 21 | Compliance Reporter +107.2% |
+| v3.11.0 | Phase 20 | Incident Responder +26.9% |
+| v3.10.0 | Phase 19 | Capacity Planner +32.6% |
+| v3.9.0 | Phase 18 | Anomaly Detector +30.6% |
+| v3.8.0 | Phase 17 | Cloud Bridge +24.5% |
+| v3.7.0 | Phase 16 | Federated Learning +62.1% |
+| v3.6.0 | Phase 15 | Dashboard +59.1% |
+| v3.5.0 | Phase 14 | Self-Healing +63.0% |
+
 ## Requirements
 
 - Windows 10 or 11

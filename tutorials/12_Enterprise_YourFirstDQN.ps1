@@ -148,7 +148,7 @@ Write-Host "✅ DQN Agent created" -ForegroundColor Green
 Write-Host "   Neural net: 2 -> 16 -> 16 -> 4" -ForegroundColor White
 Write-Host ""
 
-$Episodes   = 50
+$Episodes   = 30
 $PrintEvery = 10
 $results    = [System.Collections.Generic.List[object]]::new()
 
@@ -223,6 +223,7 @@ Write-Host "  Reward design is critical — defines what good behaviour means" -
 Write-Host "  This is exactly how Phases 14-27 work!" -ForegroundColor Yellow
 Write-Host ""
 Write-Host "Tutorial 12 complete! Try Tutorial 13 next: Custom Enterprise Pillar." -ForegroundColor Green
+
 
 
 

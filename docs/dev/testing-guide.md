@@ -1,18 +1,49 @@
 ﻿# Testing Guide
 
-> 🚧 **Placeholder** — full testing guide coming soon.
+## Running All Tests
+```powershell
+. .\VBAF.LoadAll.ps1
+& ".\tests\Run-AllTests.ps1"
+```
 
-## Smoke tests
+## Testing a New Pillar
 
-Every module has a \Test-VBAF<Module>\ function:
+Before submitting a new enterprise pillar, verify:
+```powershell
+. .\VBAF.LoadAll.ps1
+. ".\VBAF.Enterprise.MyNewPillar.ps1"
 
-\\\powershell
-Test-VBAFAutoencoder          # VBAF.ML.Autoencoder.ps1
-Test-VBAFTransferLearning     # VBAF.ML.TransferLearning.ps1
-\\\
+# Test 1: SimMode runs without errors
+$r = Invoke-VBAFMyNewPillarTraining -Episodes 30 -PrintEvery 10 -SimMode
+Write-Host "Improvement: $($r.Improvement)%"
 
-## What a passing test looks like
+# Test 2: Improvement is positive (run 3 times, average should be positive)
+$improvements = @()
+for ($i = 1; $i -le 3; $i++) {
+    $r = Invoke-VBAFMyNewPillarTraining -Episodes 100 -PrintEvery 100 -SimMode
+    $improvements += $r.Improvement
+}
+$avg = ($improvements | Measure-Object -Average).Average
+Write-Host "Average improvement over 3 runs: $($avg.ToString('F1'))%"
+```
 
-- Loss / accuracy meets documented target
-- No PS 5.1 runtime errors
-- All visualisation functions render without exception
+## Minimum Acceptance Criteria
+
+- SimMode completes without errors
+- Average improvement > 0% over 3 runs with 100 episodes
+- No unhandled exceptions
+- Load message displays correctly
+- Function appears in LoadAll.ps1
+
+## Testing ML Models
+```powershell
+# Verify Split-TrainTest property names
+$split = Split-TrainTest -X $data.X -y $data.y -TestSize 0.2 -Seed 42
+Write-Host $split.XTrain.Length   # must work
+Write-Host $split.yTrain.Length   # must work
+
+# Verify OutlierDetector returns .Data
+$out   = [OutlierDetector]::new("iqr", "clip", 1.5)
+$out.Fit($X)
+$Xclip = ($out.Transform($X)).Data   # always use .Data
+```

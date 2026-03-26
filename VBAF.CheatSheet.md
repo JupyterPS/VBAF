@@ -175,9 +175,12 @@ Get-DataSummary -X $X -y $y -FeatureNames $data.Features
 ```powershell
 # Automatic algorithm selection (cross-validation)
 $result = Invoke-VBAFAlgorithmSelection -X $X -y $y `
-    -Task "regression"        # "regression" | "classification"
-    -Folds 5 `                # number of CV folds
-    -Metric "R2"              # "R2" | "Accuracy"
+    -Task "regression" `
+    -Folds 5 `
+    -Metric "R2"
+# -Task   : "regression" | "classification"
+# -Folds  : number of CV folds
+# -Metric : "R2" | "Accuracy"
 
 # Random hyperparameter search
 $hpo = Invoke-VBAFRandomSearch `
@@ -259,10 +262,14 @@ $drift = Get-VBAFDriftReport `
 # Retraining policy
 $policy = New-VBAFRetrainingPolicy `
     -ModelName     "MyModel" `
-    -MinAccuracy   0.90 `      # retrain if R2 drops below this
-    -MaxDriftPSI   0.20 `      # retrain if PSI exceeds this
-    -MaxAgeDays    30 `        # retrain if model older than this
-    -MinNewSamples 50          # retrain if enough new data
+    -MinAccuracy   0.90 `
+    -MaxDriftPSI   0.20 `
+    -MaxAgeDays    30 `
+    -MinNewSamples 50
+# -MinAccuracy   : retrain if R2 drops below this
+# -MaxDriftPSI   : retrain if PSI exceeds this
+# -MaxAgeDays    : retrain if model older than this
+# -MinNewSamples : retrain if enough new data
 
 # Check if retraining needed
 Test-VBAFRetrainingNeeded `
@@ -335,3 +342,4 @@ $preds = $model.Predict($split.XTest)
 $m     = Get-RegressionMetrics $split.yTest $preds
 Write-Host "R2: $($m.R2)"
 ```
+

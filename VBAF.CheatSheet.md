@@ -187,7 +187,7 @@ $hpo = Invoke-VBAFRandomSearch `
     -ModelFactory { param($p) [RidgeRegression]::new($p.Lambda) } `
     -ParamSpace @{ Lambda=@(0.001, 0.01, 0.1, 0.5, 1.0, 5.0) } `
     -X $X -y $y `
-    -NTrials 12 `             # number of random trials
+    -NTrials 12 `
     -Folds 5 `
     -Metric "R2"
 
@@ -342,4 +342,5 @@ $preds = $model.Predict($split.XTest)
 $m     = Get-RegressionMetrics $split.yTest $preds
 Write-Host "R2: $($m.R2)"
 ```
+
 

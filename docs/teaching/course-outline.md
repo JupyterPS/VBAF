@@ -1,20 +1,58 @@
-﻿# VBAF Course Outline
+﻿# Course Outline: ML with VBAF
 
-> 🚧 **Placeholder**
+## Course: Enterprise Machine Learning in PowerShell
+Duration: 4 weeks (2 sessions per week, 2 hours each)
+Level: IT professionals with PowerShell experience
 
-Suggested 12-week introduction to ML using VBAF:
+## Week 1: Neural Networks and Supervised Learning
 
-| Week | Topic | Module |
-|---|---|---|
-| 1 | What is ML? Neurons and XOR | VBAF.Core |
-| 2 | Reinforcement Learning basics | VBAF.RL.QTable |
-| 3 | Q-Learning agents | VBAF.RL.QLearningAgent |
-| 4 | Deep Q-Networks | VBAF.RL.DQN |
-| 5 | Supervised learning | VBAF.ML.Regression |
-| 6 | Decision trees | VBAF.ML.Trees |
-| 7 | Data pipelines | VBAF.ML.DataPipeline |
-| 8 | Convolutional networks | VBAF.ML.CNN |
-| 9 | Recurrent networks | VBAF.ML.RNN |
-| 10 | Autoencoders | VBAF.ML.Autoencoder |
-| 11 | Transfer learning | VBAF.ML.TransferLearning |
-| 12 | MLOps and production | VBAF.ML.MLOps |
+### Session 1: Your First Neural Network
+- What is machine learning?
+- Neural network concepts: layers, weights, activation
+- Hands-on: Tutorial 01 — XOR network
+- Hands-on: Tutorial 02 — First classifier
+
+### Session 2: Regression and Clustering
+- Classification vs regression vs clustering
+- Hands-on: Tutorial 06 — First regression model
+- Hands-on: Tutorial 07 — KMeans clustering
+- Lab: Load your own CSV data (Tutorial 08)
+
+## Week 2: The ML Pipeline
+
+### Session 3: Feature Engineering
+- Why raw data rarely works
+- Scaling, imputation, outlier detection
+- Hands-on: Tutorial 09 — Feature engineering impact
+
+### Session 4: Model Selection
+- Cross-validation and hyperparameter tuning
+- Avoiding data leakage
+- Hands-on: Tutorial 10 — Model comparison
+- Hands-on: Tutorial 11 — Correct pipeline pattern
+
+## Week 3: Reinforcement Learning
+
+### Session 5: RL Concepts
+- What is reinforcement learning?
+- State, action, reward, policy
+- Q-learning with a Q-table
+- Hands-on: Tutorial 03 — Q-Learning agent
+
+### Session 6: Deep Q-Networks
+- Why DQN improves on Q-learning
+- Experience replay, target network, epsilon decay
+- Hands-on: Tutorial 12 — Your first DQN agent
+
+## Week 4: Enterprise Automation
+
+### Session 7: Enterprise Pillars
+- VBAF enterprise architecture overview
+- Running enterprise agents in SimMode
+- Interpreting improvement percentages
+
+### Session 8: Build Your Own Pillar
+- Designing state signals for your domain
+- Defining the reward function
+- Hands-on: Tutorial 13 — Custom enterprise pillar
+- Final project: build a pillar for your own organisation

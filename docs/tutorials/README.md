@@ -1,26 +1,40 @@
-﻿# Tutorials
+﻿# VBAF Tutorials
 
-Step-by-step guides for learning ML concepts with VBAF.
+A complete learning path from beginner to enterprise automation engineer.
+All tutorials are runnable PowerShell scripts in the `tutorials/` folder.
 
-| File | Level | Topic |
-|------|-------|-------|
-| [01-Your-First-Neural-Network.md](01-Your-First-Neural-Network.md) | Beginner | Neurons, activation functions, first network |
-| [02-Building-XOR-Net.md](02-Building-XOR-Net.md) | Beginner | Multi-layer networks, backpropagation |
-| [03-Q-Learning-Agent.md](03-Q-Learning-Agent.md) | Intermediate | Q-Learning, epsilon-greedy exploration |
-| [04-Multi-Agent-Market.md](04-Multi-Agent-Market.md) | Intermediate | Multi-agent RL, market simulation |
-| [05-Custom-Environment.md](05-Custom-Environment.md) | Advanced | Building custom RL environments |
-| [06-Using-Dashboards.md](06-Using-Dashboards.md) | Beginner | Visualising training with dashboards |
+## Learning Path
 
-## Recommended Learning Path
+### Beginner
+| File | Topic | Time |
+|------|-------|------|
+| [02_Beginner_FirstClassifier.ps1](../../tutorials/02_Beginner_FirstClassifier.ps1) | Your first classification model | 15 min |
+| [06_Beginner_Regression.ps1](../../tutorials/06_Beginner_Regression.ps1) | Your first regression model | 20 min |
+| [07_Beginner_Clustering.ps1](../../tutorials/07_Beginner_Clustering.ps1) | KMeans clustering | 20 min |
+| [08_Beginner_YourOwnData.ps1](../../tutorials/08_Beginner_YourOwnData.ps1) | Load any CSV into VBAF | 25 min |
 
-**Complete beginner:** Start with 01 → 02 → 06
+### Intermediate
+| File | Topic | Time |
+|------|-------|------|
+| [03_Advanced_FullPipeline.ps1](../../tutorials/03_Advanced_FullPipeline.ps1) | Full ML pipeline | 30 min |
+| [09_Intermediate_FeatureEngineering.ps1](../../tutorials/09_Intermediate_FeatureEngineering.ps1) | Feature engineering | 25 min |
+| [10_Intermediate_ModelComparison.ps1](../../tutorials/10_Intermediate_ModelComparison.ps1) | Model comparison and HPO | 25 min |
+| [11_Intermediate_Pipelines.ps1](../../tutorials/11_Intermediate_Pipelines.ps1) | Avoiding data leakage | 25 min |
 
-**RL focus:** Start with 01 → 03 → 04 → 05
+### Real-World Projects
+| File | Topic | Time |
+|------|-------|------|
+| [04_Project_HousePriceMLOps.ps1](../../tutorials/04_Project_HousePriceMLOps.ps1) | House price MLOps | 45 min |
+| [05_Project_AnomalyDetection.ps1](../../tutorials/05_Project_AnomalyDetection.ps1) | Anomaly detection | 30 min |
 
-**All tutorials:** Follow 01 through 06 in order
+### Enterprise
+| File | Topic | Time |
+|------|-------|------|
+| [12_Enterprise_YourFirstDQN.ps1](../../tutorials/12_Enterprise_YourFirstDQN.ps1) | Your first DQN agent | 30 min |
+| [13_Enterprise_CustomPillar.ps1](../../tutorials/13_Enterprise_CustomPillar.ps1) | Build your own pillar | 30 min |
 
-## Prerequisites
-
-- Windows 10/11
-- PowerShell 5.1+ (included with Windows)
-- VBAF installed: `Install-Module VBAF` or clone the repo
+## How to Run
+```powershell
+. .\VBAF.LoadAll.ps1
+& ".\tutorials\02_Beginner_FirstClassifier.ps1"
+```

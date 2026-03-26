@@ -3,6 +3,10 @@
 # VBAF Cheat Sheet — Quick Reference Card
 > v4.0.0 · PowerShell 5.1 · All functions, all parameters, all valid values
 
+> **NOTE:** This is a REFERENCE DOCUMENT — not a runnable script.
+> Variables like `$X`, `$Xtrain`, `$ytrue` are placeholders.
+> Copy individual sections into your own scripts where your data is defined.
+
 ---
 
 ## 1. Load Everything First
@@ -342,5 +346,6 @@ $preds = $model.Predict($split.XTest)
 $m     = Get-RegressionMetrics $split.yTest $preds
 Write-Host "R2: $($m.R2)"
 ```
+
 
 

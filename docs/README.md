@@ -1,24 +1,31 @@
-﻿# docs/
+﻿# VBAF Documentation
 
-Documentation for the Visual Brain AI Framework (VBAF).
+Complete documentation for the Visual Business Automation Framework.
 
-## Structure
+## Where to Start
 
-| Folder / File | Status | Description |
-|---|---|---|
-| 	utorials/ | ✅ In progress | Step-by-step learning guides |
-| dev/ | 🚧 Planned | Contributor and developer guides |
-| case-studies/ | 🚧 Planned | Real-world application write-ups |
-| papers/ | 🚧 Planned | Academic paper drafts |
-| 	eaching/ | 🚧 Planned | Course materials |
-| GettingStarted.md | 🚧 Placeholder | Installation and first steps |
-| Architecture.md | 🚧 Placeholder | Framework design overview |
-| API-Reference.md | 🚧 Placeholder | Full function/class reference |
-| Theory.md | 🚧 Placeholder | Mathematical background |
-| FAQ.md | 🚧 Placeholder | Frequently asked questions |
+| I want to... | Go to |
+|-------------|-------|
+| Install and run my first agent | [GettingStarted.md](GettingStarted.md) |
+| Understand how VBAF works | [Architecture.md](Architecture.md) |
+| Learn the theory behind DQN | [Theory.md](Theory.md) |
+| Look up a function | [API-Reference.md](API-Reference.md) |
+| Follow a tutorial | [tutorials/](tutorials/) |
+| See real-world examples | [case-studies/](case-studies/) |
+| Read the research | [papers/](papers/) |
+| Contribute to VBAF | [dev/contributing.md](dev/contributing.md) |
 
-## Quick links
-
-- [Getting Started](GettingStarted.md)
-- [API Reference](API-Reference.md)
-- [Tutorials](tutorials/README.md)
+## Documentation Structure
+```
+docs/
+  GettingStarted.md     — installation and first steps
+  Architecture.md       — system design and component overview
+  Theory.md             — reinforcement learning theory
+  API-Reference.md      — complete function reference
+  FAQ.md                — common questions and answers
+  tutorials/            — step-by-step learning path
+  case-studies/         — real-world applications
+  papers/               — research and academic content
+  dev/                  — contributor guides
+  teaching/             — course materials
+```

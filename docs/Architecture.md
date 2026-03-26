@@ -1,25 +1,67 @@
-﻿[🏠 Back to Docs](../README.md#documentation)
-# VBAF Architecture
+﻿# VBAF Architecture
 
-> 🚧 **Placeholder** — full architecture document coming soon.
+## Overview
 
-## Phase overview
+VBAF is a layered framework. Each layer builds on the one below it.
+```
+Layer 4 — Enterprise AutoPilot (Phase 27)
+           One master agent orchestrating all 13 pillars
 
-| Phase | Modules | Status |
-|---|---|---|
-| Phase 1-2 | Core classes, RL foundations | ✅ Complete |
-| Phase 3 | RL algorithms (DQN, PPO, A3C) | ✅ Complete |
-| Phase 4 | Supervised ML | ✅ Complete |
-| Phase 5 | Data pipeline | ✅ Complete |
-| Phase 6 | Deep learning (CNN, RNN, Autoencoder) | ✅ Complete |
-| Phase 7 | Production (MLOps, AutoML, Explainability) | ✅ Complete |
-| Phase 8 | Transfer Learning, benchmarks | 🚧 In progress |
+Layer 3 — Enterprise Pillars (Phases 14-26)
+           13 domain-specific DQN agents
+           SelfHealing, Dashboard, FederatedLearning, CloudBridge,
+           AnomalyDetector, CapacityPlanner, IncidentResponder,
+           ComplianceReporter, UserBehaviorAnalytics, PatchIntelligence,
+           BackupOptimizer, EnergyOptimizer, MultiSiteCoordinator
 
-## Key design decision: PS 5.1 reference semantics
+Layer 2 — DQN Engine (Phases 8-13)
+           DQNAgent, NeuralNetwork, ExperienceReplay, DQNConfig
 
-Layers are stored as **hashtables in ArrayLists** — not typed class properties.
-This guarantees reference semantics so weight mutations persist during backprop.
-See [Theory.md](Theory.md) for details.
+Layer 1 — Core ML (Phases 1-7)
+           NeuralNetwork, Q-Learning, Supervised Learning,
+           Regression, Classification, Clustering
+```
 
+## Core Components
 
+### NeuralNetwork
+Fully connected feedforward network with backpropagation.
+Configurable architecture: any number of layers and neurons.
+Used by both supervised learning and DQN agents.
 
+### DQNAgent
+Deep Q-Network agent. Maintains main and target networks.
+Uses epsilon-greedy exploration with configurable decay.
+Experience replay for stable training.
+
+### ExperienceReplay
+Circular buffer storing (state, action, reward, next_state, done) tuples.
+Random sampling breaks temporal correlations in training data.
+
+### Enterprise Environment
+Each pillar defines a class with:
+- `GetState()` — returns 4 real-time signals (0.0-1.0)
+- `Step(action)` — applies action, computes reward
+- `Reset()` — starts a new episode
+
+## Data Flow
+```
+Windows signals (WMI, Get-WinEvent, Get-Service)
+    -> Environment.GetState() -> double[4]
+    -> DQNAgent.Act(state)    -> int (0-3)
+    -> Environment.Step(action)
+    -> reward signal
+    -> DQNAgent.Remember() + Replay()
+    -> improved policy
+```
+
+## File Structure
+```
+VBAF.Core.*           — neural network, math utilities
+VBAF.RL.*             — Q-learning, DQN, experience replay
+VBAF.ML.*             — supervised learning, clustering, pipelines
+VBAF.Business.*       — market simulation, company agents
+VBAF.Visualization.*  — dashboards, charts
+VBAF.Enterprise.*     — 14 enterprise automation pillars
+VBAF.LoadAll.ps1      — loads everything in correct order
+```

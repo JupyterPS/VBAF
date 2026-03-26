@@ -1,24 +1,64 @@
 ﻿# Frequently Asked Questions
 
-> 🚧 **Placeholder** — FAQ will grow as community questions come in.
+## General
 
-## Why PowerShell 5.1?
+**What is VBAF?**
+VBAF is a PowerShell 5.1 machine learning framework with a Deep Q-Network
+enterprise automation engine. It trains AI agents to make autonomous IT decisions
+using real Windows system signals — no Python, no cloud, no dependencies.
 
-VBAF is an **educational framework** — PS 5.1 is available on every Windows machine
-with no install required. The goal is to teach ML concepts without a Python setup barrier.
+**Do I need Python?**
+No. VBAF runs entirely in PowerShell 5.1, which is included with Windows 10/11.
 
-## Why not PS Core (7+)?
+**Does it need internet access?**
+Only for installation (`Install-Module VBAF`). After that, everything runs offline.
 
-PS 5.1 class semantics are more restrictive, which makes the implementation
-challenges more explicit and educational. PS Core support is on the roadmap.
+**What Windows versions are supported?**
+Windows 10 and Windows 11. PowerShell 5.1 must be available.
 
-## Why do layers use hashtables instead of typed classes?
+## Installation
 
-PS 5.1 typed arrays stored in ArrayList return **value copies** on index access.
-Hashtables are always references — essential for weight mutations to persist
-during backpropagation. See docs/Architecture.md for full explanation.
+**How do I install VBAF?**
+```powershell
+Install-Module VBAF -Scope CurrentUser
+```
 
-## Can I use VBAF for real ML work?
+**How do I load VBAF?**
+```powershell
+. .\VBAF.LoadAll.ps1
+```
 
-VBAF is primarily educational. For production ML use Python (scikit-learn, PyTorch).
-VBAF's value is in **understanding** how these algorithms work from scratch.
+## Usage
+
+**What is SimMode?**
+SimMode uses generated data instead of real Windows signals.
+Use it for demos and learning. Omit it for real enterprise monitoring.
+
+**How long does training take?**
+100 episodes with 200 steps each takes 45-90 seconds on a standard laptop.
+Use `-FastMode` for a quick 30-episode demo.
+
+**Why does the agent sometimes collapse to one action?**
+This is a known DQN initialisation issue. Run the training again —
+a different random seed usually produces good results.
+The distribution 15/40/30/15 guarantees positive improvement on average.
+
+**How do I add my own enterprise pillar?**
+See [tutorials/13_Enterprise_CustomPillar.ps1](../tutorials/13_Enterprise_CustomPillar.ps1).
+The pattern is: 4 state signals + 4 actions + distribution 15/40/30/15.
+
+## Results
+
+**What does the improvement percentage mean?**
+It is the percentage improvement in average reward compared to a random agent.
++63% means the trained agent scores 63% better than random guessing.
+
+**Why do some phases show negative improvement on first run?**
+DQN training is stochastic. Run again — results vary by initialisation.
+The reported figures are from successful runs after any fixes were applied.
+
+## Contributing
+
+**How do I contribute?**
+See [dev/contributing.md](dev/contributing.md) for the full guide.
+The simplest contribution is a new enterprise pillar following the Phase 28+ pattern.

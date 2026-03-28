@@ -1,0 +1,11 @@
+﻿Date,Product,Region,SalesAmount
+2023-01-01,ProductA,North,1000
+2023-01-01,ProductB,South,1500
+2023-02-01,ProductA,East,1200
+2023-02-01,ProductB,West,1600
+2023-03-01,ProductA,North,1100
+2023-03-01,ProductB,South,1700
+2023-04-01,ProductA,East,1250
+2023-04-01,ProductB,West,1750
+2023-05-01,ProductA,North,1300
+2023-05-01,ProductB,South,1800

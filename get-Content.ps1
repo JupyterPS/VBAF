@@ -1,0 +1,9 @@
+
+Get-Content $file.FullName
+
+
+
+
+
+
+

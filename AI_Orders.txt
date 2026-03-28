@@ -1,0 +1,34 @@
+﻿Mini AI Prompting Cheat Sheet
+💡 Prompt Format:
+
+Act as [role].
+Do: [task clearly]
+With: [constraints]
+Output: [format]
+🎯 Examples
+
+    Act as a PowerShell expert.
+    Generate a function that reads indented text into a tree.
+    Limit: 50 lines, no external modules.
+    Output: Code only.
+
+🧱 Prompt Phrases
+
+    “Explain this line by line”
+
+    “Refactor this to be modular”
+
+    “Add comments to this code”
+
+    “Convert to [language]”
+
+    “Make a GUI for this script”
+
+    “Add error handling + logging”
+
+🔁 Common Tasks
+Task	Say This
+Improve	“Make this faster + cleaner”
+Rewrite	“Rewrite using best practices”
+Format	“Output as table/JSON/code”
+Extend	“Add X feature to this function”

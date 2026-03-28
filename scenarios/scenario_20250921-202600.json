@@ -1,0 +1,67 @@
+﻿[
+    {
+        "Data":  {
+                     "OldEmployees":  250,
+                     "NewEmployees":  249,
+                     "NewRevenue":  4820000,
+                     "OldRevenue":  5000000
+                 },
+        "Message":  "Sim tick: Wine Company rev 5.0 M -\u003e 4.8 M (impact -3.6%)",
+        "CompanyName":  "Wine Company",
+        "Timestamp":  "2025-09-21T20:25:57.0441453+02:00",
+        "Type":  "RevenueChange",
+        "CompanyId":  2
+    },
+    {
+        "Data":  {
+                     "OldEmployees":  12000,
+                     "NewEmployees":  11700,
+                     "NewRevenue":  1275000000,
+                     "OldRevenue":  1500000000
+                 },
+        "Message":  "Sim tick: Commerce Bank rev 1.50 B -\u003e 1.28 B (impact -15.0%)",
+        "CompanyName":  "Commerce Bank",
+        "Timestamp":  "2025-09-21T20:25:57.0550966+02:00",
+        "Type":  "RevenueChange",
+        "CompanyId":  3
+    },
+    {
+        "Data":  {
+                     "OldEmployees":  11700,
+                     "NewEmployees":  12008,
+                     "NewRevenue":  1476450000,
+                     "OldRevenue":  1275000000
+                 },
+        "Message":  "Sim tick: Commerce Bank rev 1.28 B -\u003e 1.48 B (impact 15.8%)",
+        "CompanyName":  "Commerce Bank",
+        "Timestamp":  "2025-09-21T20:25:57.0665025+02:00",
+        "Type":  "RevenueChange",
+        "CompanyId":  3
+    },
+    {
+        "Data":  {
+                     "OldEmployees":  83000,
+                     "NewEmployees":  82779,
+                     "NewRevenue":  344400000,
+                     "OldRevenue":  350000000
+                 },
+        "Message":  "Sim tick: Maersk rev 350.0 M -\u003e 344.4 M (impact -1.6%)",
+        "CompanyName":  "Maersk",
+        "Timestamp":  "2025-09-21T20:25:59.0301594+02:00",
+        "Type":  "RevenueChange",
+        "CompanyId":  5
+    },
+    {
+        "Data":  {
+                     "OldEmployees":  48000,
+                     "NewEmployees":  48992,
+                     "NewRevenue":  22480000000.000004,
+                     "OldRevenue":  20000000000
+                 },
+        "Message":  "Sim tick: Novo Nordisk rev 20.00 B -\u003e 22.48 B (impact 12.4%)",
+        "CompanyName":  "Novo Nordisk",
+        "Timestamp":  "2025-09-21T20:25:59.0406159+02:00",
+        "Type":  "RevenueChange",
+        "CompanyId":  1
+    }
+]

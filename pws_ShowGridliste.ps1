@@ -1,0 +1,7 @@
+Get-Process | Out-GridView
+
+
+
+
+
+

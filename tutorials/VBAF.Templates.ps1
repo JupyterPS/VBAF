@@ -1,5 +1,5 @@
-﻿#Requires -Version 5.1
 <#
+#Requires -Version 5.1
 .SYNOPSIS
     VBAF Templates & Recipes - Reusable workflow patterns
 .DESCRIPTION
@@ -26,29 +26,29 @@
 # ============================================================
 
 Write-Host ""
-Write-Host "╔══════════════════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "║       VBAF Templates & Recipes Cookbook          ║" -ForegroundColor Cyan
-Write-Host "╠══════════════════════════════════════════════════╣" -ForegroundColor Cyan
-Write-Host "║  1. Common Workflow Templates                    ║" -ForegroundColor White
-Write-Host "║     - Regression pipeline                        ║" -ForegroundColor DarkGray
-Write-Host "║     - Classification pipeline                    ║" -ForegroundColor DarkGray
-Write-Host "║     - Clustering pipeline                        ║" -ForegroundColor DarkGray
-Write-Host "║     - Time series pipeline                       ║" -ForegroundColor DarkGray
-Write-Host "║  2. Industry-Specific Examples                   ║" -ForegroundColor White
-Write-Host "║     - Real estate pricing                        ║" -ForegroundColor DarkGray
-Write-Host "║     - Customer segmentation                      ║" -ForegroundColor DarkGray
-Write-Host "║     - Text spam classification                   ║" -ForegroundColor DarkGray
-Write-Host "║     - Sales forecasting                          ║" -ForegroundColor DarkGray
-Write-Host "║  3. Performance Optimization Recipes             ║" -ForegroundColor White
-Write-Host "║     - Feature selection before training          ║" -ForegroundColor DarkGray
-Write-Host "║     - Cross-validation strategy                  ║" -ForegroundColor DarkGray
-Write-Host "║     - Scaler selection guide                     ║" -ForegroundColor DarkGray
-Write-Host "║  4. Troubleshooting Cookbook                     ║" -ForegroundColor White
-Write-Host "║     - Model not improving                        ║" -ForegroundColor DarkGray
-Write-Host "║     - Overfitting / underfitting                 ║" -ForegroundColor DarkGray
-Write-Host "║     - Data quality issues                        ║" -ForegroundColor DarkGray
-Write-Host "║  5. Best Practices Guide                         ║" -ForegroundColor White
-Write-Host "╚══════════════════════════════════════════════════╝" -ForegroundColor Cyan
+Write-Host "+--------------------------------------------------+" -ForegroundColor Cyan
+Write-Host "�       VBAF Templates & Recipes Cookbook          �" -ForegroundColor Cyan
+Write-Host "�--------------------------------------------------�" -ForegroundColor Cyan
+Write-Host "�  1. Common Workflow Templates                    �" -ForegroundColor White
+Write-Host "�     - Regression pipeline                        �" -ForegroundColor DarkGray
+Write-Host "�     - Classification pipeline                    �" -ForegroundColor DarkGray
+Write-Host "�     - Clustering pipeline                        �" -ForegroundColor DarkGray
+Write-Host "�     - Time series pipeline                       �" -ForegroundColor DarkGray
+Write-Host "�  2. Industry-Specific Examples                   �" -ForegroundColor White
+Write-Host "�     - Real estate pricing                        �" -ForegroundColor DarkGray
+Write-Host "�     - Customer segmentation                      �" -ForegroundColor DarkGray
+Write-Host "�     - Text spam classification                   �" -ForegroundColor DarkGray
+Write-Host "�     - Sales forecasting                          �" -ForegroundColor DarkGray
+Write-Host "�  3. Performance Optimization Recipes             �" -ForegroundColor White
+Write-Host "�     - Feature selection before training          �" -ForegroundColor DarkGray
+Write-Host "�     - Cross-validation strategy                  �" -ForegroundColor DarkGray
+Write-Host "�     - Scaler selection guide                     �" -ForegroundColor DarkGray
+Write-Host "�  4. Troubleshooting Cookbook                     �" -ForegroundColor White
+Write-Host "�     - Model not improving                        �" -ForegroundColor DarkGray
+Write-Host "�     - Overfitting / underfitting                 �" -ForegroundColor DarkGray
+Write-Host "�     - Data quality issues                        �" -ForegroundColor DarkGray
+Write-Host "�  5. Best Practices Guide                         �" -ForegroundColor White
+Write-Host "+--------------------------------------------------+" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Run individual sections below or source this file." -ForegroundColor DarkGray
 Write-Host ""
@@ -69,7 +69,7 @@ function Invoke-RegressionTemplate {
         [double]     $Lambda       = 0.1
     )
 
-    Write-Host "📋 [Template] Regression Pipeline" -ForegroundColor Cyan
+    Write-Host "?? [Template] Regression Pipeline" -ForegroundColor Cyan
 
     # 1. Split
     $split = Split-TrainTest -X $X -y $y -TestSize $TestSize -Seed 42
@@ -101,7 +101,7 @@ function Invoke-ClassificationTemplate {
         [int]        $MaxDepth = 4
     )
 
-    Write-Host "📋 [Template] Classification Pipeline" -ForegroundColor Cyan
+    Write-Host "?? [Template] Classification Pipeline" -ForegroundColor Cyan
 
     # 1. Split
     $split = Split-TrainTest -X $X -y $y -TestSize 0.2 -Seed 42
@@ -123,7 +123,7 @@ function Invoke-ClassificationTemplate {
         $c.Model.Fit($trainXs, $split.TrainY)
         $preds  = $c.Model.Predict($testXs)
         $m      = Get-ClassificationMetrics $split.TestY $preds
-        $marker = if ($m.Accuracy -gt $bestAcc) { $bestAcc=$m.Accuracy; $best=$c; "★" } else { "" }
+        $marker = if ($m.Accuracy -gt $bestAcc) { $bestAcc=$m.Accuracy; $best=$c; "?" } else { "" }
         Write-Host ("   {0,-15} Acc={1:P1} {2}" -f $c.Name, $m.Accuracy, $marker) -ForegroundColor White
     }
 
@@ -140,7 +140,7 @@ function Invoke-ClusteringTemplate {
         [int]        $MaxK = 8
     )
 
-    Write-Host "📋 [Template] Clustering Pipeline" -ForegroundColor Cyan
+    Write-Host "?? [Template] Clustering Pipeline" -ForegroundColor Cyan
 
     # 1. Scale
     $scaler = [StandardScaler]::new()
@@ -166,7 +166,7 @@ function Invoke-TimeSeriesTemplate {
     #>
     param([string]$DatasetName = "Sales")
 
-    Write-Host "📋 [Template] Time Series Pipeline" -ForegroundColor Cyan
+    Write-Host "?? [Template] Time Series Pipeline" -ForegroundColor Cyan
 
     $ts = Get-VBAFTimeSeriesDataset -Name $DatasetName
     $ts.PrintSummary()
@@ -192,7 +192,7 @@ function Invoke-RealEstatePricingExample {
     <#
     .SYNOPSIS Industry: Real estate automated valuation model (AVM)
     #>
-    Write-Host "🏠 [Industry] Real Estate Pricing (AVM)" -ForegroundColor Cyan
+    Write-Host "?? [Industry] Real Estate Pricing (AVM)" -ForegroundColor Cyan
 
     $data = Get-VBAFDataset -Name "HousePrice"
 
@@ -221,9 +221,9 @@ function Invoke-CustomerSegmentationExample {
         Segments customers into groups for targeted campaigns.
         Features: recency, frequency, monetary value (RFM)
     #>
-    Write-Host "👥 [Industry] Customer Segmentation (RFM)" -ForegroundColor Cyan
+    Write-Host "?? [Industry] Customer Segmentation (RFM)" -ForegroundColor Cyan
 
-    # Simulate RFM data: recency (days), frequency (orders), monetary (£)
+    # Simulate RFM data: recency (days), frequency (orders), monetary (�)
     $rng = [System.Random]::new(42)
     $rfm = @()
     for ($i = 0; $i -lt 60; $i++) {
@@ -258,7 +258,7 @@ function Invoke-SpamClassificationExample {
     <#
     .SYNOPSIS Industry: Text spam classification using Bernoulli NB
     #>
-    Write-Host "📧 [Industry] Spam Classification" -ForegroundColor Cyan
+    Write-Host "?? [Industry] Spam Classification" -ForegroundColor Cyan
 
     $data = Get-VBAFNBDataset -Name "SpamHam"
     Write-Host ("   Samples: {0}  Classes: {1}" -f $data.X.Length, ($data.ClassNames -join ", ")) -ForegroundColor White
@@ -278,7 +278,7 @@ function Invoke-SalesForecastingExample {
     <#
     .SYNOPSIS Industry: Sales forecasting with lag features + regression
     #>
-    Write-Host "📈 [Industry] Sales Forecasting" -ForegroundColor Cyan
+    Write-Host "?? [Industry] Sales Forecasting" -ForegroundColor Cyan
 
     $ts = Get-VBAFTimeSeriesDataset -Name "Sales"
 
@@ -301,21 +301,21 @@ function Get-VBAFScalerGuide {
     .SYNOPSIS Recipe: Which scaler to use and when?
     #>
     Write-Host ""
-    Write-Host "⚡ Scaler Selection Guide:" -ForegroundColor Cyan
+    Write-Host "? Scaler Selection Guide:" -ForegroundColor Cyan
     Write-Host ""
     Write-Host "   StandardScaler  (z-score normalization)" -ForegroundColor Yellow
     Write-Host "     When: most cases, especially linear models and SVM" -ForegroundColor White
-    Write-Host "     How:  (x - mean) / std → mean=0, std=1" -ForegroundColor DarkGray
+    Write-Host "     How:  (x - mean) / std ? mean=0, std=1" -ForegroundColor DarkGray
     Write-Host "     Avoid: when data has heavy outliers" -ForegroundColor DarkGray
     Write-Host ""
     Write-Host "   MinMaxScaler    (0-1 normalization)" -ForegroundColor Yellow
     Write-Host "     When: neural networks, distance-based models (KMeans)" -ForegroundColor White
-    Write-Host "     How:  (x - min) / (max - min) → [0, 1]" -ForegroundColor DarkGray
+    Write-Host "     How:  (x - min) / (max - min) ? [0, 1]" -ForegroundColor DarkGray
     Write-Host "     Avoid: when outliers exist (they compress everything else)" -ForegroundColor DarkGray
     Write-Host ""
     Write-Host "   RobustScaler    (median/IQR normalization)" -ForegroundColor Yellow
     Write-Host "     When: data with significant outliers" -ForegroundColor White
-    Write-Host "     How:  (x - median) / IQR → robust to extremes" -ForegroundColor DarkGray
+    Write-Host "     How:  (x - median) / IQR ? robust to extremes" -ForegroundColor DarkGray
     Write-Host "     Best: messy real-world data" -ForegroundColor DarkGray
     Write-Host ""
     Write-Host "   No scaling" -ForegroundColor Yellow
@@ -329,7 +329,7 @@ function Get-VBAFCrossValGuide {
     .SYNOPSIS Recipe: Cross-validation strategy selection
     #>
     Write-Host ""
-    Write-Host "⚡ Cross-Validation Strategy Guide:" -ForegroundColor Cyan
+    Write-Host "? Cross-Validation Strategy Guide:" -ForegroundColor Cyan
     Write-Host ""
     Write-Host "   Small dataset (< 100 samples):" -ForegroundColor Yellow
     Write-Host "     Use k=10 folds or leave-one-out" -ForegroundColor White
@@ -355,7 +355,7 @@ function Get-VBAFFeatureSelectionRecipe {
     #>
     param([double[][]]$X, [double[]]$y, [string[]]$FeatureNames = @())
 
-    Write-Host "⚡ Feature Selection Recipe" -ForegroundColor Cyan
+    Write-Host "? Feature Selection Recipe" -ForegroundColor Cyan
 
     # Step 1: Remove zero-variance features
     $scaler  = [StandardScaler]::new()
@@ -379,7 +379,7 @@ function Get-VBAFFeatureSelectionRecipe {
 
 function Get-VBAFTroubleshootingGuide {
     Write-Host ""
-    Write-Host "🔧 VBAF Troubleshooting Cookbook" -ForegroundColor Cyan
+    Write-Host "?? VBAF Troubleshooting Cookbook" -ForegroundColor Cyan
     Write-Host ""
 
     Write-Host "PROBLEM: Model R2 is negative or very low" -ForegroundColor Red
@@ -427,35 +427,35 @@ function Get-VBAFTroubleshootingGuide {
 
 function Get-VBAFBestPractices {
     Write-Host ""
-    Write-Host "✅ VBAF Best Practices" -ForegroundColor Cyan
+    Write-Host "? VBAF Best Practices" -ForegroundColor Cyan
     Write-Host ""
 
     Write-Host "DATA PRACTICES:" -ForegroundColor Yellow
-    Write-Host "  ✅ Always split train/test BEFORE any preprocessing" -ForegroundColor White
-    Write-Host "  ✅ Fit scalers on TRAIN only, transform both train and test" -ForegroundColor White
-    Write-Host "  ✅ Check for missing values before training" -ForegroundColor White
-    Write-Host "  ✅ Understand your data with Get-DataSummary first" -ForegroundColor White
+    Write-Host "  ? Always split train/test BEFORE any preprocessing" -ForegroundColor White
+    Write-Host "  ? Fit scalers on TRAIN only, transform both train and test" -ForegroundColor White
+    Write-Host "  ? Check for missing values before training" -ForegroundColor White
+    Write-Host "  ? Understand your data with Get-DataSummary first" -ForegroundColor White
     Write-Host ""
 
     Write-Host "MODEL PRACTICES:" -ForegroundColor Yellow
-    Write-Host "  ✅ Start with the simplest model (linear regression/NB)" -ForegroundColor White
-    Write-Host "  ✅ Use cross-validation, not a single train/test split" -ForegroundColor White
-    Write-Host "  ✅ Always compare against a baseline" -ForegroundColor White
-    Write-Host "  ✅ Track all experiments with New-VBAFExperiment" -ForegroundColor White
+    Write-Host "  ? Start with the simplest model (linear regression/NB)" -ForegroundColor White
+    Write-Host "  ? Use cross-validation, not a single train/test split" -ForegroundColor White
+    Write-Host "  ? Always compare against a baseline" -ForegroundColor White
+    Write-Host "  ? Track all experiments with New-VBAFExperiment" -ForegroundColor White
     Write-Host ""
 
     Write-Host "PRODUCTION PRACTICES:" -ForegroundColor Yellow
-    Write-Host "  ✅ Save every model with Save-VBAFModel (don't retrain from memory!)" -ForegroundColor White
-    Write-Host "  ✅ Set retraining policy with New-VBAFRetrainingPolicy" -ForegroundColor White
-    Write-Host "  ✅ Monitor for data drift with Get-VBAFDriftReport" -ForegroundColor White
-    Write-Host "  ✅ Use Compare-VBAFModels before promoting a new version" -ForegroundColor White
+    Write-Host "  ? Save every model with Save-VBAFModel (don't retrain from memory!)" -ForegroundColor White
+    Write-Host "  ? Set retraining policy with New-VBAFRetrainingPolicy" -ForegroundColor White
+    Write-Host "  ? Monitor for data drift with Get-VBAFDriftReport" -ForegroundColor White
+    Write-Host "  ? Use Compare-VBAFModels before promoting a new version" -ForegroundColor White
     Write-Host ""
 
     Write-Host "PS 5.1 GOTCHAS:" -ForegroundColor Yellow
-    Write-Host "  ⚠️  foreach over double[][] unrolls - use index loops" -ForegroundColor White
-    Write-Host "  ⚠️  Class method returns can unroll - cast [double[]] explicitly" -ForegroundColor White
-    Write-Host "  ⚠️  Single-element arrays need comma: ,@(1.0) not @(1.0)" -ForegroundColor White
-    Write-Host "  ⚠️  ArrayList indexer returns [object] - always cast explicitly" -ForegroundColor White
+    Write-Host "  ??  foreach over double[][] unrolls - use index loops" -ForegroundColor White
+    Write-Host "  ??  Class method returns can unroll - cast [double[]] explicitly" -ForegroundColor White
+    Write-Host "  ??  Single-element arrays need comma: ,@(1.0) not @(1.0)" -ForegroundColor White
+    Write-Host "  ??  ArrayList indexer returns [object] - always cast explicitly" -ForegroundColor White
     Write-Host ""
 }
 
@@ -465,50 +465,52 @@ function Get-VBAFBestPractices {
 
 function Show-VBAFQuickReference {
     Write-Host ""
-    Write-Host "╔══════════════════════════════════════════════════════════╗" -ForegroundColor Green
-    Write-Host "║                VBAF Quick Reference                     ║" -ForegroundColor Green
-    Write-Host "╠══════════════════════════════════════════════════════════╣" -ForegroundColor Green
-    Write-Host "║  DATASETS                                               ║" -ForegroundColor Yellow
-    Write-Host "║  Get-VBAFDataset        -Name HousePrice/Sine/Linear    ║" -ForegroundColor White
-    Write-Host "║  Get-VBAFNBDataset      -Name Iris3Class/SpamHam        ║" -ForegroundColor White
-    Write-Host "║  Get-VBAFClusterDataset -Name Blobs/Moons               ║" -ForegroundColor White
-    Write-Host "║  Get-VBAFTreeDataset    -Name HousePrice/Titanic        ║" -ForegroundColor White
-    Write-Host "╠══════════════════════════════════════════════════════════╣" -ForegroundColor Green
-    Write-Host "║  PREPROCESSING                                          ║" -ForegroundColor Yellow
-    Write-Host "║  [StandardScaler]::new()     .FitTransform() .Transform ║" -ForegroundColor White
-    Write-Host "║  [MinMaxScaler]::new()       .FitTransform() .Transform ║" -ForegroundColor White
-    Write-Host "║  [RobustScaler]::new()       .FitTransform() .Transform ║" -ForegroundColor White
-    Write-Host "║  [MissingValueImputer]::new(strategy)                   ║" -ForegroundColor White
-    Write-Host "║  [PolynomialFeatures]::new(degree)                      ║" -ForegroundColor White
-    Write-Host "╠══════════════════════════════════════════════════════════╣" -ForegroundColor Green
-    Write-Host "║  MODELS                                                 ║" -ForegroundColor Yellow
-    Write-Host "║  [LinearRegression]::new()                              ║" -ForegroundColor White
-    Write-Host "║  [RidgeRegression]::new(lambda)                         ║" -ForegroundColor White
-    Write-Host "║  [LogisticRegression]::new()                            ║" -ForegroundColor White
-    Write-Host "║  [DecisionTree]::new(task, maxDepth, minSamples)        ║" -ForegroundColor White
-    Write-Host "║  [RandomForest]::new(nTrees, maxDepth, minSamples)      ║" -ForegroundColor White
-    Write-Host "║  [GaussianNaiveBayes]::new()                            ║" -ForegroundColor White
-    Write-Host "║  [KMeans]::new(k)                                       ║" -ForegroundColor White
-    Write-Host "╠══════════════════════════════════════════════════════════╣" -ForegroundColor Green
-    Write-Host "║  EVALUATION                                             ║" -ForegroundColor Yellow
-    Write-Host "║  Get-RegressionMetrics      $y $preds                  ║" -ForegroundColor White
-    Write-Host "║  Get-ClassificationMetrics  $y $preds                  ║" -ForegroundColor White
-    Write-Host "║  Get-SilhouetteScore  -X $Xs -Labels $km.Labels        ║" -ForegroundColor White
-    Write-Host "║  Invoke-KFoldCV  -Model $m -X $X -y $y -Folds 5        ║" -ForegroundColor White
-    Write-Host "╠══════════════════════════════════════════════════════════╣" -ForegroundColor Green
-    Write-Host "║  AUTOML / HPO                                           ║" -ForegroundColor Yellow
-    Write-Host "║  Invoke-VBAFGridSearch / RandomSearch / BayesianSearch  ║" -ForegroundColor White
-    Write-Host "║  Invoke-VBAFAlgorithmSelection  -Task regression        ║" -ForegroundColor White
-    Write-Host "║  Invoke-VBAFAutoML  -OptMethod bayesian                 ║" -ForegroundColor White
-    Write-Host "╠══════════════════════════════════════════════════════════╣" -ForegroundColor Green
-    Write-Host "║  MLOPS                                                  ║" -ForegroundColor Yellow
-    Write-Host "║  Save-VBAFModel / Load-VBAFModel / Compare-VBAFModels   ║" -ForegroundColor White
-    Write-Host "║  New-VBAFExperiment / Start-VBAFRun / Stop-VBAFRun      ║" -ForegroundColor White
-    Write-Host "║  Get-VBAFDriftReport  -ReferenceData $ref               ║" -ForegroundColor White
-    Write-Host "║  New-VBAFRetrainingPolicy / Test-VBAFRetrainingNeeded   ║" -ForegroundColor White
-    Write-Host "╚══════════════════════════════════════════════════════════╝" -ForegroundColor Green
+    Write-Host "+----------------------------------------------------------+" -ForegroundColor Green
+    Write-Host "�                VBAF Quick Reference                     �" -ForegroundColor Green
+    Write-Host "�----------------------------------------------------------�" -ForegroundColor Green
+    Write-Host "�  DATASETS                                               �" -ForegroundColor Yellow
+    Write-Host "�  Get-VBAFDataset        -Name HousePrice/Sine/Linear    �" -ForegroundColor White
+    Write-Host "�  Get-VBAFNBDataset      -Name Iris3Class/SpamHam        �" -ForegroundColor White
+    Write-Host "�  Get-VBAFClusterDataset -Name Blobs/Moons               �" -ForegroundColor White
+    Write-Host "�  Get-VBAFTreeDataset    -Name HousePrice/Titanic        �" -ForegroundColor White
+    Write-Host "�----------------------------------------------------------�" -ForegroundColor Green
+    Write-Host "�  PREPROCESSING                                          �" -ForegroundColor Yellow
+    Write-Host "�  [StandardScaler]::new()     .FitTransform() .Transform �" -ForegroundColor White
+    Write-Host "�  [MinMaxScaler]::new()       .FitTransform() .Transform �" -ForegroundColor White
+    Write-Host "�  [RobustScaler]::new()       .FitTransform() .Transform �" -ForegroundColor White
+    Write-Host "�  [MissingValueImputer]::new(strategy)                   �" -ForegroundColor White
+    Write-Host "�  [PolynomialFeatures]::new(degree)                      �" -ForegroundColor White
+    Write-Host "�----------------------------------------------------------�" -ForegroundColor Green
+    Write-Host "�  MODELS                                                 �" -ForegroundColor Yellow
+    Write-Host "�  [LinearRegression]::new()                              �" -ForegroundColor White
+    Write-Host "�  [RidgeRegression]::new(lambda)                         �" -ForegroundColor White
+    Write-Host "�  [LogisticRegression]::new()                            �" -ForegroundColor White
+    Write-Host "�  [DecisionTree]::new(task, maxDepth, minSamples)        �" -ForegroundColor White
+    Write-Host "�  [RandomForest]::new(nTrees, maxDepth, minSamples)      �" -ForegroundColor White
+    Write-Host "�  [GaussianNaiveBayes]::new()                            �" -ForegroundColor White
+    Write-Host "�  [KMeans]::new(k)                                       �" -ForegroundColor White
+    Write-Host "�----------------------------------------------------------�" -ForegroundColor Green
+    Write-Host "�  EVALUATION                                             �" -ForegroundColor Yellow
+    Write-Host "�  Get-RegressionMetrics      $y $preds                  �" -ForegroundColor White
+    Write-Host "�  Get-ClassificationMetrics  $y $preds                  �" -ForegroundColor White
+    Write-Host "�  Get-SilhouetteScore  -X $Xs -Labels $km.Labels        �" -ForegroundColor White
+    Write-Host "�  Invoke-KFoldCV  -Model $m -X $X -y $y -Folds 5        �" -ForegroundColor White
+    Write-Host "�----------------------------------------------------------�" -ForegroundColor Green
+    Write-Host "�  AUTOML / HPO                                           �" -ForegroundColor Yellow
+    Write-Host "�  Invoke-VBAFGridSearch / RandomSearch / BayesianSearch  �" -ForegroundColor White
+    Write-Host "�  Invoke-VBAFAlgorithmSelection  -Task regression        �" -ForegroundColor White
+    Write-Host "�  Invoke-VBAFAutoML  -OptMethod bayesian                 �" -ForegroundColor White
+    Write-Host "�----------------------------------------------------------�" -ForegroundColor Green
+    Write-Host "�  MLOPS                                                  �" -ForegroundColor Yellow
+    Write-Host "�  Save-VBAFModel / Load-VBAFModel / Compare-VBAFModels   �" -ForegroundColor White
+    Write-Host "�  New-VBAFExperiment / Start-VBAFRun / Stop-VBAFRun      �" -ForegroundColor White
+    Write-Host "�  Get-VBAFDriftReport  -ReferenceData $ref               �" -ForegroundColor White
+    Write-Host "�  New-VBAFRetrainingPolicy / Test-VBAFRetrainingNeeded   �" -ForegroundColor White
+    Write-Host "+----------------------------------------------------------+" -ForegroundColor Green
     Write-Host ""
 }
 
 # Auto-show quick reference on load
 Show-VBAFQuickReference
+
+

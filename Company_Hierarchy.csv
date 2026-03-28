@@ -1,0 +1,10 @@
+﻿Parent,Child
+CompanyHeadquarters,Company1
+CompanyHeadquarters,Company2
+CompanyHeadquarters,Company3
+CompanyHeadquarters,Company4
+Company1,DepartmentA1
+Company1,DepartmentA2
+Company2,DepartmentB1
+Company3,DepartmentC1
+Company4,DepartmentD1

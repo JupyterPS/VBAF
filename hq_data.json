@@ -1,0 +1,72 @@
+﻿[
+    {
+        "GrowthRate":  0.05,
+        "Industry":  "Pharma",
+        "Employees":  48000,
+        "Id":  1,
+        "Name":  "Novo Nordisk",
+        "AvgSalary":  95000,
+        "Revenue":  20000000000,
+        "Country":  "Denmark"
+    },
+    {
+        "GrowthRate":  0.02,
+        "Industry":  "Beverage",
+        "Employees":  250,
+        "Id":  2,
+        "Name":  "Wine Company",
+        "AvgSalary":  22000,
+        "Revenue":  5000000,
+        "Country":  "France"
+    },
+    {
+        "GrowthRate":  0.03,
+        "Industry":  "Finance",
+        "Employees":  12000,
+        "Id":  3,
+        "Name":  "Commerce Bank",
+        "AvgSalary":  75000,
+        "Revenue":  1500000000,
+        "Country":  "USA"
+    },
+    {
+        "GrowthRate":  0.12,
+        "Industry":  "Tech",
+        "Employees":  300,
+        "Id":  4,
+        "Name":  "AI Company",
+        "AvgSalary":  85000,
+        "Revenue":  75000000,
+        "Country":  "Germany"
+    },
+    {
+        "GrowthRate":  0.02,
+        "Industry":  "Shipping",
+        "Employees":  83000,
+        "Id":  5,
+        "Name":  "Maersk",
+        "AvgSalary":  65000,
+        "Revenue":  350000000,
+        "Country":  "Denmark"
+    },
+    {
+        "GrowthRate":  0.01,
+        "Industry":  "Beverage",
+        "Employees":  40000,
+        "Id":  6,
+        "Name":  "Carlsberg",
+        "AvgSalary":  46000,
+        "Revenue":  70000000,
+        "Country":  "Denmark"
+    },
+    {
+        "GrowthRate":  0.04,
+        "Industry":  "Energy",
+        "Employees":  29000,
+        "Id":  7,
+        "Name":  "Vestas",
+        "AvgSalary":  70000,
+        "Revenue":  120000000,
+        "Country":  "Denmark"
+    }
+]

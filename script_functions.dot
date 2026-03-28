@@ -1,0 +1,12 @@
+digraph ScriptFunctions {
+    node [shape=box];
+
+    // Functions in the script
+    "Remove-ExistingFiles" [label="Remove-ExistingFiles\n(Clean up existing files)"];
+    "Create-DOTContent" [label="Create-DOTContent\n(Generate DOT content)"];
+    "Generate-Diagram" [label="Generate-Diagram\n(Create diagram image)"];
+
+    // Add relationships between functions
+    "Create-DOTContent" -> "Generate-Diagram" [label="Calls"];
+    "Remove-ExistingFiles" -> "Generate-Diagram" [label="Used by"];
+}

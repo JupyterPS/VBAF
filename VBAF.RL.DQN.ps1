@@ -449,7 +449,7 @@ function Invoke-DQNTraining {
 #    $agent.Predict($state)              # greedy action (0 or 1)
 #
 # 7. COMPARE ALGORITHMS (after training PPO and A3C too)
-#    $dqn = (Invoke-DQNTraining -Episodes 50 -PrintEvery 50 -FastMode -Quiet)[-1]
+#    $dqn = Invoke-DQNTraining -Episodes 50 -PrintEvery 50 -FastMode -Quiet
 #    $env = New-VBAFEnvironment -Name "CartPole" -MaxSteps 200
 #    Invoke-VBAFBenchmark -Agent $dqn -Environment $env -Episodes 20 -Label "DQN"
 # ============================================================

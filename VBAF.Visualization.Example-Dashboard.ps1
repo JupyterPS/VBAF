@@ -12,9 +12,9 @@
 
 # CRITICAL: Check if classes are already loaded (cache issue)
 if ([System.Management.Automation.PSTypeName]'MetricsCollector'.Type) {
-    Write-Host "? WARNING: Classes already loaded in this session!" -ForegroundColor Yellow
-    Write-Host "  For best results, close PowerShell and start fresh." -ForegroundColor Yellow
-    Write-Host "  Or run: Launch-Dashboard-Clean.ps1" -ForegroundColor Cyan
+    Write-Host " WARNING: Classes already loaded in this session!" -ForegroundColor Yellow
+    Write-Host " For best results, close PowerShell and start fresh." -ForegroundColor Yellow
+    Write-Host " Or run: Launch-Dashboard-Clean.ps1" -ForegroundColor Cyan
     Write-Host ""
     $continue = Read-Host "Continue anyway? (y/n)"
     if ($continue -ne 'y') {

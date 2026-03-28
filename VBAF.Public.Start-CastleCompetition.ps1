@@ -87,8 +87,8 @@ function Start-VBAFCastleCompetition {
     
     begin {
         Write-Host "`n      - oo00oo - " -ForegroundColor Yellow
-        Write-Host "  ?? CASTLE COMPETITION - WEEK 8 GRAND FINALE ??" -ForegroundColor Cyan
-        Write-Host "      - oo00oo - `n" -ForegroundColor Yellow
+        Write-Host " CASTLE COMPETITION - WEEK 8 GRAND FINALE" -ForegroundColor Cyan
+        Write-Host "    - oo00oo - `n" -ForegroundColor Yellow
         
         Write-Host "  Three agents compete for aesthetic space:" -ForegroundColor Green
         Write-Host "    • Classic Agent (Brown) - Gothic, Cathedral, Fortress" -ForegroundColor DarkYellow

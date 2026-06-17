@@ -2,13 +2,13 @@
 
 <#
 .SYNOPSIS
-    VBAF Core — All Neural Network Classes
+    VBAF Core -- All Neural Network Classes
 .DESCRIPTION
     This file contains the complete building blocks of a neural network
     implemented from scratch in PowerShell 5.1.
 
     WHAT YOU ARE LEARNING HERE:
-    ════════════════════════════
+    ============================
     A neural network is a mathematical system loosely inspired by the brain.
     It consists of layers of simple units (neurons), each connected to the
     next layer by weights. Learning happens by adjusting those weights
@@ -16,35 +16,35 @@
 
     This file implements four classes that build up from simple to complex:
 
-      Activation  — the mathematical functions that make neurons non-linear
-      Neuron      — one unit that receives inputs and produces one output
-      Layer       — a collection of neurons that process inputs in parallel
-      NeuralNetwork — the full network: forward pass + backpropagation
+      Activation  -- the mathematical functions that make neurons non-linear
+      Neuron      -- one unit that receives inputs and produces one output
+      Layer       -- a collection of neurons that process inputs in parallel
+      NeuralNetwork -- the full network: forward pass + backpropagation
 
-    READ IN ORDER: Activation → Neuron → Layer → NeuralNetwork
+    READ IN ORDER: Activation -> Neuron -> Layer -> NeuralNetwork
 
     THEORY REFERENCE:
-    ═════════════════
+    =================
     Rumelhart, D.E., Hinton, G.E., & Williams, R.J. (1986).
     "Learning representations by back-propagating errors."
-    Nature, 323, 533–536.
+    Nature, 323, 533-536.
 
-    This paper introduced backpropagation — the algorithm that makes
+    This paper introduced backpropagation -- the algorithm that makes
     training neural networks practical. Every function in this file
     is a direct implementation of that paper.
 .NOTES
     Part of VBAF (Visual AI & Reinforcement Learning Framework)
-    Educational use — read the comments, not just the code.
+    Educational use -- read the comments, not just the code.
 #>
 
 # ============================================================================
 # ACTIVATION FUNCTIONS
 # ============================================================================
 #
-# WHAT IS AN ACTIVATION FUNCTION?
-# ────────────────────────────────
+# WHAT IS AN ACTIVATION FUNCTION
+# --------------------------------
 # Without activation functions, a neural network is just a series of matrix
-# multiplications — which can only learn linear relationships.
+# multiplications -- which can only learn linear relationships.
 # Activation functions introduce non-linearity, which allows the network
 # to learn complex patterns like XOR, image recognition or game strategies.
 #
@@ -54,48 +54,48 @@
 #   - ReLU: passes positive values unchanged, blocks negative values
 #   - Tanh: squashes any input to a value between -1 and 1
 #
-# WHY DO WE NEED THE DERIVATIVE?
-# ────────────────────────────────
+# WHY DO WE NEED THE DERIVATIVE
+# --------------------------------
 # During backpropagation (the learning step), we need to know HOW MUCH
 # each neuron contributed to the error. The derivative tells us the
-# slope of the activation function at a given point — how sensitive
+# slope of the activation function at a given point -- how sensitive
 # the output is to small changes in the input.
 #
-# Large derivative = this neuron strongly affects the output → adjust weights more
-# Small derivative = this neuron barely affects the output → adjust weights less
+# Large derivative = this neuron strongly affects the output -> adjust weights more
+# Small derivative = this neuron barely affects the output -> adjust weights less
 #
 # CLAMPING (-500 to 500):
-# ────────────────────────
+# ------------------------
 # Sigmoid and Tanh use Math::Exp(), which overflows at extreme values.
 # We clamp inputs to prevent NaN (Not a Number) errors during training.
 # This is a practical engineering choice, not a mathematical one.
 
 class Activation {
 
-    # ── Sigmoid ──────────────────────────────────────────────────────────────
-    # Formula: σ(x) = 1 / (1 + e^(-x))
+    # -- Sigmoid --------------------------------------------------------------
+    # Formula: sigmoid(x)(x) = 1 / (1 + e^(-x))
     # Output range: (0, 1)
     # Use when: output layer of a binary classifier (yes/no, true/false)
-    # Named after the Greek letter σ (sigma) — looks like an S-curve
+    # Named after the Greek letter sigmoid(x) (sigma) -- looks like an S-curve
     static [double] Sigmoid([double]$x) {
         if ($x -lt -500) { return 0.0 }   # Prevent underflow
         if ($x -gt  500) { return 1.0 }   # Prevent overflow
         return 1.0 / (1.0 + [Math]::Exp(-$x))
     }
 
-    # Formula: σ'(x) = σ(x) · (1 - σ(x))
+    # Formula: sigmoid(x)'(x) = sigmoid(x)(x) . (1 - sigmoid(x)(x))
     # This elegant property means we can compute the derivative
-    # from the output we already calculated — no extra computation needed.
+    # from the output we already calculated -- no extra computation needed.
     static [double] SigmoidDerivative([double]$x) {
         $s = [Activation]::Sigmoid($x)
         return $s * (1.0 - $s)
     }
 
-    # ── ReLU (Rectified Linear Unit) ─────────────────────────────────────────
+    # -- ReLU (Rectified Linear Unit) -----------------------------------------
     # Formula: ReLU(x) = max(0, x)
-    # Output range: [0, ∞)
+    # Output range: [0, infinity)
     # Use when: hidden layers of deep networks
-    # Most popular activation in modern deep learning — fast and simple.
+    # Most popular activation in modern deep learning -- fast and simple.
     # "Rectified" means negative values are set to zero (rectified = corrected).
     static [double] ReLU([double]$x) {
         if ($x -gt 0) { return $x } else { return 0.0 }
@@ -108,29 +108,29 @@ class Activation {
         if ($x -gt 0) { return 1.0 } else { return 0.0 }
     }
 
-    # ── Tanh (Hyperbolic Tangent) ─────────────────────────────────────────────
+    # -- Tanh (Hyperbolic Tangent) ---------------------------------------------
     # Formula: tanh(x) = (e^x - e^(-x)) / (e^x + e^(-x))
     # Output range: (-1, 1)
     # Use when: hidden layers where negative outputs are meaningful
-    # Zero-centred (unlike Sigmoid) — often trains faster in practice.
+    # Zero-centred (unlike Sigmoid) -- often trains faster in practice.
     static [double] Tanh([double]$x) {
         if ($x -lt -500) { return -1.0 }
         if ($x -gt  500) { return  1.0 }
         return [Math]::Tanh($x)
     }
 
-    # Formula: tanh'(x) = 1 - tanh²(x)
-    # Same elegant pattern as Sigmoid — derivative computable from output.
+    # Formula: tanh'(x) = 1 - tanh^2(x)
+    # Same elegant pattern as Sigmoid -- derivative computable from output.
     static [double] TanhDerivative([double]$x) {
         $t = [Math]::Tanh($x)
         return 1.0 - ($t * $t)
     }
 
-    # ── Linear ────────────────────────────────────────────────────────────────
-    # Formula: f(x) = x (identity function — passes input unchanged)
-    # Output range: (-∞, ∞)
+    # -- Linear ----------------------------------------------------------------
+    # Formula: f(x) = x (identity function -- passes input unchanged)
+    # Output range: (-infinity, infinity)
     # Use when: output layer of a regression network (predicting a real number)
-    # Derivative is always 1.0 — gradient flows through unchanged.
+    # Derivative is always 1.0 -- gradient flows through unchanged.
     static [double] Linear([double]$x) {
         return $x
     }
@@ -145,8 +145,8 @@ class Activation {
 # NEURON
 # ============================================================================
 #
-# WHAT IS A NEURON?
-# ─────────────────
+# WHAT IS A NEURON
+# -----------------
 # A neuron is the fundamental unit of a neural network. It:
 #   1. Receives N inputs (one from each neuron in the previous layer)
 #   2. Multiplies each input by a weight (its "importance")
@@ -154,29 +154,29 @@ class Activation {
 #   4. Passes the result through an activation function
 #   5. Produces one output value
 #
-# Mathematically: output = activation(w₁·x₁ + w₂·x₂ + ... + wₙ·xₙ + b)
+# Mathematically: output = activation(w1.x1 + w2.x2 + ... + wn.xn + b)
 # Where w = weights, x = inputs, b = bias
 #
 # WEIGHTS AND BIAS:
-# ─────────────────
+# -----------------
 # Weights are initialised randomly between -0.5 and 0.5.
-# Random initialisation is essential — if all weights started at 0,
+# Random initialisation is essential -- if all weights started at 0,
 # all neurons would learn the same thing and the network would never
 # develop specialised features.
 #
 # The bias allows the neuron to fire (activate) even when all inputs are 0.
-# Think of it as the neuron's "default mood" — its baseline tendency to activate.
+# Think of it as the neuron's "default mood" -- its baseline tendency to activate.
 #
 # DELTA:
-# ──────
-# Delta (δ) is the error signal flowing backwards through the network
+# ------
+# Delta (delta) is the error signal flowing backwards through the network
 # during backpropagation. It tells this neuron how much it contributed
 # to the overall error, so its weights can be adjusted accordingly.
 # Large delta = large contribution to error = large weight update needed.
 
 class Neuron {
     [double[]]$Weights      # One weight per input connection
-    [double]$Bias           # Baseline offset — shifts activation threshold
+    [double]$Bias           # Baseline offset -- shifts activation threshold
     [double]$Output         # Result after activation function
     [double]$WeightedSum    # Raw result before activation (needed for derivative)
     [double]$Delta          # Error signal from backpropagation
@@ -184,7 +184,7 @@ class Neuron {
     Neuron([int]$inputCount) {
         $this.Weights = New-Object double[] $inputCount
 
-        # Random initialisation — critical for breaking symmetry
+        # Random initialisation -- critical for breaking symmetry
         # If all weights were equal, all neurons would learn identically
         for ($i = 0; $i -lt $inputCount; $i++) {
             $this.Weights[$i] = (Get-Random -Minimum -0.5 -Maximum 0.5)
@@ -196,7 +196,7 @@ class Neuron {
         $this.Delta       = 0.0
     }
 
-    # Compute: w₁·x₁ + w₂·x₂ + ... + wₙ·xₙ + b
+    # Compute: w1.x1 + w2.x2 + ... + wn.xn + b
     # This is the "linear" part of the neuron before activation.
     [double] CalculateWeightedSum([double[]]$inputs) {
         if ($inputs.Count -ne $this.Weights.Count) {
@@ -227,10 +227,10 @@ class Neuron {
     }
 
     # Update weights using gradient descent:
-    # new_weight = old_weight + learning_rate × delta × input
+    # new_weight = old_weight + learning_rate x delta x input
     #
-    # WHY THIS FORMULA?
-    # ─────────────────
+    # WHY THIS FORMULA
+    # -----------------
     # Delta tells us the direction and magnitude of the error.
     # Input tells us how much this weight "caused" that error.
     # Learning rate controls how big a step we take (too big = overshooting,
@@ -240,7 +240,7 @@ class Neuron {
         for ($i = 0; $i -lt $this.Weights.Count; $i++) {
             $this.Weights[$i] += $learningRate * $this.Delta * $inputs[$i]
         }
-        # Bias has no input — treated as if its input is always 1.0
+        # Bias has no input -- treated as if its input is always 1.0
         $this.Bias += $learningRate * $this.Delta
     }
 
@@ -259,35 +259,35 @@ class Neuron {
 # LAYER
 # ============================================================================
 #
-# WHAT IS A LAYER?
-# ─────────────────
+# WHAT IS A LAYER
+# -----------------
 # A layer is a collection of neurons that all receive the same inputs
 # and each produce one output. Layers are stacked to form the network:
 #
-#   Input layer  → Hidden layer(s) → Output layer
+#   Input layer  -> Hidden layer(s) -> Output layer
 #
-# Every neuron in a layer is independent — they all see the same inputs
+# Every neuron in a layer is independent -- they all see the same inputs
 # but have different weights, so they learn to detect different features.
 #
 # THE FORWARD PASS (left to right):
-# ──────────────────────────────────
+# ----------------------------------
 # Data flows forward through the network, each layer transforming it:
-#   raw input → hidden representation → final prediction
+#   raw input -> hidden representation -> final prediction
 #
 # THE BACKWARD PASS (right to left):
-# ────────────────────────────────────
+# ------------------------------------
 # Error flows backwards through the network, each layer receiving
 # a signal telling it how much it contributed to the mistake.
-# This is backpropagation — the learning step.
+# This is backpropagation -- the learning step.
 #
 # OUTPUT LAYER vs HIDDEN LAYER BACKPROPAGATION:
-# ──────────────────────────────────────────────
-# Output layer: delta = (target - output) × activation_derivative
+# ----------------------------------------------
+# Output layer: delta = (target - output) x activation_derivative
 #   We know directly how wrong the output was.
 #
-# Hidden layer: delta = (weighted sum of next layer deltas) × activation_derivative
+# Hidden layer: delta = (weighted sum of next layer deltas) x activation_derivative
 #   We infer how wrong this layer was from how wrong the next layer was.
-#   This is the "chain rule" from calculus — errors propagate backwards
+#   This is the "chain rule" from calculus -- errors propagate backwards
 #   through the weights that connected the layers.
 
 class Layer {
@@ -313,7 +313,7 @@ class Layer {
     # Forward pass: each neuron independently processes the inputs
     # and produces one output. All outputs collected into Outputs array.
     [double[]] Forward([double[]]$inputs) {
-        $this.Inputs = $inputs   # Store inputs — needed for weight update
+        $this.Inputs = $inputs   # Store inputs -- needed for weight update
 
         for ($i = 0; $i -lt $this.Size; $i++) {
             $this.Outputs[$i] = $this.Neurons[$i].Forward($inputs, $this.ActivationType)
@@ -327,7 +327,7 @@ class Layer {
     [void] Backward([double[]]$nextLayerDeltas, [Neuron[]]$nextLayerNeurons, [bool]$isOutputLayer) {
         if ($isOutputLayer) {
             # Output layer: delta comes directly from the error
-            # delta = error_signal × activation_derivative
+            # delta = error_signal x activation_derivative
             for ($i = 0; $i -lt $this.Size; $i++) {
                 $derivative = $this.GetActivationDerivative($this.Neurons[$i].WeightedSum)
                 $this.Neurons[$i].Delta = $nextLayerDeltas[$i] * $derivative
@@ -335,8 +335,8 @@ class Layer {
         } else {
             # Hidden layer: delta comes from the NEXT layer's deltas,
             # weighted by the connections going forward.
-            # delta_i = activation_derivative × Σ(delta_j × weight_ji)
-            # This is the chain rule — errors flow backwards through weights.
+            # delta_i = activation_derivative x sum(delta_j x weight_ji)
+            # This is the chain rule -- errors flow backwards through weights.
             for ($i = 0; $i -lt $this.Size; $i++) {
                 $sum = 0.0
 
@@ -369,7 +369,7 @@ class Layer {
     }
 
     # After deltas are computed, update every neuron's weights.
-    # This is gradient descent — moving weights in the direction that reduces error.
+    # This is gradient descent -- moving weights in the direction that reduces error.
     [void] UpdateWeights([double]$learningRate) {
         foreach ($neuron in $this.Neurons) {
             $neuron.UpdateWeights($this.Inputs, $learningRate)
@@ -404,7 +404,7 @@ class Layer {
 # ============================================================================
 #
 # THE COMPLETE TRAINING LOOP:
-# ───────────────────────────
+# ---------------------------
 # Neural network training follows the same cycle for every sample:
 #
 #   1. FORWARD PASS
@@ -413,7 +413,7 @@ class Layer {
 #
 #   2. COMPUTE ERROR
 #      Compare prediction to the correct answer.
-#      Error = (target - output)² / n  (Mean Squared Error)
+#      Error = (target - output)^2 / n  (Mean Squared Error)
 #      Smaller error = better prediction.
 #
 #   3. BACKWARD PASS (Backpropagation)
@@ -429,19 +429,19 @@ class Layer {
 #      Gradually the network learns to predict correctly.
 #
 # ARCHITECTURE:
-# ─────────────
+# -------------
 # The architecture is specified as an array of integers:
-#   [2, 4, 1] = 2 inputs → 4 hidden neurons → 1 output
-#   [3, 8, 8, 2] = 3 inputs → 8 → 8 → 2 outputs
+#   [2, 4, 1] = 2 inputs -> 4 hidden neurons -> 1 output
+#   [3, 8, 8, 2] = 3 inputs -> 8 -> 8 -> 2 outputs
 #
 # More hidden neurons = more capacity to learn complex patterns.
 # More layers = can learn more abstract representations.
-# But more is not always better — too many neurons causes overfitting
+# But more is not always better -- too many neurons causes overfitting
 # (memorising training data instead of learning general patterns).
 #
 # MEAN SQUARED ERROR (MSE):
-# ──────────────────────────
-# MSE = Σ(target - output)² / n
+# --------------------------
+# MSE = sum(target - output)^2 / n
 # We square the difference so negative and positive errors don't cancel out.
 # We divide by n to get an average across all outputs.
 # A perfect prediction gives MSE = 0.
@@ -481,7 +481,7 @@ class NeuralNetwork {
         return $current
     }
 
-    # Predict is an alias for Forward — same operation, clearer name for inference.
+    # Predict is an alias for Forward -- same operation, clearer name for inference.
     [double[]] Predict([double[]]$inputs) {
         return $this.Forward($inputs)
     }
@@ -492,7 +492,7 @@ class NeuralNetwork {
         $outputLayer  = $this.Layers[$this.Layers.Count - 1]
         $output       = $outputLayer.Outputs
 
-        # Compute error at output layer: how far off was the prediction?
+        # Compute error at output layer: how far off was the prediction
         $outputDeltas = New-Object double[] $output.Count
         for ($i = 0; $i -lt $output.Count; $i++) {
             $outputDeltas[$i] = $target[$i] - $output[$i]
@@ -504,10 +504,10 @@ class NeuralNetwork {
             $currentLayer = $this.Layers[$layerIndex]
 
             if ($layerIndex -eq ($this.Layers.Count - 1)) {
-                # Output layer — error comes directly from prediction vs target
+                # Output layer -- error comes directly from prediction vs target
                 $currentLayer.Backward($outputDeltas, $null, $true)
             } else {
-                # Hidden layer — error comes from the next layer's deltas
+                # Hidden layer -- error comes from the next layer's deltas
                 $nextLayer  = $this.Layers[$layerIndex + 1]
                 $nextDeltas = New-Object double[] $nextLayer.Size
 
@@ -523,8 +523,8 @@ class NeuralNetwork {
         }
     }
 
-    # Train on one sample: forward → compute error → backward → return error.
-    # This is stochastic gradient descent (SGD) — update after each sample.
+    # Train on one sample: forward -> compute error -> backward -> return error.
+    # This is stochastic gradient descent (SGD) -- update after each sample.
     [double] TrainSample([double[]]$input, [double[]]$target) {
         $output = $this.Forward($input)
 
@@ -547,7 +547,7 @@ class NeuralNetwork {
         $this.TrainingHistory.Clear()
 
         Write-Host "`nTraining Neural Network..." -ForegroundColor Cyan
-        Write-Host "Architecture : $($this.Architecture -join ' → ')" -ForegroundColor Gray
+        Write-Host "Architecture : $($this.Architecture -join ' -> ')" -ForegroundColor Gray
         Write-Host "Learning Rate: $($this.LearningRate)"             -ForegroundColor Gray
         Write-Host "Epochs       : $epochs"                           -ForegroundColor Gray
         Write-Host "Samples      : $($data.Count)"                    -ForegroundColor Gray
@@ -556,7 +556,7 @@ class NeuralNetwork {
         for ($epoch = 1; $epoch -le $epochs; $epoch++) {
             $totalError = 0.0
 
-            # Train on every sample — order matters for SGD
+            # Train on every sample -- order matters for SGD
             foreach ($sample in $data) {
                 $error       = $this.TrainSample($sample.Input, $sample.Expected)
                 $totalError += $error
@@ -568,7 +568,7 @@ class NeuralNetwork {
 
             if ($verbose -gt 0 -and ($epoch % $verbose -eq 0 -or $epoch -eq 1 -or $epoch -eq $epochs)) {
                 $progress = ($epoch / $epochs) * 100
-                Write-Host ("Epoch {0,5} / {1} ({2,5:N1}%) — Error: {3:F6}" -f $epoch, $epochs, $progress, $avgError)
+                Write-Host ("Epoch {0,5} / {1} ({2,5:N1}%) -- Error: {3:F6}" -f $epoch, $epochs, $progress, $avgError)
             }
         }
 
@@ -589,7 +589,7 @@ class NeuralNetwork {
 
     # Evaluate classification accuracy on a dataset.
     # threshold: predictions above this are classified as 1, below as 0.
-    # Standard threshold is 0.5 — but can be adjusted for imbalanced datasets.
+    # Standard threshold is 0.5 -- but can be adjusted for imbalanced datasets.
     [hashtable] Evaluate([array]$data, [double]$threshold) {
         $correct = 0
         $total   = $data.Count
@@ -650,7 +650,7 @@ class NeuralNetwork {
 #
 # TO CREATE A NETWORK:
 #   $net = New-Object NeuralNetwork -ArgumentList @(2, 4, 1), 0.1
-#   #                                                ↑  ↑  ↑   ↑
+#   #                                                ^  ^  ^   ^
 #   #                              2 inputs, 4 hidden, 1 output, learning rate 0.1
 #
 # TO TRAIN:
@@ -668,8 +668,6 @@ class NeuralNetwork {
 #   Write-Host "Accuracy: $($accuracy.Accuracy)%"
 #
 # SEE ALSO:
-#   examples\01-XOR-Network\  — step-by-step tutorial using these classes
-#   VBAF.RL.DQN.ps1           — how these classes power a reinforcement learning agent
+#   examples\01-XOR-Network\  -- step-by-step tutorial using these classes
+#   VBAF.RL.DQN.ps1           -- how these classes power a reinforcement learning agent
 # ============================================================================
-
- 

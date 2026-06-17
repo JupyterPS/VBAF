@@ -155,6 +155,42 @@ Neither is given a strategy. Optimal defence and attack patterns emerge from exp
 
 This is reinforcement learning in its purest form — learning from reward signals, not from labelled examples.
 
+
+---
+
+## Beyond the basics — Enterprise Automation
+
+Once you understand the foundation phases (1-9), VBAF includes 14 enterprise pillars built on the same core — each one a working DQN agent solving a real IT automation problem.
+
+These are not teaching examples. They are production-grade agents that emerged from the same learning concepts you studied in Phase 1-9. Read them when you are ready to see where the fundamentals lead.
+
+| Phase | Pillar | What it automates | Improvement |
+|-------|--------|------------------|-------------|
+| 14 | Self-Healing | Detects and fixes system problems automatically | +63.0% |
+| 15 | Dashboard | Intelligent cache and refresh management | +59.1% |
+| 16 | Federated Learning | Distributed model training across nodes | +62.1% |
+| 17 | Cloud Bridge | Local vs cloud workload balancing | +24.5% |
+| 18 | Anomaly Detector | Spots unusual patterns before they become incidents | +30.6% |
+| 19 | Capacity Planner | Predicts resource needs before you run out | +32.6% |
+| 20 | Incident Responder | Automated incident triage and containment | +26.9% |
+| 21 | Compliance Reporter | GDPR/ISO27001 compliance monitoring | +107.2% |
+| 22 | User Behavior Analytics | Detects insider threats and anomalous access | +103.4% |
+| 23 | Patch Intelligence | Risk-aware patch scheduling and rollback | +65.5% |
+| 24 | Backup Optimizer | Adaptive backup strategy optimisation | +116.3% |
+| 25 | Energy Optimizer | Reduces power consumption intelligently | +117.5% |
+| 26 | Multi-Site Coordinator | Cross-datacenter workload balancing | +47.4% |
+| 27 | AutoPilot | Orchestrates all 13 pillars simultaneously | +63.3% |
+
+The improvement figures are measured against a random dispatcher baseline — the same evaluation method used throughout the foundation phases.
+
+**The learning ladder:**
+```
+Phase 1-9   — Foundation: understand HOW agents learn
+Phase 10-27 — Enterprise: see WHAT agents can do
+```
+
+Study the foundation first. Then open any enterprise file and trace exactly which foundation concepts it uses. The code is the curriculum.
+
 ---
 
 ## Requirements

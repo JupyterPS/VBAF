@@ -1,2 +1,0 @@
-C:\Users\Henni\.vscode\extensions\ms-vscode.powershell-2025.2.0\media\walkthrough.md
-C:\Users\Henni\.vscode\extensions\ms-vscode.powershell-2025.4.0\media\walkthrough.md

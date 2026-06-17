@@ -1,7 +1,0 @@
-Show-Command Get-ChildItem 
-
-
-
-
-
-

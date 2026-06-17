@@ -1,7 +1,0 @@
-get-Date -uformat %W
-
-
-
-
-
-

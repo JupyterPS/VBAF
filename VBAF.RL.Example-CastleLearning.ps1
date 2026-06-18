@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 
 <#
 .SYNOPSIS
@@ -183,7 +183,8 @@ for ($ep = 1; $ep -le $episodes; $ep++) {
     # Print progress every 10 episodes
     if ($ep % 10 -eq 0 -or $ep -eq 1 -or $ep -eq $episodes) {
         $stats      = $agent.GetStats()
-        $exploitPct = (1.0 - $stats.ExplorationRatio) * 100
+        $totalActions = $stats.ExplorationCount + $stats.ExploitationCount
+        $exploitPct = if ($totalActions -gt 0) { ($stats.ExploitationCount / $totalActions) * 100 } else { 0.0 }
 
         Write-Host ("Episode {0,3} | Reward: {1,6:F2} | Epsilon: {2:F3} | Exploit: {3,5:F1}% | Q-Table: {4,3} entries" -f `
             $ep, $episodeReward, $stats.Epsilon, $exploitPct, $stats.QTableSize)
@@ -230,8 +231,8 @@ Write-Host "  (Negative = agent avoids this castle type in this state)" -Foregro
 
 $statesFound = @()
 
-for ($stateNum = 0; $stateNum -le 5; $stateNum++) {
-    $qValues = $agent.GetQValues("$stateNum")
+foreach ($stateKey in $agent.QTable.Keys) {
+    $qValues = $agent.GetQValues($stateKey)
 
     $hasLearning = $false
     foreach ($val in $qValues.Values) {
@@ -239,9 +240,9 @@ for ($stateNum = 0; $stateNum -le 5; $stateNum++) {
     }
 
     if ($hasLearning) {
-        $statesFound += $stateNum
+        $statesFound += $stateKey
         Write-Host ""
-        Write-Host "  State '$stateNum':" -ForegroundColor Cyan
+        Write-Host "  State '$stateKey':" -ForegroundColor Cyan
 
         $sorted = $qValues.GetEnumerator() | Sort-Object Value -Descending
 

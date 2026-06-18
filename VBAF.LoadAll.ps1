@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 
 <#
 .SYNOPSIS
@@ -161,7 +161,14 @@ Write-Host "  [Phase 9-27] Enterprise automation..." -ForegroundColor Gray
 . (Join-Path $basePath "VBAF.Enterprise.AutoPilot.ps1")
 . (Join-Path $basePath "VBAF.Enterprise.FleetDispatch.ps1")
 . (Join-Path $basePath "VBAF.Enterprise.HealthcareMonitor.ps1")
-
+#  PHASE 10 -- EDUCATIONAL TOOLS 
+# Teaching, benchmarking and playground -- depend on all phases above.
+# Start-VBAFTeach       -- console teacher, 6 topics, press Enter to advance
+# Start-VBAFPlayground  -- interactive menu, pick algorithm, watch it train
+Write-Host "  [Phase 10] Educational tools..." -ForegroundColor Gray
+. (Join-Path $basePath "VBAF.Teach.ps1")
+# . (Join-Path $basePath "VBAF.Benchmark.ps1")  -- excluded pending repair
+. (Join-Path $basePath "VBAF.Playground.ps1")
 Write-Host ""
 Write-Host "  VBAF Framework ready!" -ForegroundColor Green
 Write-Host ""
@@ -178,3 +185,10 @@ Write-Host "    3. VBAF.Core.Test-ValidationDashboard.ps1         -- model valid
 Write-Host "    4. VBAF.Art.Show20-QLearning.ps1                  -- Q-learning visual" -ForegroundColor White
 Write-Host "    5. VBAF.Art.CastleCompetition.ps1                 -- castle battle" -ForegroundColor White
 Write-Host ""
+Write-Host "  EDUCATIONAL TOOLS:" -ForegroundColor Yellow
+Write-Host "    Start-VBAFTeach                    -- console teacher (6 topics)" -ForegroundColor White
+Write-Host "    Start-VBAFPlayground               -- interactive experiment station" -ForegroundColor White
+Write-Host ""
+
+
+

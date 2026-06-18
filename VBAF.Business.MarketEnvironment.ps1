@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 
 <#
 .SYNOPSIS
@@ -454,8 +454,8 @@ class MarketEnvironment {
             Write-Host "  #$rank " -NoNewline -ForegroundColor Gray
             Write-Host "$($company.Name): " -NoNewline -ForegroundColor White
             Write-Host "$($company.State.MarketShare.ToString('P2')) share, " -NoNewline -ForegroundColor Cyan
-            Write-Host "`$($company.State.Profit.ToString('N0')) profit" -NoNewline -ForegroundColor $profitColor
-            Write-Host ", `$($company.State.Cash.ToString('N0')) cash" -ForegroundColor Gray
+            Write-Host "$($company.State.Profit.ToString('N0')) profit" -NoNewline -ForegroundColor $profitColor
+            Write-Host ", $($company.State.Cash.ToString('N0')) cash" -ForegroundColor Gray
             $rank++
         }
     }

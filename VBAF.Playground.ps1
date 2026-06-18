@@ -546,6 +546,14 @@ function Start-VBAFPlayground {
         [string]$Algorithm = ""
     )
 
+    if (-not ([System.Management.Automation.PSTypeName]"QLearningAgent").Type) {
+        Write-Host ""
+        Write-Host "  ERROR: VBAF framework not loaded." -ForegroundColor Red
+        Write-Host "  Run this first:" -ForegroundColor Yellow
+        Write-Host "    . .\VBAF.LoadAll.ps1" -ForegroundColor White
+        Write-Host ""
+        return
+    }
     Write-PlayHeader "VBAF PLAYGROUND"
     Write-Host "  Experiment with algorithms interactively." -ForegroundColor Gray
     Write-Host "  No coding required -- just pick options and watch." -ForegroundColor Gray

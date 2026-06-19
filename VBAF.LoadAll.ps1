@@ -167,7 +167,7 @@ Write-Host "  [Phase 9-27] Enterprise automation..." -ForegroundColor Gray
 # Start-VBAFPlayground  -- interactive menu, pick algorithm, watch it train
 Write-Host "  [Phase 10] Educational tools..." -ForegroundColor Gray
 . (Join-Path $basePath "VBAF.Teach.ps1")
-# . (Join-Path $basePath "VBAF.Benchmark.ps1")  -- excluded pending repair
+. (Join-Path $basePath "VBAF.Benchmark.ps1")
 . (Join-Path $basePath "VBAF.Playground.ps1")
 Write-Host ""
 Write-Host "  VBAF Framework ready!" -ForegroundColor Green

@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 
 <#
 .SYNOPSIS
@@ -349,8 +349,8 @@ $statsPanel.Add_Paint({
 $timer = New-Object System.Windows.Forms.Timer
 $timer.Interval = 50  # 20 FPS
 $timer.Add_Tick({
-    $castlePanel.Invalidate()
-    $statsPanel.Invalidate()
+    if ($castlePanel) { $castlePanel.Invalidate() }
+    if ($statsPanel)  { $statsPanel.Invalidate()  }
 })
 $timer.Start()
 

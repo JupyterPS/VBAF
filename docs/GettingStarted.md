@@ -164,3 +164,50 @@ All dashboards open a WinForms window. Run from standalone PowerShell console.
 ## Tutorials
 
 13 step-by-step tutorials in `tutorials\`:
+01 -- Your First Neural Network
+
+02 -- First Classifier
+
+03 -- Q-Learning Agent
+
+06 -- First Regression Model
+
+07 -- KMeans Clustering
+
+08 -- Load Your Own CSV
+
+09 -- Feature Engineering
+
+10 -- Model Comparison
+
+11 -- Correct Pipeline Pattern
+
+12 -- Your First DQN Agent
+
+13 -- Custom Enterprise Pillar
+
+---
+
+## Enterprise Automation
+
+Run any enterprise pillar in SimMode:
+
+```powershell
+$r = Invoke-VBAFJobSchedulerTraining        -Episodes 50  -SimMode
+$r = Invoke-VBAFSecurityMonitorTraining     -Episodes 100 -SimMode
+$r = Invoke-VBAFAnomalyDetectorTraining     -Episodes 100 -SimMode
+$r = Invoke-VBAFAutoPilotTraining           -Episodes 100 -SimMode
+```
+
+Each returns `$r.Baseline.Avg`, `$r.Trained.Avg` and improvement percentage.
+Replace -SimMode with real Windows data sources when ready for production.
+
+---
+
+## Next Steps
+
+- `docs\Theory.md` -- reinforcement learning concepts explained
+- `docs\Architecture.md` -- how VBAF is structured layer by layer
+- `docs\API-Reference.md` -- complete function and class reference
+- `docs\teaching\course-outline.md` -- 4-week course for IT professionals
+- `VBAF.CheatSheet.md` -- one-page quick reference for all functions

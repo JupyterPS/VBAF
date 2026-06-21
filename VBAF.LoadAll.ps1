@@ -53,6 +53,14 @@
 
 $basePath = $PSScriptRoot
 
+# Load WinForms and Drawing assemblies once, globally.
+# Required because GraphRenderer and dashboard classes reference
+# System.Windows.Forms / System.Drawing types at PARSE time --
+# class definitions fail to parse if these assemblies are not
+# already loaded, regardless of ISE vs standalone console.
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+
 Write-Host ""
 Write-Host "  Loading VBAF Framework..." -ForegroundColor Cyan
 Write-Host ""
@@ -173,22 +181,25 @@ Write-Host ""
 Write-Host "  VBAF Framework ready!" -ForegroundColor Green
 Write-Host ""
 Write-Host "  LEARNING PATH (run in order):" -ForegroundColor Yellow
-Write-Host "    1. & .\VBAF.Core.Example-XOR.ps1                  -- neural networks" -ForegroundColor White
-Write-Host "    2. & .\VBAF.RL.Example-CastleLearning.ps1         -- Q-learning" -ForegroundColor White
-Write-Host "    3. & .\VBAF.Business.Test.CompanyMarket.ps1       -- multi-agent" -ForegroundColor White
-Write-Host "    4. & .\VBAF.Visualization.Example-Dashboard.ps1   -- dashboards" -ForegroundColor White
+Write-Host "    1. cd examples\01-XOR-Network         ; . .\Run-Example-01.ps1   -- neural networks" -ForegroundColor White
+Write-Host "    2. cd examples\02-Castle-Learning     ; . .\Run-Example-02.ps1   -- Q-learning" -ForegroundColor White
+Write-Host "    3. cd examples\03-Market-Simulation   ; . .\Run-Example-03.ps1   -- multi-agent" -ForegroundColor White
+Write-Host "    4. cd examples\04-Learning-Dashboard  ; . .\Run-Example-04.ps1   -- dashboards" -ForegroundColor White
+Write-Host "    5. cd examples\05-Validation-Dashboard ; . .\Run-Example-05.ps1   -- model validation" -ForegroundColor White
+Write-Host "    6. cd examples\06-Custom-Agent         ; . .\Run-Example-06.ps1   -- build your own" -ForegroundColor White
 Write-Host ""
-Write-Host "  THE 5 DASHBOARDS:" -ForegroundColor Yellow
-Write-Host "    1. VBAF.Visualization.Example-Dashboard.ps1       -- learning curves" -ForegroundColor White
-Write-Host "    2. VBAF.Business.Dashboard-Demo.ps1               -- market competition" -ForegroundColor White
-Write-Host "    3. VBAF.Core.Test-ValidationDashboard.ps1         -- model validation" -ForegroundColor White
-Write-Host "    4. VBAF.Art.Show20-QLearning.ps1                  -- Q-learning visual" -ForegroundColor White
-Write-Host "    5. VBAF.Art.CastleCompetition.ps1                 -- castle battle" -ForegroundColor White
+Write-Host "  THE 5 DASHBOARDS:-- Click on the first Dashboard and the rest are visible"  -ForegroundColor Yellow               
+Write-Host "    1. & .\VBAF.Visualization.Example-Dashboard.ps1       -- learning curves" -ForegroundColor White
+Write-Host "    2. & .\VBAF.Business.Dashboard-Demo.ps1               -- market competition" -ForegroundColor White
+Write-Host "    3. & .\VBAF.Core.Test-ValidationDashboard.ps1         -- model validation" -ForegroundColor White
+Write-Host "    4. & .\VBAF.Art.Show20-QLearning.ps1                  -- Q-learning visual" -ForegroundColor White
+Write-Host "    5. & .\VBAF.Art.CastleCompetition.ps1                 -- castle battle" -ForegroundColor White
 Write-Host ""
 Write-Host "  EDUCATIONAL TOOLS:" -ForegroundColor Yellow
 Write-Host "    Start-VBAFTeach                    -- console teacher (6 topics)" -ForegroundColor White
 Write-Host "    Start-VBAFPlayground               -- interactive experiment station" -ForegroundColor White
 Write-Host ""
+
 
 
 

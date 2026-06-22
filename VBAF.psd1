@@ -1,7 +1,7 @@
-@{
+ï»¿@{
 
 RootModule        = 'VBAF.psm1'
-ModuleVersion = '4.0.0'
+ModuleVersion = '5.0.0'
 GUID              = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
 Author            = 'Henning'
 CompanyName       = 'VBAF Project'
@@ -15,7 +15,7 @@ RequiredAssemblies = @(
     'System.Drawing'
 )
 
-Description = 'VBAF (Visual Business Automation Framework) - A complete Deep Q-Network (DQN) reinforcement learning framework built entirely in PowerShell 5.1. No Python. No dependencies. 27 phases: Core DQN engine, Q-Learning, Neural Networks, and 14 enterprise automation pillars including SelfHealing, AnomalyDetector, IncidentResponder, ComplianceReporter, UserBehaviorAnalytics, PatchIntelligence, BackupOptimizer, EnergyOptimizer, MultiSiteCoordinator, and AutoPilot (crown jewel — one agent orchestrating all 13 pillars). Real Windows data: WMI, Get-WinEvent, Get-Service, Get-HotFix. GitHub: https://github.com/JupyterPS/VBAF'
+Description = 'VBAF (Visual AI and Reinforcement Learning Framework) - An educational AI framework built entirely in PowerShell 5.1. No Python. No dependencies. Implements neural networks, Q-learning, DQN, PPO and A3C from scratch with full educational comments and original paper references. Includes 6 runnable examples, interactive console teacher, experiment playground, multi-agent market simulation, and 14 enterprise automation pillars. Runs on any Windows PC. GitHub: https://github.com/JupyterPS/VBAF'
 
 FunctionsToExport = @('*')
 CmdletsToExport   = @()
@@ -32,6 +32,7 @@ PrivateData = @{
 }
 
 }
+
 
 
 

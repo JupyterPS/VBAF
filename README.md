@@ -32,6 +32,15 @@ Because the code is readable. Every function in VBAF is written to be understood
 
 ---
 
+## Getting Started
+
+| Guide | Who it is for |
+|-------|--------------|
+| [Quick Start Guide](docs/GettingStarted.md) | Developers who want to get moving fast -- commands first |
+| [Learning Trail](docs/GettingStarted-Trail.md) | Complete beginners -- 5 camps, 24 steps, hand-holding all the way |
+
+---
+
 ## Quick Start
 
 ```powershell
@@ -39,22 +48,19 @@ Because the code is readable. Every function in VBAF is written to be understood
 Install-Module VBAF -Scope CurrentUser
 
 # Navigate to your working folder
-cd "C:\Users\\OneDrive\WindowsPowerShell"
+cd "C:\Users\<your-name>\OneDrive\WindowsPowerShell"
 
 # Load everything
 . .\VBAF.LoadAll.ps1
 
-# Run the XOR example -- the classic neural network benchmark
-cd examples\01-XOR-Network
-. .\Run-Example-01.ps1
+# Run the XOR example — the classic neural network benchmark
+& ".\examples\01-XOR-Network\VBAF.Core.Example-XOR.ps1"
 
-# Watch a Q-learning agent learn castle sequences
-cd ..\02-Castle-Learning
-. .\Run-Example-02.ps1
+# Watch a Q-learning agent learn castle defence
+& ".\examples\02-Castle-Learning\VBAF.RL.Example-CastleLearning.ps1"
 
 # See competing market agents emerge pricing strategies
-cd ..\03-Market-Simulation
-. .\Run-Example-03.ps1
+& ".\examples\03-Market-Simulation\VBAF.Business.Test.CompanyMarket.ps1"
 ```
 
 ---
@@ -72,39 +78,14 @@ Start here and work through in order:
 | 5 | [Validation Dashboard](examples/05-Validation-Dashboard/) | Evaluating model quality |
 | 6 | [Custom Agent](examples/06-Custom-Agent/) | Build your own RL environment |
 
-Each example folder contains a `Run-Example-XX.ps1` launcher -- just run that.
-
----
-
-## Educational Tools
-
-Three interactive tools for guided learning:
-
-```powershell
-# Console teacher -- 6 topics, press Enter to advance
-Start-VBAFTeach
-
-# Jump to one topic directly
-Start-VBAFTeach -Topic "DQN"
-Start-VBAFTeach -Topic "QLearning"
-Start-VBAFTeach -Topic "Enterprise"
-
-# Interactive experiment station -- pick algorithm, configure, watch it train
-Start-VBAFPlayground
-
-# Jump to one playground directly
-Start-VBAFPlayground -Algorithm "DQN"
-Start-VBAFPlayground -Algorithm "Enterprise"
-Start-VBAFPlayground -Algorithm "Supervised"
-```
-
 ---
 
 ## Documentation
 
 | Document | Description |
 |----------|-------------|
-| [Getting Started](docs/GettingStarted.md) | Install, load, run your first example |
+| [Quick Start](docs/GettingStarted.md) | Developers -- commands first, get moving fast |
+| [Learning Trail](docs/GettingStarted-Trail.md) | Beginners -- 5 camps, 24 steps, hand-holding all the way |
 | [Theory](docs/Theory.md) | The AI/RL concepts behind VBAF explained simply |
 | [API Reference](docs/API-Reference.md) | All functions, parameters and return values |
 | [Architecture](docs/Architecture.md) | How the framework is structured |
@@ -112,6 +93,7 @@ Start-VBAFPlayground -Algorithm "Supervised"
 | [Tutorials](docs/tutorials/) | Step-by-step walkthroughs |
 | [Teaching Materials](docs/teaching/) | Course outlines, exam questions, semester plans |
 | [Case Studies](docs/case-studies/) | Real learning experiments and results |
+| [Benchmarks](benchmarks/) | Performance data and learning curves |
 
 ---
 
@@ -121,39 +103,25 @@ Start-VBAFPlayground -Algorithm "Supervised"
 
 | Module | What it teaches |
 |--------|----------------|
-| `VBAF.Core.AllClasses.ps1` | Neural network architecture -- layers, weights, activations |
-| `VBAF.RL.QLearningAgent.ps1` | Q-learning -- the foundation of modern RL |
-| `VBAF.RL.DQN.ps1` | Deep Q-Networks -- combining neural nets with RL |
-| `VBAF.RL.PPO.ps1` | Proximal Policy Optimisation -- stable policy gradients |
-| `VBAF.RL.A3C.ps1` | Async Advantage Actor-Critic -- parallel RL workers |
-| `VBAF.RL.Environment.ps1` | Environments -- CartPole, GridWorld, RandomWalk |
-| `VBAF.Business.MarketEnvironment.ps1` | Multi-agent market simulation |
+| `VBAF.Core.AllClasses.ps1` | Neural network architecture — layers, weights, activations |
+| `VBAF.Core.Training.ps1` | Backpropagation — how networks learn from errors |
+| `VBAF.Core.Validation.ps1` | Evaluation — how to measure if a model is actually good |
+| `VBAF.Core.Preprocessing.ps1` | Data preparation — scaling, normalisation, missing values |
 
-### Supervised learning modules
+### Reinforcement learning modules
 
 | Module | What it teaches |
 |--------|----------------|
-| `VBAF.ML.Regression.ps1` | Linear, Ridge, Lasso, Logistic regression |
-| `VBAF.ML.Trees.ps1` | Decision trees and Random forests |
-| `VBAF.ML.Clustering.ps1` | KMeans, DBSCAN, Hierarchical clustering |
-| `VBAF.ML.NaiveBayes.ps1` | Gaussian, Multinomial, Bernoulli Naive Bayes |
-| `VBAF.ML.DataPipeline.ps1` | Imputation, scaling, encoding |
-| `VBAF.ML.AutoML.ps1` | Grid, random and Bayesian hyperparameter search |
-| `VBAF.ML.Explainability.ps1` | SHAP, LIME, permutation importance |
-
-### Educational tools
-
-| Tool | What it does |
-|------|-------------|
-| `VBAF.Teach.ps1` | Console teacher -- 6 topics, step by step |
-| `VBAF.Playground.ps1` | Interactive experiment station -- no coding needed |
+| `VBAF.RL.QAgent.ps1` | Q-learning — the foundation of modern RL |
+| `VBAF.RL.DQNAgent.ps1` | Deep Q-Networks — combining neural nets with RL |
+| `VBAF.RL.MultiAgent.ps1` | Multi-agent systems — competition and cooperation |
+| `VBAF.RL.Environment.ps1` | Environments — how agents observe and act |
 
 ### Visualisation
 
 | Module | What it teaches |
 |--------|----------------|
-| `VBAF.Visualization.LearningDashboard.ps1` | Live training curves |
-| `VBAF.Visualization.MarketDashboard.ps1` | Live market competition |
+| `VBAF.Visualization.Dashboard.ps1` | How to track and display learning progress |
 | `VBAF.Art.CastleCompetition.ps1` | Visualising multi-agent competition |
 
 ---
@@ -161,12 +129,11 @@ Start-VBAFPlayground -Algorithm "Supervised"
 ## The XOR benchmark
 
 XOR is the classic test of whether a neural network can learn non-linear patterns.
-A linear model cannot solve it -- you need at least one hidden layer.
+A linear model cannot solve it — you need at least one hidden layer.
 
 ```powershell
 . .\VBAF.LoadAll.ps1
-cd examples\01-XOR-Network
-. .\Run-Example-01.ps1
+& ".\examples\01-XOR-Network\VBAF.Core.Example-XOR.ps1"
 
 # Expected output:
 # XOR Truth Table:
@@ -177,32 +144,35 @@ cd examples\01-XOR-Network
 # Epochs: 847  Loss: 0.008
 ```
 
-If you see predictions close to 0 and 1 -- the network learned. That is backpropagation working.
+If you see predictions close to 0 and 1 — the network learned. That is backpropagation working.
 
 ---
 
 ## The Castle Learning experiment
 
-A Q-learning agent generates castle sequences and discovers that variety is rewarded.
-No strategy is programmed. The agent finds it through trial, error and reward signals.
+Two agents compete: Builder places walls and towers. Attacker probes for weaknesses.
+Neither is given a strategy. Optimal defence and attack patterns emerge from experience alone.
 
 ```powershell
-cd examples\02-Castle-Learning
-. .\Run-Example-02.ps1
+& ".\examples\02-Castle-Learning\VBAF.RL.Example-CastleLearning.ps1"
 
-# Watch the Q-table grow:
-# Episode   1 | Q-Table:  10 entries | Exploit:  0.0%
-# Episode  50 | Q-Table: 286 entries | Exploit: 11.6%
-# Episode 100 | Q-Table: 383 entries | Exploit: 22.2%
+# Watch the scores evolve:
+# Episode 1:   Builder: -45  Attacker: +12
+# Episode 50:  Builder: -12  Attacker: -8
+# Episode 100: Builder: +18  Attacker: -22
+# Castle defence learned — no gaps in perimeter
 ```
 
-This is reinforcement learning in its purest form -- learning from reward signals, not from labelled examples.
+This is reinforcement learning in its purest form — learning from reward signals, not from labelled examples.
+
 
 ---
 
-## Beyond the basics -- Enterprise Automation
+## Beyond the basics — Enterprise Automation
 
-Once you understand the foundation phases (1-9), VBAF includes 14 enterprise pillars built on the same core -- each one a working DQN agent solving a real IT automation problem.
+Once you understand the foundation phases (1-9), VBAF includes 14 enterprise pillars built on the same core — each one a working DQN agent solving a real IT automation problem.
+
+These are not teaching examples. They are production-grade agents that emerged from the same learning concepts you studied in Phase 1-9. Read them when you are ready to see where the fundamentals lead.
 
 | Phase | Pillar | What it automates | Improvement |
 |-------|--------|------------------|-------------|
@@ -221,17 +191,22 @@ Once you understand the foundation phases (1-9), VBAF includes 14 enterprise pil
 | 26 | Multi-Site Coordinator | Cross-datacenter workload balancing | +47.4% |
 | 27 | AutoPilot | Orchestrates all 13 pillars simultaneously | +63.3% |
 
-**The learning ladder:**
-Phase 1-9   -- Foundation: understand HOW agents learn
+The improvement figures are measured against a random dispatcher baseline — the same evaluation method used throughout the foundation phases.
 
-Phase 10-27 -- Enterprise: see WHAT agents can do
+**The learning ladder:**
+```
+Phase 1-9   — Foundation: understand HOW agents learn
+Phase 10-27 — Enterprise: see WHAT agents can do
+```
+
+Study the foundation first. Then open any enterprise file and trace exactly which foundation concepts it uses. The code is the curriculum.
 
 ---
 
 ## Requirements
 
 - Windows 10 or 11
-- PowerShell 5.1 (included with Windows -- no install needed)
+- PowerShell 5.1 (included with Windows — no install needed)
 - No Python, no Jupyter, no cloud account, no dependencies
 
 ---
@@ -240,18 +215,12 @@ Phase 10-27 -- Enterprise: see WHAT agents can do
 
 VBAF is designed to be taught. The `docs/teaching/` folder contains:
 
-- A full 4-week course outline with session plans and lab exercises
-- 34 exam questions at beginner, intermediate and advanced levels
-- Semester plan and teaching notes
-- Every example is written to be projected on a classroom screen
+- A full semester course outline (14 weeks)
+- Weekly lab exercises with working PowerShell code
+- Exam questions at beginner, intermediate and advanced levels
+- Suggested reading alongside each topic
 
-```powershell
-# The interactive teacher -- works in any classroom
-Start-VBAFTeach
-
-# Students experiment independently
-Start-VBAFPlayground
-```
+Every example is written to be projected on a classroom screen and understood immediately.
 
 ---
 
@@ -259,23 +228,22 @@ Start-VBAFPlayground
 
 | Version | Highlight |
 |---------|-----------|
-| v5.0.0 | Part XVIII -- academic repositioning, 6 examples, full docs, Teach/Playground |
-| v4.0.0 | AutoPilot -- 27 phases, 14 enterprise pillars complete |
-| v3.5.0 | Self-healing agents -- first enterprise phase |
-| v2.0.0 | DQN agents -- deep reinforcement learning |
+| v5.0.0 | Repositioned as educational framework — new era |
+| v4.0.0 | AutoPilot — 27 phases, 14 enterprise pillars complete |
+| v3.5.0 | Self-healing agents — first enterprise phase |
+| v2.0.0 | DQN agents — deep reinforcement learning |
 | v1.0.0 | Q-learning foundation |
 
 ---
 
 ## License
 
-MIT License -- see [LICENSE](LICENSE) for details.
+MIT License — see [LICENSE](LICENSE) for details.
 Free to use, teach, modify and share.
 
 ## Author
 
-**Henning** · Roskilde, Denmark 🇩🇰
+**Henning** · Roskilde, Denmark 🇩🇰  
 Built with Claude (Anthropic) · PowerShell ISE · PS 5.1
 
-*"The best way to understand AI is to build it yourself -- line by line."*
-
+*"The best way to understand AI is to build it yourself — line by line."*

@@ -215,7 +215,7 @@ Study the foundation first. Then open any enterprise file and trace exactly whic
 
 VBAF is designed to be taught. The `docs/teaching/` folder contains:
 
-- A full semester course outline (14 weeks)
+- A full 4-week course outline with session plans and lab exercises
 - Weekly lab exercises with working PowerShell code
 - Exam questions at beginner, intermediate and advanced levels
 - Suggested reading alongside each topic

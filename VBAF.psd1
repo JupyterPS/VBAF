@@ -27,11 +27,13 @@ PrivateData = @{
         Tags = @('AI','MachineLearning','ReinforcementLearning','NeuralNetwork','QLearning','DQN','PPO','A3C','MultiAgent','Automation','Visualization','PowerShell','Education','MLOps','DeepLearning','CNN','RNN','LSTM','AutoML','DataPipeline')
         LicenseUri = 'https://github.com/JupyterPS/VBAF/blob/master/LICENSE'
         ProjectUri = 'https://github.com/JupyterPS/VBAF'
-        ReleaseNotes = 'v5.0.0 (June 2026) - Educational repositioning. 6 runnable examples with launchers. Full docs: Theory, Architecture, API-Reference, GettingStarted. Educational tools: Start-VBAFTeach, Start-VBAFPlayground, Invoke-VBAFAgentBenchmark. DQN, PPO, A3C implemented and benchmarkable. Multi-agent market simulation. 14 enterprise automation pillars. Runs on any Windows PC with no dependencies.''
+        ReleaseNotes = 'v5.0.1 (June 2026) - Educational repositioning. 6 runnable examples with launchers. Full docs: Theory, Architecture, API-Reference, GettingStarted. Educational tools: Start-VBAFTeach, Start-VBAFPlayground, Invoke-VBAFAgentBenchmark. DQN, PPO, A3C implemented and benchmarkable. Multi-agent market simulation. 14 enterprise automation pillars. Runs on any Windows PC with no dependencies.'
     }
 }
 
 }
+
+
 
 
 

@@ -54,13 +54,13 @@ cd "C:\Users\<your-name>\OneDrive\WindowsPowerShell"
 . .\VBAF.LoadAll.ps1
 
 # Run the XOR example — the classic neural network benchmark
-& ".\examples\01-XOR-Network\VBAF.Core.Example-XOR.ps1"
+& ".\examples\01-XOR-Network\Run-Example-01.ps1"
 
 # Watch a Q-learning agent learn castle defence
-& ".\examples\02-Castle-Learning\VBAF.RL.Example-CastleLearning.ps1"
+& ".\examples\02-Castle-Learning\Run-Example-02.ps1"
 
 # See competing market agents emerge pricing strategies
-& ".\examples\03-Market-Simulation\VBAF.Business.Test.CompanyMarket.ps1"
+& ".\examples\03-Market-Simulation\Run-Example-03.ps1"
 ```
 
 ---
@@ -133,7 +133,7 @@ A linear model cannot solve it — you need at least one hidden layer.
 
 ```powershell
 . .\VBAF.LoadAll.ps1
-& ".\examples\01-XOR-Network\VBAF.Core.Example-XOR.ps1"
+& ".\examples\01-XOR-Network\Run-Example-01.ps1"
 
 # Expected output:
 # XOR Truth Table:
@@ -154,7 +154,7 @@ Two agents compete: Builder places walls and towers. Attacker probes for weaknes
 Neither is given a strategy. Optimal defence and attack patterns emerge from experience alone.
 
 ```powershell
-& ".\examples\02-Castle-Learning\VBAF.RL.Example-CastleLearning.ps1"
+& ".\examples\02-Castle-Learning\Run-Example-02.ps1"
 
 # Watch the scores evolve:
 # Episode 1:   Builder: -45  Attacker: +12
@@ -247,3 +247,4 @@ Free to use, teach, modify and share.
 Built with Claude (Anthropic) · PowerShell ISE · PS 5.1
 
 *"The best way to understand AI is to build it yourself — line by line."*
+

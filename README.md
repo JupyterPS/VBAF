@@ -82,6 +82,16 @@ Start here and work through in order:
 
 ## Documentation
 
+| Guide | Who it is for |
+|-------|---------------|
+| [Quick Start](docs/GettingStarted.md) | Developers who want to get moving fast -- commands first |
+| [Learning Path](docs/LEARNING-PATH.md) | Complete beginners -- 119 steps, hand-holding all the way |
+| [Theory](docs/Theory.md) | The math behind every algorithm with paper references |
+| [Architecture](docs/Architecture.md) | How the framework layers fit together |
+| [API Reference](docs/API-Reference.md) | Every function and class documented |
+| [Teaching Materials](docs/teaching/) | Educators and course designers |
+
+
 | Document | Description |
 |----------|-------------|
 | [Quick Start](docs/GettingStarted.md) | Developers -- commands first, get moving fast |
@@ -247,4 +257,5 @@ Free to use, teach, modify and share.
 Built with Claude (Anthropic) · PowerShell ISE · PS 5.1
 
 *"The best way to understand AI is to build it yourself — line by line."*
+
 

@@ -1,351 +1,241 @@
-﻿[← Back to README](README.md)
+﻿# VBAF Cheat Sheet
+## "I want to..." -- find your situation, copy the code
 
-# VBAF Cheat Sheet — Quick Reference Card
-> v4.0.0 · PowerShell 5.1 · All functions, all parameters, all valid values
-
-> **NOTE:** This is a REFERENCE DOCUMENT — not a runnable script.
-> Variables like `$X`, `$Xtrain`, `$ytrue` are placeholders.
-> Copy individual sections into your own scripts where your data is defined.
+> One rule: always run `. .\VBAF.LoadAll.ps1` first.
 
 ---
 
-## 1. Load Everything First
+## I WANT TO LEARN
+
+### ...understand what VBAF is
 ```powershell
-. .\VBAF.LoadAll.ps1
+Get-Content docs\GettingStarted.md
+```
+
+### ...follow a guided tour of all 6 concepts
+```powershell
+Start-VBAFTeach
+```
+
+### ...learn one specific topic
+```powershell
+Start-VBAFTeach -Topic "MachineLearning"
+Start-VBAFTeach -Topic "NeuralNetwork"
+Start-VBAFTeach -Topic "QLearning"
+Start-VBAFTeach -Topic "DQN"
+Start-VBAFTeach -Topic "MultiAgent"
+Start-VBAFTeach -Topic "Enterprise"
+```
+
+### ...experiment without writing code
+```powershell
+Start-VBAFPlayground
+Start-VBAFPlayground -Algorithm "DQN"
+Start-VBAFPlayground -Algorithm "QLearning"
+Start-VBAFPlayground -Algorithm "Enterprise"
+Start-VBAFPlayground -Algorithm "Supervised"
 ```
 
 ---
 
-## 2. Datasets
+## I WANT TO RUN AN EXAMPLE
 
+### ...see a neural network learn from scratch
 ```powershell
-# Classification datasets
-$data = Get-VBAFNBDataset -Name "Iris3Class"
-# Returns: $data.X, $data.y, $data.ClassNames, $data.Features
+cd examples\01-XOR-Network
+. .\Run-Example-01.ps1
+```
 
-# Regression datasets
-$data = Get-VBAFDataset -Name "HousePrice"
-# Returns: $data.X, $data.y, $data.Features
+### ...see a Q-learning agent discover strategy
+```powershell
+cd examples\02-Castle-Learning
+. .\Run-Example-02.ps1
+```
 
-# Pipeline datasets (with missing values + outliers)
-$data = Get-VBAFPipelineDataset -Name "MessyHousePrice"
-# Returns: $data.X, $data.y, $data.Features
+### ...see four companies compete in a market
+```powershell
+cd examples\03-Market-Simulation
+. .\Run-Example-03.ps1
+```
 
-# Available names:
-# Classification : "Iris3Class"
-# Regression     : "HousePrice"
-# Pipeline       : "MessyHousePrice"
+### ...see a live training dashboard
+```powershell
+cd examples\04-Learning-Dashboard
+. .\Run-Example-04.ps1   # run from standalone console, not ISE
+```
+
+### ...see three panels of validation live
+```powershell
+cd examples\05-Validation-Dashboard
+. .\Run-Example-05.ps1   # run from standalone console, not ISE
+```
+
+### ...build my own enterprise agent
+```powershell
+cd examples\06-Custom-Agent
+. .\Run-Example-06.ps1
 ```
 
 ---
 
-## 3. Train/Test Split
+## I WANT TO TRAIN AN RL AGENT
 
+### ...train a DQN agent on CartPole
 ```powershell
-$split = Split-TrainTest -X $data.X -y $data.y -TestSize 0.2 -Seed 42
-# Parameters:
-#   -X          double[][]   feature matrix
-#   -y          double[]     target array
-#   -TestSize   double       fraction for test (default 0.2)
-#   -Seed       int          random seed for reproducibility
+$agent = (Invoke-DQNTraining -Episodes 100 -PrintEvery 10)[-1]
+$agent.PrintStats()
+```
 
-# Returns hashtable — use these exact keys:
-$split.XTrain    # training features
-$split.yTrain    # training labels
-$split.XTest     # test features
-$split.yTest     # test labels
+### ...train PPO or A3C
+```powershell
+$ppo = (Invoke-PPOTraining -Episodes 50 -PrintEvery 5 -FastMode)[-1]
+$a3c = (Invoke-A3CTraining -Episodes 20 -PrintEvery 2 -FastMode)[-1]
+```
+
+### ...compare DQN vs PPO vs A3C head to head
+```powershell
+Invoke-VBAFQuickBenchmark -AgentName "DQN" -Environment "CartPole" -Episodes 50
+Invoke-VBAFAgentBenchmark -Agents @("DQN","PPO","A3C") -Episodes 50
+```
+
+### ...train a Q-learning agent on castle sequences
+```powershell
+$castleTypes = @("Gothic","FairyTale","Fortress","Palace","Wizard","Cathedral","Oriental","Ruins")
+$agent = [QLearningAgent]::new($castleTypes)
+# then run examples\02-Castle-Learning\Run-Example-02.ps1
+```
+
+### ...inspect what a Q-learning agent learned
+```powershell
+$agent.GetQValues("Gothic|Fortress")
+$agent.GetBestAction("Gothic|Fortress")
+$agent.GetStats()
 ```
 
 ---
 
-## 4. Scalers / Preprocessors
+## I WANT TO RUN AN ENTERPRISE PILLAR
 
+### ...run any pillar in safe simulation mode
 ```powershell
-# StandardScaler — zero mean, unit variance
-$scaler = [StandardScaler]::new()
-$Xs     = $scaler.FitTransform($X)        # fit + transform training data
-$Xtest  = $scaler.Transform($Xtest)       # transform test data (no refit!)
+$r = Invoke-VBAFSecurityMonitorTraining     -Episodes 100 -SimMode
+$r = Invoke-VBAFAnomalyDetectorTraining     -Episodes 100 -SimMode
+$r = Invoke-VBAFSelfHealingTraining         -Episodes 100 -SimMode
+$r = Invoke-VBAFCapacityPlannerTraining     -Episodes 100 -SimMode
+$r = Invoke-VBAFEnergyOptimizerTraining     -Episodes 100 -SimMode
+$r = Invoke-VBAFAutoPilotTraining           -Episodes 100 -SimMode
+```
 
-# RobustScaler — median/IQR, robust to outliers
-$scaler = [RobustScaler]::new()
-$Xs     = $scaler.FitTransform($X)
-$Xtest  = $scaler.Transform($Xtest)
+### ...read the results
+```powershell
+$r.Baseline.Avg    # random agent average reward
+$r.Trained.Avg     # trained agent average reward
+# Improvement = (Trained - Baseline) / |Baseline| * 100
+```
 
-# MissingValueImputer — fill missing values
-$imp  = [MissingValueImputer]::new("median")   # "median" | "mean" | "zero"
-$Ximp = $imp.FitTransform($X)
-
-# OutlierDetector — clip or remove outliers
-$out   = [OutlierDetector]::new("iqr", "clip", 1.5)
-# Parameters: method="iqr", treatment="clip"|"remove", threshold=1.5
-$out.Fit($Ximp)
-$Xclip = $out.Transform($Ximp)         # NOTE: returns hashtable!
-$Xclean = $Xclip.Data                  # <-- always use .Data
-
-# PolynomialFeatures — add interaction terms
-$poly = [PolynomialFeatures]::new(2)   # degree: 2 or 3
-$Xp   = $poly.FitTransform($X, $data.Features)
-$Xptest = $poly.FitTransform($Xtest, $data.Features)
+### ...run all pillars at once
+```powershell
+$r = Invoke-VBAFAutoPilotTraining -Episodes 100 -PrintEvery 10 -SimMode
 ```
 
 ---
 
-## 5. Classification Models
+## I WANT TO DO SUPERVISED LEARNING
 
+### ...predict house prices
 ```powershell
-# Gaussian Naive Bayes
-$gnb = [GaussianNaiveBayes]::new()
-$gnb.Fit($Xtrain, $ytrain)
-$preds = $gnb.Predict($Xtest)
-$gnb.PrintSummary()
-
-# Logistic Regression
-$lr = [LogisticRegression]::new()
-$lr.Fit($Xtrain, $ytrain)
-$preds = $lr.Predict($Xtest)
-
-# Decision Tree (classification)
-$dt = [DecisionTree]::new("classification", 3, 2)
-# Parameters: task="classification"|"regression", maxDepth=3, minSamples=2
-$dt.Fit($Xtrain, $ytrain)
-$preds = $dt.Predict($Xtest)
-```
-
----
-
-## 6. Regression Models
-
-```powershell
-# Linear Regression
-$lr = [LinearRegression]::new()
-$lr.Fit($Xtrain, $ytrain)
-$preds = $lr.Predict($Xtest)
-
-# Ridge Regression (L2 regularisation)
-$ridge = [RidgeRegression]::new(0.01)   # parameter: lambda (try 0.001–5.0)
-$ridge.Fit($Xtrain, $ytrain)
-$preds = $ridge.Predict($Xtest)
-
-# Lasso Regression (L1 regularisation)
-$lasso = [LassoRegression]::new(0.01)   # parameter: lambda
-$lasso.Fit($Xtrain, $ytrain)
-$preds = $lasso.Predict($Xtest)
-
-# Decision Tree (regression)
-$dt = [DecisionTree]::new("regression", 5, 2)
-$dt.Fit($Xtrain, $ytrain)
-$preds = $dt.Predict($Xtest)
-```
-
----
-
-## 7. Clustering
-
-```powershell
-# KMeans
-$km = [KMeans]::new(3)    # parameter: k (number of clusters)
-$km.Fit($X)
-$labels = $km.Predict($X)
-$km.PrintSummary()
-# $km.Centroids  — array of centroid vectors
-```
-
----
-
-## 8. Metrics
-
-```powershell
-# Classification metrics
-$m = Get-ClassificationMetrics $ytrue $ypred
-$m.Accuracy      # 0.0 - 1.0
-
-# Regression metrics
-$m = Get-RegressionMetrics $ytrue $ypred
-$m.R2            # R-squared (1.0 = perfect)
-$m.RMSE          # root mean squared error
-$m.MAE           # mean absolute error
-
-# Feature correlations
-Get-FeatureCorrelations -X $X -y $y -FeatureNames $data.Features
-
-# Data summary
-Get-DataSummary -X $X -y $y -FeatureNames $data.Features
-```
-
----
-
-## 9. Model Selection & Tuning
-
-```powershell
-# Automatic algorithm selection (cross-validation)
-$result = Invoke-VBAFAlgorithmSelection -X $X -y $y `
-    -Task "regression" `
-    -Folds 5 `
-    -Metric "R2"
-# -Task   : "regression" | "classification"
-# -Folds  : number of CV folds
-# -Metric : "R2" | "Accuracy"
-
-# Random hyperparameter search
-$hpo = Invoke-VBAFRandomSearch `
-    -ModelFactory { param($p) [RidgeRegression]::new($p.Lambda) } `
-    -ParamSpace @{ Lambda=@(0.001, 0.01, 0.1, 0.5, 1.0, 5.0) } `
-    -X $X -y $y `
-    -NTrials 12 `
-    -Folds 5 `
-    -Metric "R2"
-
-$hpo.BestScore               # best metric value
-$hpo.BestParams.Lambda       # best parameter found
-```
-
----
-
-## 10. Experiment Tracking (MLOps)
-
-```powershell
-# Initialise experiment store (run once per session)
-$script:ExperimentStorePath = Join-Path $env:USERPROFILE "VBAFRegistry\experiments"
-
-# Create experiment
-New-VBAFExperiment -Name "MyExperiment" -Description "What I am testing"
-
-# Start a run
-Start-VBAFRun -RunName "run_01" -ModelType "RidgeRegression" `
-    -Params @{ lambda=0.01; poly=2 }
-
-# Log metrics during run
-Set-VBAFRunMetric -Key "R2"   -Value 0.95
-Set-VBAFRunMetric -Key "RMSE" -Value 5.2
-
-# Tag a run
-Set-VBAFRunTag -Key "promoted" -Value "true"
-
-# End run
-Stop-VBAFRun
-
-# Compare all runs in an experiment
-Compare-VBAFRuns -ExperimentName "MyExperiment"
-```
-
----
-
-## 11. Model Registry
-
-```powershell
-# Initialise registry (run once per session)
-Initialize-VBAFRegistry -Path "C:\Users\henni\VBAFRegistry"
-
-# Save a model
-Save-VBAFModel `
-    -ModelName   "MyModel" `
-    -Model       $trainedModel `
-    -ModelType   "RidgeRegression" `
-    -Metrics     @{ R2=0.95; RMSE=5.2 } `
-    -Params      @{ Lambda=0.01; PolyDegree=2 } `
-    -DatasetName "HousePrice" `
-    -Description "My production model"
-
-# Load a model
-$loaded = Load-VBAFModel -ModelName "MyModel"
-```
-
----
-
-## 12. Drift Monitoring & Retraining Policy
-
-```powershell
-# Drift report
-$drift = Get-VBAFDriftReport `
-    -ReferenceData  $trainX `
-    -ProductionData $prodX `
-    -FeatureNames   $data.Features
-# $drift[i].PSI     — Population Stability Index (>0.2 = drift)
-# $drift[i].Status  — "OK" | "DRIFT"
-
-# Retraining policy
-$policy = New-VBAFRetrainingPolicy `
-    -ModelName     "MyModel" `
-    -MinAccuracy   0.90 `
-    -MaxDriftPSI   0.20 `
-    -MaxAgeDays    30 `
-    -MinNewSamples 50
-# -MinAccuracy   : retrain if R2 drops below this
-# -MaxDriftPSI   : retrain if PSI exceeds this
-# -MaxAgeDays    : retrain if model older than this
-# -MinNewSamples : retrain if enough new data
-
-# Check if retraining needed
-Test-VBAFRetrainingNeeded `
-    -Policy           $policy `
-    -CurrentAccuracy  0.94 `
-    -CurrentMaxPSI    0.15 `
-    -ModelTrainedDate (Get-Date).AddDays(-10) `
-    -NewSamplesCount  30
-```
-
----
-
-## 13. DQN / Reinforcement Learning (Enterprise Phases)
-
-```powershell
-# Run any enterprise agent
-$r = Invoke-VBAFAutoPilotTraining         -Episodes 100 -PrintEvery 10 -SimMode
-$r = Invoke-VBAFEnergyOptimizerTraining   -Episodes 100 -PrintEvery 10 -SimMode
-$r = Invoke-VBAFPatchIntelligenceTraining -Episodes 100 -PrintEvery 10 -SimMode
-$r = Invoke-VBAFBackupOptimizerTraining   -Episodes 100 -PrintEvery 10 -SimMode
-# ... same pattern for all Phase 14-27 agents
-
-# Parameters (same for all):
-#   -Episodes    int     number of training episodes (default 100)
-#   -PrintEvery  int     print progress every N episodes (default 10)
-#   -SimMode     switch  use simulated data (omit for real Windows data)
-#   -FastMode    switch  cap at 30 episodes for quick test
-
-# Returns hashtable:
-$r.Agent       # trained DQNAgent object
-$r.Results     # list of episode results
-$r.Baseline    # @{ Avg = baseline_reward }
-$r.Trained     # @{ Avg = trained_reward }
-```
-
----
-
-## 14. Common Gotchas (PS 5.1)
-
-| Problem | Fix |
-|---------|-----|
-| `Cannot index into null array` | Previous step returned null — check output of each step |
-| `Split-TrainTest` returns null | Use `$split.XTrain` not `$split.TrainX` |
-| `OutlierDetector.Transform` returns Hashtable | Use `$result.Data` not `$result` directly |
-| `op_Multiply not found` | Pre-compute values: `[double]$v = $x * 5.0` then use `$v` |
-| Registry path null | Call `Initialize-VBAFRegistry -Path "C:\Users\henni\VBAFRegistry"` first |
-| MLOps path null | Set `$script:ExperimentStorePath` before `New-VBAFExperiment` |
-| Class cached after edit | Close and reopen ISE — PS 5.1 cannot redefine classes |
-
----
-
-## 15. Full Minimal Example
-
-```powershell
-# Load
-. .\VBAF.LoadAll.ps1
-
-# Data
 $data   = Get-VBAFDataset -Name "HousePrice"
 $scaler = [StandardScaler]::new()
 $Xs     = $scaler.FitTransform($data.X)
-$split  = Split-TrainTest -X $Xs -y $data.y -TestSize 0.2 -Seed 42
-
-# Train
-$model = [RidgeRegression]::new(0.01)
-$model.Fit($split.XTrain, $split.yTrain)
-
-# Evaluate
-$preds = $model.Predict($split.XTest)
-$m     = Get-RegressionMetrics $split.yTest $preds
-Write-Host "R2: $($m.R2)"
+$model  = [RidgeRegression]::new(0.01)
+$model.Fit($Xs, $data.y)
+$preds  = $model.Predict($Xs)
+$m      = Get-RegressionMetrics $data.y $preds
+Write-Host "R2: $($m.R2)  RMSE: $($m.RMSE)"
 ```
 
+### ...classify with Naive Bayes
+```powershell
+$data = Get-VBAFNBDataset -Name "Iris3Class"
+$gnb  = [GaussianNaiveBayes]::new()
+$gnb.Fit($data.X, $data.y)
+$gnb.PrintSummary()
+```
 
+### ...find the best model automatically
+```powershell
+$data  = Get-VBAFDataset -Name "HousePrice"
+$Xs    = ([StandardScaler]::new()).FitTransform($data.X)
+$auto  = Invoke-VBAFAutoML -X $Xs -y $data.y -FeatureNames $data.Features -OptMethod "bayesian"
+```
 
+### ...clean messy data
+```powershell
+$data = Get-VBAFPipelineDataset -Name "MessyHousePrice"
+$imp  = [MissingValueImputer]::new("median")
+$Ximp = $imp.FitTransform($data.X)
+$out  = [OutlierDetector]::new("iqr", "clip", 1.5)
+$out.Fit($Ximp)
+$Xclean = ($out.Transform($Ximp)).Data   # always use .Data
+```
+
+---
+
+## I WANT TO SEE A DASHBOARD
+
+> All dashboards require standalone PowerShell console -- not ISE.
+> If the window hides behind other windows, click it once to bring it forward.
+
+```powershell
+& .\VBAF.Visualization.Example-Dashboard.ps1   # learning curves
+& .\VBAF.Business.Dashboard-Demo.ps1           # market competition
+& .\VBAF.Core.Test-ValidationDashboard.ps1     # three panel validation
+& .\VBAF.Art.Show20-QLearning.ps1              # Q-learning visual
+& .\VBAF.Art.CastleCompetition.ps1             # castle battle
+```
+
+---
+
+## I WANT TO TRACK EXPERIMENTS
+
+```powershell
+New-VBAFExperiment -Name "MyExperiment"
+Start-VBAFRun -RunName "run1" -ModelType "RidgeRegression" -Params @{ Lambda=0.01 }
+Set-VBAFRunMetric -Key "R2" -Value 0.99
+Stop-VBAFRun
+Compare-VBAFRuns
+```
+
+---
+
+## I WANT TO SAVE AND LOAD A MODEL
+
+```powershell
+Initialize-VBAFRegistry
+Save-VBAFModel -ModelName "MyModel" -Model $model -ModelType "RidgeRegression" -Metrics @{ R2=0.99 }
+$loaded = Load-VBAFModel -ModelName "MyModel"
+Get-VBAFModelList
+```
+
+---
+
+## COMMON FIXES
+
+| Problem | Fix |
+|---------|-----|
+| "Unable to find type" | Run `. .\VBAF.LoadAll.ps1` first |
+| Dashboard not visible | Click it in the taskbar to bring to front |
+| OutlierDetector returns hashtable | Use `($out.Transform($X)).Data` |
+| Class not updated after edit | Close and reopen PowerShell -- PS 5.1 caches classes |
+| LF/CRLF warning from Git | Safe to ignore -- always |
+| "master -> master" in red | Not an error -- push succeeded |
+
+---
+
+## FULL LEARNING PATH
+
+See [docs/LEARNING-PATH.md](docs/LEARNING-PATH.md) for the complete 119-step guide.
+
+---
+
+*github.com/JupyterPS/VBAF · Install-Module VBAF · v5.0.3 · Built in Roskilde, Denmark 🇩🇰*

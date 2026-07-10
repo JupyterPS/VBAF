@@ -529,15 +529,15 @@ class NeuralNetwork {
         $output = $this.Forward($input)
 
         # Compute Mean Squared Error for this sample
-        $error = 0.0
+        $sampleLoss = 0.0
         for ($i = 0; $i -lt $output.Count; $i++) {
             $diff   = $target[$i] - $output[$i]
-            $error += $diff * $diff
+            $sampleLoss += $diff * $diff
         }
-        $error = $error / $output.Count
+        $sampleLoss = $sampleLoss / $output.Count
 
         $this.Backward($target)
-        return $error
+        return $sampleLoss
     }
 
     # Train on all data for multiple epochs.
@@ -558,8 +558,8 @@ class NeuralNetwork {
 
             # Train on every sample -- order matters for SGD
             foreach ($sample in $data) {
-                $error       = $this.TrainSample($sample.Input, $sample.Expected)
-                $totalError += $error
+                $sampleLoss       = $this.TrainSample($sample.Input, $sample.Expected)
+                $totalError += $sampleLoss
             }
 
             # Average error across all samples this epoch

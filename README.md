@@ -1,6 +1,6 @@
 ﻿# VBAF — Visual AI & Reinforcement Learning Framework
 
-> **v5.0.3** · PowerShell 5.1 · Educational AI Framework · Learn by doing
+> **v5.0.4** · PowerShell 5.1 · Educational AI Framework · Learn by doing
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue.svg)](https://github.com/PowerShell/PowerShell)
@@ -37,8 +37,8 @@ Because the code is readable. Every function in VBAF is written to be understood
 | Guide | Who it is for |
 |-------|---------------|
 | [Getting Started](docs/GettingStarted.md) | First time users -- install, load, run your first example |
-| [Quick Start](#quick-start) | Developers who want commands fast -- scroll down |
 | [Learning Path](docs/LEARNING-PATH.md) | Complete beginners -- 119 steps, hand-holding all the way |
+| [Quick Start](#quick-start) | Developers who want commands fast -- scroll down |
 
 ---
 
@@ -116,6 +116,7 @@ Start-VBAFPlayground -Algorithm "Supervised"
 |-------|---------------|
 | [Getting Started](docs/GettingStarted.md) | First time users -- install, load, first run |
 | [Learning Path](docs/LEARNING-PATH.md) | Complete beginners -- 119 steps in the right order |
+| [Cheat Sheet](VBAF.CheatSheet.md) | "I want to..." -- problem-first quick reference |
 | [Theory](docs/Theory.md) | The math behind every algorithm with paper references |
 | [Architecture](docs/Architecture.md) | How the framework layers fit together |
 | [API Reference](docs/API-Reference.md) | Every function and class documented |
@@ -269,6 +270,7 @@ Start-VBAFPlayground
 
 | Version | Highlight |
 |---------|-----------|
+| v5.0.4 | CheatSheet rewritten as problem-first quick reference |
 | v5.0.3 | LEARNING-PATH.md -- 119-step complete guide added |
 | v5.0.0 | Part XVIII -- academic repositioning, 6 examples, full docs, Teach/Playground |
 | v4.0.0 | AutoPilot -- 27 phases, 14 enterprise pillars complete |

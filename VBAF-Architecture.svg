@@ -1,98 +1,81 @@
-﻿<svg width="680" height="560" viewBox="0 0 680 560" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+﻿<svg width="680" height="580" viewBox="0 0 680 580" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
 
-  <!-- Background -->
-  <rect width="680" height="560" fill="#f8f9fa" rx="12"/>
-  
-  <!-- Subtle grid pattern -->
-  <defs>
-    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e9ecef" stroke-width="0.5"/>
-    </pattern>
-    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M2 1L8 5L2 9" fill="none" stroke="#adb5bd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </marker>
-    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#00000018"/>
-    </filter>
-  </defs>
-  <rect width="680" height="560" fill="url(#grid)" rx="12"/>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#adb5bd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
 
-  <!-- Header -->
-  <rect x="0" y="0" width="680" height="56" fill="#1a1a2e" rx="12"/>
-  <rect x="0" y="44" width="680" height="12" fill="#1a1a2e"/>
-  <text x="340" y="24" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff" letter-spacing="1">VBAF ENTERPRISE ARCHITECTURE</text>
-  <text x="340" y="42" text-anchor="middle" font-size="10" fill="#adb5bd" letter-spacing="2">27 PHASES · PURE POWERSHELL 5.1 · ANY WINDOWS ENVIRONMENT</text>
+<!-- Header band -->
+<rect x="0" y="0" width="680" height="58" fill="#1c1c2e"/>
+<rect x="0" y="0" width="680" height="4" fill="#f59f00"/>
+<text x="340" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff" letter-spacing="2">VBAF ENTERPRISE ARCHITECTURE</text>
+<text x="340" y="44" text-anchor="middle" font-size="10" fill="#868e96" letter-spacing="3">27 PHASES · PURE POWERSHELL 5.1 · ANY WINDOWS ENVIRONMENT</text>
 
-  <!-- Phase 27 AutoPilot - Crown -->
-  <rect x="220" y="72" width="240" height="54" rx="8" fill="#ffffff" stroke="#f59f00" stroke-width="2" filter="url(#shadow)"/>
-  <rect x="220" y="72" width="6" height="54" rx="4" fill="#f59f00"/>
-  <text x="340" y="95" text-anchor="middle" font-size="13" font-weight="700" fill="#e67700">Phase 27 — AutoPilot</text>
-  <text x="340" y="113" text-anchor="middle" font-size="10" fill="#868e96">One master agent · Full enterprise autonomy</text>
+<!-- AutoPilot Crown -->
+<rect x="210" y="68" width="260" height="58" rx="6" fill="#fff8e1" stroke="#f59f00" stroke-width="2"/>
+<rect x="210" y="68" width="260" height="4" rx="3" fill="#f59f00"/>
+<text x="340" y="92" text-anchor="middle" font-size="13" font-weight="700" fill="#e67700">Phase 27 — AutoPilot</text>
+<text x="340" y="110" text-anchor="middle" font-size="11" fill="#666">One master agent · orchestrates all 13 pillars</text>
 
-  <!-- Arrow -->
-  <line x1="340" y1="138" x2="340" y2="126" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="340" y1="142" x2="340" y2="128" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <!-- Phase 26 -->
-  <rect x="180" y="138" width="320" height="44" rx="7" fill="#ffffff" stroke="#4dabf7" stroke-width="1.5" filter="url(#shadow)"/>
-  <rect x="180" y="138" width="6" height="44" rx="4" fill="#4dabf7"/>
-  <text x="344" y="156" text-anchor="middle" font-size="11" font-weight="700" fill="#1971c2">Phase 26</text>
-  <text x="344" y="172" text-anchor="middle" font-size="10" fill="#868e96">Multi-site coordination</text>
+<!-- Phase 26 -->
+<rect x="170" y="142" width="340" height="48" rx="5" fill="#e8f4fd" stroke="#339af0" stroke-width="1.5"/>
+<rect x="170" y="142" width="340" height="3" rx="3" fill="#339af0"/>
+<text x="340" y="163" text-anchor="middle" font-size="12" font-weight="700" fill="#1864ab">Phase 26 — Multi-site Coordinator</text>
+<text x="340" y="180" text-anchor="middle" font-size="11" fill="#444">Cross-datacenter workload balancing · global orchestration</text>
 
-  <!-- Arrow -->
-  <line x1="340" y1="194" x2="340" y2="182" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="340" y1="202" x2="340" y2="190" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <!-- Phases 22-25 -->
-  <rect x="130" y="194" width="420" height="44" rx="7" fill="#ffffff" stroke="#4dabf7" stroke-width="1.5" filter="url(#shadow)"/>
-  <rect x="130" y="194" width="6" height="44" rx="4" fill="#4dabf7"/>
-  <text x="344" y="212" text-anchor="middle" font-size="11" font-weight="700" fill="#1971c2">Phases 22–25</text>
-  <text x="344" y="228" text-anchor="middle" font-size="10" fill="#868e96">UBA · Patch Intelligence · Backup Optimizer · Energy Optimizer</text>
+<!-- Phases 22-25 -->
+<rect x="118" y="202" width="444" height="48" rx="5" fill="#e8f4fd" stroke="#339af0" stroke-width="1.5"/>
+<rect x="118" y="202" width="444" height="3" rx="3" fill="#339af0"/>
+<text x="340" y="223" text-anchor="middle" font-size="12" font-weight="700" fill="#1864ab">Phases 22–25</text>
+<text x="340" y="240" text-anchor="middle" font-size="11" fill="#444">User Behavior Analytics · Patch Intelligence · Backup Optimizer · Energy Optimizer</text>
 
-  <!-- Arrow -->
-  <line x1="340" y1="250" x2="340" y2="238" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="340" y1="262" x2="340" y2="250" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <!-- Phases 18-21 -->
-  <rect x="88" y="250" width="504" height="44" rx="7" fill="#ffffff" stroke="#4dabf7" stroke-width="1.5" filter="url(#shadow)"/>
-  <rect x="88" y="250" width="6" height="44" rx="4" fill="#4dabf7"/>
-  <text x="344" y="268" text-anchor="middle" font-size="11" font-weight="700" fill="#1971c2">Phases 18–21</text>
-  <text x="344" y="284" text-anchor="middle" font-size="10" fill="#868e96">Anomaly Detector · Capacity Planner · Incident Responder · Compliance Reporter</text>
+<!-- Phases 18-21 -->
+<rect x="74" y="262" width="532" height="48" rx="5" fill="#e8f4fd" stroke="#339af0" stroke-width="1.5"/>
+<rect x="74" y="262" width="532" height="3" rx="3" fill="#339af0"/>
+<text x="340" y="283" text-anchor="middle" font-size="12" font-weight="700" fill="#1864ab">Phases 18–21</text>
+<text x="340" y="300" text-anchor="middle" font-size="11" fill="#444">Anomaly Detector · Capacity Planner · Incident Responder · Compliance Reporter</text>
 
-  <!-- Arrow -->
-  <line x1="340" y1="306" x2="340" y2="294" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="340" y1="322" x2="340" y2="310" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <!-- Phases 14-17 -->
-  <rect x="56" y="306" width="568" height="44" rx="7" fill="#ffffff" stroke="#4dabf7" stroke-width="1.5" filter="url(#shadow)"/>
-  <rect x="56" y="306" width="6" height="44" rx="4" fill="#4dabf7"/>
-  <text x="344" y="324" text-anchor="middle" font-size="11" font-weight="700" fill="#1971c2">Phases 14–17</text>
-  <text x="344" y="340" text-anchor="middle" font-size="10" fill="#868e96">Self-Healing · Dashboard · Federated Learning · Cloud Bridge</text>
+<!-- Phases 14-17 -->
+<rect x="40" y="322" width="600" height="48" rx="5" fill="#e8f4fd" stroke="#339af0" stroke-width="1.5"/>
+<rect x="40" y="322" width="600" height="3" rx="3" fill="#339af0"/>
+<text x="340" y="343" text-anchor="middle" font-size="12" font-weight="700" fill="#1864ab">Phases 14–17</text>
+<text x="340" y="360" text-anchor="middle" font-size="11" fill="#444">Self-Healing · Dashboard Intelligence · Federated Learning · Cloud Bridge</text>
 
-  <!-- Arrow -->
-  <line x1="340" y1="362" x2="340" y2="350" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="340" y1="382" x2="340" y2="370" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <!-- Phases 10-13 -->
-  <rect x="28" y="362" width="624" height="44" rx="7" fill="#ffffff" stroke="#4dabf7" stroke-width="1.5" filter="url(#shadow)"/>
-  <rect x="28" y="362" width="6" height="44" rx="4" fill="#4dabf7"/>
-  <text x="344" y="380" text-anchor="middle" font-size="11" font-weight="700" fill="#1971c2">Phases 10–13</text>
-  <text x="344" y="396" text-anchor="middle" font-size="10" fill="#868e96">Security · Network · DataFlow · Multi-Agent Coordinator · Predictive · NL Interface</text>
+<!-- Phases 10-13 -->
+<rect x="20" y="382" width="640" height="48" rx="5" fill="#e8f4fd" stroke="#339af0" stroke-width="1.5"/>
+<rect x="20" y="382" width="640" height="3" rx="3" fill="#339af0"/>
+<text x="340" y="403" text-anchor="middle" font-size="12" font-weight="700" fill="#1864ab">Phases 10–13</text>
+<text x="340" y="420" text-anchor="middle" font-size="11" fill="#444">Security Monitor · Network Watcher · DataFlow Optimizer · Multi-Agent · Predictive · NL Interface</text>
 
-  <!-- Arrow -->
-  <line x1="340" y1="418" x2="340" y2="406" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="340" y1="442" x2="340" y2="430" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <!-- Phase 9 Foundation -->
-  <rect x="18" y="418" width="644" height="56" rx="8" fill="#ffffff" stroke="#2f9e44" stroke-width="2" filter="url(#shadow)"/>
-  <rect x="18" y="418" width="8" height="56" rx="4" fill="#2f9e44"/>
-  <text x="344" y="441" text-anchor="middle" font-size="13" font-weight="700" fill="#2f9e44">Phase 9 — Foundation</text>
-  <text x="344" y="459" text-anchor="middle" font-size="10" fill="#868e96">JobScheduler · ResourceOptimizer · AlertRouter · SupplyChain · Environment</text>
+<!-- Phase 9 Foundation -->
+<rect x="14" y="442" width="652" height="58" rx="6" fill="#ebfbee" stroke="#2f9e44" stroke-width="2"/>
+<rect x="14" y="442" width="652" height="4" rx="3" fill="#2f9e44"/>
+<text x="340" y="466" text-anchor="middle" font-size="13" font-weight="700" fill="#2b8a3e">Phase 9 — Foundation</text>
+<text x="340" y="484" text-anchor="middle" font-size="11" fill="#444">JobScheduler · ResourceOptimizer · AlertRouter · SupplyChain · Environment Interface</text>
 
-  <!-- Legend -->
-  <rect x="18" y="488" width="200" height="28" rx="6" fill="#ffffff" stroke="#e9ecef" stroke-width="1"/>
-  <rect x="26" y="496" width="10" height="10" rx="2" fill="#2f9e44"/>
-  <text x="42" y="506" font-size="9" fill="#868e96">Foundation Layer</text>
-  <rect x="90" y="496" width="10" height="10" rx="2" fill="#4dabf7"/>
-  <text x="106" y="506" font-size="9" fill="#868e96">Enterprise Pillars</text>
-  <rect x="160" y="496" width="10" height="10" rx="2" fill="#f59f00"/>
-  <text x="176" y="506" font-size="9" fill="#868e96">AutoPilot</text>
+<!-- Divider -->
+<line x1="40" y1="516" x2="640" y2="516" stroke="#dee2e6" stroke-width="0.5"/>
 
-  <!-- Footer -->
-  <text x="462" y="510" text-anchor="middle" font-size="9" fill="#adb5bd">github.com/JupyterPS/VBAF · Install-Module VBAF · Built in Denmark 🇩🇰</text>
+<!-- Legend -->
+<rect x="40" y="526" width="12" height="12" rx="2" fill="#2f9e44"/>
+<text x="58" y="537" font-size="10" fill="#666">Foundation</text>
+<rect x="130" y="526" width="12" height="12" rx="2" fill="#339af0"/>
+<text x="148" y="537" font-size="10" fill="#666">Enterprise pillars</text>
+<rect x="254" y="526" width="12" height="12" rx="2" fill="#f59f00"/>
+<text x="272" y="537" font-size="10" fill="#666">AutoPilot crown</text>
+<text x="640" y="537" text-anchor="end" font-size="10" fill="#adb5bd">github.com/JupyterPS/VBAF · Install-Module VBAF · Built in Denmark</text>
 
 </svg>

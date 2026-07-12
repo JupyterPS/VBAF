@@ -76,6 +76,6 @@
 <text x="148" y="537" font-size="10" fill="#666">Enterprise pillars</text>
 <rect x="254" y="526" width="12" height="12" rx="2" fill="#f59f00"/>
 <text x="272" y="537" font-size="10" fill="#666">AutoPilot crown</text>
-<text x="640" y="537" text-anchor="end" font-size="10" fill="#adb5bd">github.com/JupyterPS/VBAF · Install-Module VBAF · Built in Denmark</text>
+<text x="640" y="537" text-anchor="end" font-size="10" fill="#adb5bd"> Install-Module VBAF · Built in Denmark</text>
 
 </svg>

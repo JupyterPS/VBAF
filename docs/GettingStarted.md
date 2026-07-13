@@ -164,6 +164,7 @@ All dashboards open a WinForms window. Run from standalone PowerShell console.
 ## Tutorials
 
 13 step-by-step tutorials in `tutorials\`:
+
 01 -- Your First Neural Network
 
 02 -- First Classifier
@@ -211,3 +212,4 @@ Replace -SimMode with real Windows data sources when ready for production.
 - `docs\API-Reference.md` -- complete function and class reference
 - `docs\teaching\course-outline.md` -- 4-week course for IT professionals
 - `VBAF.CheatSheet.md` -- one-page quick reference for all functions
+

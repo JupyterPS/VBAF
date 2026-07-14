@@ -6,12 +6,6 @@
 </marker>
 </defs>
 
-<!-- Header band -->
-<rect x="0" y="0" width="680" height="58" fill="#1c1c2e"/>
-<rect x="0" y="0" width="680" height="4" fill="#f59f00"/>
-<text x="340" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff" letter-spacing="2">VBAF ENTERPRISE ARCHITECTURE</text>
-<text x="340" y="44" text-anchor="middle" font-size="10" fill="#868e96" letter-spacing="3">27 PHASES · PURE POWERSHELL 5.1 · ANY WINDOWS ENVIRONMENT</text>
-
 <!-- AutoPilot Crown -->
 <rect x="210" y="68" width="260" height="58" rx="6" fill="#fff8e1" stroke="#f59f00" stroke-width="2"/>
 <rect x="210" y="68" width="260" height="4" rx="3" fill="#f59f00"/>
@@ -65,6 +59,12 @@
 <rect x="14" y="442" width="652" height="4" rx="3" fill="#2f9e44"/>
 <text x="340" y="466" text-anchor="middle" font-size="13" font-weight="700" fill="#2b8a3e">Phase 9 — Foundation</text>
 <text x="340" y="484" text-anchor="middle" font-size="11" fill="#444">JobScheduler · ResourceOptimizer · AlertRouter · SupplyChain · Environment Interface</text>
+
+<!-- Header band at bottom -->
+<rect x="0" y="514" width="680" height="58" fill="#1c1c2e"/>
+<rect x="0" y="514" width="680" height="4" fill="#f59f00"/>
+<text x="340" y="538" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff" letter-spacing="2">VBAF ENTERPRISE ARCHITECTURE</text>
+<text x="340" y="556" text-anchor="middle" font-size="10" fill="#868e96" letter-spacing="3">27 PHASES · PURE POWERSHELL 5.1 · ANY WINDOWS ENVIRONMENT</text>
 
 <!-- Divider -->
 <line x1="40" y1="516" x2="640" y2="516" stroke="#dee2e6" stroke-width="0.5"/>

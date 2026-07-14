@@ -67,7 +67,6 @@
 <text x="340" y="552" text-anchor="middle" font-size="10" fill="#868e96" letter-spacing="3">27 PHASES · PURE POWERSHELL 5.1 · ANY WINDOWS ENVIRONMENT</text>
 
 <!-- Divider -->
-<line x1="40" y1="578" x2="640" y2="516" stroke="#dee2e6" stroke-width="0.5"/>
 
 <!-- Legend -->
 <rect x="40" y="588" width="12" height="12" rx="2" fill="#2f9e44"/>

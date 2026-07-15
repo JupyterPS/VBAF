@@ -9,7 +9,7 @@ Start at line 1. Work down. Skip nothing.
 
 1. [README.md](../README.md)                          -- what VBAF is and why
 2. [GettingStarted.md](GettingStarted.md)             -- install, load, first run
-3. [Architecture.md](Architecture.md)                 -- how the layers fit together
+3. [Architecture.md](docs/Architecture.md)                 -- how the layers fit together
 4. [Theory.md](Theory.md)                             -- the math behind everything
 5. [VBAF.CheatSheet.md](../VBAF.CheatSheet.md)        -- one page quick reference
 
@@ -169,45 +169,45 @@ Start at line 1. Work down. Skip nothing.
 ## BUILD YOUR OWN
 
 97. `tutorials\13_Enterprise_CustomPillar.ps1`  -- template for new pillar
-98. [Architecture.md](Architecture.md)           -- re-read with new understanding
+98. [Architecture.md](docs/Architecture.md)           -- re-read with new understanding
 
 ---
 
 ## TEACHING MATERIALS
 
-99.  [teaching\course-outline.md](teaching/course-outline.md)   -- 4-week course plan
-100. [teaching\exam-questions.md](teaching/exam-questions.md)   -- 34 questions, 6 topics
-101. [teaching\semester-plan.md](teaching/semester-plan.md)     -- full semester structure
-102. [teaching\README.md](teaching/README.md)                   -- teaching overview
+99.  [docs\docs\teaching\course-outline.md](teaching/course-outline.md)   -- 4-week course plan
+100. [docs\docs\teaching\exam-questions.md](teaching/exam-questions.md)   -- 34 questions, 6 topics
+101. [docs\docs\teaching\semester-plan.md](teaching/semester-plan.md)     -- full semester structure
+102. [docs\docs\teaching\README.md](teaching/README.md)                   -- teaching overview
 
 ---
 
 ## CASE STUDIES
 
-103. [case-studies\castle-generation.md](case-studies/castle-generation.md)
-104. [case-studies\email-triage.md](case-studies/email-triage.md)
-105. [case-studies\report-optimization.md](case-studies/report-optimization.md)
-106. [case-studies\resource-allocation.md](case-studies/resource-allocation.md)
-107. [case-studies\README.md](case-studies/README.md)
+103. [docs\docs\case-studies\castle-generation.md](case-studies/castle-generation.md)
+104. [docs\docs\case-studies\email-triage.md](case-studies/email-triage.md)
+105. [docs\docs\case-studies\report-optimization.md](case-studies/report-optimization.md)
+106. [docs\docs\case-studies\resource-allocation.md](case-studies/resource-allocation.md)
+107. [docs\docs\case-studies\README.md](case-studies/README.md)
 
 ---
 
 ## PAPERS AND RESEARCH
 
-108. [papers\vbaf-main-paper.md](papers/vbaf-main-paper.md)           -- the full VBAF paper
-109. [papers\education-evaluation.md](papers/education-evaluation.md) -- educational assessment
-110. [papers\multi-agent-study.md](papers/multi-agent-study.md)       -- multi-agent research
-111. [papers\README.md](papers/README.md)
+108. [docs\docs\papers\vbaf-main-paper.md](papers/vbaf-main-paper.md)           -- the full VBAF paper
+109. [docs\docs\papers\education-evaluation.md](papers/education-evaluation.md) -- educational assessment
+110. [docs\docs\papers\multi-agent-study.md](papers/multi-agent-study.md)       -- multi-agent research
+111. [docs\docs\papers\README.md](papers/README.md)
 
 ---
 
 ## DEVELOPER DOCUMENTATION
 
-112. [dev\coding-standards.md](dev/coding-standards.md)   -- how VBAF code is written
-113. [dev\contributing.md](dev/contributing.md)           -- how to contribute
-114. [dev\testing-guide.md](dev/testing-guide.md)         -- how to test
-115. [dev\release-process.md](dev/release-process.md)     -- how releases work
-116. [dev\README.md](dev/README.md)
+112. [docs\docs\dev\coding-standards.md](dev/coding-standards.md)   -- how VBAF code is written
+113. [docs\docs\dev\contributing.md](dev/contributing.md)           -- how to contribute
+114. [docs\docs\dev\testing-guide.md](dev/testing-guide.md)         -- how to test
+115. [docs\docs\dev\release-process.md](dev/release-process.md)     -- how releases work
+116. [docs\docs\dev\README.md](dev/README.md)
 
 ---
 
@@ -222,3 +222,4 @@ Start at line 1. Work down. Skip nothing.
 *github.com/JupyterPS/VBAF · Install-Module VBAF · Built in Roskilde, Denmark 🇩🇰*
 
 *"The best way to understand AI is to build it yourself -- line by line."*
+

@@ -199,7 +199,7 @@ function Initialize-VBAFWinForms {
     $cheat.Dispose()
 }
 Initialize-VBAFWinForms
- $cheatFunction + "`r`n$($args[0])"  -ForegroundColor Green
+ $cheatFunction + "`r`n$($args[0])"  
 Write-Host ""
 Write-Host "  LEARNING PATH (run in order):" -ForegroundColor Yellow
 Write-Host "    1. cd examples\01-XOR-Network          ; . .\Run-Example-01.ps1   -- neural networks" -ForegroundColor White

@@ -169,45 +169,45 @@ Start at line 1. Work down. Skip nothing.
 ## BUILD YOUR OWN
 
 97. `tutorials\13_Enterprise_CustomPillar.ps1`  -- template for new pillar
-98. [Architecture.md](docs/Architecture.md)           -- re-read with new understanding
+98. [docs\Architecture.md](Architecture.md)           -- re-read with new understanding
 
 ---
 
 ## TEACHING MATERIALS
 
-99.  [docs\docs\teaching\course-outline.md](teaching/course-outline.md)   -- 4-week course plan
-100. [docs\docs\teaching\exam-questions.md](teaching/exam-questions.md)   -- 34 questions, 6 topics
-101. [docs\docs\teaching\semester-plan.md](teaching/semester-plan.md)     -- full semester structure
-102. [docs\docs\teaching\README.md](teaching/README.md)                   -- teaching overview
+99.  [docs\teaching\course-outline.md](teaching/course-outline.md)   -- 4-week course plan
+100. [docs\teaching\exam-questions.md](teaching/exam-questions.md)   -- 34 questions, 6 topics
+101. [docs\teaching\semester-plan.md](teaching/semester-plan.md)     -- full semester structure
+102. [docs\teaching\README.md](teaching/README.md)                   -- teaching overview
 
 ---
 
 ## CASE STUDIES
 
-103. [docs\docs\case-studies\castle-generation.md](case-studies/castle-generation.md)
-104. [docs\docs\case-studies\email-triage.md](case-studies/email-triage.md)
-105. [docs\docs\case-studies\report-optimization.md](case-studies/report-optimization.md)
-106. [docs\docs\case-studies\resource-allocation.md](case-studies/resource-allocation.md)
-107. [docs\docs\case-studies\README.md](case-studies/README.md)
+103. [docs\case-studies\castle-generation.md](case-studies/castle-generation.md)
+104. [docs\case-studies\email-triage.md](case-studies/email-triage.md)
+105. [docs\case-studies\report-optimization.md](case-studies/report-optimization.md)
+106. [docs\case-studies\resource-allocation.md](case-studies/resource-allocation.md)
+107. [docs\case-studies\README.md](case-studies/README.md)
 
 ---
 
 ## PAPERS AND RESEARCH
 
-108. [docs\docs\papers\vbaf-main-paper.md](papers/vbaf-main-paper.md)           -- the full VBAF paper
-109. [docs\docs\papers\education-evaluation.md](papers/education-evaluation.md) -- educational assessment
-110. [docs\docs\papers\multi-agent-study.md](papers/multi-agent-study.md)       -- multi-agent research
-111. [docs\docs\papers\README.md](papers/README.md)
+108. [docs\papers\vbaf-main-paper.md](papers/vbaf-main-paper.md)           -- the full VBAF paper
+109. [docs\papers\education-evaluation.md](papers/education-evaluation.md) -- educational assessment
+110. [docs\papers\multi-agent-study.md](papers/multi-agent-study.md)       -- multi-agent research
+111. [docs\papers\README.md](papers/README.md)
 
 ---
 
 ## DEVELOPER DOCUMENTATION
 
-112. [docs\docs\dev\coding-standards.md](dev/coding-standards.md)   -- how VBAF code is written
-113. [docs\docs\dev\contributing.md](dev/contributing.md)           -- how to contribute
-114. [docs\docs\dev\testing-guide.md](dev/testing-guide.md)         -- how to test
-115. [docs\docs\dev\release-process.md](dev/release-process.md)     -- how releases work
-116. [docs\docs\dev\README.md](dev/README.md)
+112. [docs\dev\coding-standards.md](dev/coding-standards.md)   -- how VBAF code is written
+113. [docs\dev\contributing.md](dev/contributing.md)           -- how to contribute
+114. [docs\dev\testing-guide.md](dev/testing-guide.md)         -- how to test
+115. [docs\dev\release-process.md](dev/release-process.md)     -- how releases work
+116. [docs\dev\README.md](dev/README.md)
 
 ---
 

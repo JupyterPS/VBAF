@@ -57,7 +57,7 @@ Start at line 1. Work down. Skip nothing.
 
 ---
 
-## DASHBOARDS -- run from standalone PowerShell console
+## DASHBOARDS -- run in this exact order
 
 33. `.\VBAF.Visualization.Example-Dashboard.ps1`     -- learning curves live
 34. `.\VBAF.Business.Dashboard-Demo.ps1`             -- market competition live

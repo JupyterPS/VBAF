@@ -169,6 +169,7 @@ Write-Host "  [Phase 9-27] Enterprise automation..." -ForegroundColor Gray
 . (Join-Path $basePath "VBAF.Enterprise.AutoPilot.ps1")
 . (Join-Path $basePath "VBAF.Enterprise.FleetDispatch.ps1")
 . (Join-Path $basePath "VBAF.Enterprise.HealthcareMonitor.ps1")
+
 #  PHASE 10 -- EDUCATIONAL TOOLS 
 # Teaching, benchmarking and playground -- depend on all phases above.
 # Start-VBAFTeach       -- console teacher, 6 topics, press Enter to advance
@@ -177,28 +178,54 @@ Write-Host "  [Phase 10] Educational tools..." -ForegroundColor Gray
 . (Join-Path $basePath "VBAF.Teach.ps1")
 . (Join-Path $basePath "VBAF.Benchmark.ps1")
 . (Join-Path $basePath "VBAF.Playground.ps1")
-Write-Host ""
-Write-Host "  VBAF Framework ready!" -ForegroundColor Green
+
+
+#  WINFORMS ACTIVATION -- ensures all dashboards appear in foreground
+function Initialize-VBAFWinForms {
+    $runningInISE = $psISE -ne $null
+    $cheat = New-Object System.Windows.Forms.Form
+    $cheat.ShowInTaskbar = $false
+    $cheat.FormBorderStyle = 'None'
+    $cheat.Opacity = 0
+    $cheat.Width = 1
+    $cheat.Height = 1
+    if ($runningInISE) {
+        $cheat.Show()
+        $cheat.Activate()
+    } else {
+        $cheat.ShowDialog() | Out-Null
+    }
+    $cheat.Close()
+    $cheat.Dispose()
+}
+Initialize-VBAFWinForms
+ $cheatFunction + "`r`n$($args[0])"  -ForegroundColor Green
 Write-Host ""
 Write-Host "  LEARNING PATH (run in order):" -ForegroundColor Yellow
-Write-Host "    1. cd examples\01-XOR-Network         ; . .\Run-Example-01.ps1   -- neural networks" -ForegroundColor White
-Write-Host "    2. cd examples\02-Castle-Learning     ; . .\Run-Example-02.ps1   -- Q-learning" -ForegroundColor White
-Write-Host "    3. cd examples\03-Market-Simulation   ; . .\Run-Example-03.ps1   -- multi-agent" -ForegroundColor White
-Write-Host "    4. cd examples\04-Learning-Dashboard  ; . .\Run-Example-04.ps1   -- dashboards" -ForegroundColor White
+Write-Host "    1. cd examples\01-XOR-Network          ; . .\Run-Example-01.ps1   -- neural networks" -ForegroundColor White
+Write-Host "    2. cd examples\02-Castle-Learning      ; . .\Run-Example-02.ps1   -- Q-learning" -ForegroundColor White
+Write-Host "    3. cd examples\03-Market-Simulation    ; . .\Run-Example-03.ps1   -- multi-agent" -ForegroundColor White
+Write-Host "    4. cd examples\04-Learning-Dashboard   ; . .\Run-Example-04.ps1   -- dashboards" -ForegroundColor White
 Write-Host "    5. cd examples\05-Validation-Dashboard ; . .\Run-Example-05.ps1   -- model validation" -ForegroundColor White
 Write-Host "    6. cd examples\06-Custom-Agent         ; . .\Run-Example-06.ps1   -- build your own" -ForegroundColor White
 Write-Host ""
-Write-Host "  THE 5 DASHBOARDS:-- Click on the first Dashboard and the rest are visible"  -ForegroundColor Yellow               
-Write-Host "    1. & .\VBAF.Visualization.Example-Dashboard.ps1       -- learning curves" -ForegroundColor White
-Write-Host "    2. & .\VBAF.Business.Dashboard-Demo.ps1               -- market competition" -ForegroundColor White
-Write-Host "    3. & .\VBAF.Core.Test-ValidationDashboard.ps1         -- model validation" -ForegroundColor White
-Write-Host "    4. & .\VBAF.Art.Show20-QLearning.ps1                  -- Q-learning visual" -ForegroundColor White
-Write-Host "    5. & .\VBAF.Art.CastleCompetition.ps1                 -- castle battle" -ForegroundColor White
+Write-Host "  THE 5 DASHBOARDS:" -ForegroundColor Yellow
+Write-Host "    1. & .\VBAF.Visualization.Example-Dashboard.ps1                   -- learning curves" -ForegroundColor White
+Write-Host "    2. & .\VBAF.Business.Dashboard-Demo.ps1                           -- market competition" -ForegroundColor White
+Write-Host "    3. & .\VBAF.Core.Test-ValidationDashboard.ps1                     -- model validation" -ForegroundColor White
+Write-Host "    4. & .\VBAF.Art.Show20-QLearning.ps1                              -- Q-learning visual" -ForegroundColor White
+Write-Host "    5. & .\VBAF.Art.CastleCompetition.ps1                             -- castle battle" -ForegroundColor White
 Write-Host ""
 Write-Host "  EDUCATIONAL TOOLS:" -ForegroundColor Yellow
-Write-Host "    Start-VBAFTeach                    -- console teacher (6 topics)" -ForegroundColor White
-Write-Host "    Start-VBAFPlayground               -- interactive experiment station" -ForegroundColor White
+Write-Host "    Start-VBAFTeach                                                   -- console teacher (6 topics)" -ForegroundColor White
+Write-Host "    Start-VBAFPlayground                                              -- interactive experiment station" -ForegroundColor White
 Write-Host ""
+
+
+
+
+
+
 
 
 

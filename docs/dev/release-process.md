@@ -26,7 +26,6 @@ ModuleVersion = '4.1.0'
 3. Run all tests
 ```powershell
 . .\VBAF.LoadAll.ps1
-& ".\tests\Run-AllTests.ps1"
 ```
 
 4. Test install from clean session
@@ -61,3 +60,4 @@ For urgent bug fixes:
 1. Fix on master branch
 2. Increment PATCH version
 3. Follow release checklist from step 3
+

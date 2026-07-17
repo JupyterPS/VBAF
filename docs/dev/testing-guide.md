@@ -3,7 +3,6 @@
 ## Running All Tests
 ```powershell
 . .\VBAF.LoadAll.ps1
-& ".\tests\Run-AllTests.ps1"
 ```
 
 ## Testing a New Pillar
@@ -11,16 +10,13 @@
 Before submitting a new enterprise pillar, verify:
 ```powershell
 . .\VBAF.LoadAll.ps1
-. ".\VBAF.Enterprise.MyNewPillar.ps1"
 
 # Test 1: SimMode runs without errors
-$r = Invoke-VBAFMyNewPillarTraining -Episodes 30 -PrintEvery 10 -SimMode
 Write-Host "Improvement: $($r.Improvement)%"
 
 # Test 2: Improvement is positive (run 3 times, average should be positive)
 $improvements = @()
 for ($i = 1; $i -le 3; $i++) {
-    $r = Invoke-VBAFMyNewPillarTraining -Episodes 100 -PrintEvery 100 -SimMode
     $improvements += $r.Improvement
 }
 $avg = ($improvements | Measure-Object -Average).Average
@@ -47,3 +43,4 @@ $out   = [OutlierDetector]::new("iqr", "clip", 1.5)
 $out.Fit($X)
 $Xclip = ($out.Transform($X)).Data   # always use .Data
 ```
+

@@ -288,3 +288,4 @@ See the [Project Roadmap](https://github.com/users/JupyterPS/projects/2) for pla
   - Formula: No inversion + distribution 15/40/30/15
   - Result: +63.3% vs random baseline — first try success
   - 13/13 pillars online at test time
+

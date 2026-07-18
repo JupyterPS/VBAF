@@ -32,7 +32,7 @@
 
 **Purpose:** Represents a single artificial neuron with weighted inputs and bias.
 
-**Location:** `Core/Neuron.ps1`
+**Location:** `VBAF.Core.AllClasses.ps1`
 
 #### Constructor
 
@@ -104,7 +104,7 @@ $neuron.UpdateWeights(@(0.5, 0.3, 0.8), 0.1)
 
 **Purpose:** Collection of neurons that process inputs in parallel.
 
-**Location:** `Core/Layer.ps1`
+**Location:** `VBAF.Core.AllClasses.ps1`
 
 #### Constructor
 
@@ -158,7 +158,7 @@ Write-Host "Layer outputs: $($outputs -join ', ')"
 
 **Purpose:** Multi-layer neural network with backpropagation training.
 
-**Location:** `Core/NeuralNetwork.ps1`
+**Location:** `VBAF.Core.AllClasses.ps1`
 
 #### Constructor
 
@@ -274,7 +274,7 @@ Write-Host "XOR(1,0) = $rounded"
 
 **Purpose:** Static class with activation functions and derivatives.
 
-**Location:** `Core/Activation.ps1`
+**Location:** `VBAF.Core.AllClasses.ps1`
 
 #### Static Methods
 
@@ -348,7 +348,7 @@ Hyperbolic tangent: `tanh(x)`
 
 **Purpose:** Q-Learning agent for reinforcement learning tasks.
 
-**Location:** `RL/QLearningAgent.ps1`
+**Location:** `VBAF.RL.QLearningAgent.ps1`
 
 #### Constructor
 
@@ -456,7 +456,7 @@ $agent.DecayEpsilon(0.995)
 
 **Purpose:** Memory buffer for experience replay in RL.
 
-**Location:** `RL/ExperienceReplay.ps1`
+**Location:** `VBAF.RL.ExperienceReplay.ps1`
 
 #### Constructor
 
@@ -522,7 +522,7 @@ foreach ($exp in $batch) {
 
 **Purpose:** Real-time visualization of training progress.
 
-**Location:** `Visualization/LearningDashboard.ps1`
+**Location:** `VBAF.Visualization.LearningDashboard.ps1`
 
 #### Constructor
 
@@ -624,7 +624,7 @@ for ($i = 0; $i -lt 1000; $i++) {
 
 **Purpose:** Collect and aggregate training metrics.
 
-**Location:** `Visualization/MetricsCollector.ps1`
+**Location:** `VBAF.Visualization.MetricsCollector.ps1`
 
 #### Methods
 
@@ -675,7 +675,7 @@ Write-Host "Best reward: $($summary.Reward.Max)"
 
 **Purpose:** Static methods for drawing graphs.
 
-**Location:** `Visualization/GraphRenderer.ps1`
+**Location:** `VBAF.Visualization.GraphRenderer.ps1`
 
 #### Static Methods
 
@@ -702,7 +702,7 @@ Draw a line graph.
 
 **Purpose:** RL agent for business strategy simulation.
 
-**Location:** `Business/CompanyAgent.ps1`
+**Location:** `VBAF.Business.CompanyAgent.ps1`
 
 *Coming in Phase 2 - Week 5*
 
@@ -725,7 +725,7 @@ CompanyAgent([string]$name, [string]$industry, [double]$startingCapital)
 
 **Purpose:** Multi-agent market simulation environment.
 
-**Location:** `Business/MarketEnvironment.ps1`
+**Location:** `VBAF.Business.MarketEnvironment.ps1`
 
 *Coming in Phase 2 - Week 6*
 
@@ -878,5 +878,6 @@ try {
 
 *Last updated: [Date]*  
 *VBAF Version: 1.0.0*
+
 
 

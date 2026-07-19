@@ -1,4 +1,15 @@
-﻿
+﻿# VBAF Original MasterPlan -- Historical Document
+
+> This is the original planning document written before development began.
+> It outlines all 27 phases that were planned upfront and subsequently delivered.
+> Every phase listed here was implemented exactly as described.
+>
+> This document is preserved as evidence of the original design vision.
+> For current architecture see: docs\Architecture.md
+> For current API see: docs\API-Reference.md
+
+---
+
 VBAF.Art.Show20-QLearning.ps1           (Week 8)
 VBAF.Core.AllClasses.ps1
 VBAF.Core.Example-XOR.ps1
@@ -2592,3 +2603,4 @@ ______________________________________ END _____________________________________
     ├── Chat01-Initial-Discussion.md
     ├── Chat02-Master-Plan-Creation.md
     └── Chat03-[Next Topic].md
+

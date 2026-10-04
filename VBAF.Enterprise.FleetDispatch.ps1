@@ -2,7 +2,7 @@
 #Requires -Version 5.1
 .SYNOPSIS
     VBAF Enterprise - Fleet Dispatch Intelligence
-    NordLogistik A/S — Autonomous Fleet Management
+    TruckCompanyDK A/S — Autonomous Fleet Management
 .DESCRIPTION
     DQN agent that observes real-time fleet signals and recommends
     the optimal dispatch action — no gut feeling needed!
@@ -22,7 +22,7 @@
 #>
 
 # ============================================================
-# NORDLOGISTIK A/S — FLEET DISPATCH INTELLIGENCE
+# TruckCompanyDK A/S — FLEET DISPATCH INTELLIGENCE
 # ============================================================
 
 class FleetDispatchEnvironment {
@@ -119,9 +119,9 @@ class FleetDispatchEnvironment {
 # ============================================================
 # REAL FLEET DATA PROBE
 # ============================================================
-function Get-NordLogistikSnapshot {
+function Get-TruckCompanyDKSnapshot {
     Write-Host ""
-    Write-Host "   Scanning NordLogistik fleet signals..." -ForegroundColor Gray
+    Write-Host "   Scanning TruckCompanyDK fleet signals..." -ForegroundColor Gray
     try {
         $cpu = (Get-WmiObject Win32_Processor -ErrorAction Stop |
                 Measure-Object -Property LoadPercentage -Average).Average
@@ -153,7 +153,7 @@ function Invoke-VBAFFleetDispatchTraining {
 
     Write-Host ""
     Write-Host "┌─────────────────────────────────────────────────────┐" -ForegroundColor Cyan
-    Write-Host "│  🚛 NordLogistik A/S — Fleet Dispatch Intelligence  │" -ForegroundColor Cyan
+    Write-Host "│  🚛 TruckCompanyDK A/S — Fleet Dispatch Intelligence  │" -ForegroundColor Cyan
     Write-Host "│  Turning gut feeling into autonomous AI decisions   │" -ForegroundColor Cyan
     Write-Host "└─────────────────────────────────────────────────────┘" -ForegroundColor Cyan
     Write-Host ""
@@ -166,7 +166,7 @@ function Invoke-VBAFFleetDispatchTraining {
     Write-Host "   State  : IdleRate | Urgency | FuelWaste | Complaints"   -ForegroundColor White
     Write-Host ""
 
-    if (-not $SimMode) { Get-NordLogistikSnapshot }
+    if (-not $SimMode) { Get-TruckCompanyDKSnapshot }
 
     $fleetEnv = [FleetDispatchEnvironment]::new()
 
@@ -253,7 +253,7 @@ function Invoke-VBAFFleetDispatchTraining {
 
     Write-Host ""
     Write-Host "╔═════════════════════════════════════════════════════╗" -ForegroundColor Green
-    Write-Host "║       NordLogistik — AI Dispatcher Results          ║" -ForegroundColor Green
+    Write-Host "║       TruckCompanyDK — AI Dispatcher Results          ║" -ForegroundColor Green
     Write-Host "╠═════════════════════════════════════════════════════╣" -ForegroundColor Green
     Write-Host ("║  ❌ Random dispatcher score  : {0,8:F2}           ║" -f $baseAvg)    -ForegroundColor Red
     Write-Host ("║  ✅ AI dispatcher score      : {0,8:F2}           ║" -f $trainedAvg) -ForegroundColor Green
@@ -278,7 +278,7 @@ function Invoke-VBAFFleetDispatchTraining {
     return @{ Agent=$agent; Baseline=@{Avg=$baseAvg}; Trained=@{Avg=$trainedAvg}; Improvement=$imp }
 }
 
-Write-Host "📦 VBAF.Enterprise.FleetDispatch.ps1 loaded  [🚛 NordLogistik]" -ForegroundColor Green
+Write-Host "📦 VBAF.Enterprise.FleetDispatch.ps1 loaded  [🚛 TruckCompanyDK]" -ForegroundColor Green
 Write-Host "   Function : Invoke-VBAFFleetDispatchTraining"                   -ForegroundColor Cyan
 Write-Host '   Run      : $r = Invoke-VBAFFleetDispatchTraining -SimMode'     -ForegroundColor White
 Write-Host ""

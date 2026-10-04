@@ -251,8 +251,33 @@ if ($Child) {
         $tS = Get-VBAFTrace -Environment $gw4 -Policy $fix -Snapshot { param($x) [int]$x.Steps }
         $sn = @($tS.Snapshots)
         $res.TraceSnap = [ordered]@{ Count = $sn.Count; Steps = $tS.StepCount; First = $sn[0]; Last = $sn[$sn.Count - 1] }
-        Say ('Trace: A {0} {1}/{2} steps, B {3} {4}/{5} steps, C error {6}, same {7}, agent steps {8}, snapshots {9} for {10} steps' -f $tA.Style, $tA.StepCount, $mn, $tB.Style, $tB.StepCount, $res.TraceB.ManualSteps, ($res.TraceC -ne ''), $res.TraceSame, $tG.StepCount, $sn.Count, $tS.StepCount)
+        Say ('Trace: A {0} {1}/{2} steps, B {3} {4}/{5} steps, C error {6}, same {7}, agent steps {8}, snapshots {9} for {10} steps' -f $tA.Style, $tA.StepCount, $res.TraceA.ManualSteps, $tB.Style, $tB.StepCount, $res.TraceB.ManualSteps, ($res.TraceC -ne ''), $res.TraceSame, $tG.StepCount, $sn.Count, $tS.StepCount)
     } catch { $res.Errors += ('trace: ' + $_.Exception.Message) }
+    # --- Production cell + evolution (v5.0 step 5) ---
+    try {
+        $world = [ProductionCellEnvironment]::new(1)
+        $res.B0 = [double](Measure-VBAFProductionPolicy -World $world -Policy (Get-VBAFProductionRules)['SPT'].Policy -Seeds (Get-VBAFProductionTestSeeds)).Score
+        $w1 = (@($world.ResetWithSeed(1005)) | ForEach-Object { ConvertTo-RText $_ }) -join ','
+        $w2 = (@($world.ResetWithSeed(1005)) | ForEach-Object { ConvertTo-RText $_ }) -join ','
+        $w3 = (@($world.ResetWithSeed(1006)) | ForEach-Object { ConvertTo-RText $_ }) -join ','
+        $res.WorldSame = ($w1 -ceq $w2) -and ($w1 -cne $w3)
+        Say ('Production cell: Brain 0 (SPT) {0}, same seed same shift {1}' -f $res.B0, $res.WorldSame)
+        $evDir = Join-Path $env:TEMP 'VBAF-tests\evolution'
+        if (Test-Path $evDir) { Remove-Item $evDir -Recurse -Force }
+        New-Item -ItemType Directory -Path $evDir -Force | Out-Null
+        Say 'Evolution run: baseline genome, brain seed 101, 50 shifts, checkpoint every 25 (about 70 s) ...'
+        $swE = [System.Diagnostics.Stopwatch]::StartNew()
+        $null = Invoke-VBAFEvolutionRun -RunId 'suite' -Genome (Get-VBAFBaselineGenome) -BrainSeed 101 -World $world -TrainShifts 50 -Chunk 25 -ValSeeds (Get-VBAFProductionValidationSeeds) -OutDir $evDir 6>$null
+        $sec1 = $swE.Elapsed.TotalSeconds
+        $je = (Get-Content (Join-Path $evDir 'suite.json') -Raw -Encoding UTF8 | ConvertFrom-Json)
+        $sha1 = (Get-FileHash (Join-Path $evDir 'suite-best.xml') -Algorithm SHA256).Hash.Substring(0, 16)
+        $res.Evo = [ordered]@{ Curve = ((@($je.Curve) | ForEach-Object { '{0}:{1}' -f $_.Shifts, $_.ValScore }) -join ' '); ModelSha = $sha1; Seconds = [Math]::Round($sec1, 1) }
+        $swR = [System.Diagnostics.Stopwatch]::StartNew()
+        $null = Invoke-VBAFEvolutionRun -RunId 'suite' -Genome (Get-VBAFBaselineGenome) -BrainSeed 101 -World $world -TrainShifts 50 -Chunk 25 -ValSeeds (Get-VBAFProductionValidationSeeds) -OutDir $evDir 6>$null
+        $sha2 = (Get-FileHash (Join-Path $evDir 'suite-best.xml') -Algorithm SHA256).Hash.Substring(0, 16)
+        $res.EvoResume = [ordered]@{ Seconds = [Math]::Round($swR.Elapsed.TotalSeconds, 2); SameModel = ($sha1 -ceq $sha2) }
+        Say ('Evolution: curve {0}, model {1}, {2} s; resumed call {3} s, same model {4}' -f $res.Evo.Curve, $sha1, $res.Evo.Seconds, $res.EvoResume.Seconds, $res.EvoResume.SameModel)
+    } catch { $res.Errors += ('production/evolution: ' + $_.Exception.Message) }
     $res | ConvertTo-Json -Depth 6 | Set-Content -Path $OutFile -Encoding UTF8
     Say ('Result written. Child total {0:N1} s' -f $sw.Elapsed.TotalSeconds)
     return
@@ -310,6 +335,10 @@ Add-Check 'Trace style C (no Step/Reset): a clear error, not an empty trace' ($m
 Add-Check 'Trace: the same setup twice gives an identical trace' ($m.TraceSame -eq $true) ('steps ' + $m.TraceSameSteps)
 Add-Check 'Trace -Agent works with a DQN agent (valid actions only)' ((Test-Has $m.TraceAgent) -and ($m.TraceAgent.Steps -gt 0) -and ($m.TraceAgent.Invalid -eq 0)) ('steps {0}, invalid {1}, actions {2}' -f $m.TraceAgent.Steps, $m.TraceAgent.Invalid, $m.TraceAgent.Actions)
 Add-Check 'Trace -Snapshot: one before every step plus one at the end' ((Test-Has $m.TraceSnap) -and ($m.TraceSnap.Count -eq ($m.TraceSnap.Steps + 1)) -and ($m.TraceSnap.First -eq 0) -and ($m.TraceSnap.Last -eq $m.TraceSnap.Steps)) ('snapshots {0} for {1} steps, first {2}, last {3}' -f $m.TraceSnap.Count, $m.TraceSnap.Steps, $m.TraceSnap.First, $m.TraceSnap.Last)
+Add-Check 'Production cell: Brain 0 (SPT) = 37.85 on the test shifts' ($m.B0 -eq 37.85) ('' + $m.B0)
+Add-Check 'Production cell: the same seed gives the same shift (another seed does not)' ($m.WorldSame -eq $true) ('' + $m.WorldSame)
+Add-Check 'Evolution run LOCKED: curve 25:20.58 50:23.52, model BBC7739C62F0FC96' ((Test-Has $m.Evo) -and ($m.Evo.Curve -ceq '25:20.58 50:23.52') -and ($m.Evo.ModelSha -ceq 'BBC7739C62F0FC96')) ('curve {0}, model {1}, {2} s' -f $m.Evo.Curve, $m.Evo.ModelSha, $m.Evo.Seconds)
+Add-Check 'Evolution run is resumable (a second call reuses the saved run: < 5 s, same model)' ((Test-Has $m.EvoResume) -and ($m.EvoResume.Seconds -lt 5) -and ($m.EvoResume.SameModel -eq $true)) ('{0} s, same model {1}' -f $m.EvoResume.Seconds, $m.EvoResume.SameModel)
 Add-Check 'No errors during the measurements' (@($m.Errors | Where-Object { $_ }).Count -eq 0) ((@($m.Errors) -join ' | '))
 Write-Host ''
 Write-Host '=== VBAF regression suite: result ===' -ForegroundColor Cyan

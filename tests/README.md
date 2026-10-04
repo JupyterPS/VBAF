@@ -23,6 +23,9 @@ Every check protects one fix found in VBAF-Evolution-Lab (KF-1..KF-9) with a FIX
 | KF-2 | `DQNAgent` reports the real network, warns on a config mismatch, explores every action |
 | KF-6 | the JobScheduler pillar trains with its own config |
 | KF-7 | `-MaxSteps` for all four environments, simulated `Reset` by default, `-Live` only on request, `-Seed` |
+| Trace | `Get-VBAFTrace` on style A and B environments equals a manual loop; style C gives a clear error; snapshots, agents, seeds |
+| Production cell | Brain 0 (SPT) = 37.85 on the test shifts; the same seed gives the same shift |
+| Evolution | a small `Invoke-VBAFEvolutionRun` is LOCKED (curve and model file) and resumable |
 
 **Locked values.** If a locked value changes, behaviour changed. Do not edit the expected value to make the test
 green: find out why first. Change it only for a deliberate, documented behaviour change (with a note in the changelog).

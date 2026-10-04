@@ -288,6 +288,20 @@ if ($Child) {
         $res.WindowExample = [ordered]@{ Champion = $wd.Champion; Diff = (@($wd.Nodes | Where-Object { $_.Id -eq 'G1-2' })[0]).Diff; Best6 = $wb6.Id; Nodes = @($wd.Nodes).Count; Finals = @($wd.Finals).Count }
         Say ('Evolution window: {0} of {1} self-checks pass; example champion {2}' -f @($wcs | Where-Object { $_.Pass }).Count, $wcs.Count, $wd.Champion)
     } catch { $res.Errors += ('window: ' + $_.Exception.Message) }
+    # --- The shift tab (v5.0 step 6b, part 2) ---
+    try {
+        $exDir = Join-Path $kroot 'examples\07-Evolution\data'
+        $sw2 = [ProductionCellEnvironment]::new(1)
+        $sbr = Get-VBAFShiftBrains $exDir
+        $snames = @($sbr.Keys)
+        $tot = @(); $chs = $null
+        foreach ($nm in $snames) { $tr = Get-VBAFShiftTraceFor $sw2 $sbr[$nm] 1001; $tot += (ConvertTo-RText ([double]$tr.Stats.TotalReward)); $chs = $tr }
+        $cc = Get-VBAFShiftCounts $chs @($chs.Steps).Count
+        $res.ShiftLock = [ordered]@{ Names = ($snames -join ' | '); Totals = ($tot -join '/'); ChampSteps = @($chs.Steps).Count; ChampReal = $cc.Real; ChampIdle = $cc.Idle; ChampChoice = $cc.Choice }
+        $vcs = @(Test-VBAFShiftView -ResultDir $exDir)
+        $res.ShiftView = @($vcs | ForEach-Object { [ordered]@{ Check = $_.Check; Pass = [bool]$_.Pass; Detail = [string]$_.Detail } })
+        Say ('The shift: totals on shift 1001 {0}; champion {1} steps, {2} real, {3} idle; view {4} of {5} self-checks pass' -f $res.ShiftLock.Totals, $res.ShiftLock.ChampSteps, $cc.Real, $cc.Idle, @($vcs | Where-Object { $_.Pass }).Count, $vcs.Count)
+    } catch { $res.Errors += ('shift tab: ' + $_.Exception.Message) }
     $res | ConvertTo-Json -Depth 6 | Set-Content -Path $OutFile -Encoding UTF8
     Say ('Result written. Child total {0:N1} s' -f $sw.Elapsed.TotalSeconds)
     return
@@ -354,6 +368,11 @@ foreach ($wc in @($m.Window)) { Add-Check ('Evolution window: ' + $wc.Check) ([b
 $we = $m.WindowExample
 Add-Check 'Evolution window example: 10 candidates, 10 final rows, champion G1-2, its genes BatchSize 16->32 and ReplayEvery 4->2' ((Test-Has $we) -and ($we.Nodes -eq 10) -and ($we.Finals -eq 10) -and ($we.Champion -eq 'G1-2') -and ($we.Diff -ceq 'BatchSize 16->32, ReplayEvery 4->2')) ('{0} / {1} / {2} / {3}' -f $we.Nodes, $we.Finals, $we.Champion, $we.Diff)
 Add-Check 'Evolution window example: best so far after step 6 is G1-2' ($we.Best6 -eq 'G1-2') ('' + $we.Best6)
+$sl = $m.ShiftLock
+Add-Check 'The shift LOCKED to the Lab (shift 1001): SPT 27.7, control 37.55, champion 35.55' ((Test-Has $sl) -and ($sl.Totals -ceq '27.7/37.55/35.55')) ('totals {0}  ({1})' -f $sl.Totals, $sl.Names)
+Add-Check 'The shift LOCKED: champion 92 steps, 54 real choices, 38 idle' ((Test-Has $sl) -and ($sl.ChampSteps -eq 92) -and ($sl.ChampReal -eq 54) -and ($sl.ChampIdle -eq 38)) ('{0} steps, {1} real ({2} with a real choice), {3} idle' -f $sl.ChampSteps, $sl.ChampReal, $sl.ChampChoice, $sl.ChampIdle)
+if (@($m.ShiftView).Count -eq 0) { Add-Check 'The shift view self-test ran' $false 'no results' }
+foreach ($vc in @($m.ShiftView)) { Add-Check ('The shift view: ' + $vc.Check) ([bool]$vc.Pass) ([string]$vc.Detail) }
 Add-Check 'No errors during the measurements' (@($m.Errors | Where-Object { $_ }).Count -eq 0) ((@($m.Errors) -join ' | '))
 Write-Host ''
 Write-Host '=== VBAF regression suite: result ===' -ForegroundColor Cyan

@@ -237,3 +237,55 @@ function Measure-VBAFProductionPolicy {
 
 # Validation shifts (seeds 2001-2010): for checkpoints and fitness, never the test set.
 function Get-VBAFProductionValidationSeeds { return [int[]](2001..2010) }
+
+# ---------- v5.0: a production-cell shift, step by step (for the window's "The shift" and "Side by side") ----------
+# Built on the general Get-VBAFTrace plus a production-cell snapshot (clock, queue length, the first Slots orders).
+# Each step gets: ClockBefore/After, QueueLen, Visible (Id, Proc, Deadline, Slack), Action, ChosenId,
+# Outcome (ontime | late | idle = empty queue, not the brain's fault | invalid = an empty slot was picked), Reward, Total.
+function Get-VBAFShiftTrace {
+    param($World, $Agent = $null, [scriptblock]$Policy = $null, [int]$Seed, [int]$PolicySeed = 7)
+    $snap = {
+        param($e)
+        $q = $e.Queue; $n = [Math]::Min([int]$e.Slots, [int]$q.Count)
+        $vis = @(for ($i = 0; $i -lt $n; $i++) { $o = $q[$i]; [pscustomobject]@{ Id = [int]$o.Id; Proc = [int]$o.Proc; Deadline = [int]$o.Deadline; Slack = ([int]$o.Deadline - [int]$e.Clock - [int]$o.Proc) } })
+        [pscustomobject]@{ Clock = [int]$e.Clock; QueueLen = [int]$q.Count; Visible = $vis }
+    }
+    if ($null -ne $Agent) { $tr = Get-VBAFTrace -Environment $World -Agent $Agent -Seed $Seed -Snapshot $snap -PolicySeed $PolicySeed }
+    else { $tr = Get-VBAFTrace -Environment $World -Policy $Policy -Seed $Seed -Snapshot $snap -PolicySeed $PolicySeed }
+    $sn = @($tr.Snapshots)
+    $steps = [System.Collections.Generic.List[object]]::new()
+    $st = @($tr.Steps)
+    for ($k = 0; $k -lt $st.Count; $k++) {
+        $s = $st[$k]; $b = $sn[$k]; $a = $sn[$k + 1]
+        $vis = @($b.Visible)
+        $chosenId = 0; $chosenDeadline = 0
+        if ($b.QueueLen -gt 0 -and $s.Action -ge 0 -and $s.Action -lt $vis.Count) { $chosenId = $vis[$s.Action].Id; $chosenDeadline = $vis[$s.Action].Deadline }
+        $outcome = 'idle'
+        if ($b.QueueLen -gt 0) {
+            if ($chosenId -eq 0) { $outcome = 'invalid' } elseif ([int]$a.Clock -le $chosenDeadline) { $outcome = 'ontime' } else { $outcome = 'late' }
+        }
+        $steps.Add([pscustomobject]@{ Step = $k + 1; ClockBefore = [int]$b.Clock; ClockAfter = [int]$a.Clock; QueueLen = [int]$b.QueueLen
+            Visible = $vis; Action = [int]$s.Action; ChosenId = $chosenId; Outcome = $outcome; Reward = [double]$s.Reward; Total = [double]$s.Total })
+    }
+    return [pscustomobject]@{ Seed = $Seed; Steps = @($steps); Stats = $World.GetShiftStats() }
+}
+# The brains of a study (ResultDir of Invoke-VBAFEvolutionStudy): Brain 0 (the SPT rule), and -- when the final-test
+# models exist -- the control (baseline genome) and the champion, both for the FIRST final seed.
+function Get-VBAFShiftBrains([string]$ResultDir) {
+    $b = [ordered]@{}
+    $b['Brain 0 (SPT rule)'] = @{ Policy = (Get-VBAFProductionRules)['SPT'].Policy }
+    $sp = $null
+    foreach ($n in 'evolution-summary.json', 'phase4c.json') { $p = Join-Path $ResultDir $n; if (Test-Path $p) { $sp = $p; break } }
+    if ($null -eq $sp) { return $b }
+    $s = (Get-Content $sp -Raw -Encoding UTF8 | ConvertFrom-Json)
+    $seed = [int]@($s.FinalSeeds)[0]
+    $cm = Join-Path $ResultDir ('final-control-s{0}-best.xml' -f $seed)
+    if (Test-Path $cm) { $b[('Control (baseline genome, seed {0})' -f $seed)] = @{ Agent = (Restore-VBAFBrain -Genome (Get-VBAFBaselineGenome) -BrainSeed $seed -ModelPath $cm) } }
+    $hm = Join-Path $ResultDir ('final-champion-s{0}-best.xml' -f $seed)
+    if (Test-Path $hm) { $b[('Champion {0} (seed {1})' -f $s.Champion, $seed)] = @{ Agent = (Restore-VBAFBrain -Genome (ConvertTo-VBAFGenome $s.ChampionGenome) -BrainSeed $seed -ModelPath $hm) } }
+    return $b
+}
+function Get-VBAFShiftTraceFor($World, $Brain, [int]$Seed) {
+    if ($Brain.ContainsKey('Agent')) { return Get-VBAFShiftTrace -World $World -Agent $Brain.Agent -Seed $Seed }
+    return Get-VBAFShiftTrace -World $World -Policy $Brain.Policy -Seed $Seed
+}

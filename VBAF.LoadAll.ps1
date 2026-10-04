@@ -136,6 +136,7 @@ Write-Host "  [Phase 8] Visualization..." -ForegroundColor Gray
 . (Join-Path $basePath "VBAF.Visualization.LearningDashboard.ps1")
 . (Join-Path $basePath "VBAF.Visualization.MarketDashboard.ps1")
 . (Join-Path $basePath "VBAF.Visualization.EvolutionWindow.ps1")    # v5.0: Show-VBAFEvolutionWindow
+. (Join-Path $basePath "VBAF.Visualization.ShiftView.ps1")    # v5.0: the window's shift tab
 
 #  PHASE 8 -- ART / CREATIVE 
 # Aesthetic reward functions, castle competition visualisation.

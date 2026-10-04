@@ -287,6 +287,7 @@ function New-VBAFEvolutionWindow($Data) {
     } else { $l3 = New-Object System.Windows.Forms.Label; $l3.Text = 'Coming in the next step.'; $l3.Dock = 'Fill'; $l3.TextAlign = 'MiddleCenter'; $tSide.Controls.Add($l3) }
     $tabs.TabPages.Add($tEvo); $tabs.TabPages.Add($tShift); $tabs.TabPages.Add($tSide)
     $form.Controls.Add($tabs)
+    Add-VBAFDemoBar $form $tabs
     $form.Add_FormClosing({ $global:VBAFEvoTimer.Stop() })
     $status.Text = Get-VBAFEvolutionStepText $Data $global:VBAFEvoStep
     return $form
@@ -345,7 +346,91 @@ function Test-VBAFEvolutionWindow {
     $checks += [pscustomobject]@{ Check = 'a study without a bar draws fine'; Pass = $rN.Ok; Detail = '' }
     $f = New-VBAFEvolutionWindow $d
     $nTabs = $f.Controls[0].TabPages.Count
+    $nCtl = $f.Controls.Count; $demoTxt = [string]$global:VBAFDemo.Button.Text; $global:VBAFDemo.Timer.Dispose()
     $global:VBAFEvoTimer.Dispose(); $f.Dispose()
     $checks += [pscustomobject]@{ Check = 'the window has 3 tabs'; Pass = ($nTabs -eq 3); Detail = ('tabs ' + $nTabs) }
+    $checks += [pscustomobject]@{ Check = 'the demo button sits above the tabs'; Pass = (($nCtl -eq 2) -and $demoTxt.StartsWith('Demo')); Detail = ('controls ' + $nCtl + ', button: ' + $demoTxt) }
+    $demoSec = Get-VBAFDemoEstimate $ResultDir
+    $checks += [pscustomobject]@{ Check = 'demo length about 1.5 min (60-120 s, from the timer settings)'; Pass = (($demoSec -ge 60) -and ($demoSec -le 120)); Detail = ('estimated ' + $demoSec + ' s') }
     return $checks
+}
+
+# ---------- v5.0: demo -- a short tour through the three tabs (a second click stops it) ----------
+function Add-VBAFDemoBar($Form, $Tabs) {
+    $global:VBAFDemo = @{ Stage = -1; Wait = 0; Started = $false; Tabs = $Tabs }
+    $D = $global:VBAFDemo
+    $p = New-Object System.Windows.Forms.FlowLayoutPanel; $p.Dock = 'Top'; $p.Height = 36; $p.Padding = New-Object System.Windows.Forms.Padding(6, 4, 6, 0)
+    $btn = New-Object System.Windows.Forms.Button; $btn.Text = 'Demo (about 1.5 min)'; $btn.Width = 160; $btn.Height = 26
+    $lbl = New-Object System.Windows.Forms.Label; $lbl.AutoSize = $true; $lbl.Padding = New-Object System.Windows.Forms.Padding(8, 6, 0, 0)
+    $lbl.Text = 'A short tour through all three tabs. Click again to stop.'
+    $D.Button = $btn; $D.Label = $lbl
+    $t = New-Object System.Windows.Forms.Timer; $t.Interval = 500; $t.Add_Tick({ Invoke-VBAFDemoTick }); $D.Timer = $t
+    $btn.Add_Click({ if ($global:VBAFDemo.Stage -ge 0) { Stop-VBAFDemo } else { Start-VBAFDemo } })
+    $p.Controls.Add($btn); $p.Controls.Add($lbl)
+    $Form.Controls.Add($p)
+    $Form.Add_FormClosing({ $global:VBAFDemo.Timer.Stop(); $global:VBAFDemo.Timer.Dispose() })
+}
+function Stop-VBAFDemo {
+    $D = $global:VBAFDemo
+    $D.Timer.Stop(); $D.Stage = -1
+    if ($global:VBAFEvoTimer) { $global:VBAFEvoTimer.Stop() }
+    foreach ($v in @($global:VBAFShift, $global:VBAFSide)) { if ($v -and $v.Timer) { $v.Timer.Stop() } }
+    $D.Button.Text = 'Demo (about 1.5 min)'; $D.Label.Text = 'The demo was stopped. Click to start it again.'
+}
+function Start-VBAFDemo { $D = $global:VBAFDemo; $D.Stage = 0; $D.Wait = 0; $D.Started = $false; $D.Button.Text = 'Stop demo'; $D.Timer.Start(); Invoke-VBAFDemoTick }
+function Set-VBAFDemoNext { $D = $global:VBAFDemo; $D.Stage++; $D.Started = $false; $D.Wait = 4 }
+function Invoke-VBAFDemoTick {
+    $D = $global:VBAFDemo
+    if ($D.Stage -lt 0) { return }
+    if ($D.Wait -gt 0) { $D.Wait--; return }
+    if ($D.Stage -eq 0) {
+        if (-not $D.Started) {
+            $D.Tabs.SelectedIndex = 0
+            $global:VBAFEvoTimer.Stop(); $global:VBAFEvoStep = 0; Update-VBAFEvolutionView; $global:VBAFEvoTimer.Start()
+            $D.Started = $true; $D.Label.Text = '1/3 Evolution: the candidates appear in the order they were trained.'
+        } elseif ($global:VBAFEvoStep -ge $global:VBAFEvoLast) { Set-VBAFDemoNext }
+        return
+    }
+    if ($D.Stage -eq 1) {
+        if ($null -eq $global:VBAFShift) { Set-VBAFDemoNext; return }
+        $S = $global:VBAFShift
+        if (-not $D.Started) {
+            $D.Tabs.SelectedIndex = 1
+            $S.BrainBox.SelectedIndex = $S.BrainBox.Items.Count - 1
+            $S.SeedBox.SelectedIndex = [Math]::Max(0, $S.SeedBox.Items.IndexOf(1030))
+            Select-VBAFShiftRun
+            $S.BaseInterval = 400; $S.Timer.Interval = Get-VBAFShiftInterval $S.Trace 1 400; $S.Timer.Start()
+            $D.Started = $true; $D.Label.Text = '2/3 The shift: the champion works test shift 1030, one step at a time.'
+        } elseif ($S.Step -ge @($S.Trace.Steps).Count) { Set-VBAFDemoNext }
+        return
+    }
+    if ($D.Stage -eq 2) {
+        if (-not (Get-Command Initialize-VBAFSideTab -ErrorAction SilentlyContinue)) { Set-VBAFDemoNext; return }
+        if (-not $D.Started) {
+            $D.Tabs.SelectedIndex = 2
+            if (-not $global:VBAFSideReady) { Set-VBAFDemoNext; return }
+            $S = $global:VBAFSide
+            $S.SeedBox.SelectedIndex = 0
+            $S.Timer.Stop(); $S.Seed = 1001; $S.Traces = Get-VBAFSideTraces 1001; $S.Max = Get-VBAFSideMaxClock $S.Traces
+            $S.T = 0; $S.MinPerTick = 1; Update-VBAFSideView; $S.Timer.Start()
+            $D.Started = $true; $D.Label.Text = '3/3 Side by side: test shift 1001. SPT leads for a long time -- who wins in the end?'
+        } elseif ($global:VBAFSide.T -ge $global:VBAFSide.Max) { Set-VBAFDemoNext }
+        return
+    }
+    $D.Timer.Stop(); $D.Stage = -1
+    $D.Button.Text = 'Demo (about 1.5 min)'; $D.Label.Text = 'The demo is over. Explore the tabs yourself, or click to watch it again.'
+}
+# Demo length estimated from the timer settings (rendering time not included).
+function Get-VBAFDemoEstimate([string]$ResultDir) {
+    $d = Get-VBAFEvolutionData $ResultDir
+    $sec = 3 * 2.0 + (@($d.Nodes).Count + 1) * 1.5
+    if ((Get-Command Get-VBAFShiftBrains -ErrorAction SilentlyContinue) -and ([System.Management.Automation.PSTypeName]'ProductionCellEnvironment').Type) {
+        $world = [ProductionCellEnvironment]::new(1)
+        $br = Get-VBAFShiftBrains $ResultDir; $names = @($br.Keys)
+        $tr = Get-VBAFShiftTraceFor $world $br[$names[$names.Count - 1]] 1030
+        foreach ($s in @($tr.Steps)) { if ($s.Outcome -eq 'idle') { $sec += 0.1 } else { $sec += 0.4 } }
+        $mx = 200; foreach ($nm in $names) { $t2 = Get-VBAFShiftTraceFor $world $br[$nm] 1001; $mx = [Math]::Max($mx, [int]@($t2.Steps)[-1].ClockAfter) }
+        $sec += $mx * 0.15
+    }
+    return [Math]::Round($sec, 1)
 }

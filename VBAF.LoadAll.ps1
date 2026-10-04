@@ -83,6 +83,8 @@ Write-Host "  [Phase 2] Reinforcement learning..." -ForegroundColor Gray
 . (Join-Path $basePath "VBAF.RL.PPO.ps1")
 . (Join-Path $basePath "VBAF.RL.A3C.ps1")
 . (Join-Path $basePath "VBAF.RL.Trace.ps1")    # v5.0: Get-VBAFTrace (any environment, style A or B)
+. (Join-Path $basePath "VBAF.RL.ProductionCell.ps1")    # v5.0: the production cell world + measurer
+. (Join-Path $basePath "VBAF.RL.Evolution.ps1")    # v5.0: build, train and evolve a brain
 
 #  PHASE 3 -- BUSINESS / MULTI-AGENT 
 # Company state, actions, agents and market environment.

@@ -27,6 +27,7 @@ Every check protects one fix found in VBAF-Evolution-Lab (KF-1..KF-9) with a FIX
 | Production cell | Brain 0 (SPT) = 37.85 on the test shifts; the same seed gives the same shift |
 | Evolution | a small `Invoke-VBAFEvolutionRun` is LOCKED (curve and model file) and resumable |
 | Evolution window | `Show-VBAFEvolutionWindow` renders any study (playback, champion in gold only at the end, bar optional); example data in `examples\07-Evolution` |
+| The shift | `Get-VBAFShiftTrace` LOCKED to the Lab on shift 1001 (SPT 27.7, control 37.55, champion 35.55; 92 steps, 54 real, 38 idle); the tab renders |
 
 **Locked values.** If a locked value changes, behaviour changed. Do not edit the expected value to make the test
 green: find out why first. Change it only for a deliberate, documented behaviour change (with a note in the changelog).

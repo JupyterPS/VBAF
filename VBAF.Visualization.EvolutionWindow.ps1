@@ -46,7 +46,7 @@ function Get-VBAFEvolutionData([string]$ResultDir) {
     $bar = $null
     if ($null -ne $s.Bar -and ([string]$s.Bar) -ne '') { $bar = [double]$s.Bar }
     $runs = 1; if (@($s.Lineage).Count -gt 0) { $runs = @(([string]@($s.Lineage)[0].RunScores) -split '/').Count }
-    return [pscustomobject]@{ Champion = [string]$s.Champion; Nodes = @($nodes); Finals = @($finals); FinalSeeds = @($s.FinalSeeds | ForEach-Object { [int]$_ })
+    return [pscustomobject]@{ ResultDir = $ResultDir; Champion = [string]$s.Champion; Nodes = @($nodes); Finals = @($finals); FinalSeeds = @($s.FinalSeeds | ForEach-Object { [int]$_ })
         ChampionMean = [double]$s.ChampionTest.Mean; ChampionSD = [double]$s.ChampionTest.SD
         ControlMean = [double]$s.ControlTest.Mean; ControlSD = [double]$s.ControlTest.SD
         Brain0 = [double]$s.Brain0; Bar = $bar; Runs = $runs }
@@ -277,7 +277,7 @@ function New-VBAFEvolutionWindow($Data) {
         'The gold dot is the champion. Right: the final test on test shifts that no candidate has seen before.')
     $tEvo.Controls.Add($pb); $tEvo.Controls.Add($list); $tEvo.Controls.Add($status); $tEvo.Controls.Add($bar); $tEvo.Controls.Add($info)
     $tShift = New-Object System.Windows.Forms.TabPage; $tShift.Text = 'The shift'
-    $l2 = New-Object System.Windows.Forms.Label; $l2.Text = 'Coming in the next step.'; $l2.Dock = 'Fill'; $l2.TextAlign = 'MiddleCenter'; $tShift.Controls.Add($l2)
+    if ((Get-Command Initialize-VBAFShiftTab -ErrorAction SilentlyContinue) -and $Data.ResultDir -and ([System.Management.Automation.PSTypeName]'ProductionCellEnvironment').Type) { Initialize-VBAFShiftTab $tShift $Data.ResultDir } else { $l2 = New-Object System.Windows.Forms.Label; $l2.Text = 'Coming in the next step.'; $l2.Dock = 'Fill'; $l2.TextAlign = 'MiddleCenter'; $tShift.Controls.Add($l2) }
     $tSide = New-Object System.Windows.Forms.TabPage; $tSide.Text = 'Side by side'
     $l3 = New-Object System.Windows.Forms.Label; $l3.Text = 'Coming in the next step.'; $l3.Dock = 'Fill'; $l3.TextAlign = 'MiddleCenter'; $tSide.Controls.Add($l3)
     $tabs.TabPages.Add($tEvo); $tabs.TabPages.Add($tShift); $tabs.TabPages.Add($tSide)
@@ -292,6 +292,7 @@ function Show-VBAFEvolutionWindow {
     [System.Windows.Forms.Application]::EnableVisualStyles()
     $form = New-VBAFEvolutionWindow $data
     [void]$form.ShowDialog()
+    if ($global:VBAFShift -and $global:VBAFShift.Timer) { $global:VBAFShift.Timer.Stop(); $global:VBAFShift.Timer.Dispose() }
     $global:VBAFEvoTimer.Dispose()
     $form.Dispose()
 }

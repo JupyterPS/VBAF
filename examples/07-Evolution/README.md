@@ -19,4 +19,5 @@ Show-VBAFEvolutionWindow -ResultDir C:\Temp\my-study
 ```
 
 `final-champion-s201-best.xml` and `final-control-s201-best.xml` are the trained champion and control brains
-(seed 201), used by the window's shift tabs.
+(seed 201), used by the window's shift tabs. `final-champion-s202..s205-best.xml` are the other four champion brains of
+the final test, so "Side by side" can show all five champions against the SPT rule.

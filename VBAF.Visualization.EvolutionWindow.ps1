@@ -279,7 +279,12 @@ function New-VBAFEvolutionWindow($Data) {
     $tShift = New-Object System.Windows.Forms.TabPage; $tShift.Text = 'The shift'
     if ((Get-Command Initialize-VBAFShiftTab -ErrorAction SilentlyContinue) -and $Data.ResultDir -and ([System.Management.Automation.PSTypeName]'ProductionCellEnvironment').Type) { Initialize-VBAFShiftTab $tShift $Data.ResultDir } else { $l2 = New-Object System.Windows.Forms.Label; $l2.Text = 'Coming in the next step.'; $l2.Dock = 'Fill'; $l2.TextAlign = 'MiddleCenter'; $tShift.Controls.Add($l2) }
     $tSide = New-Object System.Windows.Forms.TabPage; $tSide.Text = 'Side by side'
-    $l3 = New-Object System.Windows.Forms.Label; $l3.Text = 'Coming in the next step.'; $l3.Dock = 'Fill'; $l3.TextAlign = 'MiddleCenter'; $tSide.Controls.Add($l3)
+    $global:VBAFSideReady = $false
+    if ((Get-Command Initialize-VBAFSideTab -ErrorAction SilentlyContinue) -and $Data.ResultDir -and ([System.Management.Automation.PSTypeName]'ProductionCellEnvironment').Type) {
+        $l3 = New-Object System.Windows.Forms.Label; $l3.Text = 'Open this tab to compute all test shifts (a few seconds).'; $l3.Dock = 'Fill'; $l3.TextAlign = 'MiddleCenter'; $tSide.Controls.Add($l3)
+        $global:VBAFSidePage = $tSide; $global:VBAFSideDir = $Data.ResultDir
+        $tabs.Add_SelectedIndexChanged({ param($sender, $e) if ($sender.SelectedTab -eq $global:VBAFSidePage -and -not $global:VBAFSideReady) { Initialize-VBAFSideTab $global:VBAFSidePage $global:VBAFSideDir } })
+    } else { $l3 = New-Object System.Windows.Forms.Label; $l3.Text = 'Coming in the next step.'; $l3.Dock = 'Fill'; $l3.TextAlign = 'MiddleCenter'; $tSide.Controls.Add($l3) }
     $tabs.TabPages.Add($tEvo); $tabs.TabPages.Add($tShift); $tabs.TabPages.Add($tSide)
     $form.Controls.Add($tabs)
     $form.Add_FormClosing({ $global:VBAFEvoTimer.Stop() })
@@ -293,6 +298,7 @@ function Show-VBAFEvolutionWindow {
     $form = New-VBAFEvolutionWindow $data
     [void]$form.ShowDialog()
     if ($global:VBAFShift -and $global:VBAFShift.Timer) { $global:VBAFShift.Timer.Stop(); $global:VBAFShift.Timer.Dispose() }
+    if ($global:VBAFSide -and $global:VBAFSide.Timer) { $global:VBAFSide.Timer.Stop(); $global:VBAFSide.Timer.Dispose() }
     $global:VBAFEvoTimer.Dispose()
     $form.Dispose()
 }

@@ -278,6 +278,16 @@ if ($Child) {
         $res.EvoResume = [ordered]@{ Seconds = [Math]::Round($swR.Elapsed.TotalSeconds, 2); SameModel = ($sha1 -ceq $sha2) }
         Say ('Evolution: curve {0}, model {1}, {2} s; resumed call {3} s, same model {4}' -f $res.Evo.Curve, $sha1, $res.Evo.Seconds, $res.EvoResume.Seconds, $res.EvoResume.SameModel)
     } catch { $res.Errors += ('production/evolution: ' + $_.Exception.Message) }
+    # --- Evolution window (v5.0 step 6b, part 1) ---
+    try {
+        $exDir = Join-Path $kroot 'examples\07-Evolution\data'
+        $wcs = @(Test-VBAFEvolutionWindow -ResultDir $exDir)
+        $res.Window = @($wcs | ForEach-Object { [ordered]@{ Check = $_.Check; Pass = [bool]$_.Pass; Detail = [string]$_.Detail } })
+        $wd = Get-VBAFEvolutionData $exDir
+        $wb6 = Get-VBAFEvolutionBestSoFar $wd 6
+        $res.WindowExample = [ordered]@{ Champion = $wd.Champion; Diff = (@($wd.Nodes | Where-Object { $_.Id -eq 'G1-2' })[0]).Diff; Best6 = $wb6.Id; Nodes = @($wd.Nodes).Count; Finals = @($wd.Finals).Count }
+        Say ('Evolution window: {0} of {1} self-checks pass; example champion {2}' -f @($wcs | Where-Object { $_.Pass }).Count, $wcs.Count, $wd.Champion)
+    } catch { $res.Errors += ('window: ' + $_.Exception.Message) }
     $res | ConvertTo-Json -Depth 6 | Set-Content -Path $OutFile -Encoding UTF8
     Say ('Result written. Child total {0:N1} s' -f $sw.Elapsed.TotalSeconds)
     return
@@ -339,6 +349,11 @@ Add-Check 'Production cell: Brain 0 (SPT) = 37.85 on the test shifts' ($m.B0 -eq
 Add-Check 'Production cell: the same seed gives the same shift (another seed does not)' ($m.WorldSame -eq $true) ('' + $m.WorldSame)
 Add-Check 'Evolution run LOCKED: curve 25:20.58 50:23.52, model BBC7739C62F0FC96' ((Test-Has $m.Evo) -and ($m.Evo.Curve -ceq '25:20.58 50:23.52') -and ($m.Evo.ModelSha -ceq 'BBC7739C62F0FC96')) ('curve {0}, model {1}, {2} s' -f $m.Evo.Curve, $m.Evo.ModelSha, $m.Evo.Seconds)
 Add-Check 'Evolution run is resumable (a second call reuses the saved run: < 5 s, same model)' ((Test-Has $m.EvoResume) -and ($m.EvoResume.Seconds -lt 5) -and ($m.EvoResume.SameModel -eq $true)) ('{0} s, same model {1}' -f $m.EvoResume.Seconds, $m.EvoResume.SameModel)
+if (@($m.Window).Count -eq 0) { Add-Check 'Evolution window self-test ran' $false 'no window results' }
+foreach ($wc in @($m.Window)) { Add-Check ('Evolution window: ' + $wc.Check) ([bool]$wc.Pass) ([string]$wc.Detail) }
+$we = $m.WindowExample
+Add-Check 'Evolution window example: 10 candidates, 10 final rows, champion G1-2, its genes BatchSize 16->32 and ReplayEvery 4->2' ((Test-Has $we) -and ($we.Nodes -eq 10) -and ($we.Finals -eq 10) -and ($we.Champion -eq 'G1-2') -and ($we.Diff -ceq 'BatchSize 16->32, ReplayEvery 4->2')) ('{0} / {1} / {2} / {3}' -f $we.Nodes, $we.Finals, $we.Champion, $we.Diff)
+Add-Check 'Evolution window example: best so far after step 6 is G1-2' ($we.Best6 -eq 'G1-2') ('' + $we.Best6)
 Add-Check 'No errors during the measurements' (@($m.Errors | Where-Object { $_ }).Count -eq 0) ((@($m.Errors) -join ' | '))
 Write-Host ''
 Write-Host '=== VBAF regression suite: result ===' -ForegroundColor Cyan

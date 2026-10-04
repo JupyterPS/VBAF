@@ -1,0 +1,221 @@
+﻿{
+    "Kernel":  "candidate-v1",
+    "DryRun":  false,
+    "Champion":  "G1-2",
+    "ChampionGenome":  {
+                           "Hidden":  "16",
+                           "LearningRate":  0.01,
+                           "Gamma":  0.95,
+                           "EpsilonDecay":  0.995,
+                           "EpsilonMin":  0.05,
+                           "BatchSize":  32,
+                           "TargetUpdateFreq":  5,
+                           "ReplayEvery":  2
+                       },
+    "ChampionFitness":  35.11,
+    "ChampionFitnessSD":  0.83,
+    "FinalSeeds":  [
+                       201,
+                       202,
+                       203,
+                       204,
+                       205
+                   ],
+    "ChampionTest":  {
+                         "Mean":  39.39,
+                         "SD":  0.37
+                     },
+    "ControlTest":  {
+                        "Mean":  37.17,
+                        "SD":  1.64
+                    },
+    "Brain0":  37.85,
+    "Bar":  39.17,
+    "PairWins":  5,
+    "Lineage":  [
+                    {
+                        "Id":  "G0-0",
+                        "Generation":  0,
+                        "Parent":  "Brain 1",
+                        "Fitness":  33.56,
+                        "FitnessSD":  0.41,
+                        "RunScores":  "33.28 / 34.03 / 33.36",
+                        "Seconds":  2151.2,
+                        "Key":  "Hidden=16;LearningRate=0.01;Gamma=0.95;EpsilonDecay=0.995;EpsilonMin=0.05;BatchSize=16;TargetUpdateFreq=5;ReplayEvery=4"
+                    },
+                    {
+                        "Id":  "G0-1",
+                        "Generation":  0,
+                        "Parent":  "G0-0",
+                        "Fitness":  28.99,
+                        "FitnessSD":  2.94,
+                        "RunScores":  "31.94 / 28.98 / 26.06",
+                        "Seconds":  1986.1,
+                        "Key":  "Hidden=16;LearningRate=0.01;Gamma=0.99;EpsilonDecay=0.995;EpsilonMin=0.05;BatchSize=16;TargetUpdateFreq=5;ReplayEvery=4"
+                    },
+                    {
+                        "Id":  "G0-2",
+                        "Generation":  0,
+                        "Parent":  "G0-0",
+                        "Fitness":  30.48,
+                        "FitnessSD":  1.19,
+                        "RunScores":  "30.75 / 29.18 / 31.52",
+                        "Seconds":  1740.8,
+                        "Key":  "Hidden=16-16;LearningRate=0.01;Gamma=0.95;EpsilonDecay=0.995;EpsilonMin=0.05;BatchSize=16;TargetUpdateFreq=5;ReplayEvery=8"
+                    },
+                    {
+                        "Id":  "G0-3",
+                        "Generation":  0,
+                        "Parent":  "G0-0",
+                        "Fitness":  29.91,
+                        "FitnessSD":  0.64,
+                        "RunScores":  "29.18 / 30.38 / 30.17",
+                        "Seconds":  3794.1,
+                        "Key":  "Hidden=16;LearningRate=0.01;Gamma=0.8;EpsilonDecay=0.995;EpsilonMin=0.05;BatchSize=16;TargetUpdateFreq=5;ReplayEvery=2"
+                    },
+                    {
+                        "Id":  "G1-1",
+                        "Generation":  1,
+                        "Parent":  "G0-0",
+                        "Fitness":  31.75,
+                        "FitnessSD":  2.16,
+                        "RunScores":  "32.13 / 29.43 / 33.69",
+                        "Seconds":  2000.2,
+                        "Key":  "Hidden=16;LearningRate=0.03;Gamma=0.95;EpsilonDecay=0.995;EpsilonMin=0.01;BatchSize=16;TargetUpdateFreq=5;ReplayEvery=4"
+                    },
+                    {
+                        "Id":  "G1-2",
+                        "Generation":  1,
+                        "Parent":  "G0-0",
+                        "Fitness":  35.11,
+                        "FitnessSD":  0.83,
+                        "RunScores":  "34.3 / 35.96 / 35.06",
+                        "Seconds":  6294,
+                        "Key":  "Hidden=16;LearningRate=0.01;Gamma=0.95;EpsilonDecay=0.995;EpsilonMin=0.05;BatchSize=32;TargetUpdateFreq=5;ReplayEvery=2"
+                    },
+                    {
+                        "Id":  "G1-3",
+                        "Generation":  1,
+                        "Parent":  "G0-0",
+                        "Fitness":  34.28,
+                        "FitnessSD":  0.47,
+                        "RunScores":  "33.74 / 34.61 / 34.49",
+                        "Seconds":  1334.9,
+                        "Key":  "Hidden=16;LearningRate=0.01;Gamma=0.95;EpsilonDecay=0.995;EpsilonMin=0.05;BatchSize=32;TargetUpdateFreq=5;ReplayEvery=8"
+                    },
+                    {
+                        "Id":  "G2-1",
+                        "Generation":  2,
+                        "Parent":  "G1-2",
+                        "Fitness":  34.75,
+                        "FitnessSD":  2.23,
+                        "RunScores":  "32.22 / 36.41 / 35.63",
+                        "Seconds":  5212.8,
+                        "Key":  "Hidden=16;LearningRate=0.01;Gamma=0.95;EpsilonDecay=0.995;EpsilonMin=0.05;BatchSize=32;TargetUpdateFreq=2;ReplayEvery=2"
+                    },
+                    {
+                        "Id":  "G2-2",
+                        "Generation":  2,
+                        "Parent":  "G1-2",
+                        "Fitness":  34.07,
+                        "FitnessSD":  0.51,
+                        "RunScores":  "33.94 / 33.64 / 34.63",
+                        "Seconds":  5269.3,
+                        "Key":  "Hidden=16;LearningRate=0.01;Gamma=0.95;EpsilonDecay=0.995;EpsilonMin=0.05;BatchSize=32;TargetUpdateFreq=10;ReplayEvery=2"
+                    },
+                    {
+                        "Id":  "G2-3",
+                        "Generation":  2,
+                        "Parent":  "G1-2",
+                        "Fitness":  34.82,
+                        "FitnessSD":  0.52,
+                        "RunScores":  "34.34 / 35.38 / 34.74",
+                        "Seconds":  2677.8,
+                        "Key":  "Hidden=16;LearningRate=0.01;Gamma=0.95;EpsilonDecay=0.995;EpsilonMin=0.05;BatchSize=32;TargetUpdateFreq=2;ReplayEvery=4"
+                    }
+                ],
+    "Final":  [
+                  {
+                      "Label":  "champion",
+                      "Seed":  201,
+                      "ValBest":  35.46,
+                      "BestAt":  300,
+                      "TestScore":  38.98,
+                      "OnTimePct":  79.5
+                  },
+                  {
+                      "Label":  "champion",
+                      "Seed":  202,
+                      "ValBest":  35.54,
+                      "BestAt":  200,
+                      "TestScore":  39.11,
+                      "OnTimePct":  79.8
+                  },
+                  {
+                      "Label":  "champion",
+                      "Seed":  203,
+                      "ValBest":  35.22,
+                      "BestAt":  275,
+                      "TestScore":  39.82,
+                      "OnTimePct":  81.2
+                  },
+                  {
+                      "Label":  "champion",
+                      "Seed":  204,
+                      "ValBest":  34.61,
+                      "BestAt":  150,
+                      "TestScore":  39.73,
+                      "OnTimePct":  80.8
+                  },
+                  {
+                      "Label":  "champion",
+                      "Seed":  205,
+                      "ValBest":  33.68,
+                      "BestAt":  225,
+                      "TestScore":  39.29,
+                      "OnTimePct":  80.5
+                  },
+                  {
+                      "Label":  "control",
+                      "Seed":  201,
+                      "ValBest":  34.43,
+                      "BestAt":  75,
+                      "TestScore":  38,
+                      "OnTimePct":  78.6
+                  },
+                  {
+                      "Label":  "control",
+                      "Seed":  202,
+                      "ValBest":  32.37,
+                      "BestAt":  150,
+                      "TestScore":  37.34,
+                      "OnTimePct":  78.2
+                  },
+                  {
+                      "Label":  "control",
+                      "Seed":  203,
+                      "ValBest":  34.12,
+                      "BestAt":  150,
+                      "TestScore":  35.52,
+                      "OnTimePct":  78.1
+                  },
+                  {
+                      "Label":  "control",
+                      "Seed":  204,
+                      "ValBest":  34.01,
+                      "BestAt":  225,
+                      "TestScore":  39.38,
+                      "OnTimePct":  79.8
+                  },
+                  {
+                      "Label":  "control",
+                      "Seed":  205,
+                      "ValBest":  33.96,
+                      "BestAt":  275,
+                      "TestScore":  35.62,
+                      "OnTimePct":  77.7
+                  }
+              ],
+    "Minutes":  725.4,
+    "Date":  "2026-10-04"
+}

@@ -215,6 +215,44 @@ if ($Child) {
         Say ('KF-7: MaxSteps {0}; Reset RO {1:N3} s, JS {2:N3} s, -Live {3:N3} s' -f (($res.MaxSteps.Values) -join '/'), $res.ResetRO, $res.ResetJS, $res.ResetLive)
     } catch { $res.Errors += ('kf7: ' + $_.Exception.Message) }
 
+    # --- Trace (v5.0 step 4): Get-VBAFTrace ---
+    try {
+        $fix = { param($s, $rng) 1 }
+        Set-VBAFSeed 11; $gw = New-VBAFEnvironment -Name 'GridWorld' -MaxSteps 50 -GridSize 5
+        $tA = Get-VBAFTrace -Environment $gw -Policy $fix
+        Set-VBAFSeed 11; $gw2 = New-VBAFEnvironment -Name 'GridWorld' -MaxSteps 50 -GridSize 5
+        [void]$gw2.Reset(); $mt = 0.0; $mn = 0; $dn = $false
+        while (-not $dn -and $mn -lt 10000) { $st = $gw2.Step(1); $mt += [double]$st.Reward; $dn = [bool]$st.Done; $mn++ }
+        $res.TraceA = [ordered]@{ Style = $tA.Style; Total = (ConvertTo-RText $tA.TotalReward); Steps = $tA.StepCount; ManualTotal = (ConvertTo-RText $mt); ManualSteps = $mn }
+        Set-VBAFSeed 12; $eo = [EnergyOptimizerEnvironment]::new()
+        $tB = Get-VBAFTrace -Environment $eo -Policy $fix -MaxSteps 500
+        Set-VBAFSeed 12; $eo2 = [EnergyOptimizerEnvironment]::new()
+        [void]$eo2.Reset(); $mt = 0.0; $mn = 0
+        while (-not $eo2.LastDone -and $mn -lt 500) { $eo2.Step(1); $mt += [double]$eo2.LastReward; [void]$eo2.GetState(); $mn++ }
+        $res.TraceB = [ordered]@{ Style = $tB.Style; Total = (ConvertTo-RText $tB.TotalReward); Steps = $tB.StepCount; ManualTotal = (ConvertTo-RText $mt); ManualSteps = $mn }
+        $res.TraceC = ''
+        try { $null = Get-VBAFTrace -Environment ([pscustomobject]@{ Name = 'no step' }) -Policy $fix } catch { $res.TraceC = $_.Exception.Message }
+        $rnd = { param($s, $rng) $rng.Next(0, 2) }
+        Set-VBAFSeed 21; $cp1 = New-VBAFEnvironment -Name 'CartPole' -MaxSteps 100
+        $t1 = Get-VBAFTrace -Environment $cp1 -Policy $rnd
+        Set-VBAFSeed 21; $cp2 = New-VBAFEnvironment -Name 'CartPole' -MaxSteps 100
+        $t2 = Get-VBAFTrace -Environment $cp2 -Policy $rnd
+        $res.TraceSame = ((ConvertTo-FlatText @($t1.Steps)) -ceq (ConvertTo-FlatText @($t2.Steps))) -and ($t1.StepCount -gt 1)
+        $res.TraceSameSteps = $t1.StepCount
+        Set-VBAFSeed 31
+        $gw3 = New-VBAFEnvironment -Name 'GridWorld' -MaxSteps 30 -GridSize 5
+        $nAct = [int]$gw3.ActionSpace.Size; $nObs = @($gw3.Reset()).Count
+        $cfgT = [DQNConfig]::new(); $cfgT.StateSize = $nObs; $cfgT.ActionSize = $nAct; $cfgT.HiddenLayers = @(16)
+        [int[]]$archT = @($nObs, 16, $nAct)
+        $agT = & { [DQNAgent]::new($cfgT, [NeuralNetwork]::new($archT, 0.01), [NeuralNetwork]::new($archT, 0.01), [ExperienceReplay]::new(1000)) } 3>$null 6>$null
+        $tG = Get-VBAFTrace -Environment $gw3 -Agent $agT
+        $res.TraceAgent = [ordered]@{ Steps = $tG.StepCount; Invalid = @($tG.Steps | Where-Object { $_.Action -lt 0 -or $_.Action -ge $nAct }).Count; Actions = $nAct }
+        Set-VBAFSeed 41; $gw4 = New-VBAFEnvironment -Name 'GridWorld' -MaxSteps 20 -GridSize 5
+        $tS = Get-VBAFTrace -Environment $gw4 -Policy $fix -Snapshot { param($x) [int]$x.Steps }
+        $sn = @($tS.Snapshots)
+        $res.TraceSnap = [ordered]@{ Count = $sn.Count; Steps = $tS.StepCount; First = $sn[0]; Last = $sn[$sn.Count - 1] }
+        Say ('Trace: A {0} {1}/{2} steps, B {3} {4}/{5} steps, C error {6}, same {7}, agent steps {8}, snapshots {9} for {10} steps' -f $tA.Style, $tA.StepCount, $mn, $tB.Style, $tB.StepCount, $res.TraceB.ManualSteps, ($res.TraceC -ne ''), $res.TraceSame, $tG.StepCount, $sn.Count, $tS.StepCount)
+    } catch { $res.Errors += ('trace: ' + $_.Exception.Message) }
     $res | ConvertTo-Json -Depth 6 | Set-Content -Path $OutFile -Encoding UTF8
     Say ('Result written. Child total {0:N1} s' -f $sw.Elapsed.TotalSeconds)
     return
@@ -264,6 +302,14 @@ Add-Check 'KF-7: -MaxSteps 20 reaches all four environments' (($all4 -eq 4) -and
 Add-Check 'KF-7: Reset without -Live is simulated (< 0.3 s)' ((Test-Has $m.ResetRO) -and ($m.ResetRO -lt 0.3) -and ($m.ResetJS -lt 0.3)) ('RO {0:N3} s, JS {1:N3} s' -f $m.ResetRO, $m.ResetJS)
 Add-Check 'KF-7: -Live reads the real PC (>= 0.9 s)' ((Test-Has $m.ResetLive) -and ($m.ResetLive -ge 0.9)) ('{0:N3} s' -f $m.ResetLive)
 Add-Check 'KF-7: -Seed 5 twice identical, seed 6 differs (RO + JS)' ((Test-Has $m.Seed) -and ($m.Seed.ResourceOptimizer.SameSeedEqual -eq $true) -and ($m.Seed.ResourceOptimizer.OtherSeedDiffers -eq $true) -and ($m.Seed.JobScheduler.SameSeedEqual -eq $true) -and ($m.Seed.JobScheduler.OtherSeedDiffers -eq $true)) ''
+$ta = $m.TraceA
+Add-Check 'Trace style A (GridWorld): total and steps = manual loop' ((Test-Has $ta) -and ($ta.Style -eq 'A') -and ($ta.Total -ceq $ta.ManualTotal) -and ($ta.Steps -eq $ta.ManualSteps) -and ($ta.Steps -gt 0)) ('style {0}, total {1} / {2}, steps {3} / {4}' -f $ta.Style, $ta.Total, $ta.ManualTotal, $ta.Steps, $ta.ManualSteps)
+$tb = $m.TraceB
+Add-Check 'Trace style B (EnergyOptimizer): total and steps = manual loop' ((Test-Has $tb) -and ($tb.Style -eq 'B') -and ($tb.Total -ceq $tb.ManualTotal) -and ($tb.Steps -eq $tb.ManualSteps) -and ($tb.Steps -gt 0)) ('style {0}, total {1} / {2}, steps {3} / {4}' -f $tb.Style, $tb.Total, $tb.ManualTotal, $tb.Steps, $tb.ManualSteps)
+Add-Check 'Trace style C (no Step/Reset): a clear error, not an empty trace' ($m.TraceC -match 'style C') ('' + $m.TraceC)
+Add-Check 'Trace: the same setup twice gives an identical trace' ($m.TraceSame -eq $true) ('steps ' + $m.TraceSameSteps)
+Add-Check 'Trace -Agent works with a DQN agent (valid actions only)' ((Test-Has $m.TraceAgent) -and ($m.TraceAgent.Steps -gt 0) -and ($m.TraceAgent.Invalid -eq 0)) ('steps {0}, invalid {1}, actions {2}' -f $m.TraceAgent.Steps, $m.TraceAgent.Invalid, $m.TraceAgent.Actions)
+Add-Check 'Trace -Snapshot: one before every step plus one at the end' ((Test-Has $m.TraceSnap) -and ($m.TraceSnap.Count -eq ($m.TraceSnap.Steps + 1)) -and ($m.TraceSnap.First -eq 0) -and ($m.TraceSnap.Last -eq $m.TraceSnap.Steps)) ('snapshots {0} for {1} steps, first {2}, last {3}' -f $m.TraceSnap.Count, $m.TraceSnap.Steps, $m.TraceSnap.First, $m.TraceSnap.Last)
 Add-Check 'No errors during the measurements' (@($m.Errors | Where-Object { $_ }).Count -eq 0) ((@($m.Errors) -join ' | '))
 Write-Host ''
 Write-Host '=== VBAF regression suite: result ===' -ForegroundColor Cyan

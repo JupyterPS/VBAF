@@ -296,3 +296,45 @@ function Invoke-VBAFFinalTest {
     }
     return @($rows)
 }
+
+# ---------- v5.0: the whole study in one call (was the Lab's experiments\Phase4c-Evolution.ps1) ----------
+# Evolution -> champion -> final test of the champion AND a control (the baseline genome) on NEW seeds ->
+# Brain 0 (SPT) on the same test shifts -> one file, evolution-summary.json (same layout as the Lab's phase4c.json,
+# plus Settings). -Bar is an optional, PRE-REGISTERED success criterion; it is written only when given.
+# Defaults are the Lab's phase 4c settings (3 generations x 3 children, 3 fitness seeds, 300 shifts, 5 final seeds).
+# Every run is saved at once in -OutDir, so an interrupted study resumes where it stopped.
+function Get-VBAFEvolutionStats($Values) {
+    $x = @($Values | ForEach-Object { [double]$_ })
+    $m = ($x | Measure-Object -Average).Average
+    $s = 0.0
+    if ($x.Count -gt 1) { $s = [Math]::Sqrt((($x | ForEach-Object { ($_ - $m) * ($_ - $m) }) | Measure-Object -Sum).Sum / ($x.Count - 1)) }
+    return [pscustomobject]@{ Mean = [Math]::Round($m, 2); SD = [Math]::Round($s, 2) }
+}
+function Invoke-VBAFEvolutionStudy {
+    param($World, [string]$OutDir, [int]$Generations = 3, [int]$Children = 3, [int[]]$FitSeeds = @(101, 102, 103),
+          [int]$TrainShifts = 300, [int]$Chunk = 25, [int[]]$FinalSeeds = @(201, 202, 203, 204, 205), [double]$Bar = [double]::NaN)
+    if (-not $OutDir) { throw 'Invoke-VBAFEvolutionStudy: -OutDir is required (every run is saved there, so the study is resumable).' }
+    New-Item -ItemType Directory -Path $OutDir -Force | Out-Null
+    $sw = [System.Diagnostics.Stopwatch]::StartNew()
+    $all   = Invoke-VBAFEvolution -World $World -Generations $Generations -Children $Children -FitSeeds $FitSeeds -TrainShifts $TrainShifts -Chunk $Chunk -OutDir $OutDir -LogPath (Join-Path $OutDir 'evolution.log')
+    $champ = Select-VBAFChampion $all
+    $cg    = ConvertTo-VBAFGenome $champ.Genome
+    $bg    = Get-VBAFBaselineGenome
+    $test  = Get-VBAFProductionTestSeeds
+    $fc = Invoke-VBAFFinalTest -World $World -Genome $cg -Label 'champion' -FinalSeeds $FinalSeeds -TrainShifts $TrainShifts -Chunk $Chunk -OutDir $OutDir -TestSeeds $test
+    $fk = Invoke-VBAFFinalTest -World $World -Genome $bg -Label 'control'  -FinalSeeds $FinalSeeds -TrainShifts $TrainShifts -Chunk $Chunk -OutDir $OutDir -TestSeeds $test
+    $b0 = Measure-VBAFProductionPolicy -World $World -Policy (Get-VBAFProductionRules)['SPT'].Policy -Seeds $test
+    $cs = Get-VBAFEvolutionStats ($fc | ForEach-Object { $_.TestScore })
+    $ks = Get-VBAFEvolutionStats ($fk | ForEach-Object { $_.TestScore })
+    $pairWins = @(for ($i = 0; $i -lt $fc.Count; $i++) { if ([double]$fc[$i].TestScore -gt [double]$fk[$i].TestScore) { 1 } }).Count
+    $barOut = $null; if (-not [double]::IsNaN($Bar)) { $barOut = $Bar }
+    $summary = [pscustomobject]@{
+        Kernel = 'VBAF v5.0'; Champion = $champ.Id; ChampionGenome = $champ.Genome; ChampionFitness = $champ.Fitness; ChampionFitnessSD = $champ.FitnessSD
+        FinalSeeds = $FinalSeeds; ChampionTest = $cs; ControlTest = $ks; Brain0 = $b0.Score; Bar = $barOut; PairWins = $pairWins
+        Lineage = @($all | Select-Object Id, Generation, Parent, Fitness, FitnessSD, RunScores, Seconds, Key)
+        Final = @(($fc + $fk) | Select-Object Label, Seed, ValBest, BestAt, TestScore, OnTimePct)
+        Settings = [pscustomobject]@{ Generations = $Generations; Children = $Children; FitSeeds = $FitSeeds; TrainShifts = $TrainShifts; Chunk = $Chunk }
+        Minutes = [Math]::Round($sw.Elapsed.TotalMinutes, 1); Date = (Get-Date -Format 'yyyy-MM-dd') }
+    $summary | ConvertTo-Json -Depth 6 | Set-Content -Path (Join-Path $OutDir 'evolution-summary.json') -Encoding UTF8
+    return $summary
+}

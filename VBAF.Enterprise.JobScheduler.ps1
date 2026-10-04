@@ -34,7 +34,7 @@ function Invoke-VBAFJobSchedulerTraining {
 
     # Create enterprise environment
     # SimMode = fast training on random state, then real eval
-    $jsEnv = New-EnterpriseEnvironment -Name "JobScheduler" -MaxSteps 30
+    # VBAF-Lab candidate (KF-6): a first environment (MaxSteps 30) was created here and replaced at once.
     $jsEnv = New-EnterpriseEnvironment -Name "JobScheduler" -MaxSteps 50
 
     # Train DQN on it
@@ -63,23 +63,21 @@ function Invoke-VBAFJobSchedulerTraining {
     $mainNetwork   = [NeuralNetwork]::new($arch, $config.LearningRate)
     $targetNetwork = [NeuralNetwork]::new($arch, $config.LearningRate)
     $memory        = [ExperienceReplay]::new($config.MemorySize)
-    $layers = [System.Collections.Generic.List[object]]::new()
-    $memory        = [ExperienceReplay]::new($config.MemorySize)
-    $config             = [DQNConfig]::new()
-    $config.StateSize   = 4   # cpuLoad, memLoad, pendingJobs, timeOfDay
-    $config.ActionSize  = 3   # RunNow, Delay, Skip
+    # VBAF-Lab candidate (KF-6): removed an unused $layers list and a second, identical ExperienceReplay.
+    # VBAF-Lab candidate (KF-6): removed 3 lines that re-created $config = [DQNConfig]::new() and threw away
+    # the settings above (BatchSize 16, EpsilonDecay 0.99, HiddenLayers 16,16).
 
     # Train agent
     $results = [System.Collections.Generic.List[object]]::new()
     $agent = [DQNAgent]::new($config, $mainNetwork, $targetNetwork, $memory)
 
-    for ($ep = 1; $ep -le $config.Episodes; $ep++) {
+    for ($ep = 1; $ep -le $Episodes; $ep++) {
         # SimMode: skip real Get-Counter for speed during training
         if ($SimMode) {
             $jsEnv.CpuLoad     = [double](Get-Random -Minimum 10 -Maximum 90) / 100.0
             $jsEnv.MemLoad     = [double](Get-Random -Minimum 20 -Maximum 85) / 100.0
             $jsEnv.PendingJobs = Get-Random -Minimum 1 -Maximum 10
-            $jsEnv.TimeOfDay   = [double]([System.DateTime]::Now.Hour) / 23.0
+            $jsEnv.TimeOfDay   = [double](Get-Random -Minimum 0 -Maximum 24) / 23.0  # VBAF-Lab candidate (KF-7): simulated hour, seedable (was the wall clock)
             $jsEnv.Steps       = 0
             $jsEnv.TotalReward = 0.0
             $jsEnv.EpisodeCount++
@@ -129,7 +127,7 @@ function Invoke-VBAFJobSchedulerTraining {
             $avgSum = 0.0
             foreach ($r2 in $lastN) { $avgSum += $r2.Reward }
             $avg = [Math]::Round($avgSum / $lastN.Count, 2)
-            Write-Host ("   Ep {0,4}/{1}  AvgReward: {2,7}  Epsilon: {3:F3}  Run:{4} Delay:{5} Skip:{6}" -f $ep, $config.Episodes, $avg, $agent.Epsilon, $runCount, $delayCount, $skipCount) -ForegroundColor White
+            Write-Host ("   Ep {0,4}/{1}  AvgReward: {2,7}  Epsilon: {3:F3}  Run:{4} Delay:{5} Skip:{6}" -f $ep, $Episodes, $avg, $agent.Epsilon, $runCount, $delayCount, $skipCount) -ForegroundColor White
         }
     }
 

@@ -67,6 +67,16 @@ class ExperienceReplay {
     # When full, oldest experience is removed (circular buffer)
     [int]$MaxSize
 
+    # VBAF-Lab candidate (KF-3 step 2): own generator when a seed is given; $null = Get-Random (default, unchanged).
+    [System.Random]$Rng = $null
+
+    # VBAF-Lab candidate (KF-3 step 2): optional seed -- this buffer then samples from its own generator.
+    ExperienceReplay([int]$maxSize, [int]$seed) {
+        $this.Memory  = New-Object System.Collections.ArrayList
+        $this.MaxSize = $maxSize
+        $this.Rng     = [System.Random]::new($seed)
+    }
+
     # Constructor: create an empty buffer with a fixed capacity
     # Typical sizes: 10,000 to 1,000,000 depending on problem complexity
     # Larger buffer = more diverse samples = more stable training
@@ -86,6 +96,12 @@ class ExperienceReplay {
     # This is a FIFO (First In, First Out) queue with a fixed size.
     # The oldest experiences are least relevant -- the agent has improved
     # since then and those early random experiences are less useful.
+    # VBAF-Lab candidate (KF-3 step 2): index for Sample -- own generator if seeded, else Get-Random exactly as before.
+    hidden [int] NextIndex() {
+        if ($null -ne $this.Rng) { return $this.Rng.Next(0, $this.Memory.Count) }
+        return (Get-Random -Minimum 0 -Maximum ($this.Memory.Count))
+    }
+
     [void] Add([hashtable]$experience) {
         $this.Memory.Add($experience) | Out-Null
 
@@ -124,10 +140,10 @@ class ExperienceReplay {
 
         for ($i = 0; $i -lt $actualSize; $i++) {
             # Pick a random index -- retry if already used (avoid duplicates)
-            $index    = Get-Random -Minimum 0 -Maximum $this.Memory.Count
+            $index    = $this.NextIndex()
             $attempts = 0
             while ($usedIndices.ContainsKey($index) -and $attempts -lt 10) {
-                $index = Get-Random -Minimum 0 -Maximum $this.Memory.Count
+                $index = $this.NextIndex()
                 $attempts++
             }
 

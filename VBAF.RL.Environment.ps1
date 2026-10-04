@@ -225,14 +225,14 @@ class CartPoleEnvironment : VBAFEnvironment {
     CartPoleEnvironment() : base("CartPole", 200) {
         $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, -4.8, 4.8)
         $this.ActionSpace      = [VBAFSpace]::new("discrete",   2,  0.0, 1.0)
-        $this.Rng              = [System.Random]::new()
+        $this.Rng              = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-3): seeded from Get-Random -> Set-VBAFSeed
         $this.Reset()
     }
 
     CartPoleEnvironment([int]$maxSteps) : base("CartPole", $maxSteps) {
         $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, -4.8, 4.8)
         $this.ActionSpace      = [VBAFSpace]::new("discrete",   2,  0.0, 1.0)
-        $this.Rng              = [System.Random]::new()
+        $this.Rng              = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-3): seeded from Get-Random -> Set-VBAFSeed
         $this.Reset()
     }
 
@@ -339,7 +339,7 @@ class GridWorldEnvironment : VBAFEnvironment {
         $this.GridSize         = 5
         $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, 0.0, 1.0)
         $this.ActionSpace      = [VBAFSpace]::new("discrete",   4, 0.0, 3.0)
-        $this.Rng              = [System.Random]::new()
+        $this.Rng              = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-3): seeded from Get-Random -> Set-VBAFSeed
         $this.Reset()
     }
 
@@ -347,7 +347,7 @@ class GridWorldEnvironment : VBAFEnvironment {
         $this.GridSize         = $gridSize
         $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, 0.0, 1.0)
         $this.ActionSpace      = [VBAFSpace]::new("discrete",   4, 0.0, 3.0)
-        $this.Rng              = [System.Random]::new()
+        $this.Rng              = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-3): seeded from Get-Random -> Set-VBAFSeed
         $this.Reset()
     }
 
@@ -437,7 +437,7 @@ class RandomWalkEnvironment : VBAFEnvironment {
         $this.Range            = 10
         $this.ObservationSpace = [VBAFSpace]::new("continuous", 1, -1.0, 1.0)
         $this.ActionSpace      = [VBAFSpace]::new("discrete",   2,  0.0, 1.0)
-        $this.Rng              = [System.Random]::new()
+        $this.Rng              = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-3): seeded from Get-Random -> Set-VBAFSeed
         $this.Reset()
     }
 
@@ -584,7 +584,7 @@ function Invoke-VBAFBenchmark {
 
     $rewards    = [System.Collections.Generic.List[double]]::new()
     $timer      = [System.Diagnostics.Stopwatch]::StartNew()
-    $rng        = [System.Random]::new()
+    $rng        = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-3): seeded from Get-Random -> Set-VBAFSeed
     $actionSize = $Environment.ActionSpace.Size
     $useRandom  = ($null -eq $Agent)
 

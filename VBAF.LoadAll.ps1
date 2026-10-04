@@ -181,6 +181,14 @@ Write-Host "  [Phase 10] Educational tools..." -ForegroundColor Gray
 
 
 #  WINFORMS ACTIVATION -- ensures all dashboards appear in foreground
+# VBAF-Lab candidate (KF-3): ONE seed for the whole run. It seeds PowerShell's shared generator
+# (Get-Random). Weight initialisation and ExperienceReplay use it directly, and every RL [System.Random]
+# takes its seed from it (edit F) -- so the same seed gives the same run. Without it, runs stay random.
+function Set-VBAFSeed {
+    param([Parameter(Mandatory = $true)][int]$Seed)
+    Get-Random -SetSeed $Seed | Out-Null
+}
+
 function Initialize-VBAFWinForms {
     $runningInISE = $psISE -ne $null
     $cheat = New-Object System.Windows.Forms.Form
@@ -193,6 +201,9 @@ function Initialize-VBAFWinForms {
         $cheat.Show()
         $cheat.Activate()
     } else {
+        # VBAF-Lab candidate (KF-9): outside ISE, ShowDialog() blocked forever on this invisible
+        # 1x1 form (nobody can see or close it). It now closes itself as soon as it is shown.
+        $cheat.Add_Shown({ $this.Close() })
         $cheat.ShowDialog() | Out-Null
     }
     $cheat.Close()

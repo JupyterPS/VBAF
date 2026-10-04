@@ -337,7 +337,7 @@ class A3CAgent {
         $this.Config        = $config
         $this.GlobalNetwork = $globalNetwork
         $this.Workers       = $workers
-        $this.Rng           = [System.Random]::new()
+        $this.Rng           = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-3): seeded from Get-Random -> Set-VBAFSeed
 
         $this.EpisodeRewards = [System.Collections.Generic.List[double]]::new()
         $this.LossHistory    = [System.Collections.Generic.List[double]]::new()

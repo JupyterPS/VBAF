@@ -108,7 +108,7 @@ class DQNConfig {
     [int]    $BatchSize        = 32     # Experiences sampled per training step
     [int]    $MemorySize       = 10000  # Maximum experiences stored in replay buffer
     [int]    $TargetUpdateFreq = 10     # Sync target network every N episodes
-    [string] $Activation       = "relu" # Activation function for hidden layers
+    [string] $Activation       = "relu" # NOT used by DQNAgent (VBAF-Lab candidate, KF-2): hidden layers are Sigmoid, a DQN output is Linear
 }
 
 
@@ -172,10 +172,15 @@ class DQNAgent {
         $this.Config        = $config
         $this.MainNetwork   = $mainNetwork
         $this.TargetNetwork = $targetNetwork
+        # VBAF-Lab candidate (KF-1): a DQN outputs Q-values, which are not limited to 0..1 -> Linear output layer.
+        # Networks without SetOutputActivation (custom classes) are left unchanged.
+        foreach ($net in @($this.MainNetwork, $this.TargetNetwork)) {
+            if ($null -ne $net -and ($net.PSObject.Methods.Name -contains 'SetOutputActivation')) { $net.SetOutputActivation('Linear') }
+        }
         $this.Memory        = $memory
         $this.ActionSize    = $config.ActionSize
         $this.Epsilon       = $config.Epsilon
-        $this.Rng           = [System.Random]::new()
+        $this.Rng           = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-3): seeded from Get-Random -> Set-VBAFSeed
 
         $this.EpisodeRewards = [System.Collections.Generic.List[double]]::new()
         $this.LossHistory    = [System.Collections.Generic.List[double]]::new()
@@ -185,10 +190,24 @@ class DQNAgent {
         # updates every TargetUpdateFreq episodes.
         $this.SyncTargetNetwork()
 
+        # VBAF-Lab candidate (KF-2): the NETWORK is the truth, not the config. Read its real shape, warn when
+        # the config disagrees, and explore over the network's real number of actions.
+        $kf2State = $config.StateSize; $kf2Hidden = ($config.HiddenLayers -join ' -> '); $kf2Actions = $config.ActionSize
+        if ($null -ne $mainNetwork -and ($mainNetwork.PSObject.Properties.Name -contains 'Architecture') -and @($mainNetwork.Architecture).Count -ge 2) {
+            $arch = @($mainNetwork.Architecture)
+            $kf2State   = $arch[0]
+            $kf2Actions = $arch[$arch.Count - 1]
+            if ($arch.Count -gt 2) { $kf2Hidden = ($arch[1..($arch.Count - 2)] -join ' -> ') } else { $kf2Hidden = '(none)' }
+            if ($config.StateSize -ne $kf2State) { Write-Warning ("DQNConfig.StateSize is {0}, but the network has {1} inputs -- the network is used." -f $config.StateSize, $kf2State) }
+            if (($config.HiddenLayers -join ' -> ') -ne $kf2Hidden) { Write-Warning ("DQNConfig.HiddenLayers is {0}, but the network's hidden layers are {1} -- the network is used." -f ($config.HiddenLayers -join ' -> '), $kf2Hidden) }
+            if ($config.ActionSize -ne $kf2Actions) { Write-Warning ("DQNConfig.ActionSize is {0}, but the network has {1} outputs -- exploration uses {1}." -f $config.ActionSize, $kf2Actions) }
+            $this.ActionSize = $kf2Actions
+            $kf2Hidden = $kf2Hidden + ' (layer activations: ' + (@($mainNetwork.Layers | ForEach-Object { $_.ActivationType }) -join ', ') + ')'
+        }
         Write-Host "  DQNAgent created" -ForegroundColor Green
-        Write-Host "   State size  : $($config.StateSize)"                    -ForegroundColor Cyan
-        Write-Host "   Action size : $($config.ActionSize)"                   -ForegroundColor Cyan
-        Write-Host "   Hidden      : $($config.HiddenLayers -join ' -> ')"   -ForegroundColor Cyan
+        Write-Host "   State size  : $kf2State"                    -ForegroundColor Cyan
+        Write-Host "   Action size : $kf2Actions"                   -ForegroundColor Cyan
+        Write-Host "   Hidden      : $kf2Hidden"   -ForegroundColor Cyan
         Write-Host "   Memory      : $($config.MemorySize)"                   -ForegroundColor Cyan
         Write-Host "   Batch size  : $($config.BatchSize)"                    -ForegroundColor Cyan
     }
@@ -207,6 +226,12 @@ class DQNAgent {
         }
         $this.Memory.Add($exp)
         $this.TotalSteps++
+    }
+
+    # VBAF-Lab candidate (KF-3 step 2): give THIS agent its own seeded generator for exploration,
+    # independent of creation order and other Get-Random calls. Without it: seeded from Get-Random (edit F).
+    [void] SetSeed([int]$seed) {
+        $this.Rng = [System.Random]::new($seed)
     }
 
     # EPSILON-GREEDY ACTION SELECTION:
@@ -436,7 +461,7 @@ class DQNEnvironment {
 
     DQNEnvironment() {
         $this.MaxSteps = 200
-        $this.Rng      = [System.Random]::new()
+        $this.Rng      = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-3): seeded from Get-Random -> Set-VBAFSeed
         $this.Reset()
     }
 

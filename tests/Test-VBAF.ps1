@@ -315,6 +315,19 @@ if ($Child) {
             Margins = ('{0:F2}/{1:F2}' -f $sm.WinMean, $sm.LossMean) }
         Say ('Side by side: means {0}, vs SPT {1}, vs control {2}, all champions {3}, margins {4}; view {5} of {6} self-checks pass' -f $res.SideLock.Means, $res.SideLock.VsSPT, $res.SideLock.VsControl, $res.SideLock.All, $res.SideLock.Margins, @($sv.Checks | Where-Object { $_.Pass }).Count, @($sv.Checks).Count)
     } catch { $res.Errors += ('side tab: ' + $_.Exception.Message) }
+    # --- Teach topic 7 (v5.0 step 6b, part 4b) -- keys simulated: Enter and "n" ---
+    try {
+        $tt = Get-Content (Join-Path $kroot 'VBAF.Teach.ps1') -Raw -Encoding UTF8
+        function Wait-ForEnter { }
+        function Read-Host { param([string]$Prompt) 'n' }
+        $o = @(& { Teach-Evolution } 6>&1 3>&1 2>&1 | ForEach-Object { [string]$_ })
+        $ot = $o -join "`n"
+        $res.Teach = [ordered]@{ Lines = $o.Count; Numbers = ($ot.Contains('39.39') -and $ot.Contains('87 won') -and $ot.Contains('4.63')); Command = $ot.Contains('Show-VBAFEvolutionWindow')
+            Total7 = ([regex]::Matches($tt, '-Total 7 -TopicName')).Count; Total6 = ([regex]::Matches($tt, '-Total 6 -TopicName')).Count
+            InSwitch = ($tt -match '"Evolution"\s+\{\s*Teach-Evolution'); InAll = ($tt -match '(?m)^\s*Teach-Evolution\s*$')
+            InHelp = ($tt -match 'Topic 7 -- Evolution'); Examples = ([regex]::Matches($tt, 'Start-VBAFTeach -Topic "Evolution"')).Count }
+        Say ('Teach topic 7: {0} lines shown, numbers {1}, command {2}; "of 7" in {3} topics' -f $o.Count, $res.Teach.Numbers, $res.Teach.Command, $res.Teach.Total7)
+    } catch { $res.Errors += ('teach: ' + $_.Exception.Message) }
     $res | ConvertTo-Json -Depth 6 | Set-Content -Path $OutFile -Encoding UTF8
     Say ('Result written. Child total {0:N1} s' -f $sw.Elapsed.TotalSeconds)
     return
@@ -393,6 +406,9 @@ Add-Check 'Side by side LOCKED: all 5 champion brains vs SPT 87/4/59 of 150 (Lab
 Add-Check 'Side by side LOCKED: win margin 4.63, loss margin 2.36' ((Test-Has $sk) -and ($sk.Margins -eq '4.63/2.36')) ('' + $sk.Margins)
 if (@($m.SideView).Count -eq 0) { Add-Check 'Side view self-test ran' $false 'no results' }
 foreach ($vc in @($m.SideView)) { Add-Check ('Side view: ' + $vc.Check) ([bool]$vc.Pass) ([string]$vc.Detail) }
+$tc = $m.Teach
+Add-Check 'Teach topic 7 runs end to end (keys simulated) and shows the real numbers and the command' ((Test-Has $tc) -and ($tc.Lines -gt 20) -and ($tc.Numbers -eq $true) -and ($tc.Command -eq $true)) ('lines {0}, numbers {1}, command {2}' -f $tc.Lines, $tc.Numbers, $tc.Command)
+Add-Check 'Teach: all 7 topics say "of 7"; Evolution in -Topic, in All, in the help (topic 7) and in both usage lists' ((Test-Has $tc) -and ($tc.Total7 -eq 7) -and ($tc.Total6 -eq 0) -and ($tc.InSwitch -eq $true) -and ($tc.InAll -eq $true) -and ($tc.InHelp -eq $true) -and ($tc.Examples -eq 2)) ('of 7: {0}, of 6: {1}, switch {2}, All {3}, help {4}, usage lists {5}' -f $tc.Total7, $tc.Total6, $tc.InSwitch, $tc.InAll, $tc.InHelp, $tc.Examples)
 Add-Check 'No errors during the measurements' (@($m.Errors | Where-Object { $_ }).Count -eq 0) ((@($m.Errors) -join ' | '))
 Write-Host ''
 Write-Host '=== VBAF regression suite: result ===' -ForegroundColor Cyan

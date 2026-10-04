@@ -10,7 +10,7 @@
     WHAT YOU ARE LEARNING HERE:
     ============================
     This file is the VBAF teaching engine.
-    It covers 6 topics in the correct learning order:
+    It covers 7 topics in the correct learning order:
 
       Topic 1 -- What is machine learning?
       Topic 2 -- Neural networks and backpropagation
@@ -18,6 +18,7 @@
       Topic 4 -- Deep Q-Networks (DQN)
       Topic 5 -- Multi-agent reinforcement learning
       Topic 6 -- Enterprise automation pillars
+      Topic 7 -- Evolution: build a better brain
 
     HOW TO USE:
     ===========
@@ -28,6 +29,7 @@
     Start-VBAFTeach -Topic "DQN"
     Start-VBAFTeach -Topic "MultiAgent"
     Start-VBAFTeach -Topic "Enterprise"
+    Start-VBAFTeach -Topic "Evolution"
 
 .NOTES
     Part of VBAF (Visual AI & Reinforcement Learning Framework)
@@ -94,7 +96,7 @@ function Write-TeachProgress {
 # ============================================================================
 
 function Teach-MachineLearning {
-    Write-TeachProgress -Current 1 -Total 6 -TopicName "What is Machine Learning?"
+    Write-TeachProgress -Current 1 -Total 7 -TopicName "What is Machine Learning?"
     Write-TeachHeader "TOPIC 1: WHAT IS MACHINE LEARNING?"
 
     Write-TeachSection "The Core Idea"
@@ -157,7 +159,7 @@ $model.PrintSummary()'
 # ============================================================================
 
 function Teach-NeuralNetwork {
-    Write-TeachProgress -Current 2 -Total 6 -TopicName "Neural Networks"
+    Write-TeachProgress -Current 2 -Total 7 -TopicName "Neural Networks"
     Write-TeachHeader "TOPIC 2: NEURAL NETWORKS AND BACKPROPAGATION"
 
     Write-TeachSection "The Perceptron (1958)"
@@ -252,7 +254,7 @@ Architecture [2, 3, 1] means:
 # ============================================================================
 
 function Teach-QLearning {
-    Write-TeachProgress -Current 3 -Total 6 -TopicName "Q-Learning"
+    Write-TeachProgress -Current 3 -Total 7 -TopicName "Q-Learning"
     Write-TeachHeader "TOPIC 3: Q-LEARNING AND THE Q-TABLE"
 
     Write-TeachSection "The RL Loop"
@@ -349,7 +351,7 @@ function Teach-QLearning {
 # ============================================================================
 
 function Teach-DQN {
-    Write-TeachProgress -Current 4 -Total 6 -TopicName "Deep Q-Networks"
+    Write-TeachProgress -Current 4 -Total 7 -TopicName "Deep Q-Networks"
     Write-TeachHeader "TOPIC 4: DEEP Q-NETWORKS (DQN)"
 
     Write-TeachSection "The Key Idea"
@@ -455,7 +457,7 @@ and DQN for all 14 enterprise pillars (4 continuous signals)."
 # ============================================================================
 
 function Teach-MultiAgent {
-    Write-TeachProgress -Current 5 -Total 6 -TopicName "Multi-Agent Reinforcement Learning"
+    Write-TeachProgress -Current 5 -Total 7 -TopicName "Multi-Agent Reinforcement Learning"
     Write-TeachHeader "TOPIC 5: MULTI-AGENT REINFORCEMENT LEARNING"
 
     Write-TeachSection "The Challenge"
@@ -543,7 +545,7 @@ These behaviours EMERGE from reward optimisation:
 # ============================================================================
 
 function Teach-Enterprise {
-    Write-TeachProgress -Current 6 -Total 6 -TopicName "Enterprise Automation"
+    Write-TeachProgress -Current 6 -Total 7 -TopicName "Enterprise Automation"
     Write-TeachHeader "TOPIC 6: ENTERPRISE AUTOMATION PILLARS"
 
     Write-TeachSection "The Architecture"
@@ -659,6 +661,70 @@ cd "C:\Users\henni\OneDrive\WindowsPowerShell\examples\06-Custom-Agent"
 # MAIN FUNCTION
 # ============================================================================
 
+# TOPIC 7 -- EVOLUTION
+function Teach-Evolution {
+    Write-TeachProgress -Current 7 -Total 7 -TopicName "Evolution: build a better brain"
+    Write-TeachHeader "TOPIC 7: EVOLUTION -- BUILD A BETTER BRAIN"
+
+    Write-TeachSection "The Question"
+    Write-TeachText "So far a human chose the settings of every brain: learning rate, batch size, how often to replay,
+how fast to stop exploring. Can the kernel find better settings by itself?
+
+Evolution does it in a loop:
+  1. take a genome (a set of settings) and make children with small changes (mutations)
+  2. train every child and MEASURE it
+  3. keep the best -- if no child beats its parent, the parent is kept
+  4. repeat for a few generations"
+    Wait-ForEnter
+
+    Write-TeachSection "Honest Measuring"
+    Write-TeachText "Three separate sets of shifts keep the result honest:
+
+  training shifts    -- the brain learns here
+  validation shifts  -- used to CHOOSE (seeds 2001-2010): the best moment of each brain, the best child
+  test shifts        -- used ONCE, at the very end (seeds 1001-1030); nothing is ever chosen on them
+
+One seed is not a result. A brain trained with seed 101 can be much better or worse than the same
+genome with seed 102. So fitness = the mean over several brain seeds. The VBAF Lab learned this the
+hard way: with one seed, a 'better' genome turned out to be luck."
+    Wait-ForEnter
+
+    Write-TeachSection "The Control"
+    Write-TeachText "At the end the champion is trained again on NEW seeds -- and so is a CONTROL: the starting
+genome, trained with exactly the same procedure (same shifts, same checkpointing).
+
+  champion better than control  -> the genome changes helped
+  champion equal to control     -> the gain came from the procedure (keeping the best moment), not the genes"
+    Wait-ForEnter
+
+    Write-TeachSection "What Happened in the VBAF Lab (real numbers)"
+    Write-TeachText "3 generations x 3 children, fitness = mean of 3 brain seeds, 300 training shifts each (about 12 hours).
+
+  Champion G1-2 = the starting genome with BatchSize 16->32 and ReplayEvery 4->2 (more learning per step)
+  Final test, 5 new seeds:   champion 39.39 +/- 0.37   control 37.17 +/- 1.64   Brain 0 (SPT rule) 37.85
+  All 5 champion brains vs the SPT rule, shift by shift: 87 won, 4 tied, 59 lost (of 150 shifts)
+
+And a lesson: ONE champion brain (seed 201) only drew level with SPT, 15 won and 15 lost --
+but it wins big (4.63 points on average) and loses small (2.36). One brain is not the whole story."
+    Wait-ForEnter
+
+    Write-TeachSection "Try It"
+    $ex = Join-Path $PSScriptRoot 'examples\07-Evolution\data'
+    Write-TeachText "Watch the Lab's study in the evolution window (three tabs, and a demo button):
+
+  Show-VBAFEvolutionWindow -ResultDir .\examples\07-Evolution\data
+
+Run your own small study (minutes instead of hours), then look at it:
+
+  `$world = [ProductionCellEnvironment]::new(1)
+  Invoke-VBAFEvolutionStudy -World `$world -OutDir C:\Temp\my-study -Generations 1 -Children 2 -FitSeeds 101,102 -TrainShifts 50 -FinalSeeds 201,202
+  Show-VBAFEvolutionWindow -ResultDir C:\Temp\my-study"
+    if ((Get-Command Show-VBAFEvolutionWindow -ErrorAction SilentlyContinue) -and (Test-Path $ex)) {
+        $a = Read-Host '  Open the evolution window now? (y/n)'
+        if ($a -match '^[yY]') { Show-VBAFEvolutionWindow -ResultDir $ex }
+    }
+}
+
 function Start-VBAFTeach {
     <#
     .SYNOPSIS
@@ -675,6 +741,7 @@ function Start-VBAFTeach {
         Start-VBAFTeach
         Start-VBAFTeach -Topic "DQN"
         Start-VBAFTeach -Topic "Enterprise"
+        Start-VBAFTeach -Topic "Evolution"
     #>
     param(
         [string]$Topic = "All"
@@ -697,6 +764,7 @@ function Start-VBAFTeach {
         "DQN"             { Teach-DQN              }
         "MultiAgent"      { Teach-MultiAgent       }
         "Enterprise"      { Teach-Enterprise       }
+        "Evolution"       { Teach-Evolution        }
         default {
             Teach-MachineLearning
             Teach-NeuralNetwork
@@ -704,6 +772,7 @@ function Start-VBAFTeach {
             Teach-DQN
             Teach-MultiAgent
             Teach-Enterprise
+            Teach-Evolution
         }
     }
 

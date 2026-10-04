@@ -302,6 +302,19 @@ if ($Child) {
         $res.ShiftView = @($vcs | ForEach-Object { [ordered]@{ Check = $_.Check; Pass = [bool]$_.Pass; Detail = [string]$_.Detail } })
         Say ('The shift: totals on shift 1001 {0}; champion {1} steps, {2} real, {3} idle; view {4} of {5} self-checks pass' -f $res.ShiftLock.Totals, $res.ShiftLock.ChampSteps, $cc.Real, $cc.Idle, @($vcs | Where-Object { $_.Pass }).Count, $vcs.Count)
     } catch { $res.Errors += ('shift tab: ' + $_.Exception.Message) }
+    # --- Side by side tab (v5.0 step 6b, part 3) ---
+    try {
+        $exDir = Join-Path $kroot 'examples\07-Evolution\data'
+        $sv = Test-VBAFSideView -ResultDir $exDir
+        $res.SideView = @(@($sv.Checks) | ForEach-Object { [ordered]@{ Check = $_.Check; Pass = [bool]$_.Pass; Detail = [string]$_.Detail } })
+        $sd = $sv.Data; $sm = Get-VBAFSideMargins $sd
+        $res.SideLock = [ordered]@{ Means = ((@($sd.Brains) | ForEach-Object { ConvertTo-RText $_.Score }) -join '/')
+            VsSPT = ('{0}/{1}/{2}' -f $sd.HeadToHead.ChampionVsSPT.W, $sd.HeadToHead.ChampionVsSPT.T, $sd.HeadToHead.ChampionVsSPT.L)
+            VsControl = ('{0}/{1}/{2}' -f $sd.HeadToHead.ChampionVsControl.W, $sd.HeadToHead.ChampionVsControl.T, $sd.HeadToHead.ChampionVsControl.L)
+            All = $(if ($null -ne $sd.AllChampions) { '{0}: {1}/{2}/{3} of {4}' -f $sd.AllChampions.Brains, $sd.AllChampions.W, $sd.AllChampions.T, $sd.AllChampions.L, $sd.AllChampions.Shifts } else { 'none' })
+            Margins = ('{0:F2}/{1:F2}' -f $sm.WinMean, $sm.LossMean) }
+        Say ('Side by side: means {0}, vs SPT {1}, vs control {2}, all champions {3}, margins {4}; view {5} of {6} self-checks pass' -f $res.SideLock.Means, $res.SideLock.VsSPT, $res.SideLock.VsControl, $res.SideLock.All, $res.SideLock.Margins, @($sv.Checks | Where-Object { $_.Pass }).Count, @($sv.Checks).Count)
+    } catch { $res.Errors += ('side tab: ' + $_.Exception.Message) }
     $res | ConvertTo-Json -Depth 6 | Set-Content -Path $OutFile -Encoding UTF8
     Say ('Result written. Child total {0:N1} s' -f $sw.Elapsed.TotalSeconds)
     return
@@ -373,6 +386,13 @@ Add-Check 'The shift LOCKED to the Lab (shift 1001): SPT 27.7, control 37.55, ch
 Add-Check 'The shift LOCKED: champion 92 steps, 54 real choices, 38 idle' ((Test-Has $sl) -and ($sl.ChampSteps -eq 92) -and ($sl.ChampReal -eq 54) -and ($sl.ChampIdle -eq 38)) ('{0} steps, {1} real ({2} with a real choice), {3} idle' -f $sl.ChampSteps, $sl.ChampReal, $sl.ChampChoice, $sl.ChampIdle)
 if (@($m.ShiftView).Count -eq 0) { Add-Check 'The shift view self-test ran' $false 'no results' }
 foreach ($vc in @($m.ShiftView)) { Add-Check ('The shift view: ' + $vc.Check) ([bool]$vc.Pass) ([string]$vc.Detail) }
+$sk = $m.SideLock
+Add-Check 'Side by side LOCKED: means over 30 test shifts SPT 37.85, control 38, champion 38.98' ((Test-Has $sk) -and ($sk.Means -ceq '37.85/38/38.98')) ('' + $sk.Means)
+Add-Check 'Side by side LOCKED: champion vs SPT 15/0/15, vs control 15/2/13' ((Test-Has $sk) -and ($sk.VsSPT -eq '15/0/15') -and ($sk.VsControl -eq '15/2/13')) ('vs SPT {0}, vs control {1}' -f $sk.VsSPT, $sk.VsControl)
+Add-Check 'Side by side LOCKED: all 5 champion brains vs SPT 87/4/59 of 150 (Lab head-to-head)' ((Test-Has $sk) -and ($sk.All -eq '5: 87/4/59 of 150')) ('' + $sk.All)
+Add-Check 'Side by side LOCKED: win margin 4.63, loss margin 2.36' ((Test-Has $sk) -and ($sk.Margins -eq '4.63/2.36')) ('' + $sk.Margins)
+if (@($m.SideView).Count -eq 0) { Add-Check 'Side view self-test ran' $false 'no results' }
+foreach ($vc in @($m.SideView)) { Add-Check ('Side view: ' + $vc.Check) ([bool]$vc.Pass) ([string]$vc.Detail) }
 Add-Check 'No errors during the measurements' (@($m.Errors | Where-Object { $_ }).Count -eq 0) ((@($m.Errors) -join ' | '))
 Write-Host ''
 Write-Host '=== VBAF regression suite: result ===' -ForegroundColor Cyan

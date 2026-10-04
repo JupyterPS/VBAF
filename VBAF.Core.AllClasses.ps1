@@ -196,6 +196,19 @@ class Neuron {
         $this.Delta       = 0.0
     }
 
+    # VBAF-Lab candidate (KF-3 step 2): same as Neuron([int]) above, but the weights come from the given
+    # generator -- so a network built with a seed always gets the same weights, whatever else uses Get-Random.
+    Neuron([int]$inputCount, [System.Random]$rng) {
+        $this.Weights = New-Object double[] $inputCount
+        for ($i = 0; $i -lt $inputCount; $i++) {
+            $this.Weights[$i] = $rng.NextDouble() - 0.5
+        }
+        $this.Bias        = $rng.NextDouble() - 0.5
+        $this.Output      = 0.0
+        $this.WeightedSum = 0.0
+        $this.Delta       = 0.0
+    }
+
     # Compute: w1.x1 + w2.x2 + ... + wn.xn + b
     # This is the "linear" part of the neuron before activation.
     [double] CalculateWeightedSum([double[]]$inputs) {
@@ -297,6 +310,18 @@ class Layer {
     [double[]]$Outputs
     [double[]]$Inputs      # Stored for weight updates during backprop
 
+    # VBAF-Lab candidate (KF-3 step 2): same as the constructor below, but every neuron draws from $rng.
+    Layer([int]$neuronCount, [int]$inputsPerNeuron, [string]$activation, [System.Random]$rng) {
+        $this.Size           = $neuronCount
+        $this.ActivationType = $activation
+        $this.Neurons        = New-Object Neuron[] $neuronCount
+        for ($i = 0; $i -lt $neuronCount; $i++) {
+            $this.Neurons[$i] = [Neuron]::new($inputsPerNeuron, $rng)
+        }
+        $this.Outputs = New-Object double[] $neuronCount
+        $this.Inputs  = @()
+    }
+
     Layer([int]$neuronCount, [int]$inputsPerNeuron, [string]$activation) {
         $this.Size           = $neuronCount
         $this.ActivationType = $activation
@@ -392,6 +417,8 @@ class Layer {
         if ($state.Size -ne $this.Size) {
             throw "Layer size mismatch: expected $($this.Size), got $($state.Size)"
         }
+        # VBAF-Lab candidate (KF-8): restore the activation that ExportState saved.
+        if ($state.ContainsKey('ActivationType') -and $state.ActivationType) { $this.ActivationType = [string]$state.ActivationType }
         for ($i = 0; $i -lt $this.Size; $i++) {
             $this.Neurons[$i].ImportState($state.Neurons[$i])
         }
@@ -452,6 +479,20 @@ class NeuralNetwork {
     [int[]]$Architecture
     [System.Collections.ArrayList]$TrainingHistory   # MSE per epoch
 
+    # VBAF-Lab candidate (KF-3 step 2): optional seed. [NeuralNetwork]::new($arch, $lr, 42) always gives the
+    # same starting weights -- regardless of creation order or other Get-Random calls. Without a seed: below.
+    NeuralNetwork([int[]]$architecture, [double]$learningRate, [int]$seed) {
+        $this.Architecture    = $architecture
+        $this.LearningRate    = $learningRate
+        $this.TrainingHistory = New-Object System.Collections.ArrayList
+        $rng = [System.Random]::new($seed)
+        $layerCount   = $architecture.Count
+        $this.Layers  = New-Object Layer[] ($layerCount - 1)
+        for ($i = 1; $i -lt $layerCount; $i++) {
+            $this.Layers[$i - 1] = [Layer]::new($architecture[$i], $architecture[$i - 1], "Sigmoid", $rng)
+        }
+    }
+
     NeuralNetwork([int[]]$architecture, [double]$learningRate) {
         $this.Architecture    = $architecture
         $this.LearningRate    = $learningRate
@@ -483,7 +524,17 @@ class NeuralNetwork {
 
     # Predict is an alias for Forward -- same operation, clearer name for inference.
     [double[]] Predict([double[]]$inputs) {
-        return $this.Forward($inputs)
+        # VBAF-Lab candidate (KF-4): return a COPY of the output, so a caller can never hold
+        # the output layer's internal buffer (DQNAgent.Replay trained toward that buffer -> loss 0).
+        return [double[]]($this.Forward($inputs).Clone())
+    }
+
+    # VBAF-Lab candidate (KF-1): choose the activation of the OUTPUT layer only.
+    # The constructor default stays Sigmoid for every layer (classifiers need outputs in 0..1).
+    # DQNAgent calls this with "Linear", because Q-values are not limited to 0..1.
+    [void] SetOutputActivation([string]$activation) {
+        if (@('Sigmoid', 'ReLU', 'Tanh', 'Linear') -notcontains $activation) { throw "Unknown activation: $activation" }
+        $this.Layers[$this.Layers.Count - 1].ActivationType = $activation
     }
 
     # Backward pass: compute error signals and propagate backwards.

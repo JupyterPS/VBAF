@@ -22,6 +22,8 @@
 # Actions: 0=RunNow, 1=Delay, 2=Skip
 # ============================================================
 class JobSchedulerEnvironment : VBAFEnvironment {
+    # VBAF-Lab candidate (KF-7): read the real PC (and clock) in Reset() only when asked: New-EnterpriseEnvironment -Live.
+    [bool] $LiveMode = $false
     [double] $CpuLoad
     [double] $MemLoad
     [int]    $PendingJobs
@@ -33,28 +35,30 @@ class JobSchedulerEnvironment : VBAFEnvironment {
     JobSchedulerEnvironment() : base("JobScheduler", 50) {
         $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, 0.0, 1.0)
         $this.ActionSpace      = [VBAFSpace]::new("discrete",   3, 0.0, 2.0)
-        $this.Rng              = [System.Random]::new()
+        $this.Rng              = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-7): seeded from Get-Random -> Set-VBAFSeed
         $this.Reset()
     }
 
     JobSchedulerEnvironment([int]$maxSteps) : base("JobScheduler", $maxSteps) {
         $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, 0.0, 1.0)
         $this.ActionSpace      = [VBAFSpace]::new("discrete",   3, 0.0, 2.0)
-        $this.Rng              = [System.Random]::new()
+        $this.Rng              = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-7): seeded from Get-Random -> Set-VBAFSeed
         $this.Reset()
     }
 
     [double[]] Reset() {
         try {
+            if (-not $this.LiveMode) { throw 'simulated' }  # VBAF-Lab candidate (KF-7): not live -> the catch below uses Rng
             $s = (Get-Counter "\Processor(_Total)\% Processor Time" -SampleInterval 1 -MaxSamples 1).CounterSamples[0].CookedValue
             $this.CpuLoad = [double]$s / 100.0
         } catch { $this.CpuLoad = $this.Rng.NextDouble() }
         try {
+            if (-not $this.LiveMode) { throw 'simulated' }  # VBAF-Lab candidate (KF-7): not live -> the catch below uses Rng
             $os = Get-CimInstance Win32_OperatingSystem
             $this.MemLoad = [double](($os.TotalVisibleMemorySize - $os.FreePhysicalMemory) / $os.TotalVisibleMemorySize)
         } catch { $this.MemLoad = $this.Rng.NextDouble() }
         $this.PendingJobs   = $this.Rng.Next(1, 10)
-        $this.TimeOfDay     = [double]([System.DateTime]::Now.Hour) / 23.0
+        $this.TimeOfDay     = $(if ($this.LiveMode) { [double]([System.DateTime]::Now.Hour) / 23.0 } else { [double]$this.Rng.Next(0, 24) / 23.0 })  # VBAF-Lab candidate (KF-7): the clock is live data too
         $this.JobsCompleted = 0
         $this.JobsSkipped   = 0
         $this.Steps         = 0
@@ -108,6 +112,8 @@ class JobSchedulerEnvironment : VBAFEnvironment {
 # Actions: 0=Throttle, 1=Normal, 2=Boost
 # ============================================================
 class ResourceOptimizerEnvironment : VBAFEnvironment {
+    # VBAF-Lab candidate (KF-7): read the real PC in Reset() only when asked: New-EnterpriseEnvironment -Live.
+    [bool] $LiveMode = $false
     [double] $CpuLoad
     [double] $MemLoad
     [int]    $ProcessCount
@@ -119,20 +125,22 @@ class ResourceOptimizerEnvironment : VBAFEnvironment {
         $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, 0.0, 1.0)
         $this.ActionSpace      = [VBAFSpace]::new("discrete",   3, 0.0, 2.0)
         $this.TargetCpu        = 0.6
-        $this.Rng              = [System.Random]::new()
+        $this.Rng              = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-7): seeded from Get-Random -> Set-VBAFSeed
         $this.Reset()
     }
 
     [double[]] Reset() {
         try {
+            if (-not $this.LiveMode) { throw 'simulated' }  # VBAF-Lab candidate (KF-7): not live -> the catch below uses Rng
             $s = (Get-Counter "\Processor(_Total)\% Processor Time" -SampleInterval 1 -MaxSamples 1).CounterSamples[0].CookedValue
             $this.CpuLoad = [double]$s / 100.0
         } catch { $this.CpuLoad = $this.Rng.NextDouble() }
         try {
+            if (-not $this.LiveMode) { throw 'simulated' }  # VBAF-Lab candidate (KF-7): not live -> the catch below uses Rng
             $os = Get-CimInstance Win32_OperatingSystem
             $this.MemLoad = [double](($os.TotalVisibleMemorySize - $os.FreePhysicalMemory) / $os.TotalVisibleMemorySize)
         } catch { $this.MemLoad = $this.Rng.NextDouble() * 0.8 }
-        $this.ProcessCount = (Get-Process).Count
+        $this.ProcessCount = $(if ($this.LiveMode) { (Get-Process).Count } else { $this.Rng.Next(50, 250) })  # VBAF-Lab candidate (KF-7)
         $this.DiskIO       = $this.Rng.NextDouble() * 0.5
         $this.Steps        = 0
         $this.TotalReward  = 0.0
@@ -187,7 +195,7 @@ class AlertRouterEnvironment : VBAFEnvironment {
     AlertRouterEnvironment() : base("AlertRouter", 50) {
         $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, 0.0, 1.0)
         $this.ActionSpace      = [VBAFSpace]::new("discrete",   4, 0.0, 3.0)
-        $this.Rng              = [System.Random]::new()
+        $this.Rng              = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-7): seeded from Get-Random -> Set-VBAFSeed
         $this.Reset()
     }
 
@@ -267,7 +275,7 @@ class SupplyChainEnvironment : VBAFEnvironment {
     SupplyChainEnvironment() : base("SupplyChain", 50) {
         $this.ObservationSpace = [VBAFSpace]::new("continuous", 4, 0.0, 1.0)
         $this.ActionSpace      = [VBAFSpace]::new("discrete",   4, 0.0, 3.0)
-        $this.Rng              = [System.Random]::new()
+        $this.Rng              = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-7): seeded from Get-Random -> Set-VBAFSeed
         $this.Reset()
     }
 
@@ -338,7 +346,25 @@ class SupplyChainEnvironment : VBAFEnvironment {
 
 # ENTERPRISE ENVIRONMENT FACTORY
 # ============================================================
+# VBAF-Lab candidate (KF-7): -MaxSteps now reaches ALL four environments, -Seed gives the environment its own
+# generator, and -Live reads the real PC in Reset() (OFF by default, so runs are reproducible). Original below.
 function New-EnterpriseEnvironment {
+    param(
+        [string] $Name     = "JobScheduler",
+        [int]    $MaxSteps = 50,
+        [int]    $Seed,
+        [switch] $Live
+    )
+    $e = New-EnterpriseEnvironmentCore -Name $Name -MaxSteps $MaxSteps
+    if ($null -eq $e) { return $null }
+    $e.MaxSteps = $MaxSteps
+    if ($PSBoundParameters.ContainsKey('Seed')) { $e.Rng = [System.Random]::new($Seed) }
+    if ($e.PSObject.Properties.Name -contains 'LiveMode') { $e.LiveMode = [bool]$Live }
+    elseif ($Live) { Write-Warning "$Name has no live mode -- -Live is ignored." }
+    return $e
+}
+
+function New-EnterpriseEnvironmentCore {
     param(
         [string] $Name     = "JobScheduler",
         [int]    $MaxSteps = 50

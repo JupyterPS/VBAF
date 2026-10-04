@@ -201,7 +201,7 @@ class PPOAgent {
         $this.Config  = $config
         $this.Actor   = $actor
         $this.Critic  = $critic
-        $this.Rng     = [System.Random]::new()
+        $this.Rng     = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-3): seeded from Get-Random -> Set-VBAFSeed
 
         $this.EpisodeRewards    = [System.Collections.Generic.List[double]]::new()
         $this.ActorLossHistory  = [System.Collections.Generic.List[double]]::new()
@@ -522,7 +522,7 @@ class PPOEnvironment {
 
     PPOEnvironment() {
         $this.MaxSteps = 200
-        $this.Rng      = [System.Random]::new()
+        $this.Rng      = [System.Random]::new((Get-Random -Maximum 2147483647))  # VBAF-Lab candidate (KF-3): seeded from Get-Random -> Set-VBAFSeed
         $this.Reset()
     }
 

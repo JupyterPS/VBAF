@@ -328,6 +328,16 @@ if ($Child) {
             InHelp = ($tt -match 'Topic 7 -- Evolution'); Examples = ([regex]::Matches($tt, 'Start-VBAFTeach -Topic "Evolution"')).Count }
         Say ('Teach topic 7: {0} lines shown, numbers {1}, command {2}; "of 7" in {3} topics' -f $o.Count, $res.Teach.Numbers, $res.Teach.Command, $res.Teach.Total7)
     } catch { $res.Errors += ('teach: ' + $_.Exception.Message) }
+    # --- LoadAll loads without a single error (fresh process; errors are counted, not hidden) ---
+    try {
+        $lp = Join-Path $env:TEMP 'VBAF-tests\loadall-errors.ps1'
+        New-Item -ItemType Directory -Path (Split-Path $lp) -Force | Out-Null
+        Set-Content -Path $lp -Encoding UTF8 -Value ('Push-Location ''' + $kroot + '''; $Error.Clear(); . .\VBAF.LoadAll.ps1 *> $null; Pop-Location; ''ERRORS='' + $Error.Count; foreach ($er in $Error) { ''MSG='' + $er.Exception.Message }')
+        $lo = @(& powershell.exe -NoProfile -NonInteractive -InputFormat None -ExecutionPolicy Bypass -File $lp 2>&1 | ForEach-Object { [string]$_ })
+        $ec = @($lo | Where-Object { $_ -match '^ERRORS=(\d+)$' } | ForEach-Object { [int]($_ -replace '^ERRORS=', '') })
+        $res.LoadErrors = [ordered]@{ Count = $(if ($ec.Count -eq 1) { $ec[0] } else { -1 }); Messages = (@($lo | Where-Object { $_ -like 'MSG=*' } | Select-Object -First 3) -join ' | ') }
+        Say ('LoadAll in a fresh process: {0} errors' -f $res.LoadErrors.Count)
+    } catch { $res.Errors += ('loadall errors: ' + $_.Exception.Message) }
     $res | ConvertTo-Json -Depth 6 | Set-Content -Path $OutFile -Encoding UTF8
     Say ('Result written. Child total {0:N1} s' -f $sw.Elapsed.TotalSeconds)
     return
@@ -409,6 +419,12 @@ foreach ($vc in @($m.SideView)) { Add-Check ('Side view: ' + $vc.Check) ([bool]$
 $tc = $m.Teach
 Add-Check 'Teach topic 7 runs end to end (keys simulated) and shows the real numbers and the command' ((Test-Has $tc) -and ($tc.Lines -gt 20) -and ($tc.Numbers -eq $true) -and ($tc.Command -eq $true)) ('lines {0}, numbers {1}, command {2}' -f $tc.Lines, $tc.Numbers, $tc.Command)
 Add-Check 'Teach: all 7 topics say "of 7"; Evolution in -Topic, in All, in the help (topic 7) and in both usage lists' ((Test-Has $tc) -and ($tc.Total7 -eq 7) -and ($tc.Total6 -eq 0) -and ($tc.InSwitch -eq $true) -and ($tc.InAll -eq $true) -and ($tc.InHelp -eq $true) -and ($tc.Examples -eq 2)) ('of 7: {0}, of 6: {1}, switch {2}, All {3}, help {4}, usage lists {5}' -f $tc.Total7, $tc.Total6, $tc.InSwitch, $tc.InAll, $tc.InHelp, $tc.Examples)
+$laText = Get-Content (Join-Path $kroot 'VBAF.LoadAll.ps1') -Raw -Encoding UTF8
+$laFiles = @([regex]::Matches($laText, '\.\s*\(Join-Path\s+\$basePath\s+"([^"]+)"\)') | ForEach-Object { $_.Groups[1].Value })
+$laMissing = @($laFiles | Where-Object { -not (Test-Path (Join-Path $kroot $_)) })
+$laUntracked = @($laFiles | Where-Object { -not (git -C $kroot ls-files -- $_) })
+Add-Check 'Every file LoadAll loads exists AND is tracked by git (what GitHub users get)' (($laFiles.Count -gt 50) -and ($laMissing.Count -eq 0) -and ($laUntracked.Count -eq 0)) ('{0} files; missing [{1}]; untracked [{2}]' -f $laFiles.Count, ($laMissing -join ', '), ($laUntracked -join ', '))
+Add-Check 'LoadAll loads without a single error (fresh process, errors counted)' ((Test-Has $m.LoadErrors) -and ($m.LoadErrors.Count -eq 0)) ('errors {0} {1}' -f $m.LoadErrors.Count, $m.LoadErrors.Messages)
 Add-Check 'No errors during the measurements' (@($m.Errors | Where-Object { $_ }).Count -eq 0) ((@($m.Errors) -join ' | '))
 Write-Host ''
 Write-Host '=== VBAF regression suite: result ===' -ForegroundColor Cyan

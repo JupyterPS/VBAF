@@ -30,6 +30,7 @@ Every check protects one fix found in VBAF-Evolution-Lab (KF-1..KF-9) with a FIX
 | The shift | `Get-VBAFShiftTrace` LOCKED to the Lab on shift 1001 (SPT 27.7, control 37.55, champion 35.55; 92 steps, 54 real, 38 idle); the tab renders |
 | Side by side | LOCKED to the Lab: means 37.85/38/38.98, champion vs SPT 15/0/15, vs control 15/2/13, all 5 champions 87/4/59, margins 4.63/2.36 |
 | Teach | topic 7 (Evolution) runs end to end with simulated keys and shows the real Lab numbers; all topics say "of 7" |
+| LoadAll | every file LoadAll loads exists and is tracked by git; LoadAll loads without a single error (found 4 Oct: HealthcareMonitor was never committed) |
 
 **Locked values.** If a locked value changes, behaviour changed. Do not edit the expected value to make the test
 green: find out why first. Change it only for a deliberate, documented behaviour change (with a note in the changelog).

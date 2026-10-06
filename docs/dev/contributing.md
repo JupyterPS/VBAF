@@ -24,7 +24,7 @@ git checkout -b feature/your-feature-name
 5. Test your changes
 6. Commit with a clear message
 ```powershell
-git commit -m "Phase 28: NetworkTrafficManager — +115% improvement"
+git commit -m "Phase 28: NetworkTrafficManager -- beats the best fixed action by +120 (3 seeds)"
 ```
 
 7. Push and open a pull request

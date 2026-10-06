@@ -1,0 +1,31 @@
+﻿{
+    "Pillar":  "AnomalyDetector",
+    "Seed":  3,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  703.9,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -147.2,
+    "PillarReportTrained":  260.2,
+    "EvalSeconds":  21.8,
+    "Style":  "B",
+    "Random":  -149.2,
+    "Trained":  261.4,
+    "Fixed":  [
+                  -177.9,
+                  -62.5,
+                  -91.1,
+                  -245.3
+              ],
+    "BestFixed":  -62.5,
+    "BestFixedAction":  1,
+    "VsRandomPct":  275.2,
+    "VsBestFixed":  323.9,
+    "TrainedActions":  "46/1047/527/380",
+    "Varied":  true
+}

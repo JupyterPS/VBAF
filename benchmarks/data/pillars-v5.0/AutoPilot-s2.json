@@ -1,0 +1,31 @@
+﻿{
+    "Pillar":  "AutoPilot",
+    "Seed":  2,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  693,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -137.5,
+    "PillarReportTrained":  108.1,
+    "EvalSeconds":  20.7,
+    "Style":  "B",
+    "Random":  -140.4,
+    "Trained":  86.8,
+    "Fixed":  [
+                  -225.5,
+                  6.3,
+                  -39.9,
+                  -257.7
+              ],
+    "BestFixed":  6.3,
+    "BestFixedAction":  1,
+    "VsRandomPct":  161.8,
+    "VsBestFixed":  80.5,
+    "TrainedActions":  "0/1549/451/0",
+    "Varied":  true
+}

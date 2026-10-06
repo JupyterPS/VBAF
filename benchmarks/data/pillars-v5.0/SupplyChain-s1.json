@@ -1,0 +1,31 @@
+﻿{
+    "Pillar":  "SupplyChain",
+    "Seed":  1,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  109.5,
+    "TrainSteps":  11296,
+    "Losses":  353,
+    "NonZero":  353,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -2.4424203204858843,
+    "PillarReportTrained":  -0.80287217737501559,
+    "EvalSeconds":  1.8,
+    "Style":  "A",
+    "Random":  1.198,
+    "Trained":  -4.177,
+    "Fixed":  [
+                  -7.766,
+                  1.258,
+                  -2.127,
+                  -14.275
+              ],
+    "BestFixed":  1.258,
+    "BestFixedAction":  1,
+    "VsRandomPct":  -448.7,
+    "VsBestFixed":  -5.435,
+    "TrainedActions":  "34/0/154/312",
+    "Varied":  true
+}

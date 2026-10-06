@@ -1,0 +1,31 @@
+﻿{
+    "Pillar":  "FleetDispatch",
+    "Seed":  2,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  768.1,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -132.1,
+    "PillarReportTrained":  123.1,
+    "EvalSeconds":  23.4,
+    "Style":  "B",
+    "Random":  -126.9,
+    "Trained":  115.9,
+    "Fixed":  [
+                  -321.2,
+                  0.8,
+                  10,
+                  -184.2
+              ],
+    "BestFixed":  10,
+    "BestFixedAction":  2,
+    "VsRandomPct":  191.3,
+    "VsBestFixed":  105.9,
+    "TrainedActions":  "0/1363/637/0",
+    "Varied":  true
+}

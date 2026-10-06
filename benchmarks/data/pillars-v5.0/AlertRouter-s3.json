@@ -1,0 +1,31 @@
+﻿{
+    "Pillar":  "AlertRouter",
+    "Seed":  3,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  113.7,
+    "TrainSteps":  11296,
+    "Losses":  353,
+    "NonZero":  353,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  7.25,
+    "PillarReportTrained":  32.36999999999999,
+    "EvalSeconds":  6.2,
+    "Style":  "A",
+    "Random":  8.7,
+    "Trained":  32.28,
+    "Fixed":  [
+                  20.6,
+                  32.28,
+                  -1.83,
+                  -20.8
+              ],
+    "BestFixed":  32.28,
+    "BestFixedAction":  1,
+    "VsRandomPct":  271,
+    "VsBestFixed":  0,
+    "TrainedActions":  "0/500/0/0",
+    "Varied":  false
+}

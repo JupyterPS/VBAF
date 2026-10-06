@@ -11,7 +11,7 @@ VBAF is a layered framework. Each layer builds on the one below it.
 You can use any layer independently, or combine them all.
 Layer 4 -- Enterprise AutoPilot (Phase 27)
 
-One master DQN agent orchestrating all 13 pillars simultaneously
+One master DQN agent deciding from 4 simulated aggregate signals (it does not read the other pillars yet; see KF-5)
 
 File: VBAF.Enterprise.AutoPilot.ps1
 Layer 3 -- Enterprise Pillars (Phases 14-26 + FleetDispatch + Healthcare)

@@ -564,7 +564,7 @@ function Teach-Enterprise {
   Phase 24: BackupOptimizer      -- optimise backup schedules
   Phase 25: EnergyOptimizer      -- reduce energy consumption
   Phase 26: MultiSiteCoordinator -- coordinate across locations
-  Phase 27: AutoPilot            -- orchestrate all 13 pillars"
+  Phase 27: AutoPilot            -- master agent (simulated signals)"
     Wait-ForEnter
 
     Write-TeachSection "The Standard Pattern"
@@ -625,7 +625,7 @@ Real Windows data:
 
     Write-TeachSection "Try It Now"
     Write-TeachText "Run a pillar and build your own:" -Color "Cyan"
-    Write-TeachCode '# Run the AutoPilot -- all 13 pillars simultaneously
+    Write-TeachCode '# Run the AutoPilot -- simulated aggregate signals
 $r = Invoke-VBAFAutoPilotTraining -Episodes 100 -PrintEvery 10 -SimMode
 
 # Build your own pillar from the template:

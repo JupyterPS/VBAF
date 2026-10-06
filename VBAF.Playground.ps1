@@ -342,7 +342,7 @@ function Play-Enterprise {
         "CapacityPlanner    -- predict resource needs"
         "SelfHealing        -- detect and fix infrastructure issues"
         "EnergyOptimizer    -- reduce energy consumption"
-        "AutoPilot          -- orchestrate all 13 pillars"
+        "AutoPilot          -- master agent, simulated signals"
     )
 
     $pillarNames = @(
@@ -408,7 +408,7 @@ function Play-Enterprise {
     Write-PlaySection "What Did You Learn?"
     Write-Host "  - The 15/40/30/15 distribution guarantees measurable improvement" -ForegroundColor DarkGray
     Write-Host "  - More episodes = higher improvement percentage (usually)" -ForegroundColor DarkGray
-    Write-Host "  - AutoPilot orchestrates all pillars -- the most complex agent" -ForegroundColor DarkGray
+    Write-Host "  - AutoPilot decides from simulated aggregate signals (it does not read the other pillars yet)" -ForegroundColor DarkGray
     Write-Host "  - Replace -SimMode with real Windows data for production use" -ForegroundColor DarkGray
     Write-Host ""
 }

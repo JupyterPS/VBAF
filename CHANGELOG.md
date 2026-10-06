@@ -35,6 +35,7 @@ data are in [benchmarks/agent-learning-curves.md](benchmarks/agent-learning-curv
 ### Known issues
 - AlertRouter, JobScheduler, ResourceOptimizer and SupplyChain -- the four pillars built on `New-EnterpriseEnvironment` -- do not yet beat the best fixed action.
 - KF-5: the 26 pillars run on only 11 distinct environments; several pillars are the same environment under another name, so their figures are identical.
+- AutoPilot does not yet read the other 13 pillars: it decides from 4 simulated aggregate signals (same dynamics as EnergyOptimizer). The older entries below that say it orchestrates all 13 pillars describe the intention, not the code.
 - Environments follow three different contracts instead of one base class (documented in the Lab's kernel findings).
 
 ## [4.0.0] - 2026-03-14 — Phase 27: AutoPilot — Crown Jewel 👑

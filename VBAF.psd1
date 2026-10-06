@@ -1,7 +1,7 @@
 ﻿@{
 
 RootModule        = 'VBAF.psm1'
-ModuleVersion = '5.0.4'
+ModuleVersion = '6.0.0'
 GUID              = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
 Author            = 'Henning'
 CompanyName       = 'VBAF Project'
@@ -27,7 +27,7 @@ PrivateData = @{
         Tags = @('AI','MachineLearning','ReinforcementLearning','NeuralNetwork','QLearning','DQN','PPO','A3C','MultiAgent','Automation','Visualization','PowerShell','Education','MLOps','DeepLearning','CNN','RNN','LSTM','AutoML','DataPipeline')
         LicenseUri = 'https://github.com/JupyterPS/VBAF/blob/master/LICENSE'
         ProjectUri = 'https://github.com/JupyterPS/VBAF'
-        ReleaseNotes = 'v5.0.1 (June 2026) - Educational repositioning. 6 runnable examples with launchers. Full docs: Theory, Architecture, API-Reference, GettingStarted. Educational tools: Start-VBAFTeach, Start-VBAFPlayground, Invoke-VBAFAgentBenchmark. DQN, PPO, A3C implemented and benchmarkable. Multi-agent market simulation. 14 enterprise automation pillars. Runs on any Windows PC with no dependencies.'
+        ReleaseNotes = '6.0.0 (October 2026) - The kernel learns, and proves it: 10 kernel fixes (DQN output layer, Predict copy, seeding, LoadAll outside ISE and more), a regression suite of 68 checks, Get-VBAFTrace, a production cell and evolution study (Invoke-VBAFEvolutionStudy), an evolution window, Teach topic 7 and an honest re-measurement of all 26 pillars. See CHANGELOG.md.'
     }
 }
 

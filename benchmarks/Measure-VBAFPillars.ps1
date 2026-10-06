@@ -1,9 +1,9 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-    Measure-VBAFPillars -- re-measure every enterprise pillar honestly (VBAF v5.0).
+    Measure-VBAFPillars -- re-measure every enterprise pillar honestly (VBAF v6.0).
 .DESCRIPTION
-    Before v5.0 the pillars reported "improvement over random", but nothing was learned (KF-4): the figures were
+    Before v6.0 the pillars reported "improvement over random", but nothing was learned (KF-4): the figures were
     "one fixed action vs random", and some environments were even built so that one fixed action guarantees a
     positive "improvement". This script trains each pillar with its OWN training function (unchanged, -SimMode),
     then evaluates on the SAME evaluation episodes (same seeds for every policy) with Get-VBAFTrace:

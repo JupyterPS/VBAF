@@ -720,7 +720,7 @@ $result = Invoke-VBAFAutoPilotTraining -Episodes 50 -SimMode
 ```
 
 What you will see:
-AutoPilot is meant to coordinate the other pillars. Today (v5.0) it is one agent that chooses an
+AutoPilot is meant to coordinate the other pillars. Today (v6.0) it is one agent that chooses an
 intervention level from 4 simulated aggregate signals -- it does not read the other pillars yet.
 Connecting it to the real pillars (an agent that decides which agents to activate) is a good exercise.
 

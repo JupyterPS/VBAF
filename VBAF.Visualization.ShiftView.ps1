@@ -1,7 +1,7 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-    "The shift" tab of Show-VBAFEvolutionWindow: one brain works one production-cell TEST shift, step by step (VBAF v5.0).
+    "The shift" tab of Show-VBAFEvolutionWindow: one brain works one production-cell TEST shift, step by step (VBAF v6.0).
 .DESCRIPTION
     Built on Get-VBAFShiftTrace (compute first, animate later). The machine timeline shows every step: green = order on
     time, red = late, light grey = waiting for orders (empty queue, NOT the brain's fault), orange = a wasted choice.

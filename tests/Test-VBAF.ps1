@@ -1,14 +1,14 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-    VBAF v5.0 regression suite. Run:  .\tests\Test-VBAF.ps1   (exit code 0 = all checks pass, outside ISE)
+    VBAF v6.0 regression suite. Run:  .\tests\Test-VBAF.ps1   (exit code 0 = all checks pass, outside ISE)
 .DESCRIPTION
     Each check protects one fix from VBAF-Evolution-Lab (KF-1..KF-9) with a FIXED expectation, measured on the
     tested kernel candidate (candidate-v1). The kernel is loaded from this repository ($PSScriptRoot\..) in fresh
     child processes (PowerShell classes cannot be reloaded in one session). Nothing is written into the repository;
     temporary files go to %TEMP%\VBAF-tests.
       KF-9  LoadAll loads in a normal powershell.exe without any ISE workaround (killed after 90 s).
-      Supervised results are LOCKED: they were bit-identical in VBAF v4 and v5.0 and must stay so.
+      Supervised results are LOCKED: they were bit-identical in VBAF v4 and v6.0 and must stay so.
       KF-1/KF-4  a DQN outputs Q-values through a Linear layer and Replay really learns.
       KF-3  one seed (Set-VBAFSeed) makes a DQN run reproducible; seed 42 is locked to candidate-v1's fingerprint.
       KF-2  DQNAgent reports the real network, warns on a config mismatch and explores every action.
@@ -215,7 +215,7 @@ if ($Child) {
         Say ('KF-7: MaxSteps {0}; Reset RO {1:N3} s, JS {2:N3} s, -Live {3:N3} s' -f (($res.MaxSteps.Values) -join '/'), $res.ResetRO, $res.ResetJS, $res.ResetLive)
     } catch { $res.Errors += ('kf7: ' + $_.Exception.Message) }
 
-    # --- Trace (v5.0 step 4): Get-VBAFTrace ---
+    # --- Trace (v6.0 step 4): Get-VBAFTrace ---
     try {
         $fix = { param($s, $rng) 1 }
         Set-VBAFSeed 11; $gw = New-VBAFEnvironment -Name 'GridWorld' -MaxSteps 50 -GridSize 5
@@ -253,7 +253,7 @@ if ($Child) {
         $res.TraceSnap = [ordered]@{ Count = $sn.Count; Steps = $tS.StepCount; First = $sn[0]; Last = $sn[$sn.Count - 1] }
         Say ('Trace: A {0} {1}/{2} steps, B {3} {4}/{5} steps, C error {6}, same {7}, agent steps {8}, snapshots {9} for {10} steps' -f $tA.Style, $tA.StepCount, $res.TraceA.ManualSteps, $tB.Style, $tB.StepCount, $res.TraceB.ManualSteps, ($res.TraceC -ne ''), $res.TraceSame, $tG.StepCount, $sn.Count, $tS.StepCount)
     } catch { $res.Errors += ('trace: ' + $_.Exception.Message) }
-    # --- Production cell + evolution (v5.0 step 5) ---
+    # --- Production cell + evolution (v6.0 step 5) ---
     try {
         $world = [ProductionCellEnvironment]::new(1)
         $res.B0 = [double](Measure-VBAFProductionPolicy -World $world -Policy (Get-VBAFProductionRules)['SPT'].Policy -Seeds (Get-VBAFProductionTestSeeds)).Score
@@ -278,7 +278,7 @@ if ($Child) {
         $res.EvoResume = [ordered]@{ Seconds = [Math]::Round($swR.Elapsed.TotalSeconds, 2); SameModel = ($sha1 -ceq $sha2) }
         Say ('Evolution: curve {0}, model {1}, {2} s; resumed call {3} s, same model {4}' -f $res.Evo.Curve, $sha1, $res.Evo.Seconds, $res.EvoResume.Seconds, $res.EvoResume.SameModel)
     } catch { $res.Errors += ('production/evolution: ' + $_.Exception.Message) }
-    # --- Evolution window (v5.0 step 6b, part 1) ---
+    # --- Evolution window (v6.0 step 6b, part 1) ---
     try {
         $exDir = Join-Path $kroot 'examples\07-Evolution\data'
         $wcs = @(Test-VBAFEvolutionWindow -ResultDir $exDir)
@@ -288,7 +288,7 @@ if ($Child) {
         $res.WindowExample = [ordered]@{ Champion = $wd.Champion; Diff = (@($wd.Nodes | Where-Object { $_.Id -eq 'G1-2' })[0]).Diff; Best6 = $wb6.Id; Nodes = @($wd.Nodes).Count; Finals = @($wd.Finals).Count }
         Say ('Evolution window: {0} of {1} self-checks pass; example champion {2}' -f @($wcs | Where-Object { $_.Pass }).Count, $wcs.Count, $wd.Champion)
     } catch { $res.Errors += ('window: ' + $_.Exception.Message) }
-    # --- The shift tab (v5.0 step 6b, part 2) ---
+    # --- The shift tab (v6.0 step 6b, part 2) ---
     try {
         $exDir = Join-Path $kroot 'examples\07-Evolution\data'
         $sw2 = [ProductionCellEnvironment]::new(1)
@@ -302,7 +302,7 @@ if ($Child) {
         $res.ShiftView = @($vcs | ForEach-Object { [ordered]@{ Check = $_.Check; Pass = [bool]$_.Pass; Detail = [string]$_.Detail } })
         Say ('The shift: totals on shift 1001 {0}; champion {1} steps, {2} real, {3} idle; view {4} of {5} self-checks pass' -f $res.ShiftLock.Totals, $res.ShiftLock.ChampSteps, $cc.Real, $cc.Idle, @($vcs | Where-Object { $_.Pass }).Count, $vcs.Count)
     } catch { $res.Errors += ('shift tab: ' + $_.Exception.Message) }
-    # --- Side by side tab (v5.0 step 6b, part 3) ---
+    # --- Side by side tab (v6.0 step 6b, part 3) ---
     try {
         $exDir = Join-Path $kroot 'examples\07-Evolution\data'
         $sv = Test-VBAFSideView -ResultDir $exDir
@@ -315,7 +315,7 @@ if ($Child) {
             Margins = ('{0:F2}/{1:F2}' -f $sm.WinMean, $sm.LossMean) }
         Say ('Side by side: means {0}, vs SPT {1}, vs control {2}, all champions {3}, margins {4}; view {5} of {6} self-checks pass' -f $res.SideLock.Means, $res.SideLock.VsSPT, $res.SideLock.VsControl, $res.SideLock.All, $res.SideLock.Margins, @($sv.Checks | Where-Object { $_.Pass }).Count, @($sv.Checks).Count)
     } catch { $res.Errors += ('side tab: ' + $_.Exception.Message) }
-    # --- Teach topic 7 (v5.0 step 6b, part 4b) -- keys simulated: Enter and "n" ---
+    # --- Teach topic 7 (v6.0 step 6b, part 4b) -- keys simulated: Enter and "n" ---
     try {
         $tt = Get-Content (Join-Path $kroot 'VBAF.Teach.ps1') -Raw -Encoding UTF8
         function Wait-ForEnter { }

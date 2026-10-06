@@ -131,7 +131,7 @@ $r = Invoke-VBAFAutoPilotTraining           -Episodes 100 -SimMode
 $r.Baseline.Avg    # random agent average reward
 $r.Trained.Avg     # trained agent average reward
 # Improvement = (Trained - Baseline) / |Baseline| * 100     (old measure: vs random)
-# Honest bar (v5.0): Trained minus the BEST FIXED ACTION -- see benchmarks\Measure-VBAFPillars.ps1
+# Honest bar (v6.0): Trained minus the BEST FIXED ACTION -- see benchmarks\Measure-VBAFPillars.ps1
 ```
 
 ### ...run all pillars at once
@@ -239,4 +239,4 @@ See [docs/LEARNING-PATH.md](docs/LEARNING-PATH.md) for the complete 119-step gui
 
 ---
 
-*github.com/JupyterPS/VBAF · Install-Module VBAF · v5.0.3 · Built in Roskilde, Denmark 🇩🇰*
+*github.com/JupyterPS/VBAF · Install-Module VBAF · v6.0.0 · Built in Roskilde, Denmark 🇩🇰*

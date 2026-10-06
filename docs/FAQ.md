@@ -50,8 +50,8 @@ The pattern is: 4 state signals + 4 actions + distribution 15/40/30/15.
 ## Results
 
 **What does the improvement percentage mean?**
-Before v5.0 it was the percentage improvement in average reward over a random agent -- but that does not show
-learning: one fixed action (always the same choice) can beat random. Since v5.0 VBAF compares the trained agent
+Before v6.0 it was the percentage improvement in average reward over a random agent -- but that does not show
+learning: one fixed action (always the same choice) can beat random. Since v6.0 VBAF compares the trained agent
 with the BEST FIXED ACTION on the same episodes, over several seeds. A positive difference means the agent learned
 something no fixed action can do. See benchmarks/agent-learning-curves.md.
 

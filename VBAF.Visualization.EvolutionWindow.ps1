@@ -1,7 +1,7 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-    Show-VBAFEvolutionWindow -- watch an evolution study: the lineage, the champion and the final test (VBAF v5.0).
+    Show-VBAFEvolutionWindow -- watch an evolution study: the lineage, the champion and the final test (VBAF v6.0).
 .DESCRIPTION
     Reads evolution-summary.json written by Invoke-VBAFEvolutionStudy (the Lab's phase4c.json works too) and shows:
       Evolution   -- every candidate brain as a dot: fitness on VALIDATION shifts (mean of several training runs)
@@ -355,7 +355,7 @@ function Test-VBAFEvolutionWindow {
     return $checks
 }
 
-# ---------- v5.0: demo -- a short tour through the three tabs (a second click stops it) ----------
+# ---------- v6.0: demo -- a short tour through the three tabs (a second click stops it) ----------
 function Add-VBAFDemoBar($Form, $Tabs) {
     $global:VBAFDemo = @{ Stage = -1; Wait = 0; Started = $false; Tabs = $Tabs }
     $D = $global:VBAFDemo

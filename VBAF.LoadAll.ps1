@@ -82,9 +82,9 @@ Write-Host "  [Phase 2] Reinforcement learning..." -ForegroundColor Gray
 . (Join-Path $basePath "VBAF.RL.DQN.ps1")
 . (Join-Path $basePath "VBAF.RL.PPO.ps1")
 . (Join-Path $basePath "VBAF.RL.A3C.ps1")
-. (Join-Path $basePath "VBAF.RL.Trace.ps1")    # v5.0: Get-VBAFTrace (any environment, style A or B)
-. (Join-Path $basePath "VBAF.RL.ProductionCell.ps1")    # v5.0: the production cell world + measurer
-. (Join-Path $basePath "VBAF.RL.Evolution.ps1")    # v5.0: build, train and evolve a brain
+. (Join-Path $basePath "VBAF.RL.Trace.ps1")    # v6.0: Get-VBAFTrace (any environment, style A or B)
+. (Join-Path $basePath "VBAF.RL.ProductionCell.ps1")    # v6.0: the production cell world + measurer
+. (Join-Path $basePath "VBAF.RL.Evolution.ps1")    # v6.0: build, train and evolve a brain
 
 #  PHASE 3 -- BUSINESS / MULTI-AGENT 
 # Company state, actions, agents and market environment.
@@ -135,9 +135,9 @@ Write-Host "  [Phase 8] Visualization..." -ForegroundColor Gray
 . (Join-Path $basePath "VBAF.Visualization.GraphRenderer.ps1")
 . (Join-Path $basePath "VBAF.Visualization.LearningDashboard.ps1")
 . (Join-Path $basePath "VBAF.Visualization.MarketDashboard.ps1")
-. (Join-Path $basePath "VBAF.Visualization.EvolutionWindow.ps1")    # v5.0: Show-VBAFEvolutionWindow
-. (Join-Path $basePath "VBAF.Visualization.ShiftView.ps1")    # v5.0: the window's shift tab
-. (Join-Path $basePath "VBAF.Visualization.SideView.ps1")    # v5.0: the window's side-by-side tab
+. (Join-Path $basePath "VBAF.Visualization.EvolutionWindow.ps1")    # v6.0: Show-VBAFEvolutionWindow
+. (Join-Path $basePath "VBAF.Visualization.ShiftView.ps1")    # v6.0: the window's shift tab
+. (Join-Path $basePath "VBAF.Visualization.SideView.ps1")    # v6.0: the window's side-by-side tab
 
 #  PHASE 8 -- ART / CREATIVE 
 # Aesthetic reward functions, castle competition visualisation.

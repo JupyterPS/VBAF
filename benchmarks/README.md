@@ -9,8 +9,8 @@ All benchmarks run on Windows 10/11, PowerShell 5.1, no external dependencies.
 
 | Benchmark | Metric | Result | Status |
 |-----------|--------|--------|--------|
-| Enterprise pillars (26) | Beat the best fixed action on all 3 seeds | 22 of 26 | re-measured for v5.0 |
-| Enterprise pillars (26) | Trained minus best fixed action (pillars that learn) | +146 to +404 | re-measured for v5.0 |
+| Enterprise pillars (26) | Beat the best fixed action on all 3 seeds | 22 of 26 | re-measured for v6.0 |
+| Enterprise pillars (26) | Trained minus best fixed action (pillars that learn) | +146 to +404 | re-measured for v6.0 |
 | XOR 2-3-1 (official example settings, seed 1) | Accuracy | 100% | locked in tests\Test-VBAF.ps1 |
 | XOR convergence | Epochs to 99% accuracy | 847 +/- 23 | v4 figure, not re-measured |
 | Q-Learning agent | Episodes to stable policy | 150-300 | v4 figure, not re-measured |
@@ -45,10 +45,10 @@ Invoke-VBAFAgentBenchmark -Agents @("DQN","PPO","A3C") -Episodes 100
 | File | Contents |
 |------|----------|
 | [Measure-VBAFPillars.ps1](Measure-VBAFPillars.ps1) | Re-measures every enterprise pillar (resumable) |
-| [agent-learning-curves.md](agent-learning-curves.md) | Enterprise pillars (v5.0), DQN and Q-learning |
+| [agent-learning-curves.md](agent-learning-curves.md) | Enterprise pillars (v6.0), DQN and Q-learning |
 | [xor-convergence.md](xor-convergence.md) | XOR network convergence data |
 | [performance-comparison.md](performance-comparison.md) | Algorithm comparison table |
-| [data/pillars-v5.0/](data/pillars-v5.0/) | Raw data of the v5.0 pillar measurement |
+| [data/pillars-v6.0/](data/pillars-v6.0/) | Raw data of the v6.0 pillar measurement |
 
 ---
 

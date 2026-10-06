@@ -202,7 +202,7 @@ $shaper = New-RewardShaper -Type "Sparse"    # Sparse, Dense, Shaped
 
 ---
 
-## Seeds and Tracing (v5.0)
+## Seeds and Tracing (v6.0)
 
 ### Set-VBAFSeed
 
@@ -228,7 +228,7 @@ $t.Steps | Format-Table Step, Action, Reward, Total, Done
 $t.Style, $t.TotalReward, $t.StepCount
 ```
 
-## Production Cell and Evolution (v5.0)
+## Production Cell and Evolution (v6.0)
 
 A small, honest world for learning to schedule, and the tools to build, measure and evolve a brain for it.
 One machine, an order queue, deadlines; a shift is one episode. The brain sees the first 3 orders and picks one.
@@ -629,7 +629,7 @@ All enterprise training functions follow the same pattern:
 $r = Invoke-VBAFXxxTraining -Episodes 100 -PrintEvery 10 -SimMode
 # Returns: $r.Agent, $r.Baseline.Avg, $r.Trained.Avg
 # Improvement = ($r.Trained.Avg - $r.Baseline.Avg) / |$r.Baseline.Avg| * 100     (old measure: vs random)
-# Honest bar (v5.0): trained minus the BEST FIXED ACTION -- .\benchmarks\Measure-VBAFPillars.ps1
+# Honest bar (v6.0): trained minus the BEST FIXED ACTION -- .\benchmarks\Measure-VBAFPillars.ps1
 ```
 
 ### Available Training Functions
@@ -722,7 +722,7 @@ $collector.RecordEpsilon(0.85)
 
 ---
 
-### Evolution window (v5.0)
+### Evolution window (v6.0)
 
 Three tabs -- Evolution (lineage, champion, final test), The shift (one brain, one test shift, step by step) and
 Side by side (the brains on the same shift, plus an honest board over all test shifts) -- and a demo button.
@@ -857,7 +857,7 @@ $resampled = Invoke-TimeSeriesResample -TimeSeries $ts -Frequency "monthly" -Agg
 
 ---
 
-## Testing (v5.0)
+## Testing (v6.0)
 
 ```powershell
 & .\tests\Test-VBAF.ps1      # the regression suite: 68 checks with locked results, about 3 minutes

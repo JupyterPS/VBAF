@@ -1,17 +1,17 @@
 ﻿# VBAF: Visual Business Automation Framework
 
-## Erratum (October 2026, VBAF v5.0)
+## Erratum (October 2026, VBAF v6.0)
 
 The original text below is kept unchanged. Read it with these corrections:
 
-1. **The results in the Abstract and Section 4 are withdrawn.** Before v5.0 the DQN agents did not learn: the output
+1. **The results in the Abstract and Section 4 are withdrawn.** Before v6.0 the DQN agents did not learn: the output
    layer could not represent the rewards and experience replay trained on overwritten data (kernel findings KF-1 and
    KF-4). The "improvement over random" figures measured one fixed action against random choices.
 2. **Section 3 does not describe a learning mechanism.** The 15/40/30/15 distribution makes one fixed action beat random
    choices; that is why every pillar showed a positive "improvement" without learning anything.
 3. **Layers 3 and 4.** The pillars run on only 11 distinct environments (KF-5), and AutoPilot does not read the other
    pillars: it decides from 4 simulated aggregate signals.
-4. **Corrected results.** Re-measured on v5.0 against the honest bar -- the BEST FIXED ACTION -- with 3 training seeds:
+4. **Corrected results.** Re-measured on v6.0 against the honest bar -- the BEST FIXED ACTION -- with 3 training seeds:
    22 of 26 pillars beat the best fixed action on every seed, by +146 (SecurityMonitor) to +404 (IncidentResponder) reward points (mean over
    seeds). Four pillars do not yet: AlertRouter, JobScheduler, ResourceOptimizer and SupplyChain. Method, table and raw
    data: [benchmarks/agent-learning-curves.md](../../benchmarks/agent-learning-curves.md).

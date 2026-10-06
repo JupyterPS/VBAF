@@ -1,7 +1,7 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-    Build, train and evolve a learning brain (DQN): "build a better brain" (VBAF v5.0).
+    Build, train and evolve a learning brain (DQN): "build a better brain" (VBAF v6.0).
 .DESCRIPTION
     New-VBAFBrainConfig, New-VBAFBrain and Invoke-VBAFBrainTraining build and train a seeded DQN brain.
     Invoke-VBAFEvolution evolves genomes (learning rate, batch size, replay frequency, epsilon, ...):
@@ -297,7 +297,7 @@ function Invoke-VBAFFinalTest {
     return @($rows)
 }
 
-# ---------- v5.0: the whole study in one call (was the Lab's experiments\Phase4c-Evolution.ps1) ----------
+# ---------- v6.0: the whole study in one call (was the Lab's experiments\Phase4c-Evolution.ps1) ----------
 # Evolution -> champion -> final test of the champion AND a control (the baseline genome) on NEW seeds ->
 # Brain 0 (SPT) on the same test shifts -> one file, evolution-summary.json (same layout as the Lab's phase4c.json,
 # plus Settings). -Bar is an optional, PRE-REGISTERED success criterion; it is written only when given.
@@ -329,7 +329,7 @@ function Invoke-VBAFEvolutionStudy {
     $pairWins = @(for ($i = 0; $i -lt $fc.Count; $i++) { if ([double]$fc[$i].TestScore -gt [double]$fk[$i].TestScore) { 1 } }).Count
     $barOut = $null; if (-not [double]::IsNaN($Bar)) { $barOut = $Bar }
     $summary = [pscustomobject]@{
-        Kernel = 'VBAF v5.0'; Champion = $champ.Id; ChampionGenome = $champ.Genome; ChampionFitness = $champ.Fitness; ChampionFitnessSD = $champ.FitnessSD
+        Kernel = 'VBAF v6.0'; Champion = $champ.Id; ChampionGenome = $champ.Genome; ChampionFitness = $champ.Fitness; ChampionFitnessSD = $champ.FitnessSD
         FinalSeeds = $FinalSeeds; ChampionTest = $cs; ControlTest = $ks; Brain0 = $b0.Score; Bar = $barOut; PairWins = $pairWins
         Lineage = @($all | Select-Object Id, Generation, Parent, Fitness, FitnessSD, RunScores, Seconds, Key)
         Final = @(($fc + $fk) | Select-Object Label, Seed, ValBest, BestAt, TestScore, OnTimePct)

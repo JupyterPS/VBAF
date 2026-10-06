@@ -105,7 +105,7 @@ Grouped by topic and difficulty level.
     Justify each design decision.
 
 32. You have built a custom enterprise pillar that works well in SimMode
-    (improvement +80%) but performs poorly on real Windows data (improvement +5%).
+    (it beats the best fixed action by +150 reward points) but barely beats it on real Windows data (+5).
     List three likely causes and describe how you would diagnose and fix each one,
     referencing specific VBAF functions or design patterns.
 

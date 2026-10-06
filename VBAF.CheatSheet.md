@@ -130,7 +130,8 @@ $r = Invoke-VBAFAutoPilotTraining           -Episodes 100 -SimMode
 ```powershell
 $r.Baseline.Avg    # random agent average reward
 $r.Trained.Avg     # trained agent average reward
-# Improvement = (Trained - Baseline) / |Baseline| * 100
+# Improvement = (Trained - Baseline) / |Baseline| * 100     (old measure: vs random)
+# Honest bar (v5.0): Trained minus the BEST FIXED ACTION -- see benchmarks\Measure-VBAFPillars.ps1
 ```
 
 ### ...run all pillars at once

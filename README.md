@@ -232,13 +232,14 @@ Once you understand the foundation phases (1-9), VBAF includes 14 enterprise pil
 | 24 | Backup Optimizer | Adaptive backup strategy optimisation | +170 +/- 77 | 3 of 3 |
 | 25 | Energy Optimizer | Reduces power consumption intelligently | +170 +/- 77 | 3 of 3 |
 | 26 | Multi-Site Coordinator | Cross-datacenter workload balancing | +170 +/- 77 | 3 of 3 |
-| 27 | AutoPilot | Orchestrates all 13 pillars simultaneously | +170 +/- 77 | 3 of 3 |
+| 27 | AutoPilot | Chooses an intervention level from 4 simulated signals (does not yet read the other pillars) | +170 +/- 77 | 3 of 3 |
 
 *Measured for v5.0 (5-6 Oct 2026): the trained agent's score minus the score of the BEST FIXED ACTION ("always press the
 same button"), on the same evaluation episodes, mean +/- SD over 3 training seeds, 30 training episodes. A positive
 number means the agent learned something no fixed action can do. The pre-v5.0 figures (+24.5% to +117.5% "over random")
 are withdrawn: they measured one fixed action against random choices, not learning. Four further pillars (AlertRouter,
-JobScheduler, ResourceOptimizer, SupplyChain) do not yet beat the best fixed action. Full table, method and raw data:
+JobScheduler, ResourceOptimizer, SupplyChain) do not yet beat the best fixed action. Phases 22-27 share one environment
+(kernel finding KF-5: 26 pillars, 11 distinct environments), so their figures are identical. Full table, method and raw data:
 [benchmarks/agent-learning-curves.md](benchmarks/agent-learning-curves.md).*
 
 **The learning ladder:**

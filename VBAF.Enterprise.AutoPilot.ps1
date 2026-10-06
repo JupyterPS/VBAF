@@ -3,15 +3,17 @@
 .SYNOPSIS
     Phase 27 - AutoPilot (Crown Jewel)
 .DESCRIPTION
-    The crown jewel of VBAF. One DQN agent that observes aggregate health
-    signals across ALL 13 enterprise pillars (Phases 14-26) and decides
-    the correct level of autonomous intervention:
+    The crown jewel of VBAF. One DQN agent that decides the level of autonomous
+    intervention from 4 SIMULATED aggregate health signals.
+    Note (v5.0): it does not yet read the other pillars -- the list below is the intended
+    scope -- and its environment has the same dynamics as EnergyOptimizer (kernel finding KF-5).
+    The four decisions:
       - Delegate  : all pillars healthy, agents handle themselves    (action 0)
       - Override  : pillar agents drifting, apply corrective policy  (action 1)
       - Escalate  : multiple pillars degraded, human review needed   (action 2)
       - Autopilot : full autonomous control, execute across pillars  (action 3)
 
-    Pillars monitored:
+    Pillars it is meant to monitor (not connected yet):
       Phase 14 - SelfHealing         Phase 15 - Dashboard
       Phase 16 - FederatedLearning   Phase 17 - CloudBridge
       Phase 18 - AnomalyDetector     Phase 19 - CapacityPlanner

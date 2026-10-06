@@ -5,7 +5,7 @@
 .DESCRIPTION
     The crown jewel of VBAF. One DQN agent that decides the level of autonomous
     intervention from 4 SIMULATED aggregate health signals.
-    Note (v5.0): it does not yet read the other pillars -- the list below is the intended
+    Note (v6.0): it does not yet read the other pillars -- the list below is the intended
     scope -- and its environment has the same dynamics as EnergyOptimizer (kernel finding KF-5).
     The four decisions:
       - Delegate  : all pillars healthy, agents handle themselves    (action 0)
@@ -36,7 +36,7 @@
 
 class AutoPilotEnvironment {
 
-    # State: 4 SIMULATED aggregate health signals (the other pillars are not read yet, v5.0) (0.0 - 1.0)
+    # State: 4 SIMULATED aggregate health signals (the other pillars are not read yet, v6.0) (0.0 - 1.0)
     # NO SeverityNorm — agent must learn the mapping from real signals
     # NO inversion — distribution math alone guarantees positive result
     [double] $PillarHealthIndex    # 0=all pillars green    1=multiple pillars red
@@ -170,7 +170,7 @@ class AutoPilotEnvironment {
 
 # ------------------------------------
 # Real Windows AutoPilot probe
-# Simulated aggregate signals (intended: all 13 pillars; not connected yet, v5.0)
+# Simulated aggregate signals (intended: all 13 pillars; not connected yet, v6.0)
 # ------------------------------------
 function Get-VBAFAutoPilotSnapshot {
     [CmdletBinding()]

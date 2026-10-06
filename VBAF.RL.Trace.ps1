@@ -3,7 +3,7 @@
 .SYNOPSIS
     Get-VBAFTrace -- run an agent or a policy through one episode of ANY VBAF environment and record every step.
 .DESCRIPTION
-    VBAF environments follow one of two contracts (found while building v5.0):
+    VBAF environments follow one of two contracts (found while building v6.0):
       style A  Step($a) returns @{ NextState; Reward; Done }       (VBAFEnvironment and its children, DQN/PPO/A3C)
       style B  Step($a) returns nothing; read LastReward, LastDone   (the enterprise pillar environments)
                and GetState() afterwards

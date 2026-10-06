@@ -1,14 +1,14 @@
 ﻿# Agent Learning Curves
 
-## Enterprise pillars -- re-measured for VBAF v5.0 (5-6 Oct 2026)
+## Enterprise pillars -- re-measured for VBAF v6.0 (5-6 Oct 2026)
 
-**What changed.** Before v5.0 the pillars reported "improvement over random" (e.g. +117.5%). Nothing was learned
+**What changed.** Before v6.0 the pillars reported "improvement over random" (e.g. +117.5%). Nothing was learned
 then: the DQN output layer could not represent the rewards and the replay buffer trained on aliased data (kernel
 findings KF-1 and KF-4), so those figures measured *one fixed action vs random choices*. Several environments were
 even designed so that one fixed action beats random ("Distribution 15/40/30/15 guarantees positive improvement").
 Those figures are withdrawn.
 
-**How v5.0 measures.** Each pillar is trained with its OWN training function (`-SimMode`, 30 episodes), then three
+**How v6.0 measures.** Each pillar is trained with its OWN training function (`-SimMode`, 30 episodes), then three
 kinds of policy are evaluated on the SAME 10 evaluation episodes (same seeds for all): random choices, EVERY fixed
 action, and the trained agent. The honest bar is the **best fixed action**: a brain that cannot beat "always press
 the same button" has not learned anything useful. Three training seeds (1, 2, 3) per pillar; the table shows mean
@@ -60,11 +60,11 @@ One seed is not a result.
 .\benchmarks\Measure-VBAFPillars.ps1 -OutDir C:\Temp\pillars -Episodes 30 -Seeds 1,2,3 -EvalEpisodes 10
 ```
 
-Raw data: [data/pillars-v5.0/](data/pillars-v5.0/) (one JSON file per pillar and seed, plus the summary).
+Raw data: [data/pillars-v6.0/](data/pillars-v6.0/) (one JSON file per pillar and seed, plus the summary).
 
 ## Q-Learning vs DQN
 
-*These figures come from the v4 documentation and have not been re-measured for v5.0.*
+*These figures come from the v4 documentation and have not been re-measured for v6.0.*
 
 | Agent | Episodes to stable policy | Final avg reward |
 |-------|--------------------------|-----------------|

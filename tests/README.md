@@ -2,7 +2,7 @@
 
 Validation and regression tests for all VBAF components.
 
-## Regression suite (v5.0)
+## Regression suite (v6.0)
 
 ```powershell
 .\tests\Test-VBAF.ps1      # about 1 minute; exit code 0 = all checks pass (outside ISE)
@@ -15,7 +15,7 @@ Every check protects one fix found in VBAF-Evolution-Lab (KF-1..KF-9) with a FIX
 | Finding | What the suite checks |
 |---------|-----------------------|
 | KF-9 | `VBAF.LoadAll.ps1` loads in a normal `powershell.exe` without any ISE workaround (killed after 90 s) |
-| Supervised | XOR 2-3-1, 4-6-1, 6-8-1: final errors LOCKED (bit-identical in v4 and v5.0); XOR example settings reach 100% |
+| Supervised | XOR 2-3-1, 4-6-1, 6-8-1: final errors LOCKED (bit-identical in v4 and v6.0); XOR example settings reach 100% |
 | KF-4 | `Predict` returns a copy; `Replay` really learns (weights change, losses non-zero) |
 | KF-1 | a DQN uses a Linear output layer; classifiers keep the Sigmoid default |
 | KF-8 | a Linear output survives `ExportState`/`ImportState` |
@@ -49,7 +49,7 @@ green: find out why first. Change it only for a deliberate, documented behaviour
 | GaussianNaiveBayes | Iris3Class accuracy | > 80% |
 | RidgeRegression | HousePrice R2 | > 0.95 |
 | KMeans | 3-cluster separation | Inertia < 2.0 |
-| DQNAgent | Enterprise pillar | Superseded: before v5.0 this "improvement" was one fixed action vs random (KF-4). See the regression suite. |
+| DQNAgent | Enterprise pillar | Superseded: before v6.0 this "improvement" was one fixed action vs random (KF-4). See the regression suite. |
 | Split-TrainTest | Property names | XTrain/yTrain/XTest/yTest |
 | OutlierDetector | Transform output | Returns .Data hashtable |
 | StandardScaler | Zero mean | Mean < 0.001 after scaling |
@@ -84,4 +84,4 @@ Write-Host ("  {0,-30} {1}" -f "ComponentName", $(if ($passed) { "PASS" } else {
 - The comma binds tighter than `+`: put each concatenation inside an array in its own parentheses
 - `-eq` between two arrays filters instead of comparing
 - `Get-Content` without `-Encoding UTF8` reads BOM-less UTF-8 as Windows-1252 (mojibake)
-- Before v5.0, `VBAF.LoadAll.ps1` hung forever outside ISE (KF-9); fixed in v5.0
+- Before v6.0, `VBAF.LoadAll.ps1` hung forever outside ISE (KF-9); fixed in v6.0

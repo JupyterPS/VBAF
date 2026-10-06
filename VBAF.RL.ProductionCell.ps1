@@ -1,7 +1,7 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-    The production cell: a small, honest world for learning to schedule (VBAF v5.0).
+    The production cell: a small, honest world for learning to schedule (VBAF v6.0).
 .DESCRIPTION
     One machine, an order queue, deadlines. A shift is one episode of 200 minutes; orders arrive at random, each
     with a processing time and a deadline. The brain sees the first 3 orders in the queue and picks one.
@@ -238,7 +238,7 @@ function Measure-VBAFProductionPolicy {
 # Validation shifts (seeds 2001-2010): for checkpoints and fitness, never the test set.
 function Get-VBAFProductionValidationSeeds { return [int[]](2001..2010) }
 
-# ---------- v5.0: a production-cell shift, step by step (for the window's "The shift" and "Side by side") ----------
+# ---------- v6.0: a production-cell shift, step by step (for the window's "The shift" and "Side by side") ----------
 # Built on the general Get-VBAFTrace plus a production-cell snapshot (clock, queue length, the first Slots orders).
 # Each step gets: ClockBefore/After, QueueLen, Visible (Id, Proc, Deadline, Slack), Action, ChosenId,
 # Outcome (ontime | late | idle = empty queue, not the brain's fault | invalid = an empty slot was picked), Reward, Total.

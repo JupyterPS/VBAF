@@ -1,6 +1,6 @@
 ﻿# VBAF — Visual AI & Reinforcement Learning Framework
 
-> **v5.0.4** · PowerShell 5.1 · Educational AI Framework · Learn by doing
+> **v6.0.0** · PowerShell 5.1 · Educational AI Framework · Learn by doing
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue.svg)](https://github.com/PowerShell/PowerShell)
@@ -29,6 +29,19 @@ No Python. No Jupyter. No cloud dependencies. Just open PowerShell and start lea
 **Why PowerShell?**
 
 Because the code is readable. Every function in VBAF is written to be understood — not just executed. You can open any `.ps1` file and see exactly what the algorithm is doing, line by line. That is the point.
+
+---
+
+## What's new in 6.0
+
+- **The DQN agents learn now.** Ten kernel findings fixed (KF-1 to KF-10), among them a Sigmoid output layer that could
+  not represent the rewards and a `Predict` that returned its internal array. See [CHANGELOG.md](CHANGELOG.md).
+- **Honest figures.** All 26 enterprise pillars were re-measured against the best fixed action: 22 learn something no
+  fixed action can do. The old "+117% over random" figures are withdrawn. See [benchmarks](benchmarks/agent-learning-curves.md).
+- **Build a better brain.** A production cell, a whole evolution study in one call (`Invoke-VBAFEvolutionStudy`) and an
+  evolution window with three tabs and a demo: `Show-VBAFEvolutionWindow -ResultDir .\examples\07-Evolution\data`.
+- **Reproducible.** `Set-VBAFSeed` makes runs repeatable; `tests\Test-VBAF.ps1` locks 68 results.
+- **Loads everywhere.** `VBAF.LoadAll.ps1` no longer hangs outside the PowerShell ISE.
 
 ---
 
@@ -91,13 +104,14 @@ Each example folder contains a `Run-Example-XX.ps1` launcher -- just run that.
 Three interactive tools for guided learning:
 
 ```powershell
-# Console teacher -- 6 topics, press Enter to advance
+# Console teacher -- 7 topics, press Enter to advance
 Start-VBAFTeach
 
 # Jump to one topic directly
 Start-VBAFTeach -Topic "DQN"
 Start-VBAFTeach -Topic "QLearning"
 Start-VBAFTeach -Topic "Enterprise"
+Start-VBAFTeach -Topic "Evolution"
 
 # Interactive experiment station -- pick algorithm, configure, watch it train
 Start-VBAFPlayground
@@ -139,6 +153,9 @@ Start-VBAFPlayground -Algorithm "Supervised"
 | `VBAF.RL.PPO.ps1` | Proximal Policy Optimisation -- stable policy gradients |
 | `VBAF.RL.A3C.ps1` | Async Advantage Actor-Critic -- parallel RL workers |
 | `VBAF.RL.Environment.ps1` | Environments -- CartPole, GridWorld, RandomWalk |
+| `VBAF.RL.Trace.ps1` | Watch any agent step by step -- `Get-VBAFTrace` |
+| `VBAF.RL.ProductionCell.ps1` | A production cell world, hand-written rules and an honest measurer |
+| `VBAF.RL.Evolution.ps1` | Build, train and evolve a brain -- `Invoke-VBAFEvolutionStudy` |
 | `VBAF.Business.MarketEnvironment.ps1` | Multi-agent market simulation |
 
 ### Supervised learning modules
@@ -157,7 +174,7 @@ Start-VBAFPlayground -Algorithm "Supervised"
 
 | Tool | What it does |
 |------|-------------|
-| `VBAF.Teach.ps1` | Console teacher -- 6 topics, step by step |
+| `VBAF.Teach.ps1` | Console teacher -- 7 topics, step by step |
 | `VBAF.Playground.ps1` | Interactive experiment station -- no coding needed |
 | `VBAF.Benchmark.ps1` | Compare agents head to head with CSV export |
 
@@ -167,6 +184,7 @@ Start-VBAFPlayground -Algorithm "Supervised"
 |--------|----------------|
 | `VBAF.Visualization.LearningDashboard.ps1` | Live training curves |
 | `VBAF.Visualization.MarketDashboard.ps1` | Live market competition |
+| `VBAF.Visualization.EvolutionWindow.ps1` | Evolution window -- lineage, one shift step by step, brains side by side |
 | `VBAF.Art.CastleCompetition.ps1` | Visualising multi-agent competition |
 
 ---
@@ -234,9 +252,9 @@ Once you understand the foundation phases (1-9), VBAF includes 14 enterprise pil
 | 26 | Multi-Site Coordinator | Cross-datacenter workload balancing | +170 +/- 77 | 3 of 3 |
 | 27 | AutoPilot | Chooses an intervention level from 4 simulated signals (does not yet read the other pillars) | +170 +/- 77 | 3 of 3 |
 
-*Measured for v5.0 (5-6 Oct 2026): the trained agent's score minus the score of the BEST FIXED ACTION ("always press the
+*Measured for v6.0 (5-6 Oct 2026): the trained agent's score minus the score of the BEST FIXED ACTION ("always press the
 same button"), on the same evaluation episodes, mean +/- SD over 3 training seeds, 30 training episodes. A positive
-number means the agent learned something no fixed action can do. The pre-v5.0 figures (+24.5% to +117.5% "over random")
+number means the agent learned something no fixed action can do. The pre-v6.0 figures (+24.5% to +117.5% "over random")
 are withdrawn: they measured one fixed action against random choices, not learning. Four further pillars (AlertRouter,
 JobScheduler, ResourceOptimizer, SupplyChain) do not yet beat the best fixed action. Phases 22-27 share one environment
 (kernel finding KF-5: 26 pillars, 11 distinct environments), so their figures are identical. Full table, method and raw data:
@@ -278,6 +296,7 @@ Start-VBAFPlayground
 
 | Version | Highlight |
 |---------|-----------|
+| v6.0.0 | The kernel learns, and proves it -- 10 kernel fixes, evolution study and window, honest re-measurement |
 | v5.0.4 | CheatSheet rewritten as problem-first quick reference |
 | v5.0.3 | LEARNING-PATH.md -- 119-step complete guide added |
 | v5.0.0 | Part XVIII -- academic repositioning, 6 examples, full docs, Teach/Playground |

@@ -2,7 +2,7 @@
 <#
 .SYNOPSIS
     "Side by side" tab of Show-VBAFEvolutionWindow: the brains on the SAME test shift with the same clock, plus an
-    honest board over ALL test shifts (VBAF v5.0).
+    honest board over ALL test shifts (VBAF v6.0).
 .DESCRIPTION
     Top: one machine timeline per brain, played minute by minute (an order in progress is drawn lighter), live score.
     Bottom: champion minus SPT on every test shift, means, head-to-head (this champion vs SPT and vs the control), all

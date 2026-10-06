@@ -2,9 +2,9 @@
 
 All notable changes to VBAF are documented here.
 
-## [5.0.0] - unreleased (branch v5.0) -- The kernel learns, and proves it
+## [6.0.0] - unreleased (branch v5.0) -- The kernel learns, and proves it
 
-**Read this first.** Before 5.0 the DQN agents did not learn (KF-1, KF-4 below). The "improvement over random"
+**Read this first.** Before 6.0 the DQN agents did not learn (KF-1, KF-4 below). The "improvement over random"
 figures in the older entries below (+24.5% to +292%) measured one fixed action against random choices, not learning.
 They are withdrawn. The older entries are kept as they were written; the re-measured figures, the method and the raw
 data are in [benchmarks/agent-learning-curves.md](benchmarks/agent-learning-curves.md).

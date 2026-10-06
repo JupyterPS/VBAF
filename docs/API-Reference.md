@@ -178,12 +178,12 @@ $env = New-VBAFEnvironment -Name "CartPole"   # CartPole, GridWorld, RandomWalk
 $env = New-VBAFEnvironment -Name "CartPole" -MaxSteps 200
 $env.PrintInfo()
 
-# Standard interface
+# Standard interface -- style A: Step() returns a hashtable
 $state = $env.Reset()                  # double[] -- initial state
-$env.Step($action)                     # apply action
-$reward = $env.LastReward              # double
-$done   = $env.LastDone                # bool
-$state  = $env.GetState()              # double[] -- current state
+$r     = $env.Step($action)            # @{ NextState; Reward; Done }
+$state = $r.NextState; $reward = $r.Reward; $done = $r.Done
+# (The enterprise pillar environments use style B: Step() returns nothing;
+#  read LastReward, LastDone and GetState(). Get-VBAFTrace handles both.)
 ```
 
 ### Invoke-VBAFBenchmark
@@ -202,6 +202,101 @@ $shaper = New-RewardShaper -Type "Sparse"    # Sparse, Dense, Shaped
 
 ---
 
+## Seeds and Tracing (v5.0)
+
+### Set-VBAFSeed
+
+Seeds every VBAF random generator, so the same seed gives exactly the same run (kernel finding KF-3).
+
+```powershell
+Set-VBAFSeed [-Seed] <int> [<CommonParameters>]
+```
+
+### Get-VBAFTrace
+
+Runs one episode of any environment with an agent (greedy) or a policy and records every step: state, action,
+reward, running total, done. Works with both environment contracts: style A (`Step` returns
+`@{ NextState; Reward; Done }`) and style B (`Step` returns nothing; read `LastReward`, `LastDone`,
+`GetState()`). An environment without `Step`/`Reset` gives a clear error.
+
+```powershell
+Get-VBAFTrace [-Environment] <Object> [[-Agent] <Object>] [[-Policy] <scriptblock>] [[-Seed] <int>] [[-MaxSteps] <int>] [[-Snapshot] <scriptblock>] [[-PolicySeed] <int>] [<CommonParameters>]
+
+$env = New-VBAFEnvironment -Name "GridWorld" -MaxSteps 50
+$t   = Get-VBAFTrace -Environment $env -Policy { param($state, $rng) $rng.Next(0, 4) }
+$t.Steps | Format-Table Step, Action, Reward, Total, Done
+$t.Style, $t.TotalReward, $t.StepCount
+```
+
+## Production Cell and Evolution (v5.0)
+
+A small, honest world for learning to schedule, and the tools to build, measure and evolve a brain for it.
+One machine, an order queue, deadlines; a shift is one episode. The brain sees the first 3 orders and picks one.
+Test shifts: seeds 1001-1030 (never used for training or selection). Validation shifts: seeds 2001-2010.
+
+### ProductionCellEnvironment and the hand-written rules
+
+```powershell
+$world = [ProductionCellEnvironment]::new(1)
+$state = $world.ResetWithSeed(1001)          # the same seed gives exactly the same shift
+$rules = Get-VBAFProductionRules               # Random, FIFO, EDF, SPT, LST
+Get-VBAFProductionTestSeeds
+Get-VBAFProductionValidationSeeds
+```
+
+### Measure-VBAFProductionPolicy
+
+Runs a policy on a list of shifts and returns the mean score (and per-shift results).
+
+```powershell
+Measure-VBAFProductionPolicy [[-World] <Object>] [[-Policy] <scriptblock>] [[-Seeds] <int[]>] [[-PolicySeed] <int>]
+
+$m = Measure-VBAFProductionPolicy -World $world -Policy $rules['SPT'].Policy -Seeds (Get-VBAFProductionTestSeeds)
+$m.Score                                        # 37.85 -- "Brain 0", the shortest-job-first rule
+```
+
+### Get-VBAFShiftTrace
+
+One shift, step by step, with the production-cell details (clock, queue, the 3 visible orders, outcome).
+Built on Get-VBAFTrace.
+
+```powershell
+Get-VBAFShiftTrace [[-World] <Object>] [[-Agent] <Object>] [[-Policy] <scriptblock>] [[-Seed] <int>] [[-PolicySeed] <int>]
+```
+
+### Building and training a brain
+
+```powershell
+New-VBAFBrainConfig [[-HiddenLayers] <int[]>] [[-LearningRate] <double>] [[-Gamma] <double>] [[-EpsilonDecay] <double>] [[-EpsilonMin] <double>] [[-BatchSize] <int>] [[-MemorySize] <int>] [[-TargetUpdateFreq] <int>]
+New-VBAFBrain [[-Config] <Object>] [[-Seed] <int>]
+Invoke-VBAFBrainTraining [[-Agent] <Object>] [[-World] <Object>] [[-Episodes] <int>] [[-ReplayEvery] <int>] [[-SeedBase] <int>] [-Quiet]
+Get-VBAFBrainPolicy [[-Agent] <Object>]
+Restore-VBAFBrain [[-Genome] <Object>] [[-BrainSeed] <int>] [[-ModelPath] <string>]
+Get-VBAFBaselineGenome
+```
+
+### Invoke-VBAFEvolutionStudy
+
+A whole evolution study in one call: evolve genomes (fitness = mean over several brain seeds of each seed's best
+moment on the validation shifts), pick the champion, then train the champion AND a control (the baseline genome)
+again on NEW seeds and measure both on the test shifts. Writes `evolution-summary.json`; every run is saved at
+once, so an interrupted study resumes. `-Bar` is an optional, pre-registered success criterion.
+
+```powershell
+Invoke-VBAFEvolutionStudy [[-World] <Object>] [[-OutDir] <string>] [[-Generations] <int>] [[-Children] <int>] [[-FitSeeds] <int[]>] [[-TrainShifts] <int>] [[-Chunk] <int>] [[-FinalSeeds] <int[]>] [[-Bar] <double>]
+
+# A small study (minutes, not hours), then look at it:
+$world = [ProductionCellEnvironment]::new(1)
+Invoke-VBAFEvolutionStudy -World $world -OutDir C:\Temp\my-study -Generations 1 -Children 2 -FitSeeds 101,102 -TrainShifts 50 -FinalSeeds 201,202
+Show-VBAFEvolutionWindow -ResultDir C:\Temp\my-study
+```
+
+The building blocks, for your own loop:
+
+```powershell
+Invoke-VBAFEvolution [[-World] <Object>] [[-Generations] <int>] [[-Children] <int>] [[-FitSeeds] <int[]>] [[-TrainShifts] <int>] [[-Chunk] <int>] [[-Seed] <int>] [[-OutDir] <string>] [[-LogPath] <string>]
+Invoke-VBAFFinalTest [[-World] <Object>] [[-Genome] <Object>] [[-Label] <string>] [[-FinalSeeds] <int[]>] [[-TrainShifts] <int>] [[-Chunk] <int>] [[-OutDir] <string>] [[-TestSeeds] <int[]>]
+```
 ## Datasets
 
 ### Supervised Learning Datasets
@@ -533,7 +628,8 @@ All enterprise training functions follow the same pattern:
 ```powershell
 $r = Invoke-VBAFXxxTraining -Episodes 100 -PrintEvery 10 -SimMode
 # Returns: $r.Agent, $r.Baseline.Avg, $r.Trained.Avg
-# Improvement = ($r.Trained.Avg - $r.Baseline.Avg) / |$r.Baseline.Avg| * 100
+# Improvement = ($r.Trained.Avg - $r.Baseline.Avg) / |$r.Baseline.Avg| * 100     (old measure: vs random)
+# Honest bar (v5.0): trained minus the BEST FIXED ACTION -- .\benchmarks\Measure-VBAFPillars.ps1
 ```
 
 ### Available Training Functions
@@ -626,6 +722,18 @@ $collector.RecordEpsilon(0.85)
 
 ---
 
+### Evolution window (v5.0)
+
+Three tabs -- Evolution (lineage, champion, final test), The shift (one brain, one test shift, step by step) and
+Side by side (the brains on the same shift, plus an honest board over all test shifts) -- and a demo button.
+Works in the ISE and in a normal console.
+
+```powershell
+Show-VBAFEvolutionWindow [-ResultDir] <string> [<CommonParameters>]
+Test-VBAFEvolutionWindow [-ResultDir] <string> [[-OutPng] <string>] [<CommonParameters>]
+
+Show-VBAFEvolutionWindow -ResultDir .\examples\07-Evolution\data     # the real study from VBAF-Evolution-Lab
+```
 ## Deep Learning
 
 ### CNN
@@ -749,6 +857,13 @@ $resampled = Invoke-TimeSeriesResample -TimeSeries $ts -Frequency "monthly" -Agg
 
 ---
 
+## Testing (v5.0)
+
+```powershell
+& .\tests\Test-VBAF.ps1      # the regression suite: 68 checks with locked results, about 3 minutes
+```
+
+See `tests\README.md` for what each check protects and why the results are locked.
 ## Common Patterns
 
 ### Full supervised learning pipeline

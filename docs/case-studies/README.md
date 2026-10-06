@@ -3,6 +3,9 @@
 Real-world applications of VBAF across different domains.
 Each case study shows how the framework solves a concrete business problem.
 
+> **Note (v5.0):** Measured with VBAF before v5.0. At that time the DQN agents did not yet learn (KF-1, KF-4),
+> so the effects are those of the deployed system as a whole.
+
 ## Available Case Studies
 
 | Study | Domain | Improvement |

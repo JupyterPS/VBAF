@@ -120,7 +120,7 @@ $agent.PrintStats()
 $ppo = (Invoke-PPOTraining -Episodes 50 -PrintEvery 5 -FastMode)[-1]
 $a3c = (Invoke-A3CTraining -Episodes 20 -PrintEvery 2 -FastMode)[-1]
 
-# Run the AutoPilot -- orchestrates all 13 enterprise pillars
+# Run the AutoPilot (decides from simulated aggregate signals)
 $r = Invoke-VBAFAutoPilotTraining -Episodes 100 -PrintEvery 10 -SimMode
 
 # Benchmark an agent

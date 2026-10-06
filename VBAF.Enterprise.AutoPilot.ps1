@@ -36,7 +36,7 @@
 
 class AutoPilotEnvironment {
 
-    # State: 4 aggregate health signals across all 13 pillars (0.0 - 1.0)
+    # State: 4 SIMULATED aggregate health signals (the other pillars are not read yet, v5.0) (0.0 - 1.0)
     # NO SeverityNorm — agent must learn the mapping from real signals
     # NO inversion — distribution math alone guarantees positive result
     [double] $PillarHealthIndex    # 0=all pillars green    1=multiple pillars red
@@ -170,7 +170,7 @@ class AutoPilotEnvironment {
 
 # ------------------------------------
 # Real Windows AutoPilot probe
-# Aggregates signals from all 13 pillars
+# Simulated aggregate signals (intended: all 13 pillars; not connected yet, v5.0)
 # ------------------------------------
 function Get-VBAFAutoPilotSnapshot {
     [CmdletBinding()]
@@ -239,7 +239,7 @@ function Invoke-VBAFAutoPilotTraining {
 
     Write-Host ""
     Write-Host "👑 VBAF Enterprise - Phase 27: AutoPilot (Crown Jewel)"               -ForegroundColor Magenta
-    Write-Host "   The master agent — orchestrating all 13 VBAF enterprise pillars"   -ForegroundColor Magenta
+    Write-Host "   The master agent — deciding from 4 simulated aggregate signals"   -ForegroundColor Magenta
     Write-Host "   Phases 14-26: SelfHealing → Dashboard → FederatedLearning →"       -ForegroundColor Gray
     Write-Host "   CloudBridge → AnomalyDetector → CapacityPlanner → Incident →"      -ForegroundColor Gray
     Write-Host "   Compliance → UserBehavior → Patch → Backup → Energy → MultiSite"   -ForegroundColor Gray
@@ -465,7 +465,7 @@ function Invoke-VBAFAutoPilotTraining {
 Write-Host "📦 VBAF.Enterprise.AutoPilot.ps1 loaded  [v3.17.0 👑]"    -ForegroundColor Magenta
 Write-Host "   Phase 27: AutoPilot — Crown Jewel"                       -ForegroundColor Magenta
 Write-Host "   Function : Invoke-VBAFAutoPilotTraining"                 -ForegroundColor Magenta
-Write-Host "   Orchestrates ALL 13 enterprise pillars (Ph. 14-26)"     -ForegroundColor Gray
+Write-Host "   Simulated aggregate signals (reading pillars 14-26 is planned)"     -ForegroundColor Gray
 Write-Host ""
 Write-Host "   Quick start:" -ForegroundColor Yellow
 Write-Host '   $r = Invoke-VBAFAutoPilotTraining -Episodes 100 -PrintEvery 10 -SimMode' -ForegroundColor White

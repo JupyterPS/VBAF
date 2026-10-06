@@ -235,9 +235,14 @@ All 14 pillars work in both modes without changing any other code.
 
 ## Layer 4 -- Enterprise AutoPilot
 
-AutoPilot (Phase 27) is a master DQN agent that observes the state of
-all 13 enterprise pillars simultaneously and decides which pillar to
-prioritise each episode.
+AutoPilot (Phase 27) is meant to be the master agent: one agent that watches the other enterprise pillars
+and decides how strongly to intervene.
+
+**What the code does today (v5.0).** One DQN agent observes 4 SIMULATED aggregate health signals and chooses
+one of 4 intervention levels (Delegate, Override, Escalate, Autopilot). It does not read the other pillars yet,
+and its environment has the same dynamics as EnergyOptimizer (kernel finding KF-5).
+
+**Original design (not implemented):**
 
 State: 13 x 4 = 52 signals (all pillar states concatenated)
 Actions: 13 (one per pillar -- which to focus training on)

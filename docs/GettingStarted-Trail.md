@@ -720,9 +720,9 @@ $result = Invoke-VBAFAutoPilotTraining -Episodes 50 -SimMode
 ```
 
 What you will see:
-AutoPilot orchestrates ALL 13 enterprise pillars simultaneously.
-It is an agent that coordinates other agents.
-Meta-learning -- an agent that decides which agents to activate.
+AutoPilot is meant to coordinate the other pillars. Today (v5.0) it is one agent that chooses an
+intervention level from 4 simulated aggregate signals -- it does not read the other pillars yet.
+Connecting it to the real pillars (an agent that decides which agents to activate) is a good exercise.
 
 This is Phase 27 -- the furthest point VBAF reaches.
 But it is built entirely from the same concepts you learned in Camp 1.

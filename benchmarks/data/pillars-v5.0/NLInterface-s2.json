@@ -1,0 +1,31 @@
+﻿{
+    "Pillar":  "NLInterface",
+    "Seed":  2,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  706.2,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -150.8,
+    "PillarReportTrained":  312.4,
+    "EvalSeconds":  17.4,
+    "Style":  "B",
+    "Random":  -151,
+    "Trained":  312.1,
+    "Fixed":  [
+                  -182.1,
+                  -51.5,
+                  -110.1,
+                  -237.1
+              ],
+    "BestFixed":  -51.5,
+    "BestFixedAction":  1,
+    "VsRandomPct":  306.7,
+    "VsBestFixed":  363.6,
+    "TrainedActions":  "199/922/465/414",
+    "Varied":  true
+}

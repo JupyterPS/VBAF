@@ -1,0 +1,31 @@
+﻿{
+    "Pillar":  "Dashboard",
+    "Seed":  3,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  693.5,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -138.2,
+    "PillarReportTrained":  144.1,
+    "EvalSeconds":  14.1,
+    "Style":  "B",
+    "Random":  -151,
+    "Trained":  129.4,
+    "Fixed":  [
+                  -182.1,
+                  -51.5,
+                  -110.1,
+                  -237.1
+              ],
+    "BestFixed":  -51.5,
+    "BestFixedAction":  1,
+    "VsRandomPct":  185.7,
+    "VsBestFixed":  180.9,
+    "TrainedActions":  "3/1121/876/0",
+    "Varied":  true
+}

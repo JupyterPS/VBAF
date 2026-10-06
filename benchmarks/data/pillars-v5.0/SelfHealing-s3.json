@@ -1,0 +1,31 @@
+﻿{
+    "Pillar":  "SelfHealing",
+    "Seed":  3,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  503.1,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -138.2,
+    "PillarReportTrained":  140.5,
+    "EvalSeconds":  12.7,
+    "Style":  "B",
+    "Random":  -151,
+    "Trained":  125.8,
+    "Fixed":  [
+                  -182.1,
+                  -51.5,
+                  -110.1,
+                  -237.1
+              ],
+    "BestFixed":  -51.5,
+    "BestFixedAction":  1,
+    "VsRandomPct":  183.3,
+    "VsBestFixed":  177.3,
+    "TrainedActions":  "0/1133/867/0",
+    "Varied":  true
+}

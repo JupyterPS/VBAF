@@ -1,0 +1,886 @@
+﻿[
+    {
+        "Pillar":  "AlertRouter",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  32.28,
+                        "SD":  0,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  8.7,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  32.28,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  271,
+                            "SD":  0,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  0,
+                            "SD":  0,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  0,
+        "Varied":  0,
+        "TrainSeconds":  313,
+        "EvalSeconds":  24
+    },
+    {
+        "Pillar":  "AnomalyDetector",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  301.4,
+                        "SD":  49.53,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -149.2,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -62.5,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  302,
+                            "SD":  33.17,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  363.9,
+                            "SD":  49.53,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  2062,
+        "EvalSeconds":  61
+    },
+    {
+        "Pillar":  "AutoPilot",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  176.1,
+                        "SD":  77.34,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -140.4,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  6.3,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  225.4,
+                            "SD":  55.08,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  169.8,
+                            "SD":  77.34,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  2284,
+        "EvalSeconds":  65
+    },
+    {
+        "Pillar":  "BackupOptimizer",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  176.1,
+                        "SD":  77.34,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -140.4,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  6.3,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  225.4,
+                            "SD":  55.08,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  169.8,
+                            "SD":  77.34,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  2320,
+        "EvalSeconds":  64
+    },
+    {
+        "Pillar":  "CapacityPlanner",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  308,
+                        "SD":  58.25,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -149.2,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -62.5,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  306.43,
+                            "SD":  39.03,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  370.5,
+                            "SD":  58.25,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  2169,
+        "EvalSeconds":  63
+    },
+    {
+        "Pillar":  "CloudBridge",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  298.1,
+                        "SD":  56.67,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -149.2,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -62.5,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  299.83,
+                            "SD":  37.99,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  360.6,
+                            "SD":  56.67,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  2237,
+        "EvalSeconds":  59
+    },
+    {
+        "Pillar":  "ComplianceReporter",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  207.3,
+                        "SD":  23.65,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -140.4,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  6.3,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  247.63,
+                            "SD":  16.82,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  201,
+                            "SD":  23.65,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  2086,
+        "EvalSeconds":  61
+    },
+    {
+        "Pillar":  "Dashboard",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  305.9,
+                        "SD":  152.91,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -151,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -51.5,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  302.57,
+                            "SD":  101.25,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  357.4,
+                            "SD":  152.91,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  2067,
+        "EvalSeconds":  51
+    },
+    {
+        "Pillar":  "DataFlowOptimizer",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  291.3,
+                        "SD":  83.23,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -149.4,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -56.5,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  294.97,
+                            "SD":  55.71,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  347.8,
+                            "SD":  83.23,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  1963,
+        "EvalSeconds":  49
+    },
+    {
+        "Pillar":  "EnergyOptimizer",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  176.1,
+                        "SD":  77.34,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -140.4,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  6.3,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  225.4,
+                            "SD":  55.08,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  169.8,
+                            "SD":  77.34,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  1891,
+        "EvalSeconds":  55
+    },
+    {
+        "Pillar":  "FederatedLearning",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  335.6,
+                        "SD":  43.11,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -149.2,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -62.5,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  324.93,
+                            "SD":  28.89,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  398.1,
+                            "SD":  43.11,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  1922,
+        "EvalSeconds":  55
+    },
+    {
+        "Pillar":  "FleetDispatch",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  202.6,
+                        "SD":  76.01,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -126.9,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  10,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  259.67,
+                            "SD":  59.94,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  192.6,
+                            "SD":  76.01,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  1937,
+        "EvalSeconds":  55
+    },
+    {
+        "Pillar":  "HealthcareMonitor",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  202.6,
+                        "SD":  76.01,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -126.9,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  10,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  259.67,
+                            "SD":  59.94,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  192.6,
+                            "SD":  76.01,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  2021,
+        "EvalSeconds":  55
+    },
+    {
+        "Pillar":  "IncidentResponder",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  341.1,
+                        "SD":  51.84,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -149.2,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -62.5,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  328.63,
+                            "SD":  34.76,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  403.6,
+                            "SD":  51.84,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  2048,
+        "EvalSeconds":  58
+    },
+    {
+        "Pillar":  "JobScheduler",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  -8.27,
+                        "SD":  7.85,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -0.1,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  0.8,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  -8166.67,
+                            "SD":  7851.96,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  -9.07,
+                            "SD":  7.85,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  0,
+        "Varied":  0,
+        "TrainSeconds":  255,
+        "EvalSeconds":  3
+    },
+    {
+        "Pillar":  "MultiAgentCoordinator",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  318.1,
+                        "SD":  68.07,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -149.4,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -56.5,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  312.9,
+                            "SD":  45.55,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  374.6,
+                            "SD":  68.07,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  1930,
+        "EvalSeconds":  49
+    },
+    {
+        "Pillar":  "MultiSiteCoordinator",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  176.1,
+                        "SD":  77.34,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -140.4,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  6.3,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  225.4,
+                            "SD":  55.08,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  169.8,
+                            "SD":  77.34,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  1902,
+        "EvalSeconds":  58
+    },
+    {
+        "Pillar":  "NetworkWatcher",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  141.8,
+                        "SD":  60.83,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -161.3,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -57.6,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  187.9,
+                            "SD":  37.7,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  199.4,
+                            "SD":  60.83,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  1886,
+        "EvalSeconds":  59
+    },
+    {
+        "Pillar":  "NLInterface",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  240.5,
+                        "SD":  90.34,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -151,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -51.5,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  259.3,
+                            "SD":  59.81,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  292,
+                            "SD":  90.34,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  1894,
+        "EvalSeconds":  47
+    },
+    {
+        "Pillar":  "PatchIntelligence",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  176.1,
+                        "SD":  77.34,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -140.4,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  6.3,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  225.4,
+                            "SD":  55.08,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  169.8,
+                            "SD":  77.34,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  1882,
+        "EvalSeconds":  55
+    },
+    {
+        "Pillar":  "PredictiveMaintenance",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  248.4,
+                        "SD":  118.57,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -151,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -51.5,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  264.5,
+                            "SD":  78.54,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  299.9,
+                            "SD":  118.57,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  1947,
+        "EvalSeconds":  52
+    },
+    {
+        "Pillar":  "ResourceOptimizer",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  -31.48,
+                        "SD":  39.88,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  13.79,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  22.01,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  -328.27,
+                            "SD":  289.19,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  -53.48,
+                            "SD":  39.88,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  0,
+        "Varied":  0,
+        "TrainSeconds":  485,
+        "EvalSeconds":  6
+    },
+    {
+        "Pillar":  "SecurityMonitor",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  100.8,
+                        "SD":  36.99,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -141.8,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -45.1,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  171.07,
+                            "SD":  26.12,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  145.9,
+                            "SD":  36.99,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  1978,
+        "EvalSeconds":  43
+    },
+    {
+        "Pillar":  "SelfHealing",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  258.8,
+                        "SD":  134.73,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -151,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -51.5,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  271.37,
+                            "SD":  89.22,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  310.3,
+                            "SD":  134.73,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  1919,
+        "EvalSeconds":  50
+    },
+    {
+        "Pillar":  "SupplyChain",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  -1.19,
+                        "SD":  3.56,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  1.2,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  1.26,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  -199.07,
+                            "SD":  296.73,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  -2.44,
+                            "SD":  3.56,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  1,
+        "Varied":  2,
+        "TrainSeconds":  300,
+        "EvalSeconds":  5
+    },
+    {
+        "Pillar":  "UserBehaviorAnalytics",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  176.1,
+                        "SD":  77.34,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -140.4,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  6.3,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  225.4,
+                            "SD":  55.08,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  169.8,
+                            "SD":  77.34,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  1866,
+        "EvalSeconds":  51
+    }
+]

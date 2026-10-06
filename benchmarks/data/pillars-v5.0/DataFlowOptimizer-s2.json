@@ -1,0 +1,31 @@
+﻿{
+    "Pillar":  "DataFlowOptimizer",
+    "Seed":  2,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  702.7,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -144.1,
+    "PillarReportTrained":  380.2,
+    "EvalSeconds":  17.8,
+    "Style":  "B",
+    "Random":  -149.4,
+    "Trained":  387.4,
+    "Fixed":  [
+                  -173.9,
+                  -56.5,
+                  -110.3,
+                  -242.7
+              ],
+    "BestFixed":  -56.5,
+    "BestFixedAction":  1,
+    "VsRandomPct":  359.3,
+    "VsBestFixed":  443.9,
+    "TrainedActions":  "513/644/428/415",
+    "Varied":  true
+}

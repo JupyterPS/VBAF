@@ -1,0 +1,30 @@
+﻿{
+    "Pillar":  "ResourceOptimizer",
+    "Seed":  1,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  167.1,
+    "TrainSteps":  18208,
+    "Losses":  569,
+    "NonZero":  569,
+    "Learned":  true,
+    "Actions":  3,
+    "PillarReportBaseline":  4.0612574564135917,
+    "PillarReportTrained":  -1.7496388853595772,
+    "EvalSeconds":  1.9,
+    "Style":  "A",
+    "Random":  13.79,
+    "Trained":  -8.453,
+    "Fixed":  [
+                  -8.453,
+                  22.006,
+                  -77.526
+              ],
+    "BestFixed":  22.006,
+    "BestFixedAction":  1,
+    "VsRandomPct":  -161.3,
+    "VsBestFixed":  -30.459,
+    "TrainedActions":  "500/0/0",
+    "Varied":  false
+}

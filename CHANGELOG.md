@@ -1,6 +1,40 @@
 ﻿# Changelog
 
 All notable changes to VBAF are documented here.
+## [5.0.0] - unreleased (branch v5.0) -- The kernel learns, and proves it
+
+**Read this first.** Before 5.0 the DQN agents did not learn (KF-1, KF-4 below). The "improvement over random"
+figures in the older entries below (+24.5% to +292%) measured one fixed action against random choices, not learning.
+They are withdrawn. The older entries are kept as they were written; the re-measured figures, the method and the raw
+data are in [benchmarks/agent-learning-curves.md](benchmarks/agent-learning-curves.md).
+
+### Fixed (kernel findings from VBAF-Evolution-Lab)
+- KF-1: the DQN output layer was Sigmoid, so Q-values could never exceed 1. DQN agents now use a Linear output (`NeuralNetwork.SetOutputActivation`).
+- KF-2: `DQNAgent` trusted `DQNConfig.ActionSize` / `HiddenLayers` even when the network was different. It now uses the real network, warns about a mismatch and explores every real action.
+- KF-3: 11 random generators were unseeded. All are seeded through `Set-VBAFSeed`; runs are reproducible.
+- KF-4: `NeuralNetwork.Predict` returned its internal array, so experience replay trained on overwritten data. `Predict` returns a copy.
+- KF-6: the JobScheduler pillar never trained (0 episodes) and threw away its own settings.
+- KF-7: `New-EnterpriseEnvironment` ignored `-MaxSteps` for 3 of 4 environments, and ResourceOptimizer read the live PC on every `Reset`. Simulated by default now; `-Live` on request; `-Seed`.
+- KF-8: `Layer.ImportState` did not restore the activation type (a saved Linear model came back as Sigmoid).
+- KF-9: `VBAF.LoadAll.ps1` hung forever outside the PowerShell ISE (an invisible WinForms dialog).
+- KF-10: `VBAF.Enterprise.HealthcareMonitor.ps1` was loaded by `VBAF.LoadAll.ps1` but had never been committed, so every GitHub / PSGallery user got an error on every load. It is included now.
+
+### Added
+- `tests\Test-VBAF.ps1`: a regression suite of 68 checks with locked results (about 3 minutes). See `tests\README.md`.
+- `Get-VBAFTrace`: a step-by-step trace of one episode in any environment.
+- `VBAF.RL.ProductionCell.ps1`: the production cell world (one machine, an order queue, deadlines), hand-written rules (SPT and others) and a measurer.
+- `VBAF.RL.Evolution.ps1`: build, train and evolve a brain. `Invoke-VBAFEvolutionStudy` runs a whole study: evolution with several seeds per candidate, the champion, and a final test of the champion AND a control on new seeds.
+- `Show-VBAFEvolutionWindow`: a window with three tabs (Evolution, The shift, Side by side) and a demo.
+- `Start-VBAFTeach -Topic Evolution` (topic 7) and `examples\07-Evolution` with the real study data from VBAF-Evolution-Lab.
+- `benchmarks\Measure-VBAFPillars.ps1`: measures every pillar honestly (random choices, every fixed action and the trained agent on the same episodes, several seeds). Resumable.
+
+### Changed
+- All 26 enterprise pillars were re-measured (30 training episodes, 3 seeds): 22 beat the best fixed action on every seed. README and benchmarks show the new figures.
+
+### Known issues
+- AlertRouter, JobScheduler, ResourceOptimizer and SupplyChain -- the four pillars built on `New-EnterpriseEnvironment` -- do not yet beat the best fixed action.
+- KF-5: the 26 pillars run on only 11 distinct environments; several pillars are the same environment under another name, so their figures are identical.
+- Environments follow three different contracts instead of one base class (documented in the Lab's kernel findings).
 
 ## [3.0.0] - March 2026 - Enterprise Automation Engine
 

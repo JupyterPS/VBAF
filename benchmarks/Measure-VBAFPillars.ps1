@@ -141,5 +141,5 @@ $md -join "`n" | Set-Content (Join-Path $OutDir 'pillars-summary.md') -Encoding 
 Write-Host ''
 Write-Host '=== Summary (mean over seeds) ===' -ForegroundColor Cyan
 $rows | ForEach-Object { '{0,-24} learned {1,-5} trained {2,9} | random {3,9} | best fixed {4,9} | vs random {5,7}% | vs best fixed {6,8} | beats best fixed {7}/{8} | train {9}s eval {10}s' -f $_.Pillar, $_.Learned, $_.Trained.Mean, $_.Random.Mean, $_.BestFixed.Mean, $_.VsRandomPct.Mean, $_.VsBestFixed.Mean, $_.BeatsBestFixed, $_.Seeds, $_.TrainSeconds, $_.EvalSeconds } | Write-Host
-$errs = @(Get-ChildItem $OutDir -Filter '*-s[0-9]*.json' | ForEach-Object { Get-Content $_.FullName -Raw -Encoding UTF8 | ConvertFrom-Json } | Where-Object { $_.Error })
+$errs = @(Get-ChildItem $OutDir -Filter '*-s*.json' | Where-Object { $_.Name -match '-s\d+\.json$' } | ForEach-Object { Get-Content $_.FullName -Raw -Encoding UTF8 | ConvertFrom-Json } | Where-Object { $_.Error })
 if ($errs.Count -gt 0) { Write-Host ('Errors ({0}):' -f $errs.Count) -ForegroundColor Yellow; $errs | ForEach-Object { '  {0} seed {1}: {2}' -f $_.Pillar, $_.Seed, $_.Error } | Write-Host }

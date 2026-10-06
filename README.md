@@ -217,22 +217,29 @@ This is reinforcement learning in its purest form -- learning from reward signal
 
 Once you understand the foundation phases (1-9), VBAF includes 14 enterprise pillars built on the same core -- each one a working DQN agent solving a real IT automation problem.
 
-| Phase | Pillar | What it automates | Improvement |
-|-------|--------|------------------|-------------|
-| 14 | Self-Healing | Detects and fixes system problems automatically | +63.0% |
-| 15 | Dashboard | Intelligent cache and refresh management | +59.1% |
-| 16 | Federated Learning | Distributed model training across nodes | +62.1% |
-| 17 | Cloud Bridge | Local vs cloud workload balancing | +24.5% |
-| 18 | Anomaly Detector | Spots unusual patterns before they become incidents | +30.6% |
-| 19 | Capacity Planner | Predicts resource needs before you run out | +32.6% |
-| 20 | Incident Responder | Automated incident triage and containment | +26.9% |
-| 21 | Compliance Reporter | GDPR/ISO27001 compliance monitoring | +107.2% |
-| 22 | User Behavior Analytics | Detects insider threats and anomalous access | +103.4% |
-| 23 | Patch Intelligence | Risk-aware patch scheduling and rollback | +65.5% |
-| 24 | Backup Optimizer | Adaptive backup strategy optimisation | +116.3% |
-| 25 | Energy Optimizer | Reduces power consumption intelligently | +117.5% |
-| 26 | Multi-Site Coordinator | Cross-datacenter workload balancing | +47.4% |
-| 27 | AutoPilot | Orchestrates all 13 pillars simultaneously | +63.3% |
+| Phase | Pillar | What it automates | Trained minus best fixed action (3 seeds) | Beats best fixed |
+|---|---|---|---|---|
+| 14 | Self-Healing | Detects and fixes system problems automatically | +310 +/- 135 | 3 of 3 |
+| 15 | Dashboard | Intelligent cache and refresh management | +357 +/- 153 | 3 of 3 |
+| 16 | Federated Learning | Distributed model training across nodes | +398 +/- 43 | 3 of 3 |
+| 17 | Cloud Bridge | Local vs cloud workload balancing | +361 +/- 57 | 3 of 3 |
+| 18 | Anomaly Detector | Spots unusual patterns before they become incidents | +364 +/- 50 | 3 of 3 |
+| 19 | Capacity Planner | Predicts resource needs before you run out | +371 +/- 58 | 3 of 3 |
+| 20 | Incident Responder | Automated incident triage and containment | +404 +/- 52 | 3 of 3 |
+| 21 | Compliance Reporter | GDPR/ISO27001 compliance monitoring | +201 +/- 24 | 3 of 3 |
+| 22 | User Behavior Analytics | Detects insider threats and anomalous access | +170 +/- 77 | 3 of 3 |
+| 23 | Patch Intelligence | Risk-aware patch scheduling and rollback | +170 +/- 77 | 3 of 3 |
+| 24 | Backup Optimizer | Adaptive backup strategy optimisation | +170 +/- 77 | 3 of 3 |
+| 25 | Energy Optimizer | Reduces power consumption intelligently | +170 +/- 77 | 3 of 3 |
+| 26 | Multi-Site Coordinator | Cross-datacenter workload balancing | +170 +/- 77 | 3 of 3 |
+| 27 | AutoPilot | Orchestrates all 13 pillars simultaneously | +170 +/- 77 | 3 of 3 |
+
+*Measured for v5.0 (5-6 Oct 2026): the trained agent's score minus the score of the BEST FIXED ACTION ("always press the
+same button"), on the same evaluation episodes, mean +/- SD over 3 training seeds, 30 training episodes. A positive
+number means the agent learned something no fixed action can do. The pre-v5.0 figures (+24.5% to +117.5% "over random")
+are withdrawn: they measured one fixed action against random choices, not learning. Four further pillars (AlertRouter,
+JobScheduler, ResourceOptimizer, SupplyChain) do not yet beat the best fixed action. Full table, method and raw data:
+[benchmarks/agent-learning-curves.md](benchmarks/agent-learning-curves.md).*
 
 **The learning ladder:**
 Phase 1-9   -- Foundation: understand HOW agents learn

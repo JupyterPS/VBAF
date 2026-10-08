@@ -1,5 +1,48 @@
 ﻿# Agent Learning Curves
 
+## Enterprise pillars -- re-measured for VBAF v6.1 (8 Oct 2026)
+
+**What changed.** Kernel finding KF-13: before 6.1 the DQN target network shared the main network's weights, so it was
+never frozen. 6.1 fixes it. All 26 pillars were re-measured exactly as for v6.0 (same script, same settings: 30 training
+episodes, 10 evaluation episodes, seeds 1, 2, 3), on the battery (`-Engine Fast`, bit-identical to pure PowerShell): 60
+minutes instead of 13 hours. Raw data: [data/pillars-v6.1](data/pillars-v6.1).
+
+**Result.** 21 of 26 pillars score higher than in v6.0, 3 lower and 2 the same. Most differences are within one standard
+deviation over 3 seeds, so read it as a consistent, moderate shift, not a breakthrough. 22 of 26 still beat the best fixed
+action on every seed; the same four pillars do not (AlertRouter, JobScheduler, ResourceOptimizer, SupplyChain). Random
+and best-fixed scores are unchanged, because they do not depend on the network. Environment groups as in the v6.0 table (KF-5).
+
+| Pillar | Env. group | Trained 6.1 (mean +/- SD) | Trained 6.0 | Change | Trained minus best fixed, 6.1 | Beats best fixed, 6.1 |
+|---|---|---|---|---|---|---|
+| AnomalyDetector | A | 353.9 +/- 60.1 | 301.4 | +52.5 | +416 +/- 60.1 | 3 of 3 |
+| CapacityPlanner | A | 356 +/- 41.1 | 308 | +48.0 | +419 +/- 41.1 | 3 of 3 |
+| CloudBridge | A | 353.7 +/- 59.5 | 298.1 | +55.6 | +416 +/- 59.5 | 3 of 3 |
+| FederatedLearning | A | 352.6 +/- 59.4 | 335.6 | +17.0 | +415 +/- 59.4 | 3 of 3 |
+| IncidentResponder | A | 351.2 +/- 58.7 | 341.1 | +10.1 | +414 +/- 58.7 | 3 of 3 |
+| DataFlowOptimizer | B | 296.2 +/- 88.1 | 291.3 | +4.9 | +353 +/- 88.1 | 3 of 3 |
+| MultiAgentCoordinator | B | 330 +/- 59.9 | 318.1 | +11.9 | +387 +/- 59.9 | 3 of 3 |
+| Dashboard | C | 338.7 +/- 94 | 305.9 | +32.8 | +390 +/- 94 | 3 of 3 |
+| NLInterface | C | 299.3 +/- 69.4 | 240.5 | +58.8 | +351 +/- 69.4 | 3 of 3 |
+| PredictiveMaintenance | C | 256.6 +/- 132 | 248.4 | +8.2 | +308 +/- 132 | 3 of 3 |
+| SelfHealing | C | 262.4 +/- 134 | 258.8 | +3.6 | +314 +/- 134 | 3 of 3 |
+| AutoPilot | D | 181.7 +/- 64.5 | 176.1 | +5.6 | +175 +/- 64.5 | 3 of 3 |
+| BackupOptimizer | D | 181.7 +/- 64.5 | 176.1 | +5.6 | +175 +/- 64.5 | 3 of 3 |
+| ComplianceReporter | D | 210.6 +/- 13.2 | 207.3 | +3.3 | +204 +/- 13.2 | 3 of 3 |
+| EnergyOptimizer | D | 181.7 +/- 64.5 | 176.1 | +5.6 | +175 +/- 64.5 | 3 of 3 |
+| MultiSiteCoordinator | D | 181.7 +/- 64.5 | 176.1 | +5.6 | +175 +/- 64.5 | 3 of 3 |
+| PatchIntelligence | D | 181.7 +/- 64.5 | 176.1 | +5.6 | +175 +/- 64.5 | 3 of 3 |
+| UserBehaviorAnalytics | D | 181.7 +/- 64.5 | 176.1 | +5.6 | +175 +/- 64.5 | 3 of 3 |
+| NetworkWatcher | E | 156.7 +/- 36.7 | 141.8 | +14.9 | +214 +/- 36.7 | 3 of 3 |
+| FleetDispatch | F | 201.6 +/- 81.6 | 202.6 | -1.0 | +192 +/- 81.6 | 3 of 3 |
+| HealthcareMonitor | F | 201.6 +/- 81.6 | 202.6 | -1.0 | +192 +/- 81.6 | 3 of 3 |
+| SecurityMonitor | G | 101.8 +/- 61.1 | 100.8 | +1.0 | +147 +/- 61.1 | 3 of 3 |
+| AlertRouter | H | 32.3 +/- 0 | 32.3 | 0.0 | 0 +/- 0 | 0 of 3 |
+| SupplyChain | I | -2.2 +/- 2.4 | -1.2 | -1.0 | -3 +/- 2.4 | 0 of 3 |
+| JobScheduler | J | -3.7 +/- 7.9 | -8.3 | +4.5 | -5 +/- 7.9 | 0 of 3 |
+| ResourceOptimizer | K | -31.5 +/- 39.9 | -31.5 | 0.0 | -53 +/- 39.9 | 0 of 3 |
+
+The v6.0 section below is kept as it was written.
+
 ## Enterprise pillars -- re-measured for VBAF v6.0 (5-6 Oct 2026)
 
 **What changed.** Before v6.0 the pillars reported "improvement over random" (e.g. +117.5%). Nothing was learned

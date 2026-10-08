@@ -258,11 +258,13 @@ class Neuron {
     }
 
     [hashtable] ExportState() {
-        return @{ Weights = $this.Weights; Bias = $this.Bias }
+        # KF-13 fix (6.1): hand out a COPY of the weights, never the live array.
+        return @{ Weights = [double[]]$this.Weights.Clone(); Bias = $this.Bias }
     }
 
     [void] ImportState([hashtable]$state) {
-        $this.Weights = $state.Weights
+        # KF-13 fix (6.1): keep our own copy, so two networks never share a weight array.
+        $this.Weights = [double[]]([double[]]$state.Weights).Clone()
         $this.Bias    = $state.Bias
     }
 }

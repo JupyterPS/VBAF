@@ -1,6 +1,6 @@
 ﻿# VBAF — Visual AI & Reinforcement Learning Framework
 
-> **v6.0.0** · PowerShell 5.1 · Educational AI Framework · Learn by doing
+> **v6.1.0** · PowerShell 5.1 · Educational AI Framework · Learn by doing
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue.svg)](https://github.com/PowerShell/PowerShell)
@@ -32,6 +32,11 @@ Because the code is readable. Every function in VBAF is written to be understood
 
 ---
 
+## What's new in 6.1
+
+- **A frozen target.** Kernel finding KF-13: the DQN target network shared the main network's weights, so it was never frozen. Fixed in every DQN agent and in the A3C workers.
+- **The battery.** `Set-VBAFNetEngine Auto` trains on an optional C# engine compiled in memory -- bit-identical to pure PowerShell, about 8x faster in the pillars. Pure PowerShell stays the readable default.
+- **Re-measured.** All 26 pillars in 60 minutes instead of 13 hours; `tests\Test-VBAF.ps1` now locks 71 results.
 ## What's new in 6.0
 
 - **The DQN agents learn now.** Ten kernel findings fixed (KF-1 to KF-10), among them a Sigmoid output layer that could
@@ -296,6 +301,7 @@ Start-VBAFPlayground
 
 | Version | Highlight |
 |---------|-----------|
+| v6.1.0 | A frozen target and a battery -- KF-13 fixed, optional bit-identical C# engine, 71 suite checks, pillars re-measured in 60 minutes |
 | v6.0.0 | The kernel learns, and proves it -- 10 kernel fixes, evolution study and window, honest re-measurement |
 | v5.0.4 | CheatSheet rewritten as problem-first quick reference |
 | v5.0.3 | LEARNING-PATH.md -- 119-step complete guide added |

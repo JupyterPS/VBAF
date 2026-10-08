@@ -45,8 +45,8 @@ function New-VBAFBrainConfig {
 function New-VBAFBrainNetwork {
     param([int[]]$Architecture, [double]$LearningRate,
           [string]$HiddenActivation = 'Sigmoid', [string]$OutputActivation = 'Linear', [int]$Seed = -1)
-    if ($Seed -ge 0) { $net = [NeuralNetwork]::new([int[]]$Architecture, [double]$LearningRate, [int]$Seed) }
-    else             { $net = [NeuralNetwork]::new([int[]]$Architecture, [double]$LearningRate) }
+    if ($Seed -ge 0) { $net = [VBAFNetworkFactory]::Create([int[]]$Architecture, [double]$LearningRate, [int]$Seed) }
+    else             { $net = [VBAFNetworkFactory]::Create([int[]]$Architecture, [double]$LearningRate) }
     for ($i = 0; $i -lt $net.Layers.Count - 1; $i++) { $net.Layers[$i].ActivationType = $HiddenActivation }
     $net.SetOutputActivation($OutputActivation)
     return $net

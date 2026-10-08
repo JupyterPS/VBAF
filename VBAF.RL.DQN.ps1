@@ -605,8 +605,8 @@ function Invoke-DQNTraining {
     # Instantiate networks at script level -- PS 5.1 requires this
     # because class definitions cannot reference external types at parse time.
     # These objects are then INJECTED into DQNAgent via its constructor.
-    $mainNetwork   = [NeuralNetwork]::new($layerArray, $config.LearningRate)
-    $targetNetwork = [NeuralNetwork]::new($layerArray, $config.LearningRate)
+    $mainNetwork   = [VBAFNetworkFactory]::Create($layerArray, $config.LearningRate)
+    $targetNetwork = [VBAFNetworkFactory]::Create($layerArray, $config.LearningRate)
     $memory        = [ExperienceReplay]::new($config.MemorySize)
 
     $agent        = [DQNAgent]::new($config, $mainNetwork, $targetNetwork, $memory)

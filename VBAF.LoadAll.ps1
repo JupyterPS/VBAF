@@ -70,6 +70,7 @@ Write-Host ""
 # Everything else depends on these -- load first.
 Write-Host "  [Phase 1] Core neural network..." -ForegroundColor Gray
 . (Join-Path $basePath "VBAF.Core.AllClasses.ps1")
+. (Join-Path $basePath "VBAF.Core.FastNet.ps1")   # 6.1: optional C# engine + VBAFNetworkFactory (must load before RL)
 
 #  PHASE 2 -- REINFORCEMENT LEARNING 
 # Q-table, experience replay, Q-learning agent, DQN agent, environments.

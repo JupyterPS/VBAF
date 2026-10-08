@@ -197,8 +197,8 @@ function Invoke-VBAFFleetDispatchTraining {
     [int[]] $arch        = @(4, 24, 24, 4)
     $agent               = [DQNAgent]::new(
                                $config,
-                               [NeuralNetwork]::new($arch, $config.LearningRate),
-                               [NeuralNetwork]::new($arch, $config.LearningRate),
+                               [VBAFNetworkFactory]::Create($arch, $config.LearningRate),
+                               [VBAFNetworkFactory]::Create($arch, $config.LearningRate),
                                [ExperienceReplay]::new($config.MemorySize))
 
     $results = [System.Collections.Generic.List[object]]::new()

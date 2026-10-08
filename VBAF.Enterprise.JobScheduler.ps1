@@ -60,8 +60,8 @@ function Invoke-VBAFJobSchedulerTraining {
 
     # Build networks - int[] architecture like Invoke-DQNTraining
     [int[]] $arch  = @($config.StateSize, 16, 16, $config.ActionSize)
-    $mainNetwork   = [NeuralNetwork]::new($arch, $config.LearningRate)
-    $targetNetwork = [NeuralNetwork]::new($arch, $config.LearningRate)
+    $mainNetwork   = [VBAFNetworkFactory]::Create($arch, $config.LearningRate)
+    $targetNetwork = [VBAFNetworkFactory]::Create($arch, $config.LearningRate)
     $memory        = [ExperienceReplay]::new($config.MemorySize)
     # VBAF-Lab candidate (KF-6): removed an unused $layers list and a second, identical ExperienceReplay.
     # VBAF-Lab candidate (KF-6): removed 3 lines that re-created $config = [DQNConfig]::new() and threw away

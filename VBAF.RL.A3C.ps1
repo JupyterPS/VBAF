@@ -654,14 +654,14 @@ function Invoke-A3CTraining {
     $layerArray = $layers.ToArray()
 
     # Build global network -- the shared model all workers update
-    $globalNetwork = [NeuralNetwork]::new($layerArray, $config.LearningRate)
+    $globalNetwork = [VBAFNetworkFactory]::Create($layerArray, $config.LearningRate)
 
     # Build worker local networks + environments (each with unique seed)
     $workers = [System.Collections.ArrayList]::new()
     $envs    = [System.Collections.ArrayList]::new()
 
     for ($w = 0; $w -lt $numWorkers; $w++) {
-        $localNet = [NeuralNetwork]::new($layerArray, $config.LearningRate)
+        $localNet = [VBAFNetworkFactory]::Create($layerArray, $config.LearningRate)
         $worker   = [A3CWorker]::new($w, $config, $localNet)
         $env      = [A3CEnvironment]::new($w * 13 + 1)   # Unique seed per worker
         $env.MaxSteps = $maxSteps

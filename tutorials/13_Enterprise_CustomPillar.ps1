@@ -168,8 +168,8 @@ $config.ActionSize   = 4
 $config.EpsilonDecay = 0.9995
 $config.EpsilonMin   = 0.05
 [int[]] $arch        = @(4, 24, 24, 4)
-$main                = [NeuralNetwork]::new($arch, $config.LearningRate)
-$target              = [NeuralNetwork]::new($arch, $config.LearningRate)
+$main                = [VBAFNetworkFactory]::Create($arch, $config.LearningRate)
+$target              = [VBAFNetworkFactory]::Create($arch, $config.LearningRate)
 $memory              = [ExperienceReplay]::new($config.MemorySize)
 $agent               = [DQNAgent]::new($config, $main, $target, $memory)
 

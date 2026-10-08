@@ -647,8 +647,8 @@ function Invoke-PPOTraining {
     $criticLayers.Add(1)   # Single value output
 
     # Instantiate at script level -- PS 5.1 dependency injection
-    $actor  = [NeuralNetwork]::new($actorLayers.ToArray(),  $config.LearningRate)
-    $critic = [NeuralNetwork]::new($criticLayers.ToArray(), $config.LearningRate)
+    $actor  = [VBAFNetworkFactory]::Create($actorLayers.ToArray(),  $config.LearningRate)
+    $critic = [VBAFNetworkFactory]::Create($criticLayers.ToArray(), $config.LearningRate)
     $agent  = [PPOAgent]::new($config, $actor, $critic)
 
     $env          = [PPOEnvironment]::new()

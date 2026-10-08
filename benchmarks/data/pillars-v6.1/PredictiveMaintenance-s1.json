@@ -1,0 +1,33 @@
+﻿{
+    "Pillar":  "PredictiveMaintenance",
+    "Seed":  1,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  38.7,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -133.3,
+    "PillarReportTrained":  391,
+    "EvalSeconds":  13.6,
+    "Style":  "B",
+    "Random":  -151,
+    "Trained":  390.4,
+    "Fixed":  [
+                  -182.1,
+                  -51.5,
+                  -110.1,
+                  -237.1
+              ],
+    "BestFixed":  -51.5,
+    "BestFixedAction":  1,
+    "VsRandomPct":  358.5,
+    "VsBestFixed":  441.9,
+    "TrainedActions":  "489/665/432/414",
+    "Varied":  true,
+    "Engine":  "Fast",
+    "UsesFast":  true
+}

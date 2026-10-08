@@ -1,0 +1,33 @@
+﻿{
+    "Pillar":  "CloudBridge",
+    "Seed":  2,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  36.7,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -159.1,
+    "PillarReportTrained":  376.3,
+    "EvalSeconds":  14.1,
+    "Style":  "B",
+    "Random":  -149.2,
+    "Trained":  377.2,
+    "Fixed":  [
+                  -177.9,
+                  -62.5,
+                  -91.1,
+                  -245.3
+              ],
+    "BestFixed":  -62.5,
+    "BestFixedAction":  1,
+    "VsRandomPct":  352.8,
+    "VsBestFixed":  439.7,
+    "TrainedActions":  "527/562/478/433",
+    "Varied":  true,
+    "Engine":  "Fast",
+    "UsesFast":  true
+}

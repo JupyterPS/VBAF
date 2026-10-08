@@ -1,0 +1,33 @@
+﻿{
+    "Pillar":  "UserBehaviorAnalytics",
+    "Seed":  2,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  41.7,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -137.5,
+    "PillarReportTrained":  124.9,
+    "EvalSeconds":  14.7,
+    "Style":  "B",
+    "Random":  -140.4,
+    "Trained":  107.2,
+    "Fixed":  [
+                  -225.5,
+                  6.3,
+                  -39.9,
+                  -257.7
+              ],
+    "BestFixed":  6.3,
+    "BestFixedAction":  1,
+    "VsRandomPct":  176.4,
+    "VsBestFixed":  100.9,
+    "TrainedActions":  "0/1481/519/0",
+    "Varied":  true,
+    "Engine":  "Fast",
+    "UsesFast":  true
+}

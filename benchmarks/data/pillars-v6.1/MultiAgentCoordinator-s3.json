@@ -1,0 +1,33 @@
+﻿{
+    "Pillar":  "MultiAgentCoordinator",
+    "Seed":  3,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  40.4,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -151.2,
+    "PillarReportTrained":  289,
+    "EvalSeconds":  14.2,
+    "Style":  "B",
+    "Random":  -149.4,
+    "Trained":  278.8,
+    "Fixed":  [
+                  -173.9,
+                  -56.5,
+                  -110.3,
+                  -242.7
+              ],
+    "BestFixed":  -56.5,
+    "BestFixedAction":  1,
+    "VsRandomPct":  286.6,
+    "VsBestFixed":  335.3,
+    "TrainedActions":  "513/613/874/0",
+    "Varied":  true,
+    "Engine":  "Fast",
+    "UsesFast":  true
+}

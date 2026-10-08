@@ -1,19 +1,20 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-    VBAF v6.0 regression suite. Run:  .\tests\Test-VBAF.ps1   (exit code 0 = all checks pass, outside ISE)
+    VBAF v6.1 regression suite. Run:  .\tests\Test-VBAF.ps1   (exit code 0 = all checks pass, outside ISE)
 .DESCRIPTION
-    Each check protects one fix from VBAF-Evolution-Lab (KF-1..KF-9) with a FIXED expectation, measured on the
+    Each check protects one fix from VBAF-Evolution-Lab (KF-1..KF-9, KF-13) with a FIXED expectation, measured on the
     tested kernel candidate (candidate-v1). The kernel is loaded from this repository ($PSScriptRoot\..) in fresh
     child processes (PowerShell classes cannot be reloaded in one session). Nothing is written into the repository;
     temporary files go to %TEMP%\VBAF-tests.
       KF-9  LoadAll loads in a normal powershell.exe without any ISE workaround (killed after 90 s).
       Supervised results are LOCKED: they were bit-identical in VBAF v4 and v6.0 and must stay so.
       KF-1/KF-4  a DQN outputs Q-values through a Linear layer and Replay really learns.
-      KF-3  one seed (Set-VBAFSeed) makes a DQN run reproducible; seed 42 is locked to candidate-v1's fingerprint.
+      KF-3  one seed (Set-VBAFSeed) makes a DQN run reproducible; seed 42 is locked to the 6.1 fingerprint (re-locked after KF-13).
       KF-2  DQNAgent reports the real network, warns on a config mismatch and explores every action.
       KF-6  the JobScheduler pillar trains with its own config.   KF-7  MaxSteps, seeds and -Live in the environments.
       KF-8  Layer.ImportState restores the activation.
+      KF-13 ExportState/ImportState hand out copies, so a DQN target network no longer shares weight arrays (6.1).
 #>
 param([switch]$Child, [switch]$LoadOnly, [string]$OutFile = '')
 $kroot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
@@ -102,6 +103,11 @@ if ($Child) {
         $nb = [NeuralNetwork]::new([int[]]@(2,3,1), 0.5)
         $nb.ImportState($nn.ExportState())
         $res.KF8 = $nb.Layers[$nb.Layers.Count - 1].ActivationType
+        $kf13t = [NeuralNetwork]::new([int[]]@(2,3,1), 0.5); $kf13t.ImportState($nn.ExportState())
+        $res.KF13Alias = [object]::ReferenceEquals($nn.Layers[0].Neurons[0].Weights, $kf13t.Layers[0].Neurons[0].Weights)
+        $res.KF13Same = ($nn.Layers[0].Neurons[0].Weights[0] -eq $kf13t.Layers[0].Neurons[0].Weights[0])
+        $kf13w0 = $kf13t.Layers[0].Neurons[0].Weights[0]; $nn.Layers[0].Neurons[0].Weights[0] += 1.0
+        $res.KF13Leak = ($kf13t.Layers[0].Neurons[0].Weights[0] -ne $kf13w0)
         Say ('Predict aliased {0}, default output {1}, activation after import {2}' -f $res.PredictAliased, $res.DefaultOutput, $res.KF8)
     } catch { $res.Errors += ('kf4/kf8: ' + $_.Exception.Message) }
 
@@ -345,7 +351,8 @@ if ($Child) {
 
 # ===================== RUNNER =====================
 $ExpectedSup = [ordered]@{ 'XOR 2-3-1' = '0.27176407352813781'; 'Agent9-like 4-6-1' = '0.058366696125746409'; 'Agent14-like 6-8-1' = '0.14516136481322664' }
-$ExpectedKF3 = @{ ActionsSha = 'daf7ee2f0a39b441b7d20fb45c2d5d4e4d21c31fd67a2c7d0b1bd99eeb07fd05'; LossSha = '2470a106d66e6ab6841e703f0eb30846048bf21ecb69e90fb08feef139936068'; WeightsSha = '59a51cf5c0edb48db80f685133a7420648ded359d02b64ec5b5234625e7f9810' }
+# Re-locked in 6.1 after the KF-13 fix (frozen target). 6.0.0 values were made with the bug: LossSha 2470a106..., WeightsSha 59a51cf5..., Evolution curve 20.58/23.52, model BBC7739C...
+$ExpectedKF3 = @{ ActionsSha = 'daf7ee2f0a39b441b7d20fb45c2d5d4e4d21c31fd67a2c7d0b1bd99eeb07fd05'; LossSha = '891c3b4acca7d1e65f2340459e5f36dddaeb08ec21331e69da301b1400930c1f'; WeightsSha = '51b61a9b70d980e7d45926630f152a021a04ecef8ddbda818ca5710e9fda8ba4' }
 $tmp = Join-Path $env:TEMP 'VBAF-tests'
 New-Item -ItemType Directory -Path $tmp -Force | Out-Null
 $checks = [System.Collections.Generic.List[object]]::new()
@@ -371,10 +378,11 @@ Add-Check 'XOR, official example settings (seed 1): 100% accuracy' ($m.XorAccura
 Add-Check 'KF-4: Predict returns a copy' ((Test-Has $m.PredictAliased) -and ($m.PredictAliased -eq $false)) ('aliased: ' + $m.PredictAliased)
 Add-Check 'Default output layer stays Sigmoid (classifiers)' ($m.DefaultOutput -eq 'Sigmoid') ('' + $m.DefaultOutput)
 Add-Check 'KF-8: Linear survives export/import' ($m.KF8 -eq 'Linear') ('' + $m.KF8)
+Add-Check 'KF-13: ExportState/ImportState copy the weights (no alias, no leak, values equal)' ((Test-Has $m.KF13Alias) -and ($m.KF13Alias -eq $false) -and ($m.KF13Leak -eq $false) -and ($m.KF13Same -eq $true)) ('aliased {0}, leak {1}, values equal {2}' -f $m.KF13Alias, $m.KF13Leak, $m.KF13Same)
 Add-Check 'KF-1: DQN output layer is Linear' ($m.DQNOutput -eq 'Linear') ('' + $m.DQNOutput)
 Add-Check 'KF-4: Replay learns (weights change, losses non-zero)' (($m.DQNWeightsChanged -eq $true) -and ($m.DQNLossNonZero -eq 10) -and ($m.DQNLossCount -eq 10)) ('changed {0}, non-zero {1}/{2}' -f $m.DQNWeightsChanged, $m.DQNLossNonZero, $m.DQNLossCount)
 $s42 = $m.Seed42a
-Add-Check 'KF-3: seed 42 = candidate-v1 fingerprint (actions, losses, weights)' ((Test-Has $s42) -and ($s42.ActionsSha -eq $ExpectedKF3.ActionsSha) -and ($s42.LossSha -eq $ExpectedKF3.LossSha) -and ($s42.WeightsSha -eq $ExpectedKF3.WeightsSha)) ('actions {0}, losses {1}, weights {2}' -f ($s42.ActionsSha -eq $ExpectedKF3.ActionsSha), ($s42.LossSha -eq $ExpectedKF3.LossSha), ($s42.WeightsSha -eq $ExpectedKF3.WeightsSha))
+Add-Check 'KF-3: seed 42 = 6.1 fingerprint (actions, losses, weights)' ((Test-Has $s42) -and ($s42.ActionsSha -eq $ExpectedKF3.ActionsSha) -and ($s42.LossSha -eq $ExpectedKF3.LossSha) -and ($s42.WeightsSha -eq $ExpectedKF3.WeightsSha)) ('actions {0}, losses {1}, weights {2}' -f ($s42.ActionsSha -eq $ExpectedKF3.ActionsSha), ($s42.LossSha -eq $ExpectedKF3.LossSha), ($s42.WeightsSha -eq $ExpectedKF3.WeightsSha))
 Add-Check 'KF-3: seed 42 twice in one process is identical' ((Test-Has $m.Seed42b) -and ($m.Seed42a.ActionsSha -eq $m.Seed42b.ActionsSha) -and ($m.Seed42a.LossSha -eq $m.Seed42b.LossSha) -and ($m.Seed42a.WeightsSha -eq $m.Seed42b.WeightsSha)) ''
 Add-Check 'KF-3: seed 43 differs from seed 42' ((Test-Has $m.Seed43) -and ($m.Seed43.ActionsSha -ne $m.Seed42a.ActionsSha) -and ($m.Seed43.WeightsSha -ne $m.Seed42a.WeightsSha)) ''
 $mw = @($m.KF2Mis.Warnings)
@@ -397,7 +405,7 @@ Add-Check 'Trace -Agent works with a DQN agent (valid actions only)' ((Test-Has 
 Add-Check 'Trace -Snapshot: one before every step plus one at the end' ((Test-Has $m.TraceSnap) -and ($m.TraceSnap.Count -eq ($m.TraceSnap.Steps + 1)) -and ($m.TraceSnap.First -eq 0) -and ($m.TraceSnap.Last -eq $m.TraceSnap.Steps)) ('snapshots {0} for {1} steps, first {2}, last {3}' -f $m.TraceSnap.Count, $m.TraceSnap.Steps, $m.TraceSnap.First, $m.TraceSnap.Last)
 Add-Check 'Production cell: Brain 0 (SPT) = 37.85 on the test shifts' ($m.B0 -eq 37.85) ('' + $m.B0)
 Add-Check 'Production cell: the same seed gives the same shift (another seed does not)' ($m.WorldSame -eq $true) ('' + $m.WorldSame)
-Add-Check 'Evolution run LOCKED: curve 25:20.58 50:23.52, model BBC7739C62F0FC96' ((Test-Has $m.Evo) -and ($m.Evo.Curve -ceq '25:20.58 50:23.52') -and ($m.Evo.ModelSha -ceq 'BBC7739C62F0FC96')) ('curve {0}, model {1}, {2} s' -f $m.Evo.Curve, $m.Evo.ModelSha, $m.Evo.Seconds)
+Add-Check 'Evolution run LOCKED: curve 25:26.48 50:26.39, model E1DFB81E14DFBBCD' ((Test-Has $m.Evo) -and ($m.Evo.Curve -ceq '25:26.48 50:26.39') -and ($m.Evo.ModelSha -ceq 'E1DFB81E14DFBBCD')) ('curve {0}, model {1}, {2} s' -f $m.Evo.Curve, $m.Evo.ModelSha, $m.Evo.Seconds)
 Add-Check 'Evolution run is resumable (a second call reuses the saved run: < 5 s, same model)' ((Test-Has $m.EvoResume) -and ($m.EvoResume.Seconds -lt 5) -and ($m.EvoResume.SameModel -eq $true)) ('{0} s, same model {1}' -f $m.EvoResume.Seconds, $m.EvoResume.SameModel)
 if (@($m.Window).Count -eq 0) { Add-Check 'Evolution window self-test ran' $false 'no window results' }
 foreach ($wc in @($m.Window)) { Add-Check ('Evolution window: ' + $wc.Check) ([bool]$wc.Pass) ([string]$wc.Detail) }

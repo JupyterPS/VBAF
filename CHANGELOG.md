@@ -2,7 +2,31 @@
 
 All notable changes to VBAF are documented here.
 
-## [6.0.0] - unreleased (branch v5.0) -- The kernel learns, and proves it
+## [6.1.0] - 2026-10-08 -- A frozen target and a battery
+
+**Read this first.** 6.1 fixes kernel finding KF-13: the DQN target network was never frozen. DQN training results
+therefore differ from 6.0.0 (runs saved with 6.0.0 are not reproduced bit for bit). The re-measured pillar figures
+and the raw data are in `benchmarks/data/pillars-v6.1`.
+
+### Fixed (kernel findings from VBAF-Evolution-Lab)
+- KF-13: the DQN target network shared the main network's weight arrays (`Neuron.ExportState` handed out its live array and `ImportState` kept it), so the target followed every training step instead of staying frozen -- in every DQN agent. The A3C workers shared the global network's weights the same way. `ExportState` now gives copies and `ImportState` keeps its own copy. The suite checks it (no alias, no leak, values equal); the KF-3 seed-42 fingerprint and the locked Evolution run were re-locked, because the 6.0.0 values were made with the bug.
+
+### Added
+- `VBAF.Core.FastNet.ps1` -- the battery: an optional C# engine for `NeuralNetwork`, compiled in memory with Add-Type (no dependencies). Bit-identical to pure PowerShell, locked by the suite through a whole DQN run. Training is about 8x faster in the pillars.
+- `Set-VBAFNetEngine` / `$global:VBAFNetEngine`: `PowerShell` (default, the readable kernel), `Auto` (the engine when it is available, otherwise PowerShell) or `Fast` (stops with a clear error when Add-Type is blocked, for example in Constrained Language Mode). `Get-VBAFNetEngine` shows the setting and why the engine is not available.
+- `VBAFNetworkFactory` -- every network in VBAF is created here (all 66 places in 33 files), so the engine setting reaches every pillar and agent.
+- `benchmarks\Measure-VBAFPillars.ps1 -Engine` -- passed to every child process; each result file records the engine it used.
+- The regression suite has 71 checks (was 68): KF-13, battery = pure PowerShell bit for bit, and the fallback when the engine is blocked.
+
+### Changed
+- All 26 pillars were re-measured with the fixed target, with the same settings as 6.0 (30 training episodes, 3 seeds, 10 evaluation episodes), on the battery: 60 minutes instead of 13 hours. 21 of 26 pillars score higher than in 6.0, 3 lower and 2 the same -- mostly within one standard deviation, so read it as a consistent, moderate shift, not a breakthrough. 22 of 26 still beat the best fixed action on every seed.
+
+### Known issues
+- Unchanged from 6.0.0: the four pillars built on `New-EnterpriseEnvironment` (AlertRouter, JobScheduler, ResourceOptimizer, SupplyChain) do not beat the best fixed action, and KF-5 (26 pillars on 11 environments) still makes several pillars' figures identical.
+- KF-11: AutoPilot does not orchestrate the other pillars. It decides from 4 simulated aggregate signals with the same dynamics as EnergyOptimizer and does not read the other pillars at all. Found on 6 Oct 2026 while confirming KF-5 (AutoPilot sat in the same environment group as EnergyOptimizer). The documentation was corrected everywhere it claimed otherwise (README, Architecture, Teach, Playground, GettingStarted, and the article via errata); the code is unchanged.
+- KF-12: backprop reads weights that the layer above has already updated in the same step (classic backprop uses the old weights). Documented, not changed in 6.1 (one behaviour change at a time). The battery reproduces it on purpose, so both engines stay bit-identical.
+- VBAF-Evolution-Lab has its own `FastNeuralNetwork` class; retire it when the Lab moves to kernel 6.1.
+## [6.0.0] - 2026-10-06 -- The kernel learns, and proves it
 
 **Read this first.** Before 6.0 the DQN agents did not learn (KF-1, KF-4 below). The "improvement over random"
 figures in the older entries below (+24.5% to +292%) measured one fixed action against random choices, not learning.

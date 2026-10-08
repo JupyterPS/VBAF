@@ -860,7 +860,7 @@ $resampled = Invoke-TimeSeriesResample -TimeSeries $ts -Frequency "monthly" -Agg
 ## Testing (v6.0)
 
 ```powershell
-& .\tests\Test-VBAF.ps1      # the regression suite: 68 checks with locked results, about 3 minutes
+& .\tests\Test-VBAF.ps1      # the regression suite: 71 checks with locked results, about 3 minutes
 ```
 
 See `tests\README.md` for what each check protects and why the results are locked.

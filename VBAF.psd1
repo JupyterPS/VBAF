@@ -1,7 +1,7 @@
 ﻿@{
 
 RootModule        = 'VBAF.psm1'
-ModuleVersion = '6.0.0'
+ModuleVersion = '6.1.0'
 GUID              = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
 Author            = 'Henning'
 CompanyName       = 'VBAF Project'
@@ -27,7 +27,7 @@ PrivateData = @{
         Tags = @('AI','MachineLearning','ReinforcementLearning','NeuralNetwork','QLearning','DQN','PPO','A3C','MultiAgent','Automation','Visualization','PowerShell','Education','MLOps','DeepLearning','CNN','RNN','LSTM','AutoML','DataPipeline')
         LicenseUri = 'https://github.com/JupyterPS/VBAF/blob/master/LICENSE'
         ProjectUri = 'https://github.com/JupyterPS/VBAF'
-        ReleaseNotes = '6.0.0 (October 2026) - The kernel learns, and proves it: 10 kernel fixes (DQN output layer, Predict copy, seeding, LoadAll outside ISE and more), a regression suite of 68 checks, Get-VBAFTrace, a production cell and evolution study (Invoke-VBAFEvolutionStudy), an evolution window, Teach topic 7 and an honest re-measurement of all 26 pillars. See CHANGELOG.md.'
+        ReleaseNotes = '6.1.0 (October 2026) - A frozen target and a battery: kernel finding KF-13 fixed (the DQN target network shared the main weights in every DQN agent), an optional bit-identical C# engine (Set-VBAFNetEngine Auto or Fast, about 8x faster training in the pillars), VBAFNetworkFactory, a regression suite of 71 checks and all 26 pillars re-measured. See CHANGELOG.md.'
     }
 }
 

@@ -12,13 +12,14 @@
     action (the honest bar), and whether the agent uses more than one action. Several seeds -> mean +/- SD.
     Every pillar x seed runs in its own powershell.exe (a crash never stops the rest) and is saved at once, so an
     interrupted run resumes. Test-NetConnection is stubbed during the run (CloudBridge would ping real hosts).
+    -Engine PowerShell|Auto|Fast (6.1): the network engine the child processes use. The engine is bit-identical, so it changes only the speed.
 .EXAMPLE
     .\benchmarks\Measure-VBAFPillars.ps1 -OutDir C:\Temp\pillars -Episodes 30 -Seeds 1,2,3 -EvalEpisodes 10
 .EXAMPLE
     .\benchmarks\Measure-VBAFPillars.ps1 -OutDir C:\Temp\pillars-dry -Episodes 1 -Seeds 1 -EvalEpisodes 2   # timing dry run
 #>
 param(
-    [string]$OutDir = '', [int]$Episodes = 30, [int[]]$Seeds = @(1, 2, 3), [int]$EvalEpisodes = 10, [string[]]$Pillars = @(),
+    [string]$OutDir = '', [int]$Episodes = 30, [int[]]$Seeds = @(1, 2, 3), [int]$EvalEpisodes = 10, [string[]]$Pillars = @(), [ValidateSet('PowerShell', 'Auto', 'Fast')][string]$Engine = 'PowerShell',
     [string]$ChildPillar = '', [int]$ChildSeed = 0, [string]$ChildOut = ''
 )
 $kroot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
@@ -39,7 +40,7 @@ function Get-VBAFPillarList([string]$Root) {
 
 if ($ChildPillar -ne '') {
     # ===================== CHILD: one pillar, one seed =====================
-    Push-Location $kroot; . (Join-Path $kroot 'VBAF.LoadAll.ps1') *> $null; Pop-Location
+    Push-Location $kroot; . (Join-Path $kroot 'VBAF.LoadAll.ps1') *> $null; Pop-Location; $global:VBAFNetEngine = $Engine
     function global:Test-NetConnection {
         param([Parameter(Position = 0)]$ComputerName, $Port, [switch]$InformationLevel, [switch]$WarningAction)
         [pscustomobject]@{ ComputerName = $ComputerName; RemoteAddress = $ComputerName; PingSucceeded = $true; TcpTestSucceeded = $true
@@ -98,6 +99,7 @@ if ($ChildPillar -ne '') {
         $res.VsBestFixed = [Math]::Round($res.Trained - $best, 3)
         $res.TrainedActions = ($trainedActs -join '/'); $res.Varied = (@($trainedActs | Where-Object { $_ -gt 0 }).Count -gt 1)
     } catch { $res.Error = $_.Exception.Message }
+    if ($res -is [System.Collections.IDictionary]) { $res['Engine'] = $Engine; $res['UsesFast'] = [VBAFNetworkFactory]::UseFast() } else { $res | Add-Member -NotePropertyName Engine -NotePropertyValue $Engine -Force; $res | Add-Member -NotePropertyName UsesFast -NotePropertyValue ([VBAFNetworkFactory]::UseFast()) -Force }
     $res | ConvertTo-Json -Depth 4 | Set-Content -Path $ChildOut -Encoding UTF8
     return
 }
@@ -107,7 +109,7 @@ if ($OutDir -eq '') { throw 'Measure-VBAFPillars: -OutDir is required (one resul
 New-Item -ItemType Directory -Path $OutDir -Force | Out-Null
 $list = @(Get-VBAFPillarList $kroot)
 if ($Pillars.Count -gt 0) { $list = @($list | Where-Object { $Pillars -contains $_.Pillar }) }
-Write-Host ('=== Measure-VBAFPillars: {0} pillars x {1} seeds, {2} training episodes, {3} evaluation episodes -> {4} ===' -f $list.Count, $Seeds.Count, $Episodes, $EvalEpisodes, $OutDir) -ForegroundColor Cyan
+Write-Host ('=== Measure-VBAFPillars: {0} pillars x {1} seeds, {2} training episodes, {3} evaluation episodes, engine {5} -> {4} ===' -f $list.Count, $Seeds.Count, $Episodes, $EvalEpisodes, $OutDir, $Engine) -ForegroundColor Cyan
 $i = 0
 foreach ($s in $Seeds) {
     foreach ($pl in $list) {
@@ -115,7 +117,7 @@ foreach ($s in $Seeds) {
         $f = Join-Path $OutDir ('{0}-s{1}.json' -f $pl.Pillar, $s)
         if (Test-Path $f) { Say ('[{0}/{1}] {2} seed {3}: done earlier' -f $i, ($list.Count * $Seeds.Count), $pl.Pillar, $s); continue }
         Say ('[{0}/{1}] {2} seed {3} ...' -f $i, ($list.Count * $Seeds.Count), $pl.Pillar, $s)
-        & powershell.exe -NoProfile -NonInteractive -InputFormat None -ExecutionPolicy Bypass -File $PSCommandPath -ChildPillar $pl.Pillar -ChildSeed $s -ChildOut $f -Episodes $Episodes -EvalEpisodes $EvalEpisodes 2>&1 | ForEach-Object { Write-Host ('      ' + [string]$_) }
+        & powershell.exe -NoProfile -NonInteractive -InputFormat None -ExecutionPolicy Bypass -File $PSCommandPath -ChildPillar $pl.Pillar -ChildSeed $s -ChildOut $f -Episodes $Episodes -EvalEpisodes $EvalEpisodes -Engine $Engine 2>&1 | ForEach-Object { Write-Host ('      ' + [string]$_) }
         if (Test-Path $f) {
             $x = (Get-Content $f -Raw -Encoding UTF8 | ConvertFrom-Json)
             if ($x.Error) { Say ('      ERROR: ' + $x.Error) }

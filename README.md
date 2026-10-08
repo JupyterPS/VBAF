@@ -242,22 +242,22 @@ Once you understand the foundation phases (1-9), VBAF includes 14 enterprise pil
 
 | Phase | Pillar | What it automates | Trained minus best fixed action (3 seeds) | Beats best fixed |
 |---|---|---|---|---|
-| 14 | Self-Healing | Detects and fixes system problems automatically | +310 +/- 135 | 3 of 3 |
-| 15 | Dashboard | Intelligent cache and refresh management | +357 +/- 153 | 3 of 3 |
-| 16 | Federated Learning | Distributed model training across nodes | +398 +/- 43 | 3 of 3 |
-| 17 | Cloud Bridge | Local vs cloud workload balancing | +361 +/- 57 | 3 of 3 |
-| 18 | Anomaly Detector | Spots unusual patterns before they become incidents | +364 +/- 50 | 3 of 3 |
-| 19 | Capacity Planner | Predicts resource needs before you run out | +371 +/- 58 | 3 of 3 |
-| 20 | Incident Responder | Automated incident triage and containment | +404 +/- 52 | 3 of 3 |
-| 21 | Compliance Reporter | GDPR/ISO27001 compliance monitoring | +201 +/- 24 | 3 of 3 |
-| 22 | User Behavior Analytics | Detects insider threats and anomalous access | +170 +/- 77 | 3 of 3 |
-| 23 | Patch Intelligence | Risk-aware patch scheduling and rollback | +170 +/- 77 | 3 of 3 |
-| 24 | Backup Optimizer | Adaptive backup strategy optimisation | +170 +/- 77 | 3 of 3 |
-| 25 | Energy Optimizer | Reduces power consumption intelligently | +170 +/- 77 | 3 of 3 |
-| 26 | Multi-Site Coordinator | Cross-datacenter workload balancing | +170 +/- 77 | 3 of 3 |
-| 27 | AutoPilot | Chooses an intervention level from 4 simulated signals (does not yet read the other pillars) | +170 +/- 77 | 3 of 3 |
+| 14 | Self-Healing | Detects and fixes system problems automatically | +314 +/- 134 | 3 of 3 |
+| 15 | Dashboard | Intelligent cache and refresh management | +390 +/- 94 | 3 of 3 |
+| 16 | Federated Learning | Distributed model training across nodes | +415 +/- 59 | 3 of 3 |
+| 17 | Cloud Bridge | Local vs cloud workload balancing | +416 +/- 60 | 3 of 3 |
+| 18 | Anomaly Detector | Spots unusual patterns before they become incidents | +416 +/- 60 | 3 of 3 |
+| 19 | Capacity Planner | Predicts resource needs before you run out | +419 +/- 41 | 3 of 3 |
+| 20 | Incident Responder | Automated incident triage and containment | +414 +/- 59 | 3 of 3 |
+| 21 | Compliance Reporter | GDPR/ISO27001 compliance monitoring | +204 +/- 13 | 3 of 3 |
+| 22 | User Behavior Analytics | Detects insider threats and anomalous access | +175 +/- 65 | 3 of 3 |
+| 23 | Patch Intelligence | Risk-aware patch scheduling and rollback | +175 +/- 65 | 3 of 3 |
+| 24 | Backup Optimizer | Adaptive backup strategy optimisation | +175 +/- 65 | 3 of 3 |
+| 25 | Energy Optimizer | Reduces power consumption intelligently | +175 +/- 65 | 3 of 3 |
+| 26 | Multi-Site Coordinator | Cross-datacenter workload balancing | +175 +/- 65 | 3 of 3 |
+| 27 | AutoPilot | Chooses an intervention level from 4 simulated signals (does not yet read the other pillars) | +175 +/- 65 | 3 of 3 |
 
-*Measured for v6.0 (5-6 Oct 2026): the trained agent's score minus the score of the BEST FIXED ACTION ("always press the
+*Measured for v6.1 (8 Oct 2026, with the KF-13 fix; the v6.0 figures are kept in the benchmarks file): the trained agent's score minus the score of the BEST FIXED ACTION ("always press the
 same button"), on the same evaluation episodes, mean +/- SD over 3 training seeds, 30 training episodes. A positive
 number means the agent learned something no fixed action can do. The pre-v6.0 figures (+24.5% to +117.5% "over random")
 are withdrawn: they measured one fixed action against random choices, not learning. Four further pillars (AlertRouter,

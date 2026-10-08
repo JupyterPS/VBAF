@@ -1,0 +1,33 @@
+﻿{
+    "Pillar":  "SecurityMonitor",
+    "Seed":  3,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  25.1,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -146.6,
+    "PillarReportTrained":  13,
+    "EvalSeconds":  7.9,
+    "Style":  "B",
+    "Random":  -141.8,
+    "Trained":  31.3,
+    "Fixed":  [
+                  -179.1,
+                  -45.1,
+                  -102.9,
+                  -246.9
+              ],
+    "BestFixed":  -45.1,
+    "BestFixedAction":  1,
+    "VsRandomPct":  122.1,
+    "VsBestFixed":  76.4,
+    "TrainedActions":  "0/1490/510/0",
+    "Varied":  true,
+    "Engine":  "Fast",
+    "UsesFast":  true
+}

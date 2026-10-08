@@ -1,0 +1,33 @@
+﻿{
+    "Pillar":  "IncidentResponder",
+    "Seed":  2,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  37.6,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -159.1,
+    "PillarReportTrained":  369.7,
+    "EvalSeconds":  14.2,
+    "Style":  "B",
+    "Random":  -149.2,
+    "Trained":  367.9,
+    "Fixed":  [
+                  -177.9,
+                  -62.5,
+                  -91.1,
+                  -245.3
+              ],
+    "BestFixed":  -62.5,
+    "BestFixedAction":  1,
+    "VsRandomPct":  346.6,
+    "VsBestFixed":  430.4,
+    "TrainedActions":  "522/567/442/469",
+    "Varied":  true,
+    "Engine":  "Fast",
+    "UsesFast":  true
+}

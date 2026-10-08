@@ -1,0 +1,33 @@
+﻿{
+    "Pillar":  "NetworkWatcher",
+    "Seed":  1,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  40.3,
+    "TrainSteps":  47776,
+    "Losses":  1493,
+    "NonZero":  1493,
+    "Learned":  true,
+    "Actions":  4,
+    "PillarReportBaseline":  -160.8,
+    "PillarReportTrained":  208.6,
+    "EvalSeconds":  14,
+    "Style":  "B",
+    "Random":  -161.3,
+    "Trained":  196.9,
+    "Fixed":  [
+                  -162.6,
+                  -57.6,
+                  -103.6,
+                  -256.8
+              ],
+    "BestFixed":  -57.6,
+    "BestFixedAction":  1,
+    "VsRandomPct":  222.1,
+    "VsBestFixed":  254.5,
+    "TrainedActions":  "0/1274/359/367",
+    "Varied":  true,
+    "Engine":  "Fast",
+    "UsesFast":  true
+}

@@ -181,8 +181,8 @@ function Play-DQN {
         2 { @(4, 12, 12, 4) }
     }
 
-    $main   = [NeuralNetwork]::new($arch, $config.LearningRate)
-    $target = [NeuralNetwork]::new($arch, $config.LearningRate)
+    $main   = [VBAFNetworkFactory]::Create($arch, $config.LearningRate)
+    $target = [VBAFNetworkFactory]::Create($arch, $config.LearningRate)
     $memory = [ExperienceReplay]::new($config.MemorySize)
     $agent  = [DQNAgent]::new($config, $main, $target, $memory)
 

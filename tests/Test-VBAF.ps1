@@ -15,6 +15,7 @@
       KF-6  the JobScheduler pillar trains with its own config.   KF-7  MaxSteps, seeds and -Live in the environments.
       KF-8  Layer.ImportState restores the activation.
       KF-13 ExportState/ImportState hand out copies, so a DQN target network no longer shares weight arrays (6.1).
+      6.1   Battery (VBAF.Core.FastNet.ps1): the C# engine gives the same DQN run bit for bit; when blocked, Auto falls back.
 #>
 param([switch]$Child, [switch]$LoadOnly, [string]$OutFile = '')
 $kroot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
@@ -134,11 +135,15 @@ if ($Child) {
     } catch { $res.Errors += ('dqn: ' + $_.Exception.Message) }
 
     # --- KF-3: seed (same procedure as the Lab KF-3 test) ---
-    function Invoke-SeedRun([int]$Seed) {
+    function Invoke-SeedRun([int]$Seed, [string]$Engine = 'PowerShell') {
+        # 6.1: the same run on either engine; the battery check compares them bit for bit.
         Set-VBAFSeed $Seed
         $cfg = [DQNConfig]::new(); $cfg.StateSize = 4; $cfg.ActionSize = 3
         [int[]]$arch = @(4, 16, 3)
-        $main = [NeuralNetwork]::new($arch, $cfg.LearningRate); $tgt = [NeuralNetwork]::new($arch, $cfg.LearningRate)
+        $global:VBAFNetEngine = $Engine
+        $main = [VBAFNetworkFactory]::Create($arch, $cfg.LearningRate); $tgt = [VBAFNetworkFactory]::Create($arch, $cfg.LearningRate)
+        $global:VBAFNetEngine = 'PowerShell'
+        $netClass = $main.GetType().Name
         $mem = [ExperienceReplay]::new($cfg.MemorySize)
         $agent = & { [DQNAgent]::new($cfg, $main, $tgt, $mem) } 3>$null 6>$null
         $actions = New-Object System.Collections.Generic.List[int]
@@ -152,7 +157,7 @@ if ($Child) {
             if ($k % 2 -eq 0) { & { [void]$agent.Replay() } 6>$null }
         }
         $lossTxt = (@($agent.LossHistory) | ForEach-Object { ([double]$_).ToString('R', [System.Globalization.CultureInfo]::InvariantCulture) }) -join ','
-        return [ordered]@{ ActionsSha = Get-ShaText (($actions | ForEach-Object { [string]$_ }) -join ','); LossSha = Get-ShaText $lossTxt; WeightsSha = Get-ShaText (ConvertTo-FlatText ($main.ExportState())) }
+        return [ordered]@{ NetClass = $netClass; ActionsSha = Get-ShaText (($actions | ForEach-Object { [string]$_ }) -join ','); LossSha = Get-ShaText $lossTxt; WeightsSha = Get-ShaText (ConvertTo-FlatText ($main.ExportState())) }
     }
     try {
         $res.Seed42a = Invoke-SeedRun 42; $res.Seed42b = Invoke-SeedRun 42; $res.Seed43 = Invoke-SeedRun 43
@@ -344,6 +349,7 @@ if ($Child) {
         $res.LoadErrors = [ordered]@{ Count = $(if ($ec.Count -eq 1) { $ec[0] } else { -1 }); Messages = (@($lo | Where-Object { $_ -like 'MSG=*' } | Select-Object -First 3) -join ' | ') }
         Say ('LoadAll in a fresh process: {0} errors' -f $res.LoadErrors.Count)
     } catch { $res.Errors += ('loadall errors: ' + $_.Exception.Message) }
+    try { $res.Seed42Fast = Invoke-SeedRun 42 'Fast' } catch { $res.Errors += ('battery: ' + $_.Exception.Message) }   # 6.1: last, so it moves no random state
     $res | ConvertTo-Json -Depth 6 | Set-Content -Path $OutFile -Encoding UTF8
     Say ('Result written. Child total {0:N1} s' -f $sw.Elapsed.TotalSeconds)
     return
@@ -379,12 +385,18 @@ Add-Check 'KF-4: Predict returns a copy' ((Test-Has $m.PredictAliased) -and ($m.
 Add-Check 'Default output layer stays Sigmoid (classifiers)' ($m.DefaultOutput -eq 'Sigmoid') ('' + $m.DefaultOutput)
 Add-Check 'KF-8: Linear survives export/import' ($m.KF8 -eq 'Linear') ('' + $m.KF8)
 Add-Check 'KF-13: ExportState/ImportState copy the weights (no alias, no leak, values equal)' ((Test-Has $m.KF13Alias) -and ($m.KF13Alias -eq $false) -and ($m.KF13Leak -eq $false) -and ($m.KF13Same -eq $true)) ('aliased {0}, leak {1}, values equal {2}' -f $m.KF13Alias, $m.KF13Leak, $m.KF13Same)
+$fb = @(& powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command { param($k) $global:VBAFFastEngineDisable = $true; Push-Location $k; . .\VBAF.LoadAll.ps1 *> $null; Pop-Location; $global:VBAFNetEngine = 'Auto'; 'AUTO=' + [VBAFNetworkFactory]::Create([int[]]@(2,3,1), 0.5).GetType().Name; $global:VBAFNetEngine = 'Fast'; try { [void][VBAFNetworkFactory]::Create([int[]]@(2,3,1), 0.5); 'FAST=no error' } catch { 'FAST=' + $_.Exception.Message } } -args $kroot)
+$fbAuto = (@($fb | Where-Object { "$_" -like 'AUTO=*' }) -join '') -replace '^AUTO=', ''
+$fbFast = (@($fb | Where-Object { "$_" -like 'FAST=*' }) -join '') -replace '^FAST=', ''
+Add-Check '6.1 battery fallback: engine blocked -> Auto uses pure PowerShell, Fast stops with a clear error' (($fbAuto -eq 'NeuralNetwork') -and ($fbFast -like '*the C# engine is not available*')) ('Auto -> ' + $fbAuto + '; Fast -> ' + $fbFast)
 Add-Check 'KF-1: DQN output layer is Linear' ($m.DQNOutput -eq 'Linear') ('' + $m.DQNOutput)
 Add-Check 'KF-4: Replay learns (weights change, losses non-zero)' (($m.DQNWeightsChanged -eq $true) -and ($m.DQNLossNonZero -eq 10) -and ($m.DQNLossCount -eq 10)) ('changed {0}, non-zero {1}/{2}' -f $m.DQNWeightsChanged, $m.DQNLossNonZero, $m.DQNLossCount)
 $s42 = $m.Seed42a
 Add-Check 'KF-3: seed 42 = 6.1 fingerprint (actions, losses, weights)' ((Test-Has $s42) -and ($s42.ActionsSha -eq $ExpectedKF3.ActionsSha) -and ($s42.LossSha -eq $ExpectedKF3.LossSha) -and ($s42.WeightsSha -eq $ExpectedKF3.WeightsSha)) ('actions {0}, losses {1}, weights {2}' -f ($s42.ActionsSha -eq $ExpectedKF3.ActionsSha), ($s42.LossSha -eq $ExpectedKF3.LossSha), ($s42.WeightsSha -eq $ExpectedKF3.WeightsSha))
 Add-Check 'KF-3: seed 42 twice in one process is identical' ((Test-Has $m.Seed42b) -and ($m.Seed42a.ActionsSha -eq $m.Seed42b.ActionsSha) -and ($m.Seed42a.LossSha -eq $m.Seed42b.LossSha) -and ($m.Seed42a.WeightsSha -eq $m.Seed42b.WeightsSha)) ''
 Add-Check 'KF-3: seed 43 differs from seed 42' ((Test-Has $m.Seed43) -and ($m.Seed43.ActionsSha -ne $m.Seed42a.ActionsSha) -and ($m.Seed43.WeightsSha -ne $m.Seed42a.WeightsSha)) ''
+$sf = $m.Seed42Fast
+Add-Check '6.1 battery: seed 42 DQN run on the C# engine = pure PowerShell, bit for bit (actions, losses, weights)' ((Test-Has $sf) -and ($sf.NetClass -eq 'FastNeuralNetwork') -and ($m.Seed42a.NetClass -eq 'NeuralNetwork') -and ($sf.ActionsSha -eq $m.Seed42a.ActionsSha) -and ($sf.LossSha -eq $m.Seed42a.LossSha) -and ($sf.WeightsSha -eq $m.Seed42a.WeightsSha)) ('classes ' + $m.Seed42a.NetClass + '/' + $sf.NetClass + '; actions ' + ($sf.ActionsSha -eq $m.Seed42a.ActionsSha) + ', losses ' + ($sf.LossSha -eq $m.Seed42a.LossSha) + ', weights ' + ($sf.WeightsSha -eq $m.Seed42a.WeightsSha))
 $mw = @($m.KF2Mis.Warnings)
 Add-Check 'KF-2: config mismatch warns about ActionSize and HiddenLayers (not StateSize)' (($mw.Count -eq 2) -and (@($mw | Where-Object { $_ -match 'ActionSize' }).Count -eq 1) -and (@($mw | Where-Object { $_ -match 'HiddenLayers' }).Count -eq 1) -and (@($mw | Where-Object { $_ -match 'StateSize' }).Count -eq 0)) ($mw -join ' | ')
 Add-Check 'KF-2: mismatch still explores action 2 (>= 50 of 300)' ((Test-Has $m.KF2Mis) -and ($m.KF2Mis.Counts[2] -ge 50)) ('0/1/2 = ' + (@($m.KF2Mis.Counts)[0..2] -join '/'))

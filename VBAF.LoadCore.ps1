@@ -51,6 +51,7 @@ Write-Host ""
 #  PHASE 1 -- CORE NEURAL NETWORK
 Write-Host "  [Phase 1] Core neural network..." -ForegroundColor Gray
 . (Join-Path $basePath "VBAF.Core.AllClasses.ps1")
+. (Join-Path $basePath "VBAF.Core.FastNet.ps1")   # 6.1: optional C# engine + VBAFNetworkFactory (must load before RL)
 
 #  PHASE 2 -- REINFORCEMENT LEARNING
 Write-Host "  [Phase 2] Reinforcement learning..." -ForegroundColor Gray

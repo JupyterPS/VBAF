@@ -49,8 +49,8 @@ function Invoke-VBAFSupplyChainTraining {
     $config.EpsilonDecay = 0.9995
     $config.EpsilonMin   = 0.05
     [int[]] $arch        = @(4, 16, 16, 4)
-    $mainNetwork         = [NeuralNetwork]::new($arch, $config.LearningRate)
-    $targetNetwork       = [NeuralNetwork]::new($arch, $config.LearningRate)
+    $mainNetwork         = [VBAFNetworkFactory]::Create($arch, $config.LearningRate)
+    $targetNetwork       = [VBAFNetworkFactory]::Create($arch, $config.LearningRate)
     $memory              = [ExperienceReplay]::new($config.MemorySize)
     $agent               = [DQNAgent]::new($config, $mainNetwork, $targetNetwork, $memory)
 

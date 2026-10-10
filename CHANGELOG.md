@@ -21,7 +21,11 @@ over settings lifted 12 of 12 pillar-seeds over the best fixed action (default s
 2. Nothing else breaks: the suite passes (re-locks only where KF-15 changes a number, each with its reason), and the other 22
    pillars give unchanged results.
 3. On at least one environment not used to build it (for example the production cell), the search finds settings that beat the
-   default settings.
+   default settings.
+   Operationalized on 10 Oct 2026, before running: the production cell (ProductionCellEnvironment); the default settings (LR 0.001,
+   gamma 0.95, epsilon decay 0.995, target update 10) run through the same search machinery with one candidate; the search with 6
+   candidates; both 150 episodes in 6 rounds, validation seeds 2001-2010, population seeds 1-3, scored on the 30 test seeds
+   1001-1030 (benchmarks\Measure-VBAFSearchCriterion3.ps1). Met if the search has the higher mean AND wins on at least 2 of 3 seeds.
 
 ## [6.1.0] - 2026-10-08 -- A frozen target and a battery
 

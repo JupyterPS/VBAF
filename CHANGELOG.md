@@ -2,6 +2,27 @@
 
 All notable changes to VBAF are documented here.
 
+## [6.2.0] - planned (branch v6.2) -- Brains that find their own settings
+
+Plan and success criterion locked on 10 Oct 2026, before any code. Background: in VBAF-Evolution-Lab Phase 8, a random search
+over settings lifted 12 of 12 pillar-seeds over the best fixed action (default settings: 0 of 12).
+
+### Planned
+- KF-15: no live data in the Enterprise environments by default. AlertRouter gets the LiveMode guard (the event log only with
+  -Live), and TimeOfDay in Step() of AlertRouter and JobScheduler comes from the environment's own generator unless -Live.
+- `Invoke-VBAFSettingsSearch`: an automatic settings search (learning rate, gamma, epsilon decay, target update) for any VBAF
+  environment. It tries random settings, trains each, picks the best on validation seeds and returns the trained brain and its
+  settings. Built from the tested Lab code (src\VBAF.Lab.PBT.ps1), without the PBT part.
+- KF-14: the four New-EnterpriseEnvironment pillars get an optional -Settings parameter, and their default learning rate is the
+  one the search finds on validation seeds (never on test seeds).
+
+### Success criterion (locked before code)
+1. With the new defaults, all 4 of these pillars beat the best fixed action on 3 of 3 seeds in Measure-VBAFPillars, on new test seeds.
+2. Nothing else breaks: the suite passes (re-locks only where KF-15 changes a number, each with its reason), and the other 22
+   pillars give unchanged results.
+3. On at least one environment not used to build it (for example the production cell), the search finds settings that beat the
+   default settings.
+
 ## [6.1.0] - 2026-10-08 -- A frozen target and a battery
 
 **Read this first.** 6.1 fixes kernel finding KF-13: the DQN target network was never frozen. DQN training results

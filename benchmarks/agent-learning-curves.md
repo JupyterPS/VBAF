@@ -1,5 +1,26 @@
 ﻿# Agent Learning Curves
 
+## Enterprise pillars -- re-measured for VBAF v6.2 (10 Oct 2026)
+
+**What changed.** KF-15: AlertRouter and JobScheduler no longer read live data (event log, clock) unless asked. KF-14: the
+four New-EnterpriseEnvironment pillars use settings they found themselves (benchmarks\Find-VBAFPillarDefaults.ps1). Same
+script and settings as for v6.1 (30 training episodes, 10 evaluation episodes, seeds 1-3, battery). Raw data:
+[data/pillars-v6.2](data/pillars-v6.2).
+
+**Result.** The other 22 pillars are identical to v6.1 in all 66 result files. 23 of 26 pillars beat the best fixed action
+on every seed (v6.1: 22). AlertRouter 3/3 (was 0/3); JobScheduler 1/3, ResourceOptimizer 0/3, SupplyChain 1/3 (were
+0/3). On new test seeds (50001-50010) JobScheduler is 3/3: it is seed-sensitive at 30 episodes. ResourceOptimizer still
+collapses to one action.
+
+| Pillar | v6.1 trained | v6.2 trained | v6.2 best fixed | Beats best fixed (v6.2) |
+|---|---|---|---|---|
+| AlertRouter | 32.28 | 36.29 | 29.67 | 3 of 3 |
+| JobScheduler | -3.73 | -3.78 | 0.8 | 1 of 3 |
+| ResourceOptimizer | -31.48 | 1.70 | 22.01 | 0 of 3 |
+| SupplyChain | -2.16 | 1.54 | 1.26 | 1 of 3 |
+
+Means over 3 seeds. AlertRouter's best fixed action changed from 32.28 to 29.67 because KF-15 made its environment seeded.
+
 ## Enterprise pillars -- re-measured for VBAF v6.1 (8 Oct 2026)
 
 **What changed.** Kernel finding KF-13: before 6.1 the DQN target network shared the main network's weights, so it was

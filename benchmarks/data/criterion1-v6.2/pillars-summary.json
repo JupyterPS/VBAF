@@ -1,0 +1,138 @@
+﻿[
+    {
+        "Pillar":  "AlertRouter",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  37.57,
+                        "SD":  0.83,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  9.17,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  33.26,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  309.73,
+                            "SD":  9.02,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  4.31,
+                            "SD":  0.83,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  18,
+        "EvalSeconds":  2
+    },
+    {
+        "Pillar":  "JobScheduler",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  4.17,
+                        "SD":  0.77,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -1.05,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  -4.15,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  496.83,
+                            "SD":  73.24,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  8.32,
+                            "SD":  0.77,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  3,
+        "Varied":  3,
+        "TrainSeconds":  14,
+        "EvalSeconds":  1
+    },
+    {
+        "Pillar":  "ResourceOptimizer",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  2.22,
+                        "SD":  18.36,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  12.54,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  23.42,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  -82.27,
+                            "SD":  146.42,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  -21.2,
+                            "SD":  18.36,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  0,
+        "Varied":  0,
+        "TrainSeconds":  26,
+        "EvalSeconds":  2
+    },
+    {
+        "Pillar":  "SupplyChain",
+        "Seeds":  3,
+        "Learned":  true,
+        "Trained":  {
+                        "Mean":  1.04,
+                        "SD":  1.44,
+                        "N":  3
+                    },
+        "Random":  {
+                       "Mean":  -0.65,
+                       "SD":  0,
+                       "N":  3
+                   },
+        "BestFixed":  {
+                          "Mean":  0.89,
+                          "SD":  0,
+                          "N":  3
+                      },
+        "VsRandomPct":  {
+                            "Mean":  259.97,
+                            "SD":  220.85,
+                            "N":  3
+                        },
+        "VsBestFixed":  {
+                            "Mean":  0.15,
+                            "SD":  1.44,
+                            "N":  3
+                        },
+        "BeatsBestFixed":  1,
+        "Varied":  2,
+        "TrainSeconds":  18,
+        "EvalSeconds":  2
+    }
+]

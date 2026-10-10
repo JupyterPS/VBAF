@@ -81,6 +81,7 @@ Write-Host "  [Phase 2] Reinforcement learning..." -ForegroundColor Gray
 . (Join-Path $basePath "VBAF.RL.QLearningAgent.ps1")
 . (Join-Path $basePath "VBAF.RL.Environment.ps1")
 . (Join-Path $basePath "VBAF.RL.DQN.ps1")
+. (Join-Path $basePath "VBAF.RL.SettingsSearch.ps1")   # 6.2: Invoke-VBAFSettingsSearch (KF-14)
 . (Join-Path $basePath "VBAF.RL.PPO.ps1")
 . (Join-Path $basePath "VBAF.RL.A3C.ps1")
 . (Join-Path $basePath "VBAF.RL.Trace.ps1")    # v6.0: Get-VBAFTrace (any environment, style A or B)

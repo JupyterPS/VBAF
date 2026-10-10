@@ -1,0 +1,73 @@
+﻿{
+    "Seed":  3,
+    "KernelCommit":  "2537f14",
+    "DryRun":  false,
+    "SearchTest":  37.7633,
+    "DefaultTest":  28.2533,
+    "SearchWins":  true,
+    "SearchSettings":  {
+                           "LR":  0.0023767858709745379,
+                           "Gamma":  0.82062783563073161,
+                           "TUF":  2,
+                           "Decay":  0.99658429505819657
+                       },
+    "SearchValidation":  30.105,
+    "DefaultSettings":  {
+                            "LR":  0.0010000000000000002,
+                            "Gamma":  0.95,
+                            "TUF":  10,
+                            "Decay":  0.995
+                        },
+    "DefaultValidation":  18.5,
+    "Candidates":  [
+                       {
+                           "Index":  0,
+                           "LR":  0.02923,
+                           "Gamma":  0.8116,
+                           "Decay":  0.99584,
+                           "TUF":  11,
+                           "BestValidation":  29.525
+                       },
+                       {
+                           "Index":  1,
+                           "LR":  0.00238,
+                           "Gamma":  0.8206,
+                           "Decay":  0.99658,
+                           "TUF":  2,
+                           "BestValidation":  30.105
+                       },
+                       {
+                           "Index":  2,
+                           "LR":  0.00145,
+                           "Gamma":  0.9512,
+                           "Decay":  0.99008,
+                           "TUF":  18,
+                           "BestValidation":  17.71
+                       },
+                       {
+                           "Index":  3,
+                           "LR":  0.01107,
+                           "Gamma":  0.8151,
+                           "Decay":  0.99757,
+                           "TUF":  5,
+                           "BestValidation":  27.995
+                       },
+                       {
+                           "Index":  4,
+                           "LR":  0.00074,
+                           "Gamma":  0.9013,
+                           "Decay":  0.99331,
+                           "TUF":  11,
+                           "BestValidation":  17.42
+                       },
+                       {
+                           "Index":  5,
+                           "LR":  0.01185,
+                           "Gamma":  0.8055,
+                           "Decay":  0.99836,
+                           "TUF":  2,
+                           "BestValidation":  27.965
+                       }
+                   ],
+    "Seconds":  614.1
+}

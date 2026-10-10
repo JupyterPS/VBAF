@@ -20,7 +20,7 @@
 # ============================================================
 function Invoke-VBAFResourceOptimizerTraining {
     param(
-        [hashtable] $Settings,   # VBAF 6.2 (KF-14): LR / Gamma / Decay / TUF; missing keys keep the defaults
+        [hashtable] $Settings = @{ LR = 0.0086816697910747365; Gamma = 0.975045388948659; Decay = 0.99786104291438171; TUF = 3 },   # VBAF 6.2 (KF-14): found by benchmarks\Find-VBAFPillarDefaults.ps1 on validation seeds (data: benchmarks\data\settings-v6.2); -Settings overrides
         [int]    $Episodes   = 50,
         [int]    $PrintEvery = 10,
         [switch] $FastMode,

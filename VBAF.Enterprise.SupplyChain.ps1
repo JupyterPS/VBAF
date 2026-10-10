@@ -21,7 +21,7 @@
 # ============================================================
 function Invoke-VBAFSupplyChainTraining {
     param(
-        [hashtable] $Settings,   # VBAF 6.2 (KF-14): LR / Gamma / Decay / TUF; missing keys keep the defaults
+        [hashtable] $Settings = @{ LR = 0.030347595187890205; Gamma = 0.91645994787405227; Decay = 0.99862252615654035; TUF = 19 },   # VBAF 6.2 (KF-14): found by benchmarks\Find-VBAFPillarDefaults.ps1 on validation seeds (data: benchmarks\data\settings-v6.2); -Settings overrides
         [int]    $Episodes   = 100,
         [int]    $PrintEvery = 20,
         [switch] $FastMode

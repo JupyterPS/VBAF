@@ -20,7 +20,7 @@
 # ============================================================
 function Invoke-VBAFAlertRouterTraining {
     param(
-        [hashtable] $Settings,   # VBAF 6.2 (KF-14): LR / Gamma / Decay / TUF; missing keys keep the defaults
+        [hashtable] $Settings = @{ LR = 0.022772878506054473; Gamma = 0.8099144443962325; Decay = 0.99767332798343777; TUF = 3 },   # VBAF 6.2 (KF-14): found by benchmarks\Find-VBAFPillarDefaults.ps1 on validation seeds (data: benchmarks\data\settings-v6.2); -Settings overrides
         [int]    $Episodes   = 50,
         [int]    $PrintEvery = 10,
         [switch] $FastMode,

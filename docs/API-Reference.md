@@ -297,6 +297,33 @@ The building blocks, for your own loop:
 Invoke-VBAFEvolution [[-World] <Object>] [[-Generations] <int>] [[-Children] <int>] [[-FitSeeds] <int[]>] [[-TrainShifts] <int>] [[-Chunk] <int>] [[-Seed] <int>] [[-OutDir] <string>] [[-LogPath] <string>]
 Invoke-VBAFFinalTest [[-World] <Object>] [[-Genome] <Object>] [[-Label] <string>] [[-FinalSeeds] <int[]>] [[-TrainShifts] <int>] [[-Chunk] <int>] [[-OutDir] <string>] [[-TestSeeds] <int[]>]
 ```
+## Settings Search (v6.2)
+
+### Invoke-VBAFSettingsSearch
+
+Tries random settings (learning rate, gamma, epsilon decay, target update) for a DQN brain in any environment, trains each, checks every brain on validation episodes after each round, keeps each brain's best checkpoint and returns the best brain. The validation seeds pick the winner -- keep your test seeds apart.
+
+```powershell
+$r = Invoke-VBAFSettingsSearch -NewEnvironment { param($s) [ProductionCellEnvironment]::new($s) } -ValidationSeeds (Get-VBAFProductionValidationSeeds)
+$r.Settings          # LR, Gamma, Decay, TUF
+$r.ValidationScore
+$r.Agent             # the trained brain (its best checkpoint)
+```
+
+Parameters: `-NewEnvironment` (a scriptblock that builds the environment from a seed), `-Candidates` (6), `-Episodes` (150), `-Rounds` (6; the episodes must be a multiple), `-ValidationSeeds` (20001-20020), `-Seed` (1), `-Hidden` (16, 16), `-ReplayEvery` (4), `-Ranges` (default: LR 0.0005-0.05 log-uniform, gamma 0.8-0.99, epsilon decay 0.99-0.9995, target update 2-20 episodes), `-Quiet`.
+
+### Measure-VBAFAgentScore
+
+```powershell
+Measure-VBAFAgentScore -NewEnvironment { param($s) [ProductionCellEnvironment]::new($s) } -Agent $r.Agent -Seeds (Get-VBAFProductionTestSeeds)
+```
+
+The mean total reward of an agent over the given seeds (greedy, through Get-VBAFTrace).
+
+### Settings for the four Enterprise pillars
+
+`Invoke-VBAFAlertRouterTraining`, `Invoke-VBAFJobSchedulerTraining`, `Invoke-VBAFResourceOptimizerTraining` and `Invoke-VBAFSupplyChainTraining` take `-Settings @{ LR = ...; Gamma = ...; Decay = ...; TUF = ... }`. Without it they use the defaults found by `benchmarks\Find-VBAFPillarDefaults.ps1` (data in `benchmarks\data\settings-v6.2`). `benchmarks\Measure-VBAFPillars.ps1 -EvalSeedBase` measures on other evaluation seeds (default 10000).
+
 ## Datasets
 
 ### Supervised Learning Datasets
@@ -860,7 +887,7 @@ $resampled = Invoke-TimeSeriesResample -TimeSeries $ts -Frequency "monthly" -Agg
 ## Testing (v6.0)
 
 ```powershell
-& .\tests\Test-VBAF.ps1      # the regression suite: 71 checks with locked results, about 3 minutes
+& .\tests\Test-VBAF.ps1      # the regression suite: 72 checks with locked results, about 3 minutes
 ```
 
 See `tests\README.md` for what each check protects and why the results are locked.

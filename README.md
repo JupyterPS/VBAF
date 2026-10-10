@@ -1,6 +1,6 @@
 ﻿# VBAF — Visual AI & Reinforcement Learning Framework
 
-> **v6.1.0** · PowerShell 5.1 · Educational AI Framework · Learn by doing
+> **v6.2.0** · PowerShell 5.1 · Educational AI Framework · Learn by doing
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue.svg)](https://github.com/PowerShell/PowerShell)
@@ -31,6 +31,13 @@ No Python. No Jupyter. No cloud dependencies. Just open PowerShell and start lea
 Because the code is readable. Every function in VBAF is written to be understood — not just executed. You can open any `.ps1` file and see exactly what the algorithm is doing, line by line. That is the point.
 
 ---
+
+## What's new in 6.2
+
+- **Brains that find their own settings.** `Invoke-VBAFSettingsSearch` tries random settings (learning rate, gamma, epsilon decay, target update) for any environment and returns the best trained brain. On the production cell it beat the default settings on 3 of 3 seeds (37.6 vs 28.2).
+- **KF-14.** The four `New-EnterpriseEnvironment` pillars use settings they found themselves. AlertRouter now beats the best fixed action on 3 of 3 seeds (was 0 of 3); JobScheduler, ResourceOptimizer and SupplyChain still do not learn reliably at 30 episodes, so the first success criterion of this release was not met (details in the CHANGELOG).
+- **KF-15.** The Enterprise environments are simulated by default; the event log and the clock are read only with `-Live`. The same seed gives the same result on any PC at any hour.
+- **72 suite checks**, and the other 22 pillars give exactly the 6.1 results.
 
 ## What's new in 6.1
 
@@ -301,6 +308,7 @@ Start-VBAFPlayground
 
 | Version | Highlight |
 |---------|-----------|
+| v6.2.0 | Brains that find their own settings -- Invoke-VBAFSettingsSearch, searched defaults for the 4 Enterprise pillars (KF-14), no live data by default (KF-15), 72 suite checks |
 | v6.1.0 | A frozen target and a battery -- KF-13 fixed, optional bit-identical C# engine, 71 suite checks, pillars re-measured in 60 minutes |
 | v6.0.0 | The kernel learns, and proves it -- 10 kernel fixes, evolution study and window, honest re-measurement |
 | v5.0.4 | CheatSheet rewritten as problem-first quick reference |

@@ -2,12 +2,12 @@
 
 All notable changes to VBAF are documented here.
 
-## [6.2.0] - planned (branch v6.2) -- Brains that find their own settings
+## [6.2.0] - 2026-10-10 -- Brains that find their own settings
 
 Plan and success criterion locked on 10 Oct 2026, before any code. Background: in VBAF-Evolution-Lab Phase 8, a random search
 over settings lifted 12 of 12 pillar-seeds over the best fixed action (default settings: 0 of 12).
 
-### Planned
+### Plan (locked before code)
 - KF-15: no live data in the Enterprise environments by default. AlertRouter gets the LiveMode guard (the event log only with
   -Live), and TimeOfDay in Step() of AlertRouter and JobScheduler comes from the environment's own generator unless -Live.
 - `Invoke-VBAFSettingsSearch`: an automatic settings search (learning rate, gamma, epsilon decay, target update) for any VBAF
@@ -26,6 +26,33 @@ over settings lifted 12 of 12 pillar-seeds over the best fixed action (default s
    gamma 0.95, epsilon decay 0.995, target update 10) run through the same search machinery with one candidate; the search with 6
    candidates; both 150 episodes in 6 rounds, validation seeds 2001-2010, population seeds 1-3, scored on the 30 test seeds
    1001-1030 (benchmarks\Measure-VBAFSearchCriterion3.ps1). Met if the search has the higher mean AND wins on at least 2 of 3 seeds.
+
+### What shipped
+- KF-15 fixed: AlertRouter gets LiveMode (the event log only with -Live); TimeOfDay in Reset() comes from the environment's
+  generator; Step() of AlertRouter and JobScheduler reads the clock only in live mode. AlertRouter's start severity on seeds
+  1-5 is now 0.25/0.77/0.29/0.82/0.34 (it was 0.000 on every seed on the author's PC). New suite check KF-15.
+- `Invoke-VBAFSettingsSearch` and `Measure-VBAFAgentScore` (VBAF.RL.SettingsSearch.ps1, loaded by LoadAll and LoadCore):
+  random search over learning rate, gamma, epsilon decay and target update for any environment, a best checkpoint per brain,
+  validation seeds pick the winner. tests\Test-SettingsSearch.ps1: 5 checks.
+- KF-14: the four New-EnterpriseEnvironment pillars take `-Settings`, and their defaults are the settings that
+  benchmarks\Find-VBAFPillarDefaults.ps1 found through each pillar's own training on validation seeds
+  (benchmarks\data\settings-v6.2): learning rate AlertRouter 0.0228, JobScheduler 0.0274, ResourceOptimizer 0.0087,
+  SupplyChain 0.0304 (was 0.001).
+- Measure-VBAFPillars `-EvalSeedBase` (default 10000: earlier measurements are unchanged).
+- The regression suite has 72 checks (was 71): the new KF-15 check, and KF-6 re-locked with its reason (JobScheduler's own
+  epsilon decay is now its searched default, not 0.99; the check still catches the old KF-6 bug, which gives 0.995).
+
+### Results against the success criterion (all three measured; reported as they came out)
+1. **NOT MET.** On new test seeds 50001-50010 (benchmarks\data\criterion1-v6.2): AlertRouter 3/3, JobScheduler 3/3,
+   ResourceOptimizer 0/3, SupplyChain 1/3 -- 7 of 12 pillar-seeds beat the best fixed action (6.1: 0 of 12).
+   ResourceOptimizer still collapses to one action (the unstable learning found in VBAF-Evolution-Lab); SupplyChain's
+   rewards are too small to separate from the bar at 30 episodes.
+2. **MET.** All 26 pillars re-measured (benchmarks\data\pillars-v6.2, default eval seeds): the other 22 pillars are identical
+   to 6.1 in all 66 files; suite 72/72. On these seeds the 4 Enterprise pillars are 5 of 12 (AlertRouter 3/3, JobScheduler
+   1/3, ResourceOptimizer 0/3, SupplyChain 1/3): JobScheduler is seed-sensitive at 30 episodes (3/3 on the new test seeds,
+   1/3 here). 23 of 26 pillars beat the best fixed action on every seed (6.1: 22 of 26).
+3. **MET.** On the production cell, which was not used to build the search (benchmarks\data\criterion3-v6.2): search 37.63
+   vs default settings 28.22 on the 30 test seeds; the search wins on 3 of 3 seeds.
 
 ## [6.1.0] - 2026-10-08 -- A frozen target and a battery
 

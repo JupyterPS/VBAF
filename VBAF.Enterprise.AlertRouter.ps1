@@ -20,6 +20,7 @@
 # ============================================================
 function Invoke-VBAFAlertRouterTraining {
     param(
+        [hashtable] $Settings,   # VBAF 6.2 (KF-14): LR / Gamma / Decay / TUF; missing keys keep the defaults
         [int]    $Episodes   = 50,
         [int]    $PrintEvery = 10,
         [switch] $FastMode,
@@ -53,6 +54,7 @@ function Invoke-VBAFAlertRouterTraining {
     $config.ActionSize   = 4   # Ignore, Log, Alert, Escalate
     $config.EpsilonDecay = 0.9995
     $config.EpsilonMin  = 0.05
+    if ($Settings) { if ($Settings.ContainsKey('LR')) { $config.LearningRate = [double]$Settings.LR }; if ($Settings.ContainsKey('Gamma')) { $config.Gamma = [double]$Settings.Gamma }; if ($Settings.ContainsKey('Decay')) { $config.EpsilonDecay = [double]$Settings.Decay }; if ($Settings.ContainsKey('TUF')) { $config.TargetUpdateFreq = [int]$Settings.TUF } }   # VBAF 6.2 (KF-14): -Settings overrides, before the networks are built
     [int[]] $arch        = @(4, 16, 16, 4)
     $mainNetwork         = [VBAFNetworkFactory]::Create($arch, $config.LearningRate)
     $targetNetwork       = [VBAFNetworkFactory]::Create($arch, $config.LearningRate)

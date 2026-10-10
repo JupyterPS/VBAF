@@ -264,11 +264,11 @@ Once you understand the foundation phases (1-9), VBAF includes 14 enterprise pil
 | 26 | Multi-Site Coordinator | Cross-datacenter workload balancing | +175 +/- 65 | 3 of 3 |
 | 27 | AutoPilot | Chooses an intervention level from 4 simulated signals (does not yet read the other pillars) | +175 +/- 65 | 3 of 3 |
 
-*Measured for v6.1 (8 Oct 2026, with the KF-13 fix; the v6.0 figures are kept in the benchmarks file): the trained agent's score minus the score of the BEST FIXED ACTION ("always press the
+*Measured for v6.1 (8 Oct 2026, with the KF-13 fix) and unchanged in v6.2 (10 Oct 2026: identical results; the v6.0 figures are kept in the benchmarks file): the trained agent's score minus the score of the BEST FIXED ACTION ("always press the
 same button"), on the same evaluation episodes, mean +/- SD over 3 training seeds, 30 training episodes. A positive
 number means the agent learned something no fixed action can do. The pre-v6.0 figures (+24.5% to +117.5% "over random")
 are withdrawn: they measured one fixed action against random choices, not learning. Four further pillars (AlertRouter,
-JobScheduler, ResourceOptimizer, SupplyChain) do not yet beat the best fixed action. Phases 22-27 share one environment
+JobScheduler, ResourceOptimizer, SupplyChain) use settings they found themselves since 6.2: AlertRouter now beats the best fixed action on 3 of 3 seeds, the other three do not yet. Phases 22-27 share one environment
 (kernel finding KF-5: 26 pillars, 11 distinct environments), so their figures are identical. Full table, method and raw data:
 [benchmarks/agent-learning-curves.md](benchmarks/agent-learning-curves.md).*
 

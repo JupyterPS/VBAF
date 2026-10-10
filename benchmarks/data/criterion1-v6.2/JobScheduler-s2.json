@@ -1,0 +1,33 @@
+﻿{
+    "Pillar":  "JobScheduler",
+    "Seed":  2,
+    "Episodes":  30,
+    "EvalEpisodes":  10,
+    "Error":  "",
+    "TrainSeconds":  3.8,
+    "TrainSteps":  6352,
+    "Losses":  397,
+    "NonZero":  397,
+    "Learned":  true,
+    "Actions":  3,
+    "PillarReportBaseline":  -1.45,
+    "PillarReportTrained":  -1.85,
+    "EvalSeconds":  0.5,
+    "Style":  "A",
+    "Random":  -1.05,
+    "Trained":  3.65,
+    "Fixed":  [
+                  -15.4,
+                  -4.15,
+                  -5.1
+              ],
+    "BestFixed":  -4.15,
+    "BestFixedAction":  1,
+    "VsRandomPct":  447.6,
+    "VsBestFixed":  7.8,
+    "TrainedActions":  "87/131/0",
+    "Varied":  true,
+    "Engine":  "Fast",
+    "UsesFast":  true,
+    "EvalSeedBase":  50000
+}

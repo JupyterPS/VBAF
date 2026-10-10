@@ -9,7 +9,7 @@
       - JobSchedulerEnvironment  : learns optimal Windows task scheduling
       - ResourceOptimizerEnvironment : optimizes CPU/memory allocation
       - AlertRouterEnvironment   : learns intelligent event log routing
-    All environments use real Windows data via Get-Counter and Get-WinEvent.
+    Simulated by default (seeded); real Windows data (Get-Counter, Get-WinEvent, the clock) only with New-EnterpriseEnvironment -Live.
 .NOTES
     Part of VBAF - Phase 9 Enterprise Automation Engine
     PS 5.1 compatible
@@ -99,7 +99,7 @@ class JobSchedulerEnvironment : VBAFEnvironment {
         }
         $this.CpuLoad  = [Math]::Max(0.0, [Math]::Min(1.0, $this.CpuLoad + ($this.Rng.NextDouble() - 0.5) * 0.1))
         $this.MemLoad  = [Math]::Max(0.0, [Math]::Min(1.0, $this.MemLoad + ($this.Rng.NextDouble() - 0.5) * 0.05))
-        $this.TimeOfDay = [double]([System.DateTime]::Now.Hour) / 23.0
+        if ($this.LiveMode) { $this.TimeOfDay = [double]([System.DateTime]::Now.Hour) / 23.0 }  # VBAF 6.2 (KF-15): simulated time stands still within an episode
         [bool] $done = ($this.Steps -ge $this.MaxSteps) -or ($this.PendingJobs -le 0)
         $this.TotalReward += $reward
         return @{ NextState = $this.GetState(); Reward = $reward; Done = $done }
@@ -184,6 +184,7 @@ class ResourceOptimizerEnvironment : VBAFEnvironment {
 # Actions: 0=Ignore, 1=Log, 2=Alert, 3=Escalate
 # ============================================================
 class AlertRouterEnvironment : VBAFEnvironment {
+    [bool] $LiveMode = $false   # VBAF 6.2 (KF-15): read the event log and the clock only when asked: New-EnterpriseEnvironment -Live
     [double] $Severity
     [double] $Frequency
     [double] $TimeOfDay
@@ -201,6 +202,7 @@ class AlertRouterEnvironment : VBAFEnvironment {
 
     [double[]] Reset() {
         try {
+            if (-not $this.LiveMode) { throw 'simulated' }  # VBAF 6.2 (KF-15): not live -> the catch below uses Rng
             $events = Get-WinEvent -LogName System -MaxEvents 10 -ErrorAction SilentlyContinue
             $crit   = ($events | Where-Object { $_.Level -le 2 }).Count
             $this.Severity  = [double]$crit / 10.0
@@ -209,7 +211,7 @@ class AlertRouterEnvironment : VBAFEnvironment {
             $this.Severity  = $this.Rng.NextDouble()
             $this.Frequency = $this.Rng.NextDouble()
         }
-        $this.TimeOfDay    = [double]([System.DateTime]::Now.Hour) / 23.0
+        $this.TimeOfDay    = $(if ($this.LiveMode) { [double]([System.DateTime]::Now.Hour) / 23.0 } else { [double]$this.Rng.Next(0, 24) / 23.0 })  # VBAF 6.2 (KF-15): the clock is live data too
         $this.RepeatCount  = $this.Rng.Next(0, 5)
         $this.CorrectRoutes = 0
         $this.MissedAlerts  = 0
@@ -249,7 +251,7 @@ class AlertRouterEnvironment : VBAFEnvironment {
         $this.Severity    = [Math]::Max(0.0, [Math]::Min(1.0, $this.Severity  + ($this.Rng.NextDouble() - 0.5) * 0.2))
         $this.Frequency   = [Math]::Max(0.0, [Math]::Min(1.0, $this.Frequency + ($this.Rng.NextDouble() - 0.5) * 0.1))
         $this.RepeatCount = [Math]::Max(0, $this.RepeatCount + $this.Rng.Next(-1, 2))
-        $this.TimeOfDay   = [double]([System.DateTime]::Now.Hour) / 23.0
+        if ($this.LiveMode) { $this.TimeOfDay = [double]([System.DateTime]::Now.Hour) / 23.0 }  # VBAF 6.2 (KF-15): simulated time stands still within an episode
         [bool] $done = ($this.Steps -ge $this.MaxSteps)
         $this.TotalReward += $reward
         return @{ NextState = $this.GetState(); Reward = $reward; Done = $done }

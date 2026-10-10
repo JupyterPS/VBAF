@@ -15,6 +15,7 @@
       KF-6  the JobScheduler pillar trains with its own config.   KF-7  MaxSteps, seeds and -Live in the environments.
       KF-8  Layer.ImportState restores the activation.
       KF-13 ExportState/ImportState hand out copies, so a DQN target network no longer shares weight arrays (6.1).
+      KF-15 The Enterprise environments are simulated by default: no event log and no clock without -Live (6.2).
       6.1   Battery (VBAF.Core.FastNet.ps1): the C# engine gives the same DQN run bit for bit; when blocked, Auto falls back.
 #>
 param([switch]$Child, [switch]$LoadOnly, [string]$OutFile = '')
@@ -350,6 +351,13 @@ if ($Child) {
         Say ('LoadAll in a fresh process: {0} errors' -f $res.LoadErrors.Count)
     } catch { $res.Errors += ('loadall errors: ' + $_.Exception.Message) }
     try { $res.Seed42Fast = Invoke-SeedRun 42 'Fast' } catch { $res.Errors += ('battery: ' + $_.Exception.Message) }   # 6.1: last, so it moves no random state
+    try {   # VBAF 6.2 (KF-15): the Enterprise environments are simulated by default
+        $sv15 = @(); $tm15 = @()
+        foreach ($sd15 in 1..5) { Set-VBAFSeed $sd15; $e15 = New-EnterpriseEnvironment -Name 'AlertRouter' -Seed $sd15; $st15 = @($e15.Reset()); $sv15 += [Math]::Round($st15[0], 6); $tm15 += [Math]::Round($st15[2], 6) }
+        $res.KF15Distinct = @($sv15 | Sort-Object -Unique).Count; $res.KF15TimeSeeds = @($tm15 | Sort-Object -Unique).Count
+        $res.KF15LiveDefault = [bool](New-EnterpriseEnvironment -Name 'AlertRouter' -Seed 1).LiveMode
+        $res.KF15TimeValues = (@(foreach ($nm15 in 'AlertRouter', 'JobScheduler') { Set-VBAFSeed 7; $e15 = New-EnterpriseEnvironment -Name $nm15 -Seed 7; $ix15 = $(if ($nm15 -eq 'AlertRouter') { 2 } else { 3 }); $v15 = @(@($e15.Reset())[$ix15]); for ($q15 = 0; $q15 -lt 50; $q15++) { $r15 = $e15.Step(1); $v15 += $r15.NextState[$ix15]; if ($r15.Done) { break } }; @($v15 | Sort-Object -Unique).Count }) -join '/')
+    } catch { $res.Errors += ('kf15: ' + $_.Exception.Message) }
     $res | ConvertTo-Json -Depth 6 | Set-Content -Path $OutFile -Encoding UTF8
     Say ('Result written. Child total {0:N1} s' -f $sw.Elapsed.TotalSeconds)
     return
@@ -407,6 +415,7 @@ Add-Check 'KF-7: -MaxSteps 20 reaches all four environments' (($all4 -eq 4) -and
 Add-Check 'KF-7: Reset without -Live is simulated (< 0.3 s)' ((Test-Has $m.ResetRO) -and ($m.ResetRO -lt 0.3) -and ($m.ResetJS -lt 0.3)) ('RO {0:N3} s, JS {1:N3} s' -f $m.ResetRO, $m.ResetJS)
 Add-Check 'KF-7: -Live reads the real PC (>= 0.9 s)' ((Test-Has $m.ResetLive) -and ($m.ResetLive -ge 0.9)) ('{0:N3} s' -f $m.ResetLive)
 Add-Check 'KF-7: -Seed 5 twice identical, seed 6 differs (RO + JS)' ((Test-Has $m.Seed) -and ($m.Seed.ResourceOptimizer.SameSeedEqual -eq $true) -and ($m.Seed.ResourceOptimizer.OtherSeedDiffers -eq $true) -and ($m.Seed.JobScheduler.SameSeedEqual -eq $true) -and ($m.Seed.JobScheduler.OtherSeedDiffers -eq $true)) ''
+Add-Check 'KF-15: AlertRouter is simulated by default (5 seeds -> 5 start severities and varied time, LiveMode False); time stands still within an episode (AlertRouter/JobScheduler)' (($m.KF15Distinct -eq 5) -and ($m.KF15TimeSeeds -ge 2) -and ($m.KF15LiveDefault -eq $false) -and ($m.KF15TimeValues -eq '1/1')) ('severities ' + $m.KF15Distinct + ', start times ' + $m.KF15TimeSeeds + ', live default ' + $m.KF15LiveDefault + ', time values in an episode ' + $m.KF15TimeValues)
 $ta = $m.TraceA
 Add-Check 'Trace style A (GridWorld): total and steps = manual loop' ((Test-Has $ta) -and ($ta.Style -eq 'A') -and ($ta.Total -ceq $ta.ManualTotal) -and ($ta.Steps -eq $ta.ManualSteps) -and ($ta.Steps -gt 0)) ('style {0}, total {1} / {2}, steps {3} / {4}' -f $ta.Style, $ta.Total, $ta.ManualTotal, $ta.Steps, $ta.ManualSteps)
 $tb = $m.TraceB

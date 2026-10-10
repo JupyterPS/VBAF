@@ -20,7 +20,7 @@
 #>
 param(
     [string]$OutDir = '', [int]$Episodes = 30, [int[]]$Seeds = @(1, 2, 3), [int]$EvalEpisodes = 10, [string[]]$Pillars = @(), [ValidateSet('PowerShell', 'Auto', 'Fast')][string]$Engine = 'PowerShell',
-    [string]$ChildPillar = '', [int]$ChildSeed = 0, [string]$ChildOut = ''
+    [string]$ChildPillar = '', [int]$ChildSeed = 0, [string]$ChildOut = '', [int]$EvalSeedBase = 10000
 )
 $kroot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 function Say([string]$m) { [Console]::WriteLine(('{0:HH:mm:ss}  {1}' -f (Get-Date), $m)) }
@@ -80,7 +80,7 @@ if ($ChildPillar -ne '') {
         foreach ($pn in $policies.Keys) {
             $tot = @()
             for ($e = 1; $e -le $EvalEpisodes; $e++) {
-                $s = 10000 + $e
+                $s = $EvalSeedBase + $e
                 $env = New-EvalEnv $s
                 if ($policies[$pn].ContainsKey('Agent')) { $tr = Get-VBAFTrace -Environment $env -Agent $policies[$pn].Agent -MaxSteps 5000 -PolicySeed $s }
                 else { $tr = Get-VBAFTrace -Environment $env -Policy $policies[$pn].Policy -MaxSteps 5000 -PolicySeed $s }
@@ -99,7 +99,7 @@ if ($ChildPillar -ne '') {
         $res.VsBestFixed = [Math]::Round($res.Trained - $best, 3)
         $res.TrainedActions = ($trainedActs -join '/'); $res.Varied = (@($trainedActs | Where-Object { $_ -gt 0 }).Count -gt 1)
     } catch { $res.Error = $_.Exception.Message }
-    if ($res -is [System.Collections.IDictionary]) { $res['Engine'] = $Engine; $res['UsesFast'] = [VBAFNetworkFactory]::UseFast() } else { $res | Add-Member -NotePropertyName Engine -NotePropertyValue $Engine -Force; $res | Add-Member -NotePropertyName UsesFast -NotePropertyValue ([VBAFNetworkFactory]::UseFast()) -Force }
+    if ($res -is [System.Collections.IDictionary]) { $res['Engine'] = $Engine; $res['UsesFast'] = [VBAFNetworkFactory]::UseFast(); $res['EvalSeedBase'] = $EvalSeedBase } else { $res | Add-Member -NotePropertyName Engine -NotePropertyValue $Engine -Force; $res | Add-Member -NotePropertyName UsesFast -NotePropertyValue ([VBAFNetworkFactory]::UseFast()) -Force }
     $res | ConvertTo-Json -Depth 4 | Set-Content -Path $ChildOut -Encoding UTF8
     return
 }
@@ -117,7 +117,7 @@ foreach ($s in $Seeds) {
         $f = Join-Path $OutDir ('{0}-s{1}.json' -f $pl.Pillar, $s)
         if (Test-Path $f) { Say ('[{0}/{1}] {2} seed {3}: done earlier' -f $i, ($list.Count * $Seeds.Count), $pl.Pillar, $s); continue }
         Say ('[{0}/{1}] {2} seed {3} ...' -f $i, ($list.Count * $Seeds.Count), $pl.Pillar, $s)
-        & powershell.exe -NoProfile -NonInteractive -InputFormat None -ExecutionPolicy Bypass -File $PSCommandPath -ChildPillar $pl.Pillar -ChildSeed $s -ChildOut $f -Episodes $Episodes -EvalEpisodes $EvalEpisodes -Engine $Engine 2>&1 | ForEach-Object { Write-Host ('      ' + [string]$_) }
+        & powershell.exe -NoProfile -NonInteractive -InputFormat None -ExecutionPolicy Bypass -File $PSCommandPath -ChildPillar $pl.Pillar -ChildSeed $s -ChildOut $f -Episodes $Episodes -EvalEpisodes $EvalEpisodes -Engine $Engine -EvalSeedBase $EvalSeedBase 2>&1 | ForEach-Object { Write-Host ('      ' + [string]$_) }
         if (Test-Path $f) {
             $x = (Get-Content $f -Raw -Encoding UTF8 | ConvertFrom-Json)
             if ($x.Error) { Say ('      ERROR: ' + $x.Error) }

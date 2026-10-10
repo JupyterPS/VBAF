@@ -20,7 +20,7 @@
 # ============================================================
 function Invoke-VBAFJobSchedulerTraining {
     param(
-        [hashtable] $Settings,   # VBAF 6.2 (KF-14): LR / Gamma / Decay / TUF; missing keys keep the defaults
+        [hashtable] $Settings = @{ LR = 0.027364082019312085; Gamma = 0.91384496632211132; Decay = 0.99290328371334047; TUF = 9 },   # VBAF 6.2 (KF-14): found by benchmarks\Find-VBAFPillarDefaults.ps1 on validation seeds (data: benchmarks\data\settings-v6.2); -Settings overrides
         [int]    $Episodes   = 100,
         [int]    $PrintEvery = 10,
         [switch] $FastMode,

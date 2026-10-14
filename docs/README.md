@@ -7,6 +7,7 @@
 | [Theory](Theory.md) | The math behind every algorithm with paper references |
 | [Architecture](Architecture.md) | How the framework layers fit together |
 | [API Reference](API-Reference.md) | Every function and class documented |
+| [Vocabulary](Vocabulary.md) | Every AI term used in VBAF and its sister projects, explained |
 | [Teaching Materials](teaching/) | Educators and course designers |
 
 ---
@@ -19,6 +20,7 @@
 | [Theory](Theory.md) | The math behind every algorithm with paper references |
 | [Architecture](Architecture.md) | How the framework layers fit together |
 | [API Reference](API-Reference.md) | Every function and class documented |
+| [Vocabulary](Vocabulary.md) | Every AI term used in VBAF and its sister projects, explained |
 | [Teaching Materials](teaching/) | Educators and course designers |
 
 ---

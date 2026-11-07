@@ -70,6 +70,8 @@ Write-Host ""
 # Everything else depends on these -- load first.
 Write-Host "  [Phase 1] Core neural network..." -ForegroundColor Gray
 . (Join-Path $basePath "VBAF.Core.AllClasses.ps1")
+if (-not (Test-Path variable:global:VBAFFastEngineDisable)) { $global:VBAFFastEngineDisable = $false }   # StrictMode: FastNet reads it before anyone sets it
+if (-not (Test-Path variable:global:VBAFNetEngine)) { $global:VBAFNetEngine = $null }   # StrictMode: FastNet line 106 then sets 'PowerShell'
 . (Join-Path $basePath "VBAF.Core.FastNet.ps1")   # 6.1: optional C# engine + VBAFNetworkFactory (must load before RL)
 
 #  PHASE 2 -- REINFORCEMENT LEARNING 
@@ -198,7 +200,7 @@ function Set-VBAFSeed {
 }
 
 function Initialize-VBAFWinForms {
-    $runningInISE = $psISE -ne $null
+    $runningInISE = $(if (Test-Path variable:global:psISE) { $global:psISE } else { $null }) -ne $null
     $cheat = New-Object System.Windows.Forms.Form
     $cheat.ShowInTaskbar = $false
     $cheat.FormBorderStyle = 'None'

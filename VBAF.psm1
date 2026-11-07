@@ -118,40 +118,8 @@ if ($script:ShowWelcomeMessage) {
 # ==================== EXPORTED MEMBERS ====================
 
 # Export functions (defined in manifest, but we can also export here for safety)
-Export-ModuleMember -Function @(
-    # Neural Network Functions
-    'New-VBAFNeuralNetwork',
-    'Train-VBAFNeuralNetwork',
-    'Test-VBAFNeuralNetwork',
-    'Export-VBAFNeuralNetwork',
-    'Import-VBAFNeuralNetwork',
-    
-    # RL Agent Functions
-    'New-VBAFAgent',
-    'Train-VBAFAgent',
-    'Get-VBAFAgentStats',
-    'Export-VBAFAgent',
-    'Import-VBAFAgent',
-    
-    # Market/Business Functions
-    'New-VBAFMarket',
-    'Start-VBAFMarketSimulation',
-    'Get-VBAFMarketStats',
-    
-    # Visualization Functions
-    'New-VBAFDashboard',
-    'Show-VBAFLearningCurve',
-    'Show-VBAFNetworkStructure',
-    
-    # Competition Functions
-    'Start-VBAFCastleCompetition',
-    'New-VBAFAestheticReward',
-    
-    # Utility Functions
-    'Get-VBAFVersion',
-    'Get-VBAFExamples',
-    'Test-VBAF'
-)
+# All functions are exported, so Import-Module VBAF gives exactly what . .\VBAF.LoadAll.ps1 gives (6.2.0).
+Export-ModuleMember -Function *
 
 # Export module variables (if any)
 Export-ModuleMember -Variable @(

@@ -96,7 +96,7 @@ Write-Verbose "  ? Public API functions loaded ($($PublicFunctions.Count) functi
 # ==================== MODULE INITIALIZATION ====================
 
 # Module version
-$script:VBAFVersion = '1.0.0'
+$script:VBAFVersion = [string](Import-PowerShellDataFile (Join-Path $PSScriptRoot 'VBAF.psd1')).ModuleVersion
 
 # Module startup message
 $script:ShowWelcomeMessage = $true

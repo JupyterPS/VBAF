@@ -500,9 +500,9 @@ Write-Host "`n      - oo00oo - " -ForegroundColor Yellow
 Write-Host "CASTLE COMPETITION - WEEK 8 GRAND FINALE" -ForegroundColor Cyan
 Write-Host "      - oo00oo - `n" -ForegroundColor Yellow
 Write-Host "Three agents compete for aesthetic space:" -ForegroundColor Green
-Write-Host "  ï¿½ Classic Agent (Brown) - Prefers Gothic, Cathedral, Fortress" -ForegroundColor DarkYellow
-Write-Host "  ï¿½ Whimsical Agent (Pink) - Prefers FairyTale, Wizard, Palace" -ForegroundColor Magenta
-Write-Host "  ï¿½ Modern Agent (Cyan) - Prefers Oriental, Ruins, Fortress" -ForegroundColor Cyan
+Write-Host "  • Classic Agent (Brown) - Prefers Gothic, Cathedral, Fortress" -ForegroundColor DarkYellow
+Write-Host "  • Whimsical Agent (Pink) - Prefers FairyTale, Wizard, Palace" -ForegroundColor Magenta
+Write-Host "  • Modern Agent (Cyan) - Prefers Oriental, Ruins, Fortress" -ForegroundColor Cyan
 Write-Host "`nWatch them learn to coordinate!`n" -ForegroundColor Yellow
 
 $form = New-Object System.Windows.Forms.Form

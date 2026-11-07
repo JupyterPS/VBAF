@@ -1,6 +1,6 @@
 # VBAF — Visual AI & Reinforcement Learning Framework
 
-> **v6.2.1** · PowerShell 5.1 · Educational AI Framework · Learn by doing
+> **v6.2.2** · PowerShell 5.1 · Educational AI Framework · Learn by doing
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue.svg)](https://github.com/PowerShell/PowerShell)
@@ -283,6 +283,7 @@ Start-VBAFPlayground
 
 | Version | Highlight |
 |---------|-----------|
+| v6.2.2 | Works under Set-StrictMode -Version Latest -- loading in the ISE or a console no longer stops on unset variables |
 | v6.2.1 | Import-Module VBAF fixed -- all functions exported, no castle window on load, the right version in the welcome message |
 | v6.2.0 | Brains that find their own settings -- Invoke-VBAFSettingsSearch, searched defaults for the 4 Enterprise pillars (KF-14), no live data by default (KF-15), 72 suite checks |
 | v6.1.0 | A frozen target and a battery -- KF-13 fixed, optional bit-identical C# engine, 71 suite checks, pillars re-measured in 60 minutes |

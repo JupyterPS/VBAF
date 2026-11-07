@@ -1,4 +1,4 @@
-﻿# VBAF — Visual AI & Reinforcement Learning Framework
+# VBAF — Visual AI & Reinforcement Learning Framework
 
 > **v6.2.0** · PowerShell 5.1 · Educational AI Framework · Learn by doing
 
@@ -29,31 +29,6 @@ No Python. No Jupyter. No cloud dependencies. Just open PowerShell and start lea
 **Why PowerShell?**
 
 Because the code is readable. Every function in VBAF is written to be understood — not just executed. You can open any `.ps1` file and see exactly what the algorithm is doing, line by line. That is the point.
-
----
-
-## What's new in 6.2
-
-- **Brains that find their own settings.** `Invoke-VBAFSettingsSearch` tries random settings (learning rate, gamma, epsilon decay, target update) for any environment and returns the best trained brain. On the production cell it beat the default settings on 3 of 3 seeds (37.6 vs 28.2).
-- **KF-14.** The four `New-EnterpriseEnvironment` pillars use settings they found themselves. AlertRouter now beats the best fixed action on 3 of 3 seeds (was 0 of 3); JobScheduler, ResourceOptimizer and SupplyChain still do not learn reliably at 30 episodes, so the first success criterion of this release was not met (details in the CHANGELOG).
-- **KF-15.** The Enterprise environments are simulated by default; the event log and the clock are read only with `-Live`. The same seed gives the same result on any PC at any hour.
-- **72 suite checks**, and the other 22 pillars give exactly the 6.1 results.
-
-## What's new in 6.1
-
-- **A frozen target.** Kernel finding KF-13: the DQN target network shared the main network's weights, so it was never frozen. Fixed in every DQN agent and in the A3C workers.
-- **The battery.** `Set-VBAFNetEngine Auto` trains on an optional C# engine compiled in memory -- bit-identical to pure PowerShell, about 8x faster in the pillars. Pure PowerShell stays the readable default.
-- **Re-measured.** All 26 pillars in 60 minutes instead of 13 hours; `tests\Test-VBAF.ps1` now locks 71 results.
-## What's new in 6.0
-
-- **The DQN agents learn now.** Ten kernel findings fixed (KF-1 to KF-10), among them a Sigmoid output layer that could
-  not represent the rewards and a `Predict` that returned its internal array. See [CHANGELOG.md](CHANGELOG.md).
-- **Honest figures.** All 26 enterprise pillars were re-measured against the best fixed action: 22 learn something no
-  fixed action can do. The old "+117% over random" figures are withdrawn. See [benchmarks](benchmarks/agent-learning-curves.md).
-- **Build a better brain.** A production cell, a whole evolution study in one call (`Invoke-VBAFEvolutionStudy`) and an
-  evolution window with three tabs and a demo: `Show-VBAFEvolutionWindow -ResultDir .\examples\07-Evolution\data`.
-- **Reproducible.** `Set-VBAFSeed` makes runs repeatable; `tests\Test-VBAF.ps1` locks 68 results.
-- **Loads everywhere.** `VBAF.LoadAll.ps1` no longer hangs outside the PowerShell ISE.
 
 ---
 
@@ -318,6 +293,36 @@ Start-VBAFPlayground
 | v3.5.0 | Self-healing agents -- first enterprise phase |
 | v2.0.0 | DQN agents -- deep reinforcement learning |
 | v1.0.0 | Q-learning foundation |
+
+---
+
+## What's new in 6.2
+
+- **Brains that find their own settings.** `Invoke-VBAFSettingsSearch` tries random settings (learning rate, gamma, epsilon decay, target update) for any environment and returns the best trained brain. On the production cell it beat the default settings on 3 of 3 seeds (37.6 vs 28.2).
+- **KF-14.** The four `New-EnterpriseEnvironment` pillars use settings they found themselves. AlertRouter now beats the best fixed action on 3 of 3 seeds (was 0 of 3); JobScheduler, ResourceOptimizer and SupplyChain still do not learn reliably at 30 episodes, so the first success criterion of this release was not met (details in the CHANGELOG).
+- **KF-15.** The Enterprise environments are simulated by default; the event log and the clock are read only with `-Live`. The same seed gives the same result on any PC at any hour.
+- **72 suite checks**, and the other 22 pillars give exactly the 6.1 results.
+
+---
+
+## What's new in 6.1
+
+- **A frozen target.** Kernel finding KF-13: the DQN target network shared the main network's weights, so it was never frozen. Fixed in every DQN agent and in the A3C workers.
+- **The battery.** `Set-VBAFNetEngine Auto` trains on an optional C# engine compiled in memory -- bit-identical to pure PowerShell, about 8x faster in the pillars. Pure PowerShell stays the readable default.
+- **Re-measured.** All 26 pillars in 60 minutes instead of 13 hours; `tests\Test-VBAF.ps1` now locks 71 results.
+
+---
+
+## What's new in 6.0
+
+- **The DQN agents learn now.** Ten kernel findings fixed (KF-1 to KF-10), among them a Sigmoid output layer that could
+  not represent the rewards and a `Predict` that returned its internal array. See [CHANGELOG.md](CHANGELOG.md).
+- **Honest figures.** All 26 enterprise pillars were re-measured against the best fixed action: 22 learn something no
+  fixed action can do. The old "+117% over random" figures are withdrawn. See [benchmarks](benchmarks/agent-learning-curves.md).
+- **Build a better brain.** A production cell, a whole evolution study in one call (`Invoke-VBAFEvolutionStudy`) and an
+  evolution window with three tabs and a demo: `Show-VBAFEvolutionWindow -ResultDir .\examples\07-Evolution\data`.
+- **Reproducible.** `Set-VBAFSeed` makes runs repeatable; `tests\Test-VBAF.ps1` locks 68 results.
+- **Loads everywhere.** `VBAF.LoadAll.ps1` no longer hangs outside the PowerShell ISE.
 
 ---
 

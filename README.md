@@ -265,6 +265,7 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 | B13 | Hotel bookings: resell the room because this booking will probably be canceled? | Hotel Booking Demand, 2 hotels in Portugal, 119,390 bookings 2015-2017 (test: 40,687 arrivals in 2017) | Resell when the deposit is non-refundable, or when there is no deposit and the lead time is at least T days | 7.8 % higher net gain per booking (required: 10 %) | **NO** (2026-11-09) |
 | B14 | Maintenance under hard conditions: service now or keep running? | NASA C-MAPSS FD004, 249 engines run to failure, 6 operating conditions and 2 fault modes (test: engines 212-249) | Fixed service interval (138 cycles) | 51.8 % lower cost per cycle, 0 failures (rule: 1) | **YES** (2026-11-09) |
 | B15 | Maintenance with a safety margin: service now or keep running, with at least 10 cycles left? | NASA C-MAPSS FD002, 260 engines run to failure, 6 operating conditions (test: engines 222-260) | Fixed service interval (126 cycles), same margin | 53.4 % lower cost per cycle, 0 failures (rule: 2), every service with at least 11 cycles left | **YES** (2026-11-09) |
+| B16 | Heating in many buildings: forecast the next day's heat use with one shared brain | Building Data Genome Project 2, 152 buildings with hot-water meters on 7 sites (test: 2017) | Degree-day model per building | 3.1 % lower relative error (required: 10 %) | **NO** (2026-11-09) |
 
 **B12 caveat:** the engine VBAF serviced last had only 1 cycle left. The brain goes all the way to the edge, so a real installation needs a safety margin, set during a shadow period before it is trusted.
 
@@ -278,6 +279,8 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 
 **B15 note:** B15 removes the caveat from B12 and B14. A service with fewer than 10 cycles left counted as a failure, for the rule and the brain alike. VBAF kept the margin on every test engine and still won by more than half.
 
+**B16 note:** a rule without AI (yesterday's use plus the change in degree days) beat the VBAF brain in every period, so one shared brain did not add value across many different buildings. The error measure (the mean over buildings of each building's error relative to its own average) also turned out to be dominated by a few buildings; a new attempt needs a robust measure. B11 (one house) stands, but it does not extend to many buildings on this basis.
+
 Cost model for B12: planned service = 1, failure = 10. Data: A. Saxena, K. Goebel, D. Simon and N. Eklund, Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation, PHM08 (NASA).
 
 Data for B01: Energi Data Service, Energinet (dataset Elspotprices, price area DK2, EUR/MWh).
@@ -289,6 +292,8 @@ Data for B13: Hotel Booking Demand, N. Antonio, A. de Almeida and L. Nunes, Data
 Data for B14: the same NASA C-MAPSS data as B12, subset FD004.
 
 Data for B15: the same NASA C-MAPSS data as B12, subset FD002.
+
+Data for B16: The Building Data Genome Project 2 (C. Miller et al., Scientific Data, 2020), BUDS Lab on GitHub.
 
 ## Requirements
 

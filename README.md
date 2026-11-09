@@ -266,6 +266,7 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 | B14 | Maintenance under hard conditions: service now or keep running? | NASA C-MAPSS FD004, 249 engines run to failure, 6 operating conditions and 2 fault modes (test: engines 212-249) | Fixed service interval (138 cycles) | 51.8 % lower cost per cycle, 0 failures (rule: 1) | **YES** (2026-11-09) |
 | B15 | Maintenance with a safety margin: service now or keep running, with at least 10 cycles left? | NASA C-MAPSS FD002, 260 engines run to failure, 6 operating conditions (test: engines 222-260) | Fixed service interval (126 cycles), same margin | 53.4 % lower cost per cycle, 0 failures (rule: 2), every service with at least 11 cycles left | **YES** (2026-11-09) |
 | B16 | Heating in many buildings: forecast the next day's heat use with one shared brain | Building Data Genome Project 2, 152 buildings with hot-water meters on 7 sites (test: 2017) | Degree-day model per building | 3.1 % lower relative error (required: 10 %) | **NO** (2026-11-09) |
+| B17 | Maintenance with a safety margin, two fault modes: service now or keep running, with at least 10 cycles left? | NASA C-MAPSS FD003, 100 engines run to failure, 1 operating condition and 2 fault modes (test: engines 86-100) | Fixed service interval (151 cycles), same margin | 56.5 % lower cost per cycle, 2 failures (rule: 4) | **YES, with caveat** (2026-11-09) |
 
 **B12 caveat:** the engine VBAF serviced last had only 1 cycle left. The brain goes all the way to the edge, so a real installation needs a safety margin, set during a shadow period before it is trusted.
 
@@ -281,6 +282,8 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 
 **B16 note:** a rule without AI (yesterday's use plus the change in degree days) beat the VBAF brain in every period, so one shared brain did not add value across many different buildings. The error measure (the mean over buildings of each building's error relative to its own average) also turned out to be dominated by a few buildings; a new attempt needs a robust measure. B11 (one house) stands, but it does not extend to many buildings on this basis.
 
+**B17 note:** the lock was met, but VBAF had 2 failures on 15 test engines, against 0 in B12, B14 and B15. With two fault modes, a 10-cycle margin was not enough, and 2 failures in 15 is not good enough for a customer as it stands. VBAF still clearly beat a fixed interval; the margin or threshold for a real installation must be set during a shadow period.
+
 Cost model for B12: planned service = 1, failure = 10. Data: A. Saxena, K. Goebel, D. Simon and N. Eklund, Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation, PHM08 (NASA).
 
 Data for B01: Energi Data Service, Energinet (dataset Elspotprices, price area DK2, EUR/MWh).
@@ -294,6 +297,8 @@ Data for B14: the same NASA C-MAPSS data as B12, subset FD004.
 Data for B15: the same NASA C-MAPSS data as B12, subset FD002.
 
 Data for B16: The Building Data Genome Project 2 (C. Miller et al., Scientific Data, 2020), BUDS Lab on GitHub.
+
+Data for B17: the same NASA C-MAPSS data as B12, subset FD003.
 
 ## Requirements
 

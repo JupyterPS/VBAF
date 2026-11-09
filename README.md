@@ -260,10 +260,15 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 | # | Decision | Public case | Simple rule | Result | Verdict |
 |---|---|---|---|---|---|
 | B12 | Maintenance: service now or keep running? | NASA C-MAPSS FD001, 100 engines run to failure (70 for training, 30 for the test) | Fixed service interval (127 cycles) | 38.9 % lower cost per cycle, 0 failures (rule: 0) | **YES** (2026-11-09) |
+| B01 | Electricity: when to run a 1-hour job within the next 48 hours, planned at 08:00 | Energinet day-ahead prices, price area DK2, 2015-2025 (test: 637 days in 2024-2025) | Cheapest hour already known at 08:00 | 4.3 % lower average price (required: 10 %) | **NO** (2026-11-09) |
 
 **B12 caveat:** the engine VBAF serviced last had only 1 cycle left. The brain goes all the way to the edge, so a real installation needs a safety margin, set during a shadow period before it is trusted.
 
+**B01 note:** the brain learned something, and a perfect forecast would have saved 43 %, but prices and calendar alone were not enough. Tomorrow's price is driven by wind and demand, so a new attempt needs public wind and demand forecasts as input, a new lock and fresh test data.
+
 Cost model for B12: planned service = 1, failure = 10. Data: A. Saxena, K. Goebel, D. Simon and N. Eklund, Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation, PHM08 (NASA).
+
+Data for B01: Energi Data Service, Energinet (dataset Elspotprices, price area DK2, EUR/MWh).
 
 ## Requirements
 

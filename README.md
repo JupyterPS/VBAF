@@ -267,6 +267,7 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 | B15 | Maintenance with a safety margin: service now or keep running, with at least 10 cycles left? | NASA C-MAPSS FD002, 260 engines run to failure, 6 operating conditions (test: engines 222-260) | Fixed service interval (126 cycles), same margin | 53.4 % lower cost per cycle, 0 failures (rule: 2), every service with at least 11 cycles left | **YES** (2026-11-09) |
 | B16 | Heating in many buildings: forecast the next day's heat use with one shared brain | Building Data Genome Project 2, 152 buildings with hot-water meters on 7 sites (test: 2017) | Degree-day model per building | 3.1 % lower relative error (required: 10 %) | **NO** (2026-11-09) |
 | B17 | Maintenance with a safety margin, two fault modes: service now or keep running, with at least 10 cycles left? | NASA C-MAPSS FD003, 100 engines run to failure, 1 operating condition and 2 fault modes (test: engines 86-100) | Fixed service interval (151 cycles), same margin | 56.5 % lower cost per cycle, 2 failures (rule: 4) | **YES, with caveat** (2026-11-09) |
+| B18 | Heating in many buildings, one brain per building: forecast the next day's steam use | Building Data Genome Project 2, 319 buildings with steam meters on 6 sites (test: 2017) | The better of the degree-day model and yesterday's use plus the change in degree days (no AI) | Median relative error 0.272 against 0.136 for the rule without AI | **NO** (2026-11-09) |
 
 **B12 caveat:** the engine VBAF serviced last had only 1 cycle left. The brain goes all the way to the edge, so a real installation needs a safety margin, set during a shadow period before it is trusted.
 
@@ -284,6 +285,8 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 
 **B17 note:** the lock was met, but VBAF had 2 failures on 15 test engines, against 0 in B12, B14 and B15. With two fault modes, a 10-cycle margin was not enough, and 2 failures in 15 is not good enough for a customer as it stands. VBAF still clearly beat a fixed interval; the margin or threshold for a real installation must be set during a shadow period.
 
+**B18 note:** B18 redid B16 with one brain per building, a median as a robust measure, and a stricter lock: VBAF had to beat the best simple rule, not just the degree-day model. The rule without AI was twice as good as the VBAF brains. For daily heat use in large buildings, a simple rule is the right tool; VBAF wins on wear that builds up over time, as in B12, B14 and B15.
+
 Cost model for B12: planned service = 1, failure = 10. Data: A. Saxena, K. Goebel, D. Simon and N. Eklund, Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation, PHM08 (NASA).
 
 Data for B01: Energi Data Service, Energinet (dataset Elspotprices, price area DK2, EUR/MWh).
@@ -299,6 +302,8 @@ Data for B15: the same NASA C-MAPSS data as B12, subset FD002.
 Data for B16: The Building Data Genome Project 2 (C. Miller et al., Scientific Data, 2020), BUDS Lab on GitHub.
 
 Data for B17: the same NASA C-MAPSS data as B12, subset FD003.
+
+Data for B18: the same Building Data Genome Project 2 as B16, steam meters.
 
 ## Requirements
 

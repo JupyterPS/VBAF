@@ -261,14 +261,19 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 |---|---|---|---|---|---|
 | B12 | Maintenance: service now or keep running? | NASA C-MAPSS FD001, 100 engines run to failure (70 for training, 30 for the test) | Fixed service interval (127 cycles) | 38.9 % lower cost per cycle, 0 failures (rule: 0) | **YES** (2026-11-09) |
 | B01 | Electricity: when to run a 1-hour job within the next 48 hours, planned at 08:00 | Energinet day-ahead prices, price area DK2, 2015-2025 (test: 637 days in 2024-2025) | Cheapest hour already known at 08:00 | 4.3 % lower average price (required: 10 %) | **NO** (2026-11-09) |
+| B11 | Heating: forecast the next day's district-heating use for one house | One house, daily meter readings 2020-2023 (data withdrawn by the owner 2026-11-12) and DMI daily mean temperature, a nearby DMI station (test: 218 days in 2022/23) | Degree-day model (base 17 C) | 38.1 % lower mean absolute error | **YES** (2026-11-09) |
 
 **B12 caveat:** the engine VBAF serviced last had only 1 cycle left. The brain goes all the way to the edge, so a real installation needs a safety margin, set during a shadow period before it is trusted.
 
 **B01 note:** the brain learned something, and a perfect forecast would have saved 43 %, but prices and calendar alone were not enough. Tomorrow's price is driven by wind and demand, so a new attempt needs public wind and demand forecasts as input, a new lock and fresh test data.
 
+**B11 note:** a rule without AI (yesterday's use plus the change in degree days) was 22 % better than the degree-day model, and the VBAF brain was about 20 % better again. The case is one house with one meter, so it shows the method, not that it works for every building.
+
 Cost model for B12: planned service = 1, failure = 10. Data: A. Saxena, K. Goebel, D. Simon and N. Eklund, Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation, PHM08 (NASA).
 
 Data for B01: Energi Data Service, Energinet (dataset Elspotprices, price area DK2, EUR/MWh).
+
+Data for B11: the house owner's own meter readings, published with his consent (data withdrawn by the owner 2026-11-12; the meter labels the unit KwH), and DMI open data, a nearby DMI station.
 
 ## Requirements
 

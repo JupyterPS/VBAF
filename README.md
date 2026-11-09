@@ -263,6 +263,7 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 | B01 | Electricity: when to run a 1-hour job within the next 48 hours, planned at 08:00 | Energinet day-ahead prices, price area DK2, 2015-2025 (test: 637 days in 2024-2025) | Cheapest hour already known at 08:00 | 4.3 % lower average price (required: 10 %) | **NO** (2026-11-09) |
 | B11 | Heating: forecast the next day's district-heating use for one house | One house, daily meter readings 2020-2023 (data withdrawn by the owner 2026-11-12) and DMI daily mean temperature, a nearby DMI station (test: 218 days in 2022/23) | Degree-day model (base 17 C) | 38.1 % lower mean absolute error | **YES** (2026-11-09) |
 | B13 | Hotel bookings: resell the room because this booking will probably be canceled? | Hotel Booking Demand, 2 hotels in Portugal, 119,390 bookings 2015-2017 (test: 40,687 arrivals in 2017) | Resell when the deposit is non-refundable, or when there is no deposit and the lead time is at least T days | 7.8 % higher net gain per booking (required: 10 %) | **NO** (2026-11-09) |
+| B14 | Maintenance under hard conditions: service now or keep running? | NASA C-MAPSS FD004, 249 engines run to failure, 6 operating conditions and 2 fault modes (test: engines 212-249) | Fixed service interval (138 cycles) | 51.8 % lower cost per cycle, 0 failures (rule: 1) | **YES** (2026-11-09) |
 
 **B12 caveat:** the engine VBAF serviced last had only 1 cycle left. The brain goes all the way to the edge, so a real installation needs a safety margin, set during a shadow period before it is trusted.
 
@@ -272,6 +273,8 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 
 **B13 note:** the simple rule was first locked to resell only bookings without a deposit. Before any result was computed, it was corrected to also resell non-refundable bookings, which in this dataset are almost always canceled. That made the rule stronger, and it decided the case: VBAF found a real extra gain, but not enough. Gain per booking: resold and canceled = rate x nights; resold but the guest arrives = -2 x rate x nights.
 
+**B14 note:** B14 repeats B12 on the hardest NASA subset, to test that the B12 result was not luck. The same caveat applies: the engine VBAF serviced last had only 1 cycle left, so a real installation needs a safety margin, set during a shadow period.
+
 Cost model for B12: planned service = 1, failure = 10. Data: A. Saxena, K. Goebel, D. Simon and N. Eklund, Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation, PHM08 (NASA).
 
 Data for B01: Energi Data Service, Energinet (dataset Elspotprices, price area DK2, EUR/MWh).
@@ -279,6 +282,8 @@ Data for B01: Energi Data Service, Energinet (dataset Elspotprices, price area D
 Data for B11: the house owner's own meter readings, published with his consent (data withdrawn by the owner 2026-11-12; the meter labels the unit KwH), and DMI open data, a nearby DMI station.
 
 Data for B13: Hotel Booking Demand, N. Antonio, A. de Almeida and L. Nunes, Data in Brief (2019), via TidyTuesday (2020-02-11).
+
+Data for B14: the same NASA C-MAPSS data as B12, subset FD004.
 
 ## Requirements
 

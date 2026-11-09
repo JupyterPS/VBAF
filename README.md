@@ -270,6 +270,18 @@ Cost model for B12: planned service = 1, failure = 10. Data: A. Saxena, K. Goebe
 
 Data for B01: Energi Data Service, Energinet (dataset Elspotprices, price area DK2, EUR/MWh).
 
+## Verdicts -- tested on public data
+
+Every new use of VBAF gets an honest verdict before it is offered to anyone. The rules are fixed before the data is seen: the decision, a public case with a known answer, the simple rule VBAF must beat, and what counts as YES. The test data is used exactly once. A NO is published just like a YES.
+
+| # | Decision | Public case | Simple rule | Result | Verdict |
+|---|---|---|---|---|---|
+| B12 | Maintenance: service now or keep running? | NASA C-MAPSS FD001, 100 engines run to failure (70 for training, 30 for the test) | Fixed service interval (127 cycles) | 38.9 % lower cost per cycle, 0 failures (rule: 0) | **YES** (2026-11-09) |
+
+**B12 caveat:** the engine VBAF serviced last had only 1 cycle left. The brain goes all the way to the edge, so a real installation needs a safety margin, set during a shadow period before it is trusted.
+
+Cost model for B12: planned service = 1, failure = 10. Data: A. Saxena, K. Goebel, D. Simon and N. Eklund, Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation, PHM08 (NASA).
+
 ## Requirements
 
 - Windows 10 or 11

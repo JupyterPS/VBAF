@@ -270,6 +270,7 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 | B18 | Heating in many buildings, one brain per building: forecast the next day's steam use | Building Data Genome Project 2, 319 buildings with steam meters on 6 sites (test: 2017) | The better of the degree-day model and yesterday's use plus the change in degree days (no AI) | Median relative error 0.272 against 0.136 for the rule without AI | **NO** (2026-11-09) |
 | B04 | CPU congestion on hypervisors: each morning, flag the hosts that will have CPU ready above 30 seconds that day | SAP Cloud Infrastructure Dataset, 123 hypervisors in one data centre (test: 6 days, August 2024) | Alarm if yesterday's maximum CPU ready was at least 25 seconds (no AI) | 10.9 % lower cost (required: 10 %) | **YES, with caveat** (2026-11-10) |
 | B19 | Repeat of B04 in a second data centre, with rule and brain frozen in advance | SAP Cloud Infrastructure Dataset, 146 hypervisors in data centre b (test: 12 days, August 2024) | Alarm if yesterday's maximum CPU ready was at least 25 seconds (no AI) | 1.3 % higher cost than the rule (required: 10 % lower) | **NO** (2026-11-10) |
+| B10 | Weekly stock target per product: set next week's stock level for 200 products | UCI Online Retail II, a UK online shop, 200 products (test: 21 weeks, July to November 2011) | 80th percentile of the last 13 weeks' sales (no AI) | 1.3 % lower normalised cost (required: 10 %) | **NO** (2026-11-10) |
 
 **B12 caveat:** the engine VBAF serviced last had only 1 cycle left. The brain goes all the way to the edge, so a real installation needs a safety margin, set during a shadow period before it is trusted.
 
@@ -293,6 +294,8 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 
 **B19 note:** B19 is the check on B04. The B04 brain was used unchanged in a data centre it had never seen, over twice as many test days (142 congestion days against 31). The rule without AI was slightly better (cost 234 against 237). B04's YES did not hold: for CPU congestion on hypervisors, a simple rule is the right tool. Data centre b had only 4 training days, so the brain was not retrained there. A customer's own shadow period could change this, but that is not proven.
 
+**B10 note:** the brain was slightly better than the rule (5345 against 5418), but far from the 10 % needed. At a higher shortage cost (9 per unit) the brain was 7.5 % better; at a lower one (2) it was worse. The data is sales, not demand, so sold-out weeks hide lost sales. For weekly stock targets, a percentile rule is the right tool.
+
 Cost model for B12: planned service = 1, failure = 10. Data: A. Saxena, K. Goebel, D. Simon and N. Eklund, Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation, PHM08 (NASA).
 
 Data for B01: Energi Data Service, Energinet (dataset Elspotprices, price area DK2, EUR/MWh).
@@ -314,6 +317,8 @@ Data for B18: the same Building Data Genome Project 2 as B16, steam meters.
 Data for B04: A. Uhlig, I. Braun and M. Waehlisch, The SAP Cloud Infrastructure Dataset (IMC '25), Zenodo 10.5281/zenodo.17357494, CC BY 4.0, data centre a. Cost model: alarm = 1, missed congestion day = 5.
 
 Data for B19: the same SAP Cloud Infrastructure Dataset as B04, data centre b.
+
+Data for B10: D. Chen, Online Retail II, UCI Machine Learning Repository (dataset 502), CC BY 4.0. Cost model: 1 per unit left over, 4 per unit short, divided by each product's average weekly sales in training.
 
 ## Requirements
 

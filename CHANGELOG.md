@@ -2,6 +2,24 @@
 
 All notable changes to VBAF are documented here.
 
+## [6.2.3] - 2026-11-09 -- Windows PowerShell 5.1 only
+
+- `VBAF.psm1` starts with `#Requires -PSEdition Desktop`, so `Import-Module VBAF` stops with a clear message in PowerShell 7.
+- The manifest description says that VBAF is built for Windows PowerShell 5.1 (Desktop) and not for PowerShell 7.
+- Decision of 9 Nov 2026: VBAF is developed only for Windows PowerShell 5.1 and the ISE.
+
+## [6.2.2] - 2026-11-07 -- Works under StrictMode
+
+- VBAF loads and runs under `Set-StrictMode -Version Latest`.
+- README: version line and version history.
+
+## [6.2.1] - 2026-11-07 -- Import-Module fixed
+
+- `Import-Module VBAF` exports all functions.
+- No castle window opens on load.
+- The welcome message shows the right version, and the castle bullets are back.
+- README: version line, version history and the Quick Start path.
+
 ## [6.2.0] - 2026-10-10 -- Brains that find their own settings
 
 Plan and success criterion locked on 10 Oct 2026, before any code. Background: in VBAF-Evolution-Lab Phase 8, a random search

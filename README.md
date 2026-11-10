@@ -268,6 +268,7 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 | B16 | Heating in many buildings: forecast the next day's heat use with one shared brain | Building Data Genome Project 2, 152 buildings with hot-water meters on 7 sites (test: 2017) | Degree-day model per building | 3.1 % lower relative error (required: 10 %) | **NO** (2026-11-09) |
 | B17 | Maintenance with a safety margin, two fault modes: service now or keep running, with at least 10 cycles left? | NASA C-MAPSS FD003, 100 engines run to failure, 1 operating condition and 2 fault modes (test: engines 86-100) | Fixed service interval (151 cycles), same margin | 56.5 % lower cost per cycle, 2 failures (rule: 4) | **YES, with caveat** (2026-11-09) |
 | B18 | Heating in many buildings, one brain per building: forecast the next day's steam use | Building Data Genome Project 2, 319 buildings with steam meters on 6 sites (test: 2017) | The better of the degree-day model and yesterday's use plus the change in degree days (no AI) | Median relative error 0.272 against 0.136 for the rule without AI | **NO** (2026-11-09) |
+| B04 | CPU congestion on hypervisors: each morning, flag the hosts that will have CPU ready above 30 seconds that day | SAP Cloud Infrastructure Dataset, 123 hypervisors in one data centre (test: 6 days, August 2024) | Alarm if yesterday's maximum CPU ready was at least 25 seconds (no AI) | 10.9 % lower cost (required: 10 %) | **YES, with caveat** (2026-11-10) |
 
 **B12 caveat:** the engine VBAF serviced last had only 1 cycle left. The brain goes all the way to the edge, so a real installation needs a safety margin, set during a shadow period before it is trusted.
 
@@ -287,6 +288,8 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 
 **B18 note:** B18 redid B16 with one brain per building, a median as a robust measure, and a stricter lock: VBAF had to beat the best simple rule, not just the degree-day model. The rule without AI was twice as good as the VBAF brains. For daily heat use in large buildings, a simple rule is the right tool; VBAF wins on wear that builds up over time, as in B12, B14 and B15.
 
+**B04 note:** the lock was met by a hair. The whole difference was one missed congestion day (cost 41 against 46, with 31 congestion days in the test), and on the selection period the brain was 4.5 % worse than the rule. The direction held at other cost ratios (7.1 % better at 3, 17.9 % at 10), but the gain is small and unstable. It must be proven in the customer's own shadow period before it is used.
+
 Cost model for B12: planned service = 1, failure = 10. Data: A. Saxena, K. Goebel, D. Simon and N. Eklund, Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation, PHM08 (NASA).
 
 Data for B01: Energi Data Service, Energinet (dataset Elspotprices, price area DK2, EUR/MWh).
@@ -304,6 +307,8 @@ Data for B16: The Building Data Genome Project 2 (C. Miller et al., Scientific D
 Data for B17: the same NASA C-MAPSS data as B12, subset FD003.
 
 Data for B18: the same Building Data Genome Project 2 as B16, steam meters.
+
+Data for B04: A. Uhlig, I. Braun and M. Waehlisch, The SAP Cloud Infrastructure Dataset (IMC '25), Zenodo 10.5281/zenodo.17357494, CC BY 4.0, data centre a. Cost model: alarm = 1, missed congestion day = 5.
 
 ## Requirements
 

@@ -271,6 +271,7 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 | B04 | CPU congestion on hypervisors: each morning, flag the hosts that will have CPU ready above 30 seconds that day | SAP Cloud Infrastructure Dataset, 123 hypervisors in one data centre (test: 6 days, August 2024) | Alarm if yesterday's maximum CPU ready was at least 25 seconds (no AI) | 10.9 % lower cost (required: 10 %) | **YES, with caveat** (2026-11-10) |
 | B19 | Repeat of B04 in a second data centre, with rule and brain frozen in advance | SAP Cloud Infrastructure Dataset, 146 hypervisors in data centre b (test: 12 days, August 2024) | Alarm if yesterday's maximum CPU ready was at least 25 seconds (no AI) | 1.3 % higher cost than the rule (required: 10 % lower) | **NO** (2026-11-10) |
 | B10 | Weekly stock target per product: set next week's stock level for 200 products | UCI Online Retail II, a UK online shop, 200 products (test: 21 weeks, July to November 2011) | 80th percentile of the last 13 weeks' sales (no AI) | 1.3 % lower normalised cost (required: 10 %) | **NO** (2026-11-10) |
+| B20 | Truck maintenance on real data: how close is Component X to repair, judged from the readouts so far | SCANIA Component X, 23,550 real trucks for training (test: 5,045 trucks) | Always warn at the highest level (no AI) | 8.7 % lower cost (required: 10 %) | **NO** (2026-11-11) |
 
 **B12 caveat:** the engine VBAF serviced last had only 1 cycle left. The brain goes all the way to the edge, so a real installation needs a safety margin, set during a shadow period before it is trusted.
 
@@ -296,6 +297,8 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 
 **B10 note:** the brain was slightly better than the rule (5345 against 5418), but far from the 10 % needed. At a higher shortage cost (9 per unit) the brain was 7.5 % better; at a lower one (2) it was worse. The data is sales, not demand, so sold-out weeks hide lost sales. For weekly stock targets, a percentile rule is the right tool.
 
+**B20 note:** the first maintenance test on real field data. On selection the brain was 21 % cheaper than the rule, but in the test only 8.7 %, below the locked 10 %. The brain halved the warnings to healthy trucks (2,697 of 4,903, where the rule warns all), but it missed 43 of 142 trucks close to repair, which the rule never misses. The maintenance YES verdicts (B12, B14, B15 and B17) are on NASA's simulated engines.
+
 Cost model for B12: planned service = 1, failure = 10. Data: A. Saxena, K. Goebel, D. Simon and N. Eklund, Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation, PHM08 (NASA).
 
 Data for B01: Energi Data Service, Energinet (dataset Elspotprices, price area DK2, EUR/MWh).
@@ -319,6 +322,8 @@ Data for B04: A. Uhlig, I. Braun and M. Waehlisch, The SAP Cloud Infrastructure 
 Data for B19: the same SAP Cloud Infrastructure Dataset as B04, data centre b.
 
 Data for B10: D. Chen, Online Retail II, UCI Machine Learning Repository (dataset 502), CC BY 4.0. Cost model: 1 per unit left over, 4 per unit short, divided by each product's average weekly sales in training.
+
+Data for B20: T. Lindgren, O. Steinert, O. Andersson Reyna, Z. Kharazian and S. Magnusson, SCANIA Component X Dataset version 3, Scania CV AB, DOI 10.5878/bnh5-ka77, CC BY 4.0. Cost model: the official cost table, 7 to 10 for an early warning and 200 to 500 for a late one.
 
 ## Requirements
 

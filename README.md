@@ -273,6 +273,7 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 | B10 | Weekly stock target per product: set next week's stock level for 200 products | UCI Online Retail II, a UK online shop, 200 products (test: 21 weeks, July to November 2011) | 80th percentile of the last 13 weeks' sales (no AI) | 1.3 % lower normalised cost (required: 10 %) | **NO** (2026-11-10) |
 | B20 | Truck maintenance on real data: how close is Component X to repair, judged from the readouts so far | SCANIA Component X, 23,550 real trucks for training (test: 5,045 trucks) | Always warn at the highest level (no AI) | 8.7 % lower cost (required: 10 %) | **NO** (2026-11-11) |
 | B05 | Battery wear: when to replace a lithium-ion cell, judged from its capacity at each check-up | KIT battery aging dataset (Luh and Blank), 228 lab cells under 76 operating conditions (test: 36 cells) | Replace below 90 % of the start capacity (no AI) | 22 % lower cost, 0 failures (rule: 0) | **YES** (2026-11-11) |
+| B22 | Battery wear under fast charging: when to replace a cell, judged from its capacity at each check-up | MIT, Stanford and Toyota Research Institute (Severson et al. 2019), 124 lab cells under 72 fast-charging policies (test batch not used) | Replace below 84.5 % of nominal capacity (no AI) | At most 1.3 % lower cost possible, even with perfect foresight (required: 10 %) | **NO** at lamp 2, no test (2026-11-11) |
 
 **B12 caveat:** the engine VBAF serviced last had only 1 cycle left. The brain goes all the way to the edge, so a real installation needs a safety margin, set during a shadow period before it is trusted.
 
@@ -302,6 +303,8 @@ Every new use of VBAF gets an honest verdict before it is offered to anyone. The
 
 **B05 note:** lab data, not cells in the field. Brain and rule replaced the same 30 test cells and neither had a failure, but the brain let the cells run 454 check-ups against 354 for the rule, so the cells were used about 28 % longer before replacement. The rule's 90 % was at the edge of its locked grid, so a rule above 90 % was never tested; against the next best rule (89 %) the brain was 17 % cheaper. The test has only 36 cells.
 
+**B22 note:** lab cells again, from a second lab. The rule replaces each cell at the first check-up below 84.5 % of nominal capacity, and on selection it lost only 10 of 792 possible check-ups against perfect foresight. Even a brain that knew the future could be at most 1.3 % cheaper on selection (2.1 % on training), so the locked 10 % was out of reach. The leg was closed at lamp 2 (is there room for a brain?) without building a brain or running the test. Where wear is even and uniform, a simple threshold is enough; B05 had room for a brain because its cells aged under 76 different conditions.
+
 Cost model for B12: planned service = 1, failure = 10. Data: A. Saxena, K. Goebel, D. Simon and N. Eklund, Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation, PHM08 (NASA).
 
 Data for B01: Energi Data Service, Energinet (dataset Elspotprices, price area DK2, EUR/MWh).
@@ -329,6 +332,8 @@ Data for B10: D. Chen, Online Retail II, UCI Machine Learning Repository (datase
 Data for B20: T. Lindgren, O. Steinert, O. Andersson Reyna, Z. Kharazian and S. Magnusson, SCANIA Component X Dataset version 3, Scania CV AB, DOI 10.5878/bnh5-ka77, CC BY 4.0. Cost model: the official cost table, 7 to 10 for an early warning and 200 to 500 for a late one.
 
 Data for B05: M. Luh and T. Blank, Comprehensive battery aging dataset: capacity and impedance fade measurements of a lithium-ion NMC/C-SiO cell, version 2, KIT, DOI 10.35097/1969, CC BY 4.0. Cost model: replacement = 1, failure = 10, per check-up run.
+
+Data for B22: K. A. Severson et al., Data-driven prediction of battery cycle life before capacity degradation, Nature Energy 4, 383-391 (2019); data from data.matr.io/1 (Toyota Research Institute), CC BY 4.0. Processed: check-ups every 25 cycles, cells excluded and merged as in the notebook Load Data.ipynb by the authors. Cost model: replacement = 1, failure = 10, per check-up run.
 
 ## Requirements
 

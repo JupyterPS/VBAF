@@ -335,6 +335,8 @@ Data for B05: M. Luh and T. Blank, Comprehensive battery aging dataset: capacity
 
 Data for B22: K. A. Severson et al., Data-driven prediction of battery cycle life before capacity degradation, Nature Energy 4, 383-391 (2019); data from data.matr.io/1 (Toyota Research Institute), CC BY 4.0. Processed: check-ups every 25 cycles, cells excluded and merged as in the notebook Load Data.ipynb by the authors. Cost model: replacement = 1, failure = 10, per check-up run.
 
+**History cleanup 2026-11-12:** personal files that were committed between March and June 2026, and the meter data for B11, were removed from the whole git history at the owner's request. Commit hashes from before the cleanup have changed. The kernel commit a64f2c3 is now 96d7499, and the kernel files are unchanged (VBAF.Core.AllClasses.ps1 blob eda3fa8, VBAF.Core.FastNet.ps1 blob 6aa3285).
+
 ## Requirements
 
 - Windows 10 or 11
